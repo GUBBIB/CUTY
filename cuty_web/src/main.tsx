@@ -1,8 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App from './App.tsx'
-import Pdf from './component/PDF/pdf.tsx'
+import App from './App'
+import Pdf from './component/Pdf/Pdf'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 
