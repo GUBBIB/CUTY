@@ -48,7 +48,7 @@ jobs:
           host:     ${{ secrets.CUTY_HOST }}
           username: ${{ secrets.CUTY_USER }}     # 예: ubuntu
           port:     ${{ secrets.CUTY_PORT }}
-          key: ${{ secrets.CUTY_SSH_KEY }}
+          key:      ${{ secrets.CUTY_SSH_KEY }}
           script: |
             whoami
             hostname -I
@@ -61,7 +61,7 @@ jobs:
           host:     ${{ secrets.CUTY_HOST }}
           username: ${{ secrets.CUTY_USER }}
           port:     ${{ secrets.CUTY_PORT }}
-          key: ${{ secrets.CUTY_SSH_KEY }}
+          key:      ${{ secrets.CUTY_SSH_KEY }}
           source:   "build.tar.gz"
           target:   "~/"
 
@@ -72,17 +72,24 @@ jobs:
           host:     ${{ secrets.CUTY_HOST }}
           username: ${{ secrets.CUTY_USER }}
           port:     ${{ secrets.CUTY_PORT }}
-          key: ${{ secrets.CUTY_SSH_KEY }}
+          key:      ${{ secrets.CUTY_SSH_KEY }}
           script: |
             set -e
-            # 기존 삭제 후 교체
-            sudo rm -rf /var/www/cuty_web/build
-            sudo mkdir -p /var/www/cuty_web/build
-            sudo tar -xzf ~/build.tar.gz -C /var/www/cuty_web/build
+
+            # 0) 웹 루트 초기화
+            sudo rm -rf /var/www/cuty_web/
+            sudo mkdir -p /var/www/cuty_web/
+
+            # 1) tar 추출 (최상위 디렉터리 1단계 제거)
+            sudo tar -xzf ~/build.tar.gz -C /var/www/cuty_web/ --strip-components=1
             rm -f ~/build.tar.gz
-            # 권한 (nginx가 읽기 가능)
+
+            # 2) 권한
             sudo chown -R www-data:www-data /var/www/cuty_web
-            sudo chmod -R 755 /var/www/cuty_web
-            # nginx 테스트/리로드 (정적이라 보통 불필요하지만 안전하게)
+            sudo find /var/www/cuty_web -type d -exec chmod 755 {} \;
+            sudo find /var/www/cuty_web -type f -exec chmod 644 {} \;
+
+            # 3) nginx 테스트/리로드
             sudo nginx -t && sudo systemctl reload nginx
-            echo "✅ deployed to /var/www/cuty_web/build"
+            echo "✅ deployed to /var/www/cuty_web/"
+
