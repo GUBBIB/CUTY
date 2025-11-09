@@ -1,4 +1,4 @@
-name: Deploy cuty_web (React/Vite) build to EC2
+name: Deploy cuty_web (React/Vite) build to Nginx webroot
 
 on:
   push:
@@ -10,10 +10,8 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
-    # 빌드 관련 값만 env로 유지 (secrets는 with에서 직접 사용)
     env:
-      TARGET_DIR: cuty_web/build     # EC2 기준: ~/cuty_web/build
-      BUILD_DIR: dist                # Vite 빌드 산출물 폴더
+      BUILD_DIR: dist  # Vite 산출물
 
     steps:
       - name: Checkout
@@ -34,46 +32,64 @@ jobs:
         run: |
           tar -czf build.tar.gz -C cuty_web/${{ env.BUILD_DIR }} .
 
-      # (선택) SSH 연결만 사전 점검
+      # 필수 시크릿 확인
+      - name: Assert required secrets exist
+        run: |
+          test -n "${{ secrets.CUTY_HOST }}"    || (echo "CUTY_HOST empty" && exit 1)
+          test -n "${{ secrets.CUTY_USER }}"    || (echo "CUTY_USER empty" && exit 1)
+          test -n "${{ secrets.CUTY_PORT }}"    || (echo "CUTY_PORT empty" && exit 1)
+          test -n "${{ secrets.CUTY_SSH_KEY }}" || (echo "CUTY_SSH_KEY empty" && exit 1)
+          echo "All required secrets present."
+
+      # SSH 키 파일로 저장 (개행 유지)
+      - name: Write SSH key to file
+        run: |
+          printf '%s' "${{ secrets.CUTY_SSH_KEY }}" > id_gh_actions
+          chmod 600 id_gh_actions
+          wc -c id_gh_actions
+
+      # (선택) SSH 접속 점검
       - name: Test SSH connection
         uses: appleboy/ssh-action@v1.1.0
         with:
           host:     ${{ secrets.CUTY_HOST }}
-          username: ${{ secrets.CUTY_USER }}      # 예: ubuntu
-          key:      ${{ secrets.CUTY_SSH_KEY }}   # 멀티라인 프라이빗키 전체
+          username: ${{ secrets.CUTY_USER }}     # 예: ubuntu
           port:     ${{ secrets.CUTY_PORT }}
+          key_path: id_gh_actions
           script: |
-            whoami && hostname -I && echo "SSH OK"
+            whoami
+            hostname -I
+            echo "SSH OK"
 
-      - name: Upload build to EC2
+      # 업로드 (홈으로)
+      - name: Upload build to EC2 (to home)
         uses: appleboy/scp-action@v0.1.7
         with:
           host:     ${{ secrets.CUTY_HOST }}
           username: ${{ secrets.CUTY_USER }}
-          key:      ${{ secrets.CUTY_SSH_KEY }}
           port:     ${{ secrets.CUTY_PORT }}
+          key_path: id_gh_actions
           source:   "build.tar.gz"
           target:   "~/"
 
-      - name: Deploy on EC2 (replace build folder)
+      # /var/www/cuty_web/build 로 교체
+      - name: Deploy to /var/www/cuty_web/build
         uses: appleboy/ssh-action@v1.1.0
         with:
           host:     ${{ secrets.CUTY_HOST }}
           username: ${{ secrets.CUTY_USER }}
-          key:      ${{ secrets.CUTY_SSH_KEY }}
           port:     ${{ secrets.CUTY_PORT }}
+          key_path: id_gh_actions
           script: |
             set -e
-            echo "🚀 Start deploying new build..."
-            cd ~/cuty_web
-            echo "🧹 Removing old build folder..."
-            sudo rm -rf build
-            mkdir -p build
-            mv ~/build.tar.gz .
-            echo "📦 Extracting new build..."
-            tar -xzf build.tar.gz -C build
-            rm -f build.tar.gz
-            echo "🔧 Setting permissions..."
-            sudo chown -R www-data:www-data build
-            sudo chmod -R 755 build
-            echo "✅ New build deployed successfully at ~/cuty_web/build"
+            # 기존 삭제 후 교체
+            sudo rm -rf /var/www/cuty_web/build
+            sudo mkdir -p /var/www/cuty_web/build
+            sudo tar -xzf ~/build.tar.gz -C /var/www/cuty_web/build
+            rm -f ~/build.tar.gz
+            # 권한 (nginx가 읽기 가능)
+            sudo chown -R www-data:www-data /var/www/cuty_web
+            sudo chmod -R 755 /var/www/cuty_web
+            # nginx 테스트/리로드 (정적이라 보통 불필요하지만 안전하게)
+            sudo nginx -t && sudo systemctl reload nginx
+            echo "✅ deployed to /var/www/cuty_web/build"
