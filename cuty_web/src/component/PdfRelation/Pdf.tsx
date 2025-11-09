@@ -7,7 +7,7 @@ const Pdf = () => {
             <Header />
         </div>
         
-        pdf test test
+        pdf test
       </div>  
     );
 }
