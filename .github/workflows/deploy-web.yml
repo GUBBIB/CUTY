@@ -48,7 +48,7 @@ jobs:
           host:     ${{ secrets.CUTY_HOST }}
           username: ${{ secrets.CUTY_USER }}     # 예: ubuntu
           port:     ${{ secrets.CUTY_PORT }}
-          key_path: ${{ secrets.CUTY_SSH_KEY }}
+          key: ${{ secrets.CUTY_SSH_KEY }}
           script: |
             whoami
             hostname -I
@@ -61,7 +61,7 @@ jobs:
           host:     ${{ secrets.CUTY_HOST }}
           username: ${{ secrets.CUTY_USER }}
           port:     ${{ secrets.CUTY_PORT }}
-          key_path: ${{ secrets.CUTY_SSH_KEY }}
+          key: ${{ secrets.CUTY_SSH_KEY }}
           source:   "build.tar.gz"
           target:   "~/"
 
@@ -72,7 +72,7 @@ jobs:
           host:     ${{ secrets.CUTY_HOST }}
           username: ${{ secrets.CUTY_USER }}
           port:     ${{ secrets.CUTY_PORT }}
-          key_path: ${{ secrets.CUTY_SSH_KEY }}
+          key: ${{ secrets.CUTY_SSH_KEY }}
           script: |
             set -e
             # 기존 삭제 후 교체
