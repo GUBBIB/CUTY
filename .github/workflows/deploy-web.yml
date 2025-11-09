@@ -56,30 +56,24 @@ jobs:
           target:   "~/"
 
       - name: Deploy on EC2 (replace build folder)
-      uses: appleboy/ssh-action@v1.1.0
-      with:
-        host:     ${{ secrets.CUTY_HOST }}
-        username: ${{ secrets.CUTY_USER }}
-        port:     ${{ secrets.CUTY_PORT }}
-        key_path: id_gh_actions
-        script: |
-          set -e
-          echo "🚀 Start deploying new build..."
-          cd ~/cuty_web
-
-          echo "🧹 Removing old build folder..."
-          sudo rm -rf build
-
-          echo "📁 Creating build folder..."
-          sudo mkdir -p build
-
-          echo "📦 Extracting new build..."
-          sudo mv ~/build.tar.gz .
-          sudo tar -xzf build.tar.gz -C build
-          sudo rm -f build.tar.gz
-
-          echo "🔧 Fix permissions..."
-          sudo chown -R www-data:www-data build
-          sudo chmod -R 755 build
-
-          echo "✅ Deployed to ~/cuty_web/build"
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host:     ${{ secrets.CUTY_HOST }}
+          username: ${{ secrets.CUTY_USER }}
+          key:      ${{ secrets.CUTY_SSH_KEY }}
+          port:     ${{ secrets.CUTY_PORT }}
+          script: |
+            set -e
+            echo "🚀 Start deploying new build..."
+            cd ~/cuty_web
+            echo "🧹 Removing old build folder..."
+            sudo rm -rf build
+            mkdir -p build
+            mv ~/build.tar.gz .
+            echo "📦 Extracting new build..."
+            tar -xzf build.tar.gz -C build
+            rm -f build.tar.gz
+            echo "🔧 Setting permissions..."
+            sudo chown -R www-data:www-data build
+            sudo chmod -R 755 build
+            echo "✅ New build deployed successfully at ~/cuty_web/build"
