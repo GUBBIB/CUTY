@@ -1,0 +1,91 @@
+name: Deploy cuty_web (React/Vite) build to EC2
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "cuty_web/**"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      SSH_HOST: ${{ secrets.CUTY_HOST }}
+      SSH_USER: ${{ secrets.CUTY }}
+      SSH_KEY:  ${{ secrets.CUTY_SSH }}
+      SSH_PORT: ${{ secrets.CUTY_PORT }}
+      TARGET_DIR: cuty_web/build         # EC2 기준: ~/cuty_web/build
+      BUILD_DIR: dist                    # 로컬 빌드 산출물 (Vite)
+
+    steps:
+      # 1️⃣ 리포 체크아웃
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2️⃣ Node 설치 및 빌드
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install & Build (Vite)
+        working-directory: cuty_web
+        run: |
+          npm ci
+          npm run build
+
+      # 3️⃣ 빌드 결과 압축
+      - name: Compress build folder
+        run: |
+          tar -czf build.tar.gz -C cuty_web/${{ env.BUILD_DIR }} .
+
+      # 4️⃣ EC2에 build.tar.gz 전송
+      - name: Upload build to EC2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ env.SSH_HOST }}
+          username: ${{ env.SSH_USER }}
+          key: ${{ env.SSH_KEY }}
+          port: ${{ env.SSH_PORT }}
+          source: "build.tar.gz"
+          target: "~/"                     # 홈 디렉토리(~/)에 임시로 업로드
+
+      # 5️⃣ EC2에서 기존 build 삭제 → 새 빌드 풀기
+      - name: Deploy on EC2 (replace build folder)
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host: ${{ env.SSH_HOST }}
+          username: ${{ env.SSH_USER }}
+          key: ${{ env.SSH_KEY }}
+          port: ${{ env.SSH_PORT }}
+          script: |
+            set -e
+            echo "🚀 Start deploying new build..."
+
+            # 1. 작업 디렉토리 이동
+            cd ~/cuty_web
+
+            # 2. 기존 build 폴더 삭제
+            echo "🧹 Removing old build folder..."
+            sudo rm -rf build
+
+            # 3. 새 build 폴더 생성
+            mkdir -p build
+
+            # 4. 전달된 압축파일을 현재 위치로 이동
+            mv ~/build.tar.gz .
+
+            # 5. 새 빌드 압축 해제
+            echo "📦 Extracting new build..."
+            tar -xzf build.tar.gz -C build
+
+            # 6. 압축파일 삭제
+            rm -f build.tar.gz
+
+            # 7. 권한 재설정 (nginx가 www-data로 접근 가능하게)
+            echo "🔧 Setting permissions..."
+            sudo chown -R www-data:www-data build
+            sudo chmod -R 755 build
+
+            echo "✅ New build deployed successfully at ~/cuty_web/build"
