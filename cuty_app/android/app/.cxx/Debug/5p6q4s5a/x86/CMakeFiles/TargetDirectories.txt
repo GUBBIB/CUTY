@@ -1,0 +1,2 @@
+/Users/microcephalus7/development/outsourcing/cuty/cuty_app/android/app/.cxx/Debug/5p6q4s5a/x86/CMakeFiles/edit_cache.dir
+/Users/microcephalus7/development/outsourcing/cuty/cuty_app/android/app/.cxx/Debug/5p6q4s5a/x86/CMakeFiles/rebuild_cache.dir

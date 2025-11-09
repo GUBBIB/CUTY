@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(keytool:*)",
+      "Read(//Users/microcephalus7/development/outsourcing/cuty/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

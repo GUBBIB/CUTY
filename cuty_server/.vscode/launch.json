@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Flask: Run app",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/app.py",
+      "python": "${workspaceFolder}/.venv/bin/python",
+      "env": {
+        "FLASK_APP": "app.py",
+        "ENV": "local",
+        "DEBUG": "true",
+      },
+      "args": [
+        "run",
+        "--host=0.0.0.0"
+      ],
+      "jinja": true
+    }
+  ]
+}

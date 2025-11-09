@@ -1,0 +1,16 @@
+{
+  "prod": {
+    "aws_region": "ap-northeast-2",
+    "profile_name": "cuty",
+    "project_name": "cuty-server",
+    "runtime": "python3.12",
+    "s3_bucket": "cuty-prod",
+    "app_function": "app.app",
+    "environment_variables": {
+      "ENV": "prod",
+      "DEBUG": "False"
+    },
+    "keep_warm": true,
+    "slim_handler": true
+  }
+}
