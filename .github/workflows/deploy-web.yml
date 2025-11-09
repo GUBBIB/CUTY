@@ -13,7 +13,7 @@ jobs:
     env:
       SSH_HOST: ${{ secrets.CUTY_HOST }}
       SSH_USER: ${{ secrets.CUTY_USER }}
-      SSH_KEY:  ${{ secrets.CUTY_SSH }}
+      SSH_KEY:  ${{ secrets.CUTY_SSH_KEY }}
       SSH_PORT: ${{ secrets.CUTY_PORT }}
       TARGET_DIR: cuty_web/build         # EC2 기준: ~/cuty_web/build
       BUILD_DIR: dist                    # 로컬 빌드 산출물 (Vite)
