@@ -4,7 +4,7 @@ const Home = () => {
 
     return (
         <div id="Main">
-            Home test <br></br>
+            Home test home<br></br>
             <Link to="/student-pdf">student-pdf</Link>
         </div>
     );

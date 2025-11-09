@@ -41,13 +41,6 @@ jobs:
           test -n "${{ secrets.CUTY_SSH_KEY }}" || (echo "CUTY_SSH_KEY empty" && exit 1)
           echo "All required secrets present."
 
-      # SSH 키 파일로 저장 (개행 유지)
-      - name: Write SSH key to file
-        run: |
-          printf '%s' "${{ secrets.CUTY_SSH_KEY }}" > id_gh_actions
-          chmod 600 id_gh_actions
-          wc -c id_gh_actions
-
       # (선택) SSH 접속 점검
       - name: Test SSH connection
         uses: appleboy/ssh-action@v1.1.0
@@ -55,7 +48,7 @@ jobs:
           host:     ${{ secrets.CUTY_HOST }}
           username: ${{ secrets.CUTY_USER }}     # 예: ubuntu
           port:     ${{ secrets.CUTY_PORT }}
-          key_path: id_gh_actions
+          key_path: ${{ secrets.CUTY_SSH_KEY }}
           script: |
             whoami
             hostname -I
@@ -68,7 +61,7 @@ jobs:
           host:     ${{ secrets.CUTY_HOST }}
           username: ${{ secrets.CUTY_USER }}
           port:     ${{ secrets.CUTY_PORT }}
-          key_path: id_gh_actions
+          key_path: ${{ secrets.CUTY_SSH_KEY }}
           source:   "build.tar.gz"
           target:   "~/"
 
@@ -79,7 +72,7 @@ jobs:
           host:     ${{ secrets.CUTY_HOST }}
           username: ${{ secrets.CUTY_USER }}
           port:     ${{ secrets.CUTY_PORT }}
-          key_path: id_gh_actions
+          key_path: ${{ secrets.CUTY_SSH_KEY }}
           script: |
             set -e
             # 기존 삭제 후 교체
