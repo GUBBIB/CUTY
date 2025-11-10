@@ -1,12 +1,13 @@
 from flask import Blueprint
-from src.routes.v1.auth_routes import auth_bp
-from src.routes.v1.post_routes import post_bp
-from src.routes.v1.comment_routes import comment_bp
-from src.routes.v1.school_routes import school_bp
-from src.routes.v1.user_routes import user_bp
-from src.routes.v1.like_routes import like_bp
-from src.routes.v1.document_routes import document_bp
-from src.routes.v1.image_routes import images_bp
+from src.routes.v1.User.auth_routes import auth_bp
+from src.routes.v1.Post.post_routes import post_bp
+from src.routes.v1.Post.comment_routes import comment_bp
+from src.routes.v1.School.school_routes import school_bp
+from src.routes.v1.User.user_routes import user_bp
+from src.routes.v1.Post.like_routes import like_bp
+from src.routes.v1.Document.document_routes import document_bp
+from src.routes.v1.Image.image_routes import images_bp
+from src.routes.v1.Request.request_routes import request_bp
 def init_routes(app):
     """애플리케이션의 모든 라우트를 등록합니다."""
     
@@ -35,3 +36,6 @@ def init_routes(app):
 
     # 이미지 관련 라우트
     app.register_blueprint(images_bp, url_prefix='/api/v1/images')
+
+    # 신청 관련 라우트
+    app.register_blueprint(request_bp, url_prefix='/api/v1/requests')
