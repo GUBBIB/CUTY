@@ -23,3 +23,12 @@ class DocumentType(str, Enum):
     LICENSE = "LICENSE"                                 # 면허
     QUALIFICATION = "QUALIFICATION"                     # 자격증
     OTHER = "OTHER"                                     # 기타 
+
+class ReqType(str, Enum):
+    PART_TIME = "PART_TIME"
+
+class ReqState(str, Enum):
+    PENDING = "PENDING"
+    REJECTED = "REJECTED"
+    APPROVED = "APPROVED"
+    CANCELED = "CANCELED"

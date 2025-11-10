@@ -25,5 +25,6 @@ __all__ = [
     'UserType',
     'DocumentType',
     'ImageStore',
-    'Document'
+    'Document',
+    'Requests'
 ]

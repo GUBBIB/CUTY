@@ -40,3 +40,20 @@ def token_required(f):
         return f(current_user, *args, **kwargs)
 
     return decorated
+
+def admin_required(f):
+    """관리자 권한이 있는 사용자만 접근 가능하게 하는 데코레이터"""
+    @wraps(f)
+    def wrapper(current_user, *args, **kwargs):
+        # current_user가 dict 또는 객체일 수 있으니 둘 다 처리
+        is_admin = False
+        if isinstance(current_user, dict):
+            is_admin = current_user.get("is_admin") or current_user.get("role") == "ADMIN"
+        else:
+            is_admin = getattr(current_user, "is_admin", False) or getattr(current_user, "role", None) == "ADMIN"
+
+        if not is_admin:
+            raise PermissionDeniedError("관리자 권한이 필요합니다.")
+
+        return f(current_user, *args, **kwargs)
+    return wrapper

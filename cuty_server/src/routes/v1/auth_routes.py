@@ -50,3 +50,11 @@ def login():
         return jsonify({'error': str(e)}), 401
     except Exception as e:
         return jsonify({'error': '서버 오류가 발생했습니다'}), 500
+
+
+@auth_bp.route("/ping", methods=["GET"])
+def ping():
+    """
+    서버 상태 확인용 (ping → pong)
+    """
+    return jsonify({"message": "pong"}), 200

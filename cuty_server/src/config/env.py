@@ -1,5 +1,20 @@
 import os
 from dotenv import load_dotenv
+import builtins as _bt
+__orig_open = _bt.open
+
+def _open_text_utf8_first(path, mode='r', *args, **kwargs):
+    # 바이너리 모드거나 이미 encoding 지정됐으면 원래 open 사용
+    if 'b' in mode or 'encoding' in kwargs:
+        return __orig_open(path, mode, *args, **kwargs)
+    try:
+        # 1순위: UTF-8
+        return __orig_open(path, mode, *args, encoding='utf-8', **kwargs)
+    except UnicodeDecodeError:
+        # 2순위: cp949 (Windows 기본)로 폴백, 문제 바이트는 무시
+        return __orig_open(path, mode, *args, encoding='cp949', errors='ignore', **kwargs)
+
+_bt.open = _open_text_utf8_first
 
 ENV = os.getenv('ENV', 'local')
 # 환경 변수 파일 경로 설정
@@ -29,7 +44,7 @@ AWS_SECRET_ACCESS_KEY = os.getenv('AWS_S3_SECRET_ACCESS_KEY')
 AWS_S3_BUCKET = os.getenv('AWS_S3_BUCKET')
 CLOUDFRONT_URL = os.getenv('CLOUDFRONT_URL')
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
-ALLOWED_EXTENSIONS = { 'pdf'}
+ALLOWED_EXTENSIONS = { 'pdf' }
 
 # 디버깅을 위한 출력
 print(f"현재 환경: {FLASK_ENV}")
