@@ -3,6 +3,7 @@ import 'package:cuty_app/config/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:cuty_app/services/user_service.dart';
 import 'package:cuty_app/services/auth_service.dart';
+import 'package:cuty_app/services/request_service.dart';
 import 'package:cuty_app/models/user.dart';
 import 'package:cuty_app/screens/my_posts_screen.dart';
 import 'package:cuty_app/screens/my_comments_screen.dart';
@@ -19,6 +20,7 @@ class MyPageScreen extends StatefulWidget {
 class _MyPageScreenState extends State<MyPageScreen> {
   final _userService = UserService();
   final _authService = AuthService();
+  final _requestService = RequestService();
   bool _isLoading = true;
   User? _user;
 
@@ -332,6 +334,34 @@ class _MyPageScreenState extends State<MyPageScreen> {
                 Navigator.pushNamed(context, '/changePassword');
               },
             ),
+
+            // `/api/v1/requests` [methods='GET'] 테스트 버튼
+            ListTile(
+              title: const Text(
+                '요청 API 테스트 버튼',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () async {
+                try {
+                  await _requestService.createRequest(req_type_str: "PART_TIME");
+                  print("요청 API 테스트 버튼 API 성공");
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('신청 성공! 🎉')),
+                    );
+                  }
+
+                } catch (e) {
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('에러 발생 dart 1: $e')),
+                    );
+                  }
+                }
+              },
+            ),
+
             const Divider(),
             ListTile(
               title: const Text(
