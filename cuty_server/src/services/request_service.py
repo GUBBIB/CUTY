@@ -1,4 +1,4 @@
-from src.models import db, Request
+from src.models import db, Requests
 from src.models.enums import ReqType, ReqState
 from src.utils.exceptions import ValidationError, DuplicateRequestError, InternalServiceError
 

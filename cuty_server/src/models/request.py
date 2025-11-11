@@ -1,7 +1,7 @@
 from .base import db, TimestampMixin
 from .enums import ReqType, ReqState
 
-class Request(db.Model, TimestampMixin):
+class Requests(db.Model, TimestampMixin):
     __tablename__ = 'requests'
     
     id = db.Column(db.Integer, primary_key=True)

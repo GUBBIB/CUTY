@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from src.services.user_service import UserService
-from src.utils.auth import token_required
+from src.utils.auth import token_required, admin_or_school_required
 from src.utils.formatters import get_current_user_data
 
 user_bp = Blueprint('user', __name__)
@@ -77,4 +77,10 @@ def get_my_comments(current_user):
         return jsonify({'error': str(e)}), 400
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
+# @user_bp.route('/managemet/<int:user_id>')
+# @token_required
+# @admin_or_school_required
+# def get_user_documents(current_user):
 

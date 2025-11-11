@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from src.services.request_service import RequestService
 from src.utils.formatters import get_current_user_data
-from src.utils.auth import token_required, admin_required
+from src.utils.auth import token_required, admin_or_school_required
 from src.utils.exceptions import ValidationError, PermissionDeniedError, DuplicateRequestError, InternalServiceError
 
 
@@ -26,7 +26,6 @@ def create_requests(current_user):
     if not req_type:
         raise ValidationError(message="type 은/는 필수 항목입니다.")
 
-
     try:
         result = RequestService.create_request(
             user=current_user,
@@ -46,7 +45,7 @@ def create_requests(current_user):
     
 @request_bp.route('/requests', methods=['GET'])
 @token_required
-@admin_required
+@admin_or_school_required
 def list_requests(current_user):
     """
     요청 목록 조회

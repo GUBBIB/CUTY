@@ -2,6 +2,7 @@ from functools import wraps
 from flask import request, jsonify
 import jwt
 from src.models import User
+from src.models.enums import UserType
 
 from src.config.env import (
     SECRET_KEY
@@ -41,19 +42,32 @@ def token_required(f):
 
     return decorated
 
+
 def admin_required(f):
     """관리자 권한이 있는 사용자만 접근 가능하게 하는 데코레이터"""
     @wraps(f)
     def wrapper(current_user, *args, **kwargs):
-        # current_user가 dict 또는 객체일 수 있으니 둘 다 처리
-        is_admin = False
-        if isinstance(current_user, dict):
-            is_admin = current_user.get("is_admin") or current_user.get("role") == "ADMIN"
-        else:
-            is_admin = getattr(current_user, "is_admin", False) or getattr(current_user, "role", None) == "ADMIN"
+        # current_user는 User 모델 인스턴스 (User.query.get으로 불러옴)
+        user_type = getattr(current_user, "register_type", None)
 
-        if not is_admin:
-            raise PermissionDeniedError("관리자 권한이 필요합니다.")
+        if user_type != UserType.ADMIN:
+            return jsonify({'error': '관리자 권한이 필요합니다.'}), 403
 
         return f(current_user, *args, **kwargs)
+
+    return wrapper
+
+
+def admin_or_school_required(f):
+    """관리자 또는 학교 권한이 있는 사용자만 접근 가능하게 하는 데코레이터"""
+    @wraps(f)
+    def wrapper(current_user, *args, **kwargs):
+        # current_user는 User 모델 인스턴스임
+        user_type = getattr(current_user, "register_type", None)
+
+        if user_type not in [UserType.ADMIN, UserType.SCHOOL]:
+            return jsonify({'error': '관리자 또는 학교 권한이 필요합니다.'}), 403
+
+        return f(current_user, *args, **kwargs)
+
     return wrapper

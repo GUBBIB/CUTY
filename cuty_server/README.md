@@ -101,6 +101,10 @@ cuty_server/
 ### 이미지 (`/api/v1/images`)
 - 이미지 업로드 및 관리
 
+### 신청 (`/api/v1/requests`)
+- 시간제 취업 등 검토 신청
+
+
 ## 프로젝트 초기 설정
 
 ### 사전 요구사항
@@ -830,3 +834,123 @@ adb reverse tcp:8000 tcp:8000
 ## 문의
 
 프로젝트 관련 문의사항은 담당자에게 연락해주세요.
+
+
+## 가상환경 
+### 가상환경 준비
+
+### 가상환경 활성화
+```bash
+# PowerShell 기준
+venv\Scripts\activate
+```
+
+## 디비 값
+```sql
+-- Countries 테이블
+INSERT INTO countries (id, name, code, created_at, updated_at, deleted_at) VALUES
+(1, '대한민국', 'KR', NOW(), NOW(), NULL),
+(2, '미국', 'US', NOW(), NOW(), NULL),
+(3, '일본', 'JP', NOW(), NOW(), NULL),
+(4, '중국', 'CN', NOW(), NOW(), NULL),
+(5, '독일', 'DE', NOW(), NOW(), NULL);
+
+-- Schools 테이블
+INSERT INTO schools (id, name, country_id, created_at, updated_at, deleted_at) VALUES
+-- 한국 학교들
+(1, '서울대학교', 1, NOW(), NOW(), NULL),
+(2, '연세대학교', 1, NOW(), NOW(), NULL),
+(3, '고려대학교', 1, NOW(), NOW(), NULL),
+(4, 'KAIST', 1, NOW(), NOW(), NULL),
+-- 미국 학교들
+(5, 'MIT', 2, NOW(), NOW(), NULL),
+(6, 'Stanford University', 2, NOW(), NOW(), NULL),
+(7, 'Harvard University', 2, NOW(), NOW(), NULL),
+-- 일본 학교들
+(8, '도쿄대학교', 3, NOW(), NOW(), NULL),
+(9, '와세다대학교', 3, NOW(), NOW(), NULL),
+-- 중국 학교들
+(10, '베이징대학교', 4, NOW(), NOW(), NULL),
+-- 독일 학교들
+(11, '뮌헨공과대학교', 5, NOW(), NOW(), NULL);
+
+-- Colleges 테이블
+INSERT INTO colleges (id, name, school_id, created_at, updated_at, deleted_at) VALUES
+-- 서울대학교
+(1, '공과대학', 1, NOW(), NOW(), NULL),
+(2, '경영대학', 1, NOW(), NOW(), NULL),
+(3, '인문대학', 1, NOW(), NOW(), NULL),
+-- 연세대학교
+(4, '공과대학', 2, NOW(), NOW(), NULL),
+(5, '경영대학', 2, NOW(), NOW(), NULL),
+-- 고려대학교
+(6, '공과대학', 3, NOW(), NOW(), NULL),
+(7, '경영대학', 3, NOW(), NOW(), NULL),
+-- KAIST
+(8, '전산학부', 4, NOW(), NOW(), NULL),
+(9, '공과대학', 4, NOW(), NOW(), NULL),
+-- MIT
+(10, 'School of Engineering', 5, NOW(), NOW(), NULL),
+(11, 'Sloan School of Management', 5, NOW(), NOW(), NULL),
+-- Stanford
+(12, 'School of Engineering', 6, NOW(), NOW(), NULL),
+(13, 'Graduate School of Business', 6, NOW(), NOW(), NULL);
+
+-- Departments 테이블
+INSERT INTO departments (id, name, college_id, created_at, updated_at, deleted_at) VALUES
+-- 서울대 공과대학
+(1, '컴퓨터공학부', 1, NOW(), NOW(), NULL),
+(2, '전자정보공학부', 1, NOW(), NOW(), NULL),
+(3, '기계공학부', 1, NOW(), NOW(), NULL),
+-- 서울대 경영대학
+(4, '경영학과', 2, NOW(), NOW(), NULL),
+-- 서울대 인문대학
+(5, '국어국문학과', 3, NOW(), NOW(), NULL),
+(6, '영어영문학과', 3, NOW(), NOW(), NULL),
+-- 연세대 공과대학
+(7, '컴퓨터과학과', 4, NOW(), NOW(), NULL),
+(8, '전기전자공학과', 4, NOW(), NOW(), NULL),
+-- 연세대 경영대학
+(9, '경영학과', 5, NOW(), NOW(), NULL),
+-- 고려대 공과대학
+(10, '컴퓨터학과', 6, NOW(), NOW(), NULL),
+(11, '전기전자공학부', 6, NOW(), NOW(), NULL),
+-- 고려대 경영대학
+(12, '경영학과', 7, NOW(), NOW(), NULL),
+-- KAIST
+(13, '전산학과', 8, NOW(), NOW(), NULL),
+(14, '기계공학과', 9, NOW(), NOW(), NULL),
+(15, '전기및전자공학부', 9, NOW(), NOW(), NULL),
+-- MIT
+(16, 'Computer Science', 10, NOW(), NOW(), NULL),
+(17, 'Electrical Engineering', 10, NOW(), NOW(), NULL),
+(18, 'Management', 11, NOW(), NOW(), NULL),
+-- Stanford
+(19, 'Computer Science', 12, NOW(), NOW(), NULL),
+(20, 'Electrical Engineering', 12, NOW(), NOW(), NULL),
+(21, 'MBA', 13, NOW(), NOW(), NULL);
+
+-- nicknames 랜덤 값
+INSERT INTO nicknames (id, nickname, created_at, updated_at, deleted_at) VALUES
+(1, '푸른고래', NOW(), NOW(), NULL),
+(2, '은하여우', NOW(), NOW(), NULL),
+(3, '달빛수달', NOW(), NOW(), NULL),
+(4, '바람너구리', NOW(), NOW(), NULL),
+(5, '별빛너울', NOW(), NOW(), NULL),
+(6, '초코펭귄', NOW(), NOW(), NULL),
+(7, '해달곰', NOW(), NOW(), NULL),
+(8, '모래여우', NOW(), NOW(), NULL),
+(9, '바다냥이', NOW(), NOW(), NULL),
+(10, '산책두더지', NOW(), NOW(), NULL),
+(11, '라떼토끼', NOW(), NOW(), NULL),
+(12, '밤하늘참새', NOW(), NOW(), NULL),
+(13, '소금사막', NOW(), NOW(), NULL),
+(14, '버블돌고래', NOW(), NOW(), NULL),
+(15, '자몽여신', NOW(), NOW(), NULL),
+(16, '코딩도치', NOW(), NOW(), NULL),
+(17, '안개수리', NOW(), NOW(), NULL),
+(18, '별빵고양', NOW(), NOW(), NULL),
+(19, '무지개너울', NOW(), NOW(), NULL),
+(20, '보라문조', NOW(), NOW(), NULL);
+
+```

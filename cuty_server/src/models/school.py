@@ -14,6 +14,7 @@ class Country(db.Model, TimestampMixin):
     def __repr__(self):
         return f'<Country {self.name}>'
     
+    
 class School(db.Model, TimestampMixin):
     __tablename__ = 'schools'
     
