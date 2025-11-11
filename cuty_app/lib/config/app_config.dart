@@ -20,7 +20,7 @@ class AppConfig {
   }
 
   static String get platformHost {
-    const String macRealIP = '192.168.0.50'; // 맥의 실제 IP 주소 - 네트워크에 맞게 수정하세요
+    const String macRealIP = '172.30.1.3'; // 맥의 실제 IP 주소 - 네트워크에 맞게 수정하세요
     
     String host;
     
@@ -54,11 +54,7 @@ class AppConfig {
   }
 
   static String get developmentUrl {
-    if(_isSimulator) {
-      return 'http://172.30.1.3:' + _devPort + '/api/v1';
-    } else {
-      return 'http://' + platformHost + ':' + _devPort + '/api/v1';
-    }
+    return 'http://' + platformHost + ':' + _devPort + '/api/v1';
   }
 
   // static const String developmentUrl = 'http://10.0.2.2:5012/api/v1';
