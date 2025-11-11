@@ -21,7 +21,7 @@ class RequestService:
                 raise DuplicateRequestError("이미 동일한 요청이 존재합니다.")
 
         try:
-            new_req = Request(
+            new_req = Requests(
                 user_id = user.id,
                 req_type = req_type,
                 idempotency_key = idempotency_key,

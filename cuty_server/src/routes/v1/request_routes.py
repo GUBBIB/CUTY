@@ -7,7 +7,7 @@ from src.utils.exceptions import ValidationError, PermissionDeniedError, Duplica
 
 request_bp = Blueprint('request', __name__)
 
-@request_bp.route('/requests', methods=['POST'])
+@request_bp.route('/', methods=['POST'])
 @token_required
 def create_requests(current_user):
     """
@@ -15,13 +15,13 @@ def create_requests(current_user):
     
     :param user: 로그인된 사용자 객체
     :param req_type: 요청 타입(예: "PART_TIME" 등 [ 추후 추가 예정 ] )
-    :req_type: [ PENDING, REJECTED, APPROVED, CANCELED ]
+        :req_type: [ PENDING, REJECTED, APPROVED, CANCELED ]
     :param idempotency_key: 중복 요청 방지를 위한 키(선택)
     :return: dict 응답 데이터
     :raises ValidationError, DuplicateRequestError, InternalServiceError
     """
     data = request.get_json(silent=True) or {}
-    req_type = data.get('type')
+    req_type = data.get('req_type_str')
     
     if not req_type:
         raise ValidationError(message="type 은/는 필수 항목입니다.")
@@ -29,7 +29,7 @@ def create_requests(current_user):
     try:
         result = RequestService.create_request(
             user=current_user,
-            req_type=req_type,
+            req_type_str=req_type,
             idempotency_key=data.get('idempotencyKey'),
         )
         return jsonify(result), 201

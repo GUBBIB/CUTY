@@ -35,7 +35,6 @@ def show_user(current_user, user_id):
     # if current_user.register_type == UserType.SCHOOL and current_user.school_id != user.school_id:
     #     raise PermissionDeniedError(message="해당 학교 담당자만 접근할 수 있습니다.")
 
-
     documents = [{
         "id": d.id,
         "name": d.name,

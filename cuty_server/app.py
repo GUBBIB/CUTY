@@ -13,6 +13,7 @@ from src.config.env import (
     PORT
 )
 from src.config.database import DatabaseConfig
+from flask_cors import CORS
 
 
 def create_app(config_name='local'):
@@ -21,6 +22,16 @@ def create_app(config_name='local'):
     app.config['SECRET_KEY'] = SECRET_KEY
     app.config['DEBUG'] = DEBUG
     
+    CORS(app, resources={
+        r"/api/*": {
+            "orifins": ["http://localhost:5173", "http://127.0.0.1:5173", "https://cutyweb.duckdns.org"],
+            "methods": ["GET","POST","PUT","PATCH","DELETE"],
+            "allow_headers": ["Authorization","Content-Type"],
+            "supports_credentials": False,
+
+        }
+    })
+
     # 로깅 설정
     if DEBUG:
         app.logger.setLevel(logging.DEBUG)
