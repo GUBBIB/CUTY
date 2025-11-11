@@ -43,7 +43,7 @@ def create_requests(current_user):
     except InternalServiceError as e:
         return jsonify(e.to_dict()), 500
     
-@request_bp.route('/requests', methods=['GET'])
+@request_bp.route('/', methods=['GET'])
 @token_required
 @admin_or_school_required
 def list_requests(current_user):
