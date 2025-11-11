@@ -1,4 +1,4 @@
-package com.univ.cuty
+package com.univ.cutyv2
 
 import io.flutter.embedding.android.FlutterActivity
 
