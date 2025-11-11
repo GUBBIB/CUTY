@@ -241,3 +241,8 @@ flutter pub run build_runner build --delete-conflicting-outputs
 ## 라이선스
 
 이 프로젝트는 비공개 프로젝트입니다.
+
+
+## 로컬 설정
+- lib/config/app_config.dart 부분 수정
+  -  ``developmentUrl`` 쪽 주소 수정 필요

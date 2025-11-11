@@ -54,7 +54,11 @@ class AppConfig {
   }
 
   static String get developmentUrl {
-    return 'http://' + platformHost + ':' + _devPort + '/api/v1';
+    if(_isSimulator) {
+      return 'http://172.30.1.3:' + _devPort + '/api/v1';
+    } else {
+      return 'http://' + platformHost + ':' + _devPort + '/api/v1';
+    }
   }
 
   // static const String developmentUrl = 'http://10.0.2.2:5012/api/v1';
