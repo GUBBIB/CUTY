@@ -4,11 +4,11 @@ import axios from 'axios';
 
 const Header = () => {
     const [ping, setPing] = useState("");
-    
+
     useEffect(() => {
         const fetchTest = async () => {
             try {
-                const res = await axios.get(`/auth/ping`);
+                const res = await axios.get(`/api/v1/auth/ping`);
                 setPing(res.data);
             } catch (err) {
                 console.log(err);
