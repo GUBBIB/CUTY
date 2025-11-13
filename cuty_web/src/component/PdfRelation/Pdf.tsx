@@ -10,7 +10,7 @@ const Pdf = () => {
   useEffect(() => {
     const fetchPdfList = async () => {
       try {
-        const res = await axios.get(`${__API_BASE__}/requests/`);
+        const res = await axios.get(`/requests/`);
         // 예: [{ name: "file1.pdf" }, { name: "file2.pdf" }]
         setPdfList(res.data.map((item: any) => item.name));
       } catch (err: any) {
