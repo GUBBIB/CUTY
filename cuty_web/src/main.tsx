@@ -5,6 +5,8 @@ import App from './App'
 import Pdf from './component/PdfRelation/Pdf'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Privacy from './component/Privacy/Privacy'
+import Register from './component/Auth/Register'
+import Login from './component/Auth/Login'
 
 
 createRoot(document.getElementById('root')!).render(
@@ -15,6 +17,8 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/student-pdf" element={<Pdf />} />
 
         <Route path="/privacy-policy" element={<Privacy />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
