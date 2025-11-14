@@ -7,6 +7,7 @@ const Register = () => {
 
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
+  const [name, setName] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
@@ -14,13 +15,18 @@ const Register = () => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
-//['email', 'password', 'name', 'country_id']
-//['school_id', 'college_id', 'department_id']
+//['email', 'password', 'name', 'country_id' = 4]
+//['school_id' = 1, 'college_id' = 1, 'department_id' = 1]
 
     try {
       const res = await axios.post("/api/v1/auth/register", {
         email: email,
         password: pw,
+        name: name,
+        country_id: 4,
+        school_id: 1,
+        college_id: 1,
+        department_id: 1,
       });
 
       const token = res.data.access_token;
@@ -49,7 +55,12 @@ const Register = () => {
           value={pw}
           onChange={(e) => setPw(e.target.value)}
         />
-
+        <input
+          type="text"
+          placeholder="이름"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
         <button type="submit">회원가입</button>
 
         {error && <p style={{ color: "red" }}>{error}</p>}
