@@ -42,10 +42,10 @@ class RequestsService:
 
     @staticmethod
     def list_requests(user, page, per_page, status):
-        query = Requests.query.filter_by(user_id=user.id)
+        query = Requests.query.options(selectinload(Requests.user))
 
         if status is not None:
-            query = query.filter(Requests.status == status)
+            query = query.filter(Requests.status == ReqState(status))
 
         pagination = query.order_by(Requests.created_at.desc()).paginate(page=page, per_page=per_page, error_out=False)
 
@@ -53,7 +53,9 @@ class RequestsService:
             "requestsId" : req.id,
             "reqType" : req.req_type.value if hasattr(req.req_type, "value") else req.req_type,
             "status" : req.status.value if hasattr(req.status, "value") else req.status,
-            "createdAt" : req.created_at.isoformat()
+            "createdAt" : req.created_at.isoformat(),
+            "userId" : req.user_id,
+            "userName" : req.user.name,
         } for req in pagination.items]
 
         return {
