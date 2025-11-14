@@ -9,7 +9,7 @@ from .nickname import Nickname
 from .enums import UserType, DocumentType
 from .image_store import ImageStore
 from .document import Document
-from .request import Requests
+from .requests import Requests
 
 __all__ = [
     'db',
