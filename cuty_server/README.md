@@ -844,3 +844,8 @@ adb reverse tcp:8000 tcp:8000
 # PowerShell 기준
 .venv\Scripts\activate
 ```
+
+- powershell 안될 때
+```bash
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+```

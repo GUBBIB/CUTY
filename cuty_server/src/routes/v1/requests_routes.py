@@ -1,4 +1,4 @@
-from flask import Blueprint, requests, jsonify
+from flask import Blueprint, request, jsonify
 from src.services.requests_service import RequestsService
 from src.utils.formatters import get_current_user_data
 from src.utils.auth import token_required, admin_or_school_required
@@ -20,7 +20,7 @@ def create_requests(current_user):
     :return: dict 응답 데이터
     :raises ValidationError, DuplicateRequestsError, InternalServiceError
     """
-    data = requests.get_json(silent=True) or {}
+    data = request.get_json(silent=True) or {}
     req_type = data.get('req_type_str')
     
     if not req_type:
@@ -55,9 +55,9 @@ def list_requests(current_user):
     :param status: 요청 상태 필터 (None이면 전체)
     :return: dict 형태로 { items: [...], total:…, page:…, per_page:… }
     """
-    page = requests.args.get('page', 1, type=int)
-    per_page = requests.args.get('per_page', 10, type=int)
-    status = requests.args.get('status', None)
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 10, type=int)
+    status = request.args.get('status', None)
 
     result = RequestsService.list_requests(
         user=current_user,
