@@ -7,7 +7,7 @@ from src.routes.v1.user_routes import user_bp
 from src.routes.v1.like_routes import like_bp
 from src.routes.v1.document_routes import document_bp
 from src.routes.v1.image_routes import images_bp
-from src.routes.v1.request_routes import request_bp
+from src.routes.v1.requests_routes import requests_bp
 from src.routes.v1.management_routes import management_bp
 
 def init_routes(app):
@@ -40,7 +40,7 @@ def init_routes(app):
     app.register_blueprint(images_bp, url_prefix='/api/v1/images')
 
     # 신청 관련 라우트
-    app.register_blueprint(request_bp, url_prefix='/api/v1/requests')
+    app.register_blueprint(requests_bp, url_prefix='/api/v1/requests')
 
     # ADMIN, SCHOOL의 관리 관련 라우트
     app.register_blueprint(management_bp, url_prefix='/api/v1/managements')

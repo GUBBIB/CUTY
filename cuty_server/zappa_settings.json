@@ -11,6 +11,6 @@
       "DEBUG": "False"
     },
     "keep_warm": true,
-    "slim_handler": true
+    "slim_handler": false
   }
 }

@@ -2,9 +2,9 @@ from src.models import db, Requests
 from src.models.enums import ReqType, ReqState
 from src.utils.exceptions import ValidationError, DuplicateRequestError, InternalServiceError
 
-class RequestService:
+class RequestsService:
     @staticmethod
-    def create_request(user, req_type_str, idempotency_key=None):
+    def create_requests(user, req_type_str, idempotency_key=None):
 
         if not req_type_str:
             raise ValidationError("요청 타입은 필수 항목입니다.")
@@ -15,7 +15,7 @@ class RequestService:
             raise ValidationError(f"허용되지 않은 요청 타입니다: {req_type_str}")
 
         if idempotency_key:
-            existing = Request.query.filter_by(user_id=user.id, idempotency_key=idempotency_key).first()
+            existing = Requests.query.filter_by(user_id=user.id, idempotency_key=idempotency_key).first()
 
             if existing:
                 raise DuplicateRequestError("이미 동일한 요청이 존재합니다.")
@@ -34,7 +34,7 @@ class RequestService:
             raise InternalServiceError(details={"original_exception": str(e)})
 
         return {
-            "requestId": new_req.id,
+            "requestsId": new_req.id,
             "reqType": new_req.req_type.value,
             "status": new_req.status.value if hasattr(new_req.status, "value") else new_req.status,
             "createdAt": new_req.created_at.isoformat()
@@ -42,15 +42,15 @@ class RequestService:
 
     @staticmethod
     def list_requests(user, page, per_page, status):
-        query = Request.query.filter_by(user_id=user.id)
+        query = Requests.query.filter_by(user_id=user.id)
 
         if status is not None:
-            query = query.filter(Request.status == status)
+            query = query.filter(Requests.status == status)
 
-        pagination = query.order_by(Request.created_at.desc()).paginate(page=page, per_page=per_page, error_out=False)
+        pagination = query.order_by(Requests.created_at.desc()).paginate(page=page, per_page=per_page, error_out=False)
 
         items = [{
-            "requestId" : req.id,
+            "requestsId" : req.id,
             "reqType" : req.req_type.value if hasattr(req.req_type, "value") else req.req_type,
             "status" : req.status.value if hasattr(req.status, "value") else req.status,
             "createdAt" : req.created_at.isoformat()

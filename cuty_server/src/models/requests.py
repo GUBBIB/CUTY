@@ -14,4 +14,4 @@ class Requests(db.Model, TimestampMixin):
     user = db.relationship('User', backref='requests', lazy=True)
 
     def __repr__(self):
-        return f'<Request {self.req_type} by user {self.user_id} status {self.status}>'
+        return f'<Requests {self.req_type} by user {self.user_id} status {self.status}>'
