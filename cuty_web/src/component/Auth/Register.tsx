@@ -15,7 +15,7 @@ const Register = () => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
-//['email', 'password', 'name', 'country_id' = 4]
+//['email', 'password', 'name', 'country_id' = 1]
 //['school_id' = 1, 'college_id' = 1, 'department_id' = 1]
 
     try {
@@ -23,7 +23,7 @@ const Register = () => {
         email: email,
         password: pw,
         name: name,
-        country_id: 4,
+        country_id: 1,
         school_id: 1,
         college_id: 1,
         department_id: 1,
