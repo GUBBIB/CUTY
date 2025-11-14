@@ -1,9 +1,21 @@
 import { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import "Requests.css";
+
+
+interface RequestItem {
+  requestsId: number;
+  reqType: string;
+  status: string;
+  createdAt: string;
+  userId: number;
+  userName: string;
+}
 
 const Pdf = () => {
-  const [pdfList, setPdfList] = useState<string[]>([]);
+  const [reqList, setReqList] = useState<RequestItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -14,12 +26,21 @@ const Pdf = () => {
 
         const res = await axios.get(`/api/v1/requests/`, {
           headers: token ?
-            { Authorization: `Bearer ${token}`}
+            { Authorization: `Bearer ${token}` }
             : undefined,
         });
 
-        // 예: [{ name: "file1.pdf" }, { name: "file2.pdf" }]
-        setPdfList(res.data.map((item: any) => item.name));
+        /*
+          items = [{
+            "requestsId" : req.id,
+            "reqType" : req.req_type.value if hasattr(req.req_type, "value") else req.req_type,
+            "status" : req.status.value if hasattr(req.status, "value") else req.status,
+            "createdAt" : req.created_at.isoformat(),
+            "userId" : req.user_id,
+            "userName" : req.user.name,
+          } for req in pagination.items]
+        */
+        setReqList(res.data.items);
       } catch (err: any) {
         if (axios.isAxiosError(err)) {
           const data = err.response?.data;
@@ -48,28 +69,34 @@ const Pdf = () => {
     fetchPdfList();
   }, []);
 
-    
+
   return (
-    <div id="PDF">
+    <div id="Requests">
       <div className="Header">
         <Header />
       </div>
 
       <div style={{ padding: "20px" }}>
-        <h2>📄 PDF 목록</h2>
+        <h2>📄 신청 목록</h2>
 
         {loading && <p>불러오는 중...</p>}
         {error && <p className="err">오류: {error}</p>}
 
-        {!loading && !error && pdfList.length === 0 && (
-          <p>PDF가 없습니다.</p>
+        {!loading && !error && reqList.length === 0 && (
+          <p>신청자가 없습니다.</p>
         )}
 
-        <ul>
-          {pdfList.map((name, idx) => (
-            <li key={idx}>{name}</li>
-          ))}
-        </ul>
+        {!loading && !error && reqList.length > 0 && (
+          <ul>
+            {reqList.map((req) => (
+              <li key={req.requestsId}>
+                <Link to={`/user-info/${req.userId}`}>
+                  {req.userName}님의 신청서 보기
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
