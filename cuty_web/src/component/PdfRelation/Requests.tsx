@@ -8,15 +8,15 @@ interface RequestItem {
   requestsId: number;
   reqType: string;
   status: string;
-  createdAt: string;
+  createdAt: string | null;
   userId: number;
-  userName: string;
+  userName: string | null;
 }
 
 const Requests = () => {
   const [reqList, setReqList] = useState<RequestItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchReqList = async () => {
@@ -31,60 +31,19 @@ const Requests = () => {
 
         console.log("GET /api/v1/requests response:", res.data);
 
-        // 방어적으로 items 파싱
-        const rawItems: any[] = Array.isArray(res.data?.items)
-          ? res.data.items
-          : [];
-
-        const mapped: RequestItem[] = rawItems.map((item) => ({
-          requestsId: Number(item.requestsId),
-          reqType: String(item.reqType ?? ""),
-          status: String(item.status ?? ""),
-          createdAt: String(item.createdAt ?? ""),
-          userId: Number(item.userId),
-          // userName이 객체여도 문자열로 강제
-          userName:
-            typeof item.userName === "string"
-              ? item.userName
-              : String(item.userName?.message ?? "이름 없음"),
-        }));
-
-        setReqList(mapped);
-        setError(null);
+        const items = Array.isArray(res.data?.items) ? res.data.items : [];
+        setReqList(items);
+        setError("");
       } catch (err: any) {
         console.error("GET /api/v1/requests error:", err);
 
-        if (axios.isAxiosError(err)) {
-          const data = err.response?.data;
-
-          let msg: unknown = "신청 목록 불러오기 실패";
-
-          if (data) {
-            if (typeof data === "string") {
-              msg = data;
-            } else if (typeof data === "object") {
-              if ("error" in data) {
-                // { error: "토큰이 필요합니다" }
-                msg = (data as any).error ?? msg;
-              } else if ("message" in data) {
-                // { message: "..." }
-                msg = (data as any).message ?? msg;
-              }
-            }
-          } else if (err.message) {
-            msg = err.message;
-          }
-
-          setError(String(msg)); 
-        } else {
-          setError("알 수 없는 오류가 발생했습니다.");
-        }
+        setError("알 수 없는 오류가 발생했습니다.");
       } finally {
         setLoading(false);
-      }
-    };
+      };
 
-    fetchReqList();
+      fetchReqList();
+    }
   }, []);
 
   const hasData = !loading && !error && reqList.length > 0;
@@ -106,10 +65,10 @@ const Requests = () => {
 
         {hasData && (
           <ul>
-            {reqList.map((req) => (
-              <li key={req.requestsId}>
+            {reqList.map((req, idx) => (
+              <li key={req.requestsId ?? idx}>
                 <Link to={`/user-info/${req.userId}`}>
-                  {req.userName}님의 신청서 보기
+                  {(req.userName ?? "이름 없음")}님의 신청서 보기
                 </Link>
               </li>
             ))}
