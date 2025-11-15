@@ -100,8 +100,6 @@ const Requests = () => {
 
         {loading && <p>불러오는 중...</p>}
 
-        {error && <p className="err">오류: {error}</p>}
-
         {!loading && !error && reqList.length === 0 && (
           <p>신청자가 없습니다.</p>
         )}
