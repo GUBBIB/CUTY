@@ -63,3 +63,26 @@ def generate_presigned_post(key, content_type, max_file_size=MAX_FILE_SIZE, expi
     logger.info(f"=== S3 Presigned Post 생성 완료 ===")
     
     return presigned_post 
+
+def generate_presigned_get(key, expires_in=600, bucket_name=AWS_S3_BUCKET):
+    logger.info(f"=== S3 Presigned GET 생성 시작 ===")
+    logger.info(f"Key: {key}")
+    logger.info(f"Bucket: {bucket_name}")
+    logger.info(f"Region: {AWS_REGION}")
+    
+    s3_client = get_s3_client()
+    try:
+        presigned_url = s3_client.generate_presigned_url(
+            ClientMethod="get_object",
+            Params={
+                'Bucket': bucket_name,
+                'Key': key
+            },
+            ExpiresIn=expires_in
+        )
+        logger.info(f"Presigned GET URL 생성 성공: {presigned_url}")
+        return presigned_url
+
+    except Exception as e:
+        logger.error(f"Presigned GET URL 생성 실패: {str(e)}")
+        return None

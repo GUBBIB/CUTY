@@ -5,6 +5,7 @@ from src.utils.exceptions import (
     ValidationError,
     PermissionDeniedError,
 )
+from src.services.s3_service import generate_presigned_get
 
 class ManagementService:
 
@@ -48,7 +49,7 @@ class ManagementService:
                 "type": d.document_type.value,
                 "image": {
                     "id": d.image_store_id,
-                    # TODO: 이미지 URL 등 추가 가능
+                    "url": generate_presigned_get(d.image_store.relative_path) if d.image_store else None, # url 보안 추가
                 },
                 "created_at": d.created_at.isoformat(),
             }
