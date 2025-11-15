@@ -31,6 +31,7 @@ interface UserResponse {
         type: string;
         image: {
             id: number | null;
+            url: string | undefined;
         };
         created_at: string;
     }[];
@@ -99,8 +100,15 @@ const UserInfo = () => {
                         <ul>
                             {user.documents.map(doc => (
                                 <li key={doc.id}>
+                                <a 
+                                    href={doc.image.url} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    download
+                                >
                                     {doc.name} ({doc.type})
-                                </li>
+                                </a>
+                            </li>
                             ))}
                         </ul>
                     </div>
