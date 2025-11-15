@@ -4,7 +4,6 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "./Requests.css";
 
-
 interface RequestItem {
   requestsId: number;
   reqType: string;
@@ -14,51 +13,69 @@ interface RequestItem {
   userName: string;
 }
 
-const Pdf = () => {
+const Requests = () => {
   const [reqList, setReqList] = useState<RequestItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchPdfList = async () => {
+    const fetchReqList = async () => {
       try {
         const token = localStorage.getItem("accessToken");
 
         const res = await axios.get(`/api/v1/requests/`, {
-          headers: token ?
-            { Authorization: `Bearer ${token}` }
+          headers: token
+            ? { Authorization: `Bearer ${token}` }
             : undefined,
         });
 
-        /*
-          items = [{
-            "requestsId" : req.id,
-            "reqType" : req.req_type.value if hasattr(req.req_type, "value") else req.req_type,
-            "status" : req.status.value if hasattr(req.status, "value") else req.status,
-            "createdAt" : req.created_at.isoformat(),
-            "userId" : req.user_id,
-            "userName" : req.user.name,
-          } for req in pagination.items]
-        */
-        setReqList(res.data.items);
+        console.log("GET /api/v1/requests response:", res.data);
+
+        // 방어적으로 items 파싱
+        const rawItems: any[] = Array.isArray(res.data?.items)
+          ? res.data.items
+          : [];
+
+        const mapped: RequestItem[] = rawItems.map((item) => ({
+          requestsId: Number(item.requestsId),
+          reqType: String(item.reqType ?? ""),
+          status: String(item.status ?? ""),
+          createdAt: String(item.createdAt ?? ""),
+          userId: Number(item.userId),
+          // userName이 객체여도 문자열로 강제
+          userName:
+            typeof item.userName === "string"
+              ? item.userName
+              : String(item.userName?.message ?? "이름 없음"),
+        }));
+
+        setReqList(mapped);
+        setError(null);
       } catch (err: any) {
+        console.error("GET /api/v1/requests error:", err);
+
         if (axios.isAxiosError(err)) {
           const data = err.response?.data;
 
-          let msg = "PDF 목록 불러오기 실패";
+          let msg: unknown = "신청 목록 불러오기 실패";
 
           if (data) {
             if (typeof data === "string") {
               msg = data;
-            } else if (typeof data === "object" && "error" in data) {
-              // { error: "토큰이 필요합니다" } 같은 형태
-              msg = (data as any).error ?? msg;
+            } else if (typeof data === "object") {
+              if ("error" in data) {
+                // { error: "토큰이 필요합니다" }
+                msg = (data as any).error ?? msg;
+              } else if ("message" in data) {
+                // { message: "..." }
+                msg = (data as any).message ?? msg;
+              }
             }
           } else if (err.message) {
             msg = err.message;
           }
 
-          setError(msg);
+          setError(String(msg)); 
         } else {
           setError("알 수 없는 오류가 발생했습니다.");
         }
@@ -66,9 +83,11 @@ const Pdf = () => {
         setLoading(false);
       }
     };
-    fetchPdfList();
+
+    fetchReqList();
   }, []);
 
+  const hasData = !loading && !error && reqList.length > 0;
 
   return (
     <div id="Requests">
@@ -80,13 +99,14 @@ const Pdf = () => {
         <h2>📄 신청 목록</h2>
 
         {loading && <p>불러오는 중...</p>}
+
         {error && <p className="err">오류: {error}</p>}
 
         {!loading && !error && reqList.length === 0 && (
           <p>신청자가 없습니다.</p>
         )}
 
-        {!loading && !error && reqList.length > 0 && (
+        {hasData && (
           <ul>
             {reqList.map((req) => (
               <li key={req.requestsId}>
@@ -102,4 +122,4 @@ const Pdf = () => {
   );
 };
 
-export default Pdf;
+export default Requests;
