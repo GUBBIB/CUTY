@@ -1,5 +1,6 @@
 from src.models import db, Requests
 from src.models.enums import ReqType, ReqState
+from sqlalchemy.orm import selectinload
 from src.utils.exceptions import ValidationError, DuplicateRequestError, InternalServiceError
 
 class RequestsService:
@@ -42,21 +43,78 @@ class RequestsService:
 
     @staticmethod
     def list_requests(user, page, per_page, status):
-        query = Requests.query.options(selectinload(Requests.user))
 
-        if status is not None:
-            query = query.filter(Requests.status == ReqState(status))
+        if page <= 0:
+            raise ValidationError(
+                message="page 값은 1 이상의 정수여야 합니다.",
+                details={"page": page}
+            )
 
-        pagination = query.order_by(Requests.created_at.desc()).paginate(page=page, per_page=per_page, error_out=False)
+        if per_page <= 0:
+            raise ValidationError(
+                message="per_page 값은 1 이상의 정수여야 합니다.",
+                details={"per_page": per_page}
+            )
 
-        items = [{
-            "requestsId" : req.id,
-            "reqType" : req.req_type.value if hasattr(req.req_type, "value") else req.req_type,
-            "status" : req.status.value if hasattr(req.status, "value") else req.status,
-            "createdAt" : req.created_at.isoformat(),
-            "userId" : req.user_id,
-            "userName" : req.user.name,
-        } for req in pagination.items]
+        try:
+            query = Requests.query.options(selectinload(Requests.user))
+        except Exception as e:
+            raise InternalServiceError(
+                message="요청 목록 조회 중 쿼리 초기화 오류가 발생했습니다.",
+                details={"error": str(e)}
+            )
+
+        if status:
+            try:
+                status_enum = ReqState(status)
+            except ValueError:
+                raise ValidationError(
+                    message=f"유효하지 않은 요청 상태입니다: {status}",
+                    details={"allowed": [s.value for s in ReqState]}
+                )
+            except Exception as e:
+                raise InternalServiceError(
+                    message="상태 값 처리 중 내부 오류가 발생했습니다.",
+                    details={"error": str(e)}
+                )
+
+            query = query.filter(Requests.status == status_enum)
+
+        try:
+            pagination = query.order_by(
+                Requests.created_at.desc()
+            ).paginate(page=page, per_page=per_page, error_out=False)
+
+        except SQLAlchemyError as e:
+            raise InternalServiceError(
+                message="요청 목록 조회 중 DB 오류가 발생했습니다.",
+                details={"sqlalchemy_error": str(e)}
+            )
+
+        except Exception as e:
+            raise InternalServiceError(
+                message="요청 목록 페이징 처리 중 내부 오류가 발생했습니다.",
+                details={"error": str(e)}
+            )
+
+        items = []
+
+        try:
+            for req in pagination.items:
+                items.append({
+                    "requestsId": req.id,
+                    "reqType": req.req_type.value if hasattr(req.req_type, "value") else req.req_type,
+                    "status": req.status.value if hasattr(req.status, "value") else req.status,
+                    "createdAt": req.created_at.isoformat() if req.created_at else None,
+                    "userId": req.user_id,
+                    "userName": req.user.name if req.user else None,
+                })
+
+        except Exception as e:
+            raise InternalServiceError(
+                message="요청 항목 변환 중 오류가 발생했습니다.",
+                details={"error": str(e)}
+            )
 
         return {
             "items": items,

@@ -1,8 +1,8 @@
-"""Migration
+"""initial schema
 
-Revision ID: f19bfa48440a
-Revises: 3ef588c0ead8
-Create Date: 2025-11-11 00:08:15.521084
+Revision ID: fc324c73477e
+Revises: 
+Create Date: 2025-11-15 16:07:09.677256
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f19bfa48440a'
-down_revision = '3ef588c0ead8'
+revision = 'fc324c73477e'
+down_revision = None
 branch_labels = None
 depends_on = None
 
@@ -94,7 +94,7 @@ def upgrade():
     sa.Column('school_id', sa.Integer(), nullable=False),
     sa.Column('college_id', sa.Integer(), nullable=False),
     sa.Column('department_id', sa.Integer(), nullable=False),
-    sa.Column('register_type', sa.Enum('USER', 'ADMIN', name='usertype'), nullable=False),
+    sa.Column('register_type', sa.Enum('USER', 'ADMIN', 'SCHOOL', name='usertype'), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.Column('deleted_at', sa.DateTime(), nullable=True),

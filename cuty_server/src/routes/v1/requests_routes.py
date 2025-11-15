@@ -59,11 +59,24 @@ def list_requests(current_user):
     per_page = request.args.get('per_page', 10, type=int)
     status = request.args.get('status', None)
 
-    result = RequestsService.list_requests(
-        user=current_user,
-        page=page,
-        per_page=per_page,
-        status=status
-    )
+    if not status:
+        status = None
 
-    return jsonify(result), 200
+    try :
+        result = RequestsService.list_requests(
+            user=current_user,
+            page=page,
+            per_page=per_page,
+            status=status
+        )
+
+        return jsonify(result), 200
+
+    except ValidationError as e:
+        return jsonify(e.to_dict()), 400
+    except PermissionDeniedError as e:
+        return jsonify(e.to_dict()), 403
+    except DuplicateRequestError as e:
+        return jsonify(e.to_dict()), 409
+    except InternalServiceError as e:
+        return jsonify(e.to_dict()), 500
