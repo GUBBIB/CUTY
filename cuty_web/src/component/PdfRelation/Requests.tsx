@@ -41,9 +41,9 @@ const Requests = () => {
       } finally {
         setLoading(false);
       };
-
-      fetchReqList();
     }
+    
+    fetchReqList();
   }, []);
 
   const hasData = !loading && !error && reqList.length > 0;

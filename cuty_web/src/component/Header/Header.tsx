@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+interface PingResponse{
+    message: string;
+}
 
 const Header = () => {
-    const [ping, setPing] = useState("");
+    const [ping, setPing] = useState<PingResponse | null>(null);
 
     useEffect(() => {
         const fetchTest = async () => {
@@ -20,7 +23,7 @@ const Header = () => {
     return(
         <div id="Header">
             header test header
-            <span className='testPing'>{ping}</span>
+            <span className='testPing'>{ping?.message}</span>
         </div>
     );
 }
