@@ -15,6 +15,13 @@ export default defineConfig(() => {
       host: 'localhost',
       port: 5173,
       open: true,
+      proxy: {
+        '/api' : {
+          target: "https://zm3czse9yf.execute-api.ap-northeast-2.amazonaws.com/prod",
+          changeOrigin: true,
+          secure: true,
+        }
+      }
     }
 
   }
