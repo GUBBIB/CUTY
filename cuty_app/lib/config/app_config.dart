@@ -8,7 +8,7 @@ class AppConfig {
 
   // 수동 설정: 시뮬레이터/에뮬레이터 여부를 직접 지정
   // 실제 기기에서 테스트할 때는 이 값을 true로 변경하세요
-  static const bool _forceUseRealDevice = false;
+  static const bool _forceUseRealDevice = true;
   
   // 시뮬레이터/에뮬레이터 감지 (단순화된 버전)
   static bool get _isSimulator {

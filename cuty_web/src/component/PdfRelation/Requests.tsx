@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "Requests.css";
+import "./Requests.css";
 
 
 interface RequestItem {
