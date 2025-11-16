@@ -54,15 +54,15 @@ const UserInfo = () => {
         try {
             const token = localStorage.getItem("accessToken");
 
-            const res = await axios.get(`/api/v1/managements/${userId}`, {
+            const res = await axios.get(`/api/v1/managements/user/${userId}`, {
                 headers: token ? { Authorization: `bearer ${token}` } : undefined,
             });
 
-            console.log("GET /api/v1/managements/:id response:", res.data);
+            console.log("GET /api/v1/managements/user/:id response:", res.data);
             setUser(res.data);
             setError("");
         } catch (err) {
-            console.error("GET /api/v1/users/:id error:", err);
+            console.error("GET /api/v1/managements/user/:id error:", err);
             setError("유저 정보를 불러오지 못했습니다.");
         } finally {
             setLoading(false);

@@ -3,6 +3,7 @@ import Header from "../Header/Header";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./Requests.css";
+import Select from "./SelectSection/Select";
 
 interface RequestItem {
   requestsId: number;
@@ -18,33 +19,35 @@ const Requests = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const fetchReqList = async () => {
+    try {
+      const token = localStorage.getItem("accessToken");
+
+      const res = await axios.get(`/api/v1/requests/`, {
+        headers: token
+          ? { Authorization: `Bearer ${token}` }
+          : undefined,
+      });
+
+      console.log("GET /api/v1/requests response:", res.data);
+
+      const items = Array.isArray(res.data?.items) ? res.data.items : [];
+      setReqList(items);
+      setError("");
+    } catch (err: any) {
+      console.error("GET /api/v1/requests error:", err);
+
+      setError("알 수 없는 오류가 발생했습니다.");
+    } finally {
+      setLoading(false);
+    };
+  }
+
   useEffect(() => {
-    const fetchReqList = async () => {
-      try {
-        const token = localStorage.getItem("accessToken");
-
-        const res = await axios.get(`/api/v1/requests/`, {
-          headers: token
-            ? { Authorization: `Bearer ${token}` }
-            : undefined,
-        });
-
-        console.log("GET /api/v1/requests response:", res.data);
-
-        const items = Array.isArray(res.data?.items) ? res.data.items : [];
-        setReqList(items);
-        setError("");
-      } catch (err: any) {
-        console.error("GET /api/v1/requests error:", err);
-
-        setError("알 수 없는 오류가 발생했습니다.");
-      } finally {
-        setLoading(false);
-      };
-    }
-    
     fetchReqList();
   }, []);
+
+
 
   const hasData = !loading && !error && reqList.length > 0;
 
@@ -74,6 +77,10 @@ const Requests = () => {
             ))}
           </ul>
         )}
+      </div>
+
+      <div className="select-section">
+        <Select />
       </div>
     </div>
   );
