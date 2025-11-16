@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from src.services.user_service import UserService
 from src.utils.auth import token_required, admin_or_school_required
 from src.utils.formatters import get_current_user_data
+from src.utils.exceptions import ValidationError, PermissionDeniedError, DuplicateRequestError, InternalServiceError, ServiceError
 
 user_bp = Blueprint('user', __name__)
 
@@ -79,8 +80,34 @@ def get_my_comments(current_user):
         return jsonify({'error': str(e)}), 500
 
 
-# @user_bp.route('/managemet/<int:user_id>')
-# @token_required
-# @admin_or_school_required
-# def get_user_documents(current_user):
+@user_bp.route('/select', methods=['GET'])
+@token_required
+@admin_or_school_required
+def get_select_user(current_user):
+    user_email = request.args.get('user_email', type=str)
+    if user_email is None:
+        err = ValidationError(
+            message="user_email 쿼리 파라미터가 필요합니다.",
+            code="BAD_REQUEST",
+            details={"param": " user_email"},
+        )
+        return jsonify(err.to_dict()), 400
 
+    try:
+        payload = UserService.selectUser(current_user, user_email)
+        return jsonify(payload), 200
+    
+    except ValidationError as e:
+        status_code = 404 if e.code == "NOT_FOUND" else 400
+        return jsonify(e.to_dict()), status_code
+    except PermissionDeniedError as e:
+        return jsonify(e.to_dict()), 403
+    except ServiceError as e:
+        return jsonify(e.to_dict()), 400
+    except Exception as e:
+        print(f"get_select_user 예상치 못한 오류 발생")
+        err = InternalServiceError(
+            message="서버 내부 오류가 발생했습니다.",
+            details={"error": str(e)},
+        )
+        return jsonify(err.to_dict()), 500
