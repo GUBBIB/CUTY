@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from typing import List, Tuple, Optional
 import boto3
 import uuid
-import logging
+# import logging
 from src.models.base import db
 
 from src.config.env import (
@@ -27,7 +27,7 @@ for var_name, var_value in required_env_vars.items():
         print(f"Missing required environment variable: {var_name}")
 
 # 로거 설정
-logger = logging.getLogger(__name__)
+# logger = logging.getLogger(__name__)
 
 # S3 클라이언트 설정
 s3_client = boto3.client(
@@ -42,10 +42,10 @@ class ImageService:
     def get_presigned_url(content_type: str, original_filename: str, file_size: int) -> Tuple[Optional[dict], Optional[str]]:
         """프리사인드 URL 생성 서비스 및 이미지 데이터 저장"""
         
-        logger.info(f"=== 이미지 Presigned URL 요청 시작 ===")
-        logger.info(f"Content-Type: {content_type}")
-        logger.info(f"Original Filename: {original_filename}")
-        logger.info(f"File Size: {file_size} bytes")
+        print(f"=== 이미지 Presigned URL 요청 시작 ===")
+        print(f"Content-Type: {content_type}")
+        print(f"Original Filename: {original_filename}")
+        print(f"File Size: {file_size} bytes")
 
         try:
             # 필수 환경 변수 검증
@@ -70,8 +70,8 @@ class ImageService:
             key = f"images/{file_name}"
             bucket_name = AWS_S3_BUCKET
             
-            logger.info(f"생성된 파일 키: {key}")
-            logger.info(f"사용할 버킷: {bucket_name}")
+            print(f"생성된 파일 키: {key}")
+            print(f"사용할 버킷: {bucket_name}")
             
             # S3 presigned URL 생성 시 조건 추가
             conditions = [

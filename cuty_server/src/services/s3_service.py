@@ -1,12 +1,12 @@
 import boto3
-import logging
+# import logging
 from src.config.env import (
     AWS_REGION, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY,
     AWS_S3_BUCKET, MAX_FILE_SIZE
 )
 
 # 로거 설정
-logger = logging.getLogger(__name__)
+# logger = logging.getLogger(__name__)
 
 # S3 클라이언트 반환 함수
 def get_s3_client():
@@ -19,11 +19,11 @@ def get_s3_client():
 
 # presigned post 발급 함수
 def generate_presigned_post(key, content_type, max_file_size=MAX_FILE_SIZE, expires_in=600, bucket_name=AWS_S3_BUCKET):
-    logger.info(f"=== S3 Presigned Post 생성 시작 ===")
-    logger.info(f"Key: {key}")
-    logger.info(f"Content-Type: {content_type}")
-    logger.info(f"Bucket: {bucket_name}")
-    logger.info(f"Region: {AWS_REGION}")
+    print(f"=== S3 Presigned Post 생성 시작 ===")
+    print(f"Key: {key}")
+    print(f"Content-Type: {content_type}")
+    print(f"Bucket: {bucket_name}")
+    print(f"Region: {AWS_REGION}")
     
     s3_client = get_s3_client()
     conditions = [
@@ -31,7 +31,7 @@ def generate_presigned_post(key, content_type, max_file_size=MAX_FILE_SIZE, expi
         ["content-length-range", 0, max_file_size]
     ]
     
-    logger.info(f"S3 클라이언트로 presigned post 생성 중...")
+    print(f"S3 클라이언트로 presigned post 생성 중...")
     presigned_post = s3_client.generate_presigned_post(
         Bucket=bucket_name,
         Key=key,
@@ -42,7 +42,7 @@ def generate_presigned_post(key, content_type, max_file_size=MAX_FILE_SIZE, expi
         ExpiresIn=expires_in
     )
     
-    logger.info(f"원본 presigned post URL: {presigned_post.get('url', 'URL 없음')}")
+    print(f"원본 presigned post URL: {presigned_post.get('url', 'URL 없음')}")
     
     # 지역별 엔드포인트로 URL 수정
     if 'url' in presigned_post:
@@ -55,20 +55,20 @@ def generate_presigned_post(key, content_type, max_file_size=MAX_FILE_SIZE, expi
                 f'.s3.{AWS_REGION}.amazonaws.com'
             )
             presigned_post['url'] = new_url
-            logger.info(f"URL을 지역별 엔드포인트로 변경: {original_url} -> {new_url}")
+            print(f"URL을 지역별 엔드포인트로 변경: {original_url} -> {new_url}")
         else:
-            logger.info(f"URL 변경 불필요 (이미 지역별 엔드포인트이거나 us-east-1)")
+            print(f"URL 변경 불필요 (이미 지역별 엔드포인트이거나 us-east-1)")
     
-    logger.info(f"최종 presigned post URL: {presigned_post.get('url', 'URL 없음')}")
-    logger.info(f"=== S3 Presigned Post 생성 완료 ===")
+    print(f"최종 presigned post URL: {presigned_post.get('url', 'URL 없음')}")
+    print(f"=== S3 Presigned Post 생성 완료 ===")
     
     return presigned_post 
 
 def generate_presigned_get(key, expires_in=600, bucket_name=AWS_S3_BUCKET):
-    logger.info(f"=== S3 Presigned GET 생성 시작 ===")
-    logger.info(f"Key: {key}")
-    logger.info(f"Bucket: {bucket_name}")
-    logger.info(f"Region: {AWS_REGION}")
+    print(f"=== S3 Presigned GET 생성 시작 ===")
+    print(f"Key: {key}")
+    print(f"Bucket: {bucket_name}")
+    print(f"Region: {AWS_REGION}")
     
     s3_client = get_s3_client()
     try:
@@ -80,9 +80,9 @@ def generate_presigned_get(key, expires_in=600, bucket_name=AWS_S3_BUCKET):
             },
             ExpiresIn=expires_in
         )
-        logger.info(f"Presigned GET URL 생성 성공: {presigned_url}")
+        print(f"Presigned GET URL 생성 성공: {presigned_url}")
         return presigned_url
 
     except Exception as e:
-        logger.error(f"Presigned GET URL 생성 실패: {str(e)}")
+        print(f"Presigned GET URL 생성 실패: {str(e)}")
         return None
