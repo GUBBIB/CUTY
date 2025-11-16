@@ -7,7 +7,7 @@ from sqlalchemy.orm import joinedload, selectinload
 
 management_bp = Blueprint('management', __name__)
 
-@management_bp.route('/<int:user_id>', methods=['GET'])
+@management_bp.route('/user/<int:user_id>', methods=['GET'])
 @token_required
 @admin_or_school_required
 def show_user(current_user, user_id):
