@@ -20,3 +20,8 @@
 - 전달 방식: Authorization 헤더 (Bearer 토큰)
 - 토큰 저장 위치: localStorage
 - 세션 관리: 서버 비저장(stateless)
+
+---
+
+### 국가 이름 데이터 
+- [한국국제협력단_KOICA 국가코드 테이블](https://www.data.go.kr/data/15051105/fileData.do#tab-layer-file)
