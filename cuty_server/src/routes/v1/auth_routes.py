@@ -19,7 +19,8 @@ def register():
         
         return jsonify({
             "access_token": access_token,
-            "token_type": "bearer"
+            "token_type": "bearer",
+            "user_type": user.register_type
         }), 201
         
     except ValueError as e:
@@ -43,7 +44,8 @@ def login():
         
         return jsonify({
             "access_token": access_token,
-            "token_type": "bearer"
+            "token_type": "bearer",
+            "user_type": user.register_type
         }), 200
         
     except ValueError as e:

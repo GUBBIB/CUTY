@@ -3,9 +3,13 @@ import jwt
 from src.models import User, Post, PostComment, PostView, PostLike
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-from src.models import db
+from src.models import db, User
 from sqlalchemy import func, case, distinct, and_
 from src.utils.formatters import get_post_data, get_comment_data
+from src.utils.exceptions import ValidationError, PermissionDeniedError, DuplicateRequestError, InternalServiceError
+from src.models.enums import UserType
+from sqlalchemy.orm import joinedload
+
 
 class UserService:
     @staticmethod
@@ -246,4 +250,57 @@ class UserService:
             'pages': pagination.pages,
             'current_page': page,
             'per_page': per_page
+        }
+
+    @staticmethod
+    def selectUser(current_user, user_email):
+        """
+        특정한 유저의 기본 정보를 조회합니다.
+        """
+        user = (
+            db.session.query(User)
+            .options(
+                joinedload(User.country),
+                joinedload(User.school),
+                joinedload(User.college),
+                joinedload(User.department),
+            )
+            .filter(User.email == user_email)
+            .one_or_none()
+        )
+
+        if not user:
+            raise ValidationError(
+                message="해당 사용자를 찾을 수 없습니다.",
+                code="NOT_FOUND"
+            )
+
+        # 본격적으로 런칭 할 때 주석 해제 및 관리자 권한 체크 보완 필요
+        # if current_user.register_type == UserType.SCHOOL:
+        #     if current_user.school_id != user.school_id:
+        #         raise PermissionDeniedError(
+        #             message="해당 학교 사용자가 아닙니다.",
+        #             code="FORBIDDEN"
+        #         )
+
+        return {
+            "id": user.id,
+            "name": user.name,
+            "email": user.email,
+             "country": {
+                "id": user.country_id,
+                "name": user.country.name if user.country else None,
+            },
+            "school": {
+                "id": user.school_id,
+                "name": user.school.name if user.school else None,
+            },
+            "college": {
+                "id": user.college_id,
+                "name": user.college.name if user.college else None,
+            },
+            "department": {
+                "id": user.department_id,
+                "name": user.department.name if user.department else None,
+            },
         }
