@@ -2,7 +2,6 @@
 
 ## 웹 주소
 - [CUTY_WEB](https://cutyweb.duckdns.org)
-- IP : ``54.180.8.153``
 
 ## 비고
 ### cuty_app

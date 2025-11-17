@@ -2,13 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'dart:io';
 
 class AppConfig {
-  static String _environment = kReleaseMode ? 'production' : 'development';
+  static String _environment =' kReleaseMode ? 'production' : 'development'';
 
   static const String _devPort = '5012';
 
   // 수동 설정: 시뮬레이터/에뮬레이터 여부를 직접 지정
   // 실제 기기에서 테스트할 때는 이 값을 true로 변경하세요
-  static const bool _forceUseRealDevice = true;
+  static const bool _forceUseRealDevice = false;
   
   // 시뮬레이터/에뮬레이터 감지 (단순화된 버전)
   static bool get _isSimulator {
