@@ -19,7 +19,7 @@ const Requests = () => {
   const [reqList, setReqList] = useState<RequestItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const { userType } = useAuth();
+  const { userType, isLogin } = useAuth();
 
   const fetchReqList = async () => {
     try {
@@ -49,7 +49,7 @@ const Requests = () => {
     fetchReqList();
   }, []);
 
-  const isAdminOrSchool = userType === "ADMIN" || userType === "SCHOOL";
+  const isAdminOrSchool = isLogin && userType === "ADMIN" || userType === "SCHOOL";
 
   const hasData = !loading && !error && reqList.length > 0;
 
