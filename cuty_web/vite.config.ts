@@ -19,7 +19,7 @@ export default defineConfig(() => {
         '/api' : {
           target: "https://zm3czse9yf.execute-api.ap-northeast-2.amazonaws.com/prod",
           changeOrigin: true,
-          secure: true,
+          secure: false,
         }
       }
     }
