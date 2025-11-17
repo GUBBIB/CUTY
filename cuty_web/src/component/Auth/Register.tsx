@@ -1,42 +1,25 @@
 import { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/useAuth";
 
 const Register = () => {
-  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [name, setName] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const { Register, authError, authMessage } = useAuth();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+
+  const handleSubmit = async (e: React.FormEvent) => { // 회원가입시 {나라, 학교, 단과대, 학과} 아이디는 임시로 고정
     e.preventDefault();
-    setError(null);
-    setSuccess(null);
-//['email', 'password', 'name', 'country_id' = 1]
-//['school_id' = 1, 'college_id' = 1, 'department_id' = 1]
-
-    try {
-      const res = await axios.post("/api/v1/auth/register", {
-        email: email,
-        password: pw,
-        name: name,
-        country_id: 1,
-        school_id: 1,
-        college_id: 1,
-        department_id: 1,
-      });
-
-      const token = res.data.access_token;
-      localStorage.setItem("accessToken", token);
-
-      setSuccess("회원가입 성공! 로그인 페이지로 이동합니다.");
-      navigate("/");
-    } catch (err: any) {
-      setError("회원가입 실패");
-    }
+    Register({
+      email,
+      pw,
+      name,
+      country_id: 2,
+      school_id: 4,
+      college_id: 6,
+      department_id: 3,
+    })
   };
 
   return (
@@ -63,8 +46,8 @@ const Register = () => {
         />
         <button type="submit">회원가입</button>
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        {success && <p>{success}</p>}
+        {authError && <p className="err">{authError}</p>}
+        {authMessage && <p>{authMessage}</p>}
       </form>
     </div>
   );
