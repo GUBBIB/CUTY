@@ -23,5 +23,7 @@
 
 ---
 
-### 국가 이름 데이터 
+### OPEN API
+#### 국가 이름
 - [한국국제협력단_KOICA 국가코드 테이블](https://www.data.go.kr/data/15051105/fileData.do#tab-layer-file)
+#### 대학교 이름 및 학과 이름
