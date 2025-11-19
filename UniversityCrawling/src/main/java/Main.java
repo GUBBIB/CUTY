@@ -13,6 +13,7 @@ public class Main {
         List<Map<String, Object>> schoolList = fetchAllSchools(client);
 
         System.out.println("총 학교 수: " + schoolList.size());
+        int i=1;
 
         for (Map<String, Object> school : schoolList) {
             String schlId = (String) school.get("schl_id");
@@ -22,6 +23,7 @@ public class Main {
 
             String majorJson = client.fetchMajors(schlId);
             List<Map<String, Object>> majors = JsonUtils.extractResultList(majorJson);
+            System.out.println(i++ + "총 학과 수: " + majors.size());
 
             // majors가 비어 있으면 그냥 넘어가기
             if (majors.isEmpty()) continue;

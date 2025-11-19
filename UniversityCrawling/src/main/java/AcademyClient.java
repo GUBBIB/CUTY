@@ -30,14 +30,15 @@ public class AcademyClient {
         params.put("schZnCdArr", "");
         params.put("schEstbDivCdArr", "");
         params.put("schTxt", "");
-        params.put("COLUMLAUNG", "KOR");
-        params.put("lang", "ko-KR");
-        params.put("svyYr", "2025");
-        params.put("searchGbn", "0");
+        params.put("COLUMLAUNG", "");
+        params.put("lang", "");
+        params.put("svyYr", "");
+        params.put("searchGbn", "");
         params.put("searchValue", "");
 
         String form = buildForm(params);
 
+        System.out.println("응답 시작");
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(SCHOOL_URL))
                 .header("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
@@ -48,6 +49,7 @@ public class AcademyClient {
         HttpResponse<String> res =
                 http.send(req, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
 
+        System.out.println(res);
         return res.body();
     }
 

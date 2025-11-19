@@ -72,6 +72,7 @@ public class SqlWriter implements Closeable {
         // 같은 학교 안에서 단과대 이름이 같으면 같은 college로 취급
         String collegeKey = schlId + "|" + collegeName;
 
+        String finalCollegeName = collegeName;
         int collegePk = collegeIdMap.computeIfAbsent(collegeKey, key -> {
             int newId = collegeSeq++;
 
@@ -79,7 +80,7 @@ public class SqlWriter implements Closeable {
                     "INSERT INTO colleges(id, name, school_id, created_at, updated_at, deleted_at) " +
                     "VALUES(%d, '%s', %d, now(), now(), null);",
                     newId,
-                    escape(collegeName),
+                    escape(finalCollegeName),
                     schoolPk
             );
             out.println(sql);
