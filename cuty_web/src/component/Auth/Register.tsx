@@ -15,10 +15,10 @@ const Register = () => {
       email,
       pw,
       name,
-      country_id: 2,
-      school_id: 4,
-      college_id: 6,
-      department_id: 3,
+      country_id: 1,
+      school_id: 1,
+      college_id: 1,
+      department_id: 1,
     })
   };
 
