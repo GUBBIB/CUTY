@@ -1,6 +1,37 @@
 #Login .err {
     color: red;
 }
+
+#Login .login-btn {
+    background-color: #0D6CF2;
+    width: 100%;
+}
+#Login .login-btn:hover {
+    background-color: #257AF3;
+}
+#Login .login-btn:hover button {
+    background-color: #257AF3;
+}
+
+#Login .login-section {
+    border: 1px solid gray;
+    border-radius: 1rem;
+    padding: 1rem;
+    background-color: white;
+}
+
+#Login .header-section>.title {
+    font-weight: bold;
+}
+
+#Login .header-section>.description {
+    color: gray;
+}
+
+#Login .login-form div {
+    padding: 1rem;
+}
+
 #Register .err {
     color: red;
 }

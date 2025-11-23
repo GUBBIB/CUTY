@@ -1,0 +1,18 @@
+#Home > div {
+    padding: 1rem;
+}
+
+#Home .title {
+    color: #0D6CF2;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+#Home .btn-section {
+    background-color: #0D6CF2;
+    border-radius: 1rem;
+}
+
+#Home .login-btn {
+    color: white;
+}
