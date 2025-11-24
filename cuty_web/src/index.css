@@ -16,18 +16,13 @@
 a {
   font-weight: 500;
   color: #0D6CF2;
-  text-decoration: inherit; 
-}
-a:hover {
-  text-decoration: underline;
+  text-decoration: inherit;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+html, body {
+  margin: 0 auto;
+  padding: 0;
+  height: 100%;
   background-color: #F9FAFB;
 }
 
