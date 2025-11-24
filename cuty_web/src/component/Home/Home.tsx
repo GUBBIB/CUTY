@@ -16,7 +16,7 @@ const Home = () => {
             <div className='btn-section'>
                 <Link to='/login'>
                     <div className='login-btn'>
-                        로그인
+                        시작하기
                     </div>
                 </Link>
             </div>

@@ -5,11 +5,12 @@ import App from './App'
 import Rquests from './component/PdfRelation/Requests'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Privacy from './component/Privacy/Privacy'
-import Register from './component/Auth/Register'
-import Login from './component/Auth/Login'
+import Register from './component/Auth/Register/Register'
+import Login from './component/Auth/Login/Login'
 import UserInfo from './component/PdfRelation/UserInfo'
 import { AuthProvider } from './context/AuthContext'
 import Error from './component/Error'
+import ProtectedRoute from './component/Auth/ProtectedRoute/ProtectedRoute'
 
 
 createRoot(document.getElementById('root')!).render(
@@ -19,15 +20,20 @@ createRoot(document.getElementById('root')!).render(
         <Routes>
           <Route path="/" element={<App />} />
 
-          {/* 관리자 페이지 */}
-          <Route path="/student-pdf" element={<Rquests />} />
+
+          <Route element={<ProtectedRoute />}>
+            {/* 관리자 페이지 */}
+            <Route path="/student-pdf" element={<Rquests />} />
+
+            {/* 유저 상세 정보 */}
+            <Route path="/user-info/:userId" element={<UserInfo />} />
+          </Route>
+
+
 
           {/* Auth 관련 페이지 */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-
-          {/* 유저 상세 정보 */}
-          <Route path="/user-info/:userId" element={<UserInfo />} />
 
           {/* 정책 페이지 */}
           <Route path="/privacy-policy" element={<Privacy />} />
