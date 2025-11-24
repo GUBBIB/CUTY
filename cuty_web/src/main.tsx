@@ -11,6 +11,7 @@ import UserInfo from './component/PdfRelation/UserInfo'
 import { AuthProvider } from './context/AuthContext'
 import Error from './component/Error'
 import ProtectedRoute from './component/Auth/ProtectedRoute/ProtectedRoute'
+import Dashboard from './component/DashBoard/Dashboard'
 
 
 createRoot(document.getElementById('root')!).render(
@@ -23,7 +24,9 @@ createRoot(document.getElementById('root')!).render(
 
           <Route element={<ProtectedRoute />}>
             {/* 관리자 페이지 */}
-            <Route path="/student-pdf" element={<Rquests />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/applicants" element={<Rquests />} />
+            <Route path='/students' element={<Rquests />} />
 
             {/* 유저 상세 정보 */}
             <Route path="/user-info/:userId" element={<UserInfo />} />
