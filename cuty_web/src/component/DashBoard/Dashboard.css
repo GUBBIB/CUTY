@@ -4,7 +4,7 @@
 
 #Dashboard .menu-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(50vh, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(45vh, 1fr));
     gap: 1rem;
     justify-items: left;
 }
@@ -15,8 +15,8 @@
     border-radius: 0.5rem;
     background-color: white;
     display: inline-block;
-    width: 50vh;
-    height: 12.5vh;
+    width: 45vh;
+    height: 12vh;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 
 }
