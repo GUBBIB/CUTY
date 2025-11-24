@@ -1,6 +1,10 @@
 #Login .err {
     color: red;
 }
+#Login {
+    max-width: 600px;
+    min-width: 500px;
+}
 
 #Login .login-btn {
     background-color: #0D6CF2;
@@ -14,14 +18,17 @@
 }
 
 #Login .login-section {
-    border: 1px solid gray;
+    border: 1px solid lightgray;
     border-radius: 1rem;
     padding: 1rem;
     background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
 }
 
 #Login .header-section>.title {
     font-weight: bold;
+    font-size: 2rem;
 }
 
 #Login .header-section>.description {
@@ -29,9 +36,19 @@
 }
 
 #Login .login-form div {
-    padding: 1rem;
+    width: 100%;
+    padding: 1rem 0;
 }
 
-#Register .err {
-    color: red;
+#Login .login-form input {
+    border-radius: 0.2rem;
+    border: 1px solid lightgray;
+    background-color: #F9FAFB;
+    width: 99%;
+    padding: 0.5rem 0;
+    display: block;
 }
+#Login .login-form label {
+    display: block;
+}
+

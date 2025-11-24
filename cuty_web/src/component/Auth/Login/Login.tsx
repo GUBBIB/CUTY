@@ -1,27 +1,31 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useAuth } from "../../context/useAuth";
-import "./Auth.css";
+import { type FormEvent, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../context/useAuth";
+import "./Login.css";
 
 const Login = () => {
-
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
-  const { Login, authError, authMessage } = useAuth();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const { Login, authError } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const from = (location.state as any)?.from?.pathname || "/dashboard";
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    Login({
-      email,
-      pw
-    });
-    console.log("authMessage:", authMessage);
+
+    const ok = await Login({ email, pw });
+
+    if (ok) {
+      navigate(from, { replace: true });
+    }
   };
 
   return (
     <div id="Login">
       <div className="login-section">
-
         <div className="header-section">
           <div className="title">
             CUTY
@@ -58,6 +62,7 @@ const Login = () => {
             <button className="login-btn" type="submit">
               로그인
             </button>
+
             <div>
               <Link to="/register">
                 회원가입
@@ -65,6 +70,7 @@ const Login = () => {
             </div>
           </form>
         </div>
+
         {authError && <p className="err">{authError}</p>}
       </div>
     </div>
