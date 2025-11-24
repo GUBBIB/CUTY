@@ -63,7 +63,7 @@ const Login = () => {
               로그인
             </button>
 
-            <div>
+            <div className="register-link">
               <Link to="/register">
                 회원가입
               </Link>

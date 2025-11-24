@@ -1,3 +1,37 @@
-#Header .testPing {
-    background-color: slateblue;
+#Header {
+    background-color: white;
+    border-bottom: 1px solid lightgray;
+}
+
+#Header .container {
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+    align-items: center;
+    width: 100%;
+}
+
+#Header .logout-btn {
+    background-color: #F9FAFB;
+    color: black;
+    border: 1px solid lightgray;
+    border-radius: 0.5rem;
+    height: 50%;
+    margin: 0 1rem;
+}
+
+#Header .title-user {
+    padding: 0 1rem;
+}
+
+#Header .title-user  h1 {
+    font-size: 2rem;
+    margin: 1rem 0 0 0;
+    
+}
+
+#Header .title-user .user-name {
+    color: #242424;
+    margin: 1rem 0 0 0;
+    padding: 0;
 }

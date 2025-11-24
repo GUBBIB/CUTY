@@ -1,4 +1,17 @@
-#Home > div {
+#Home {
+    height: 100%;
+}
+
+#Home .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    overflow:hidden;
+}
+
+#Home .container>div {
     padding: 1rem;
 }
 

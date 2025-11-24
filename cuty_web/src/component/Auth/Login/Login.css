@@ -1,18 +1,28 @@
 #Login .err {
     color: red;
 }
+
 #Login {
     max-width: 600px;
     min-width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    height: 100vh;
+    overflow: hidden;
+    text-align: center;
 }
 
 #Login .login-btn {
     background-color: #0D6CF2;
     width: 100%;
 }
+
 #Login .login-btn:hover {
     background-color: #257AF3;
 }
+
 #Login .login-btn:hover button {
     background-color: #257AF3;
 }
@@ -37,7 +47,11 @@
 
 #Login .login-form div {
     width: 100%;
-    padding: 1rem 0;
+    padding: 0 0 1rem 0;
+}
+
+#Login .login-form .register-link {
+    padding: 1rem 0 0.5rem 0;
 }
 
 #Login .login-form input {
@@ -45,10 +59,16 @@
     border: 1px solid lightgray;
     background-color: #F9FAFB;
     width: 99%;
-    padding: 0.5rem 0;
-    display: block;
-}
-#Login .login-form label {
+    padding: 0.5rem 0.2rem;
     display: block;
 }
 
+#Login .login-form label {
+    display: block;
+    text-align: left;
+    padding: 0.5rem 0;
+}
+
+#Login .register-link a:hover {
+    text-decoration: underline;
+}

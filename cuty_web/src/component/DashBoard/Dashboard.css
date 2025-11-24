@@ -1,0 +1,41 @@
+#Dashboard .container>div {
+    padding: 2rem;
+}
+
+#Dashboard .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50vh, 1fr));
+    gap: 1rem;
+    justify-items: left;
+}
+
+#Dashboard .menu-card {
+    cursor: pointer;
+    border: 1px solid lightgray;
+    border-radius: 0.5rem;
+    background-color: white;
+    display: inline-block;
+    width: 50vh;
+    height: 12.5vh;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+}
+
+#Dashboard .menu-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+}
+
+#Dashboard .card-title {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+#Dashboard .card-container {
+    padding: 1rem;
+}
+
+#Dashboard .page-description {
+    font-size: 1.25rem;    
+}
