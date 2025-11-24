@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom';
 import './Home.css';
+import { useAuth } from '../../context/useAuth';
 
 const Home = () => {
+    const { isLogin } = useAuth();
+
+    const path = isLogin ? '/dashboard' : '/login';
 
     return (
         <div id="Home">
@@ -14,13 +18,13 @@ const Home = () => {
             </div>
 
             <div className='btn-section'>
-                <Link to='/login'>
+                <Link to={path}>
                     <div className='login-btn'>
                         시작하기
                     </div>
                 </Link>
             </div>
-        </div>  
+        </div>
     );
 }
 export default Home;
