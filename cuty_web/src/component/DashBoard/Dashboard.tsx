@@ -12,7 +12,7 @@ const Dashboard = () => {
       title: "학생 검색",
       description: "등록된 학생 정보를 검색하고 조회합니다",
       icon: Search,
-      path: "/students"
+      path: "/search-student"
     },
     {
       title: "신청자 목록",

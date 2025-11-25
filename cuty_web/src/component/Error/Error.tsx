@@ -1,4 +1,5 @@
-import Header from "./Header/Header";
+import Header from "../Header/Header";
+import "./Error.css";
 
 const Error = () => {
     return (
@@ -7,7 +8,7 @@ const Error = () => {
                 <Header />
             </div>
             <div className="Error-Content">
-                에러 페이지 입니다.
+                경로가 잘 못 된 페이지 입니다.
             </div>
         </div>
     );

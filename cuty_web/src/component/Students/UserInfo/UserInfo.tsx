@@ -1,7 +1,8 @@
-import Header from "../Header/Header";
+import Header from "../../Header/Header";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import "./UserInfo.css";
 
 interface UserResponse {
     user: {
@@ -80,7 +81,7 @@ const UserInfo = () => {
                 <Header />
             </div>
 
-            <div>
+            <div className="container">
                 <h2>👤 유저 정보</h2>
 
                 {loading && <p>불러오는 중...</p>}
