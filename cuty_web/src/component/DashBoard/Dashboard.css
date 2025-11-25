@@ -1,41 +1,84 @@
-#Dashboard .container>div {
-    padding: 2rem;
+#Dashboard {
+    min-height: 100vh;
+    background-color: #f3f4f6;
+}
+
+#Dashboard .header {
+    background-color: #ffffff;
+}
+
+#Dashboard > .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 3rem;
+}
+
+#Dashboard .page-description {
+    margin-bottom: 1.5rem;
+}
+
+#Dashboard .page-description .title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.3rem;
+}
+
+#Dashboard .page-description .description {
+    font-size: 0.95rem;
+    color: #6b7280;
 }
 
 #Dashboard .menu-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-    gap: 1rem;
-    justify-items: left;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    align-items: stretch;
 }
 
 #Dashboard .menu-card {
     cursor: pointer;
-    border: 1px solid lightgray;
-    border-radius: 0.5rem;
-    background-color: white;
-    display: inline-block;
-    width: 500px;
-    height: 150px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-
+    border-radius: 0.9rem;
+    border: 1px solid #e5e7eb;
+    background-color: #ffffff;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
 }
 
 #Dashboard .menu-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-
-}
-
-#Dashboard .card-title {
-    display: inline-block;
-    font-weight: bold;
-    font-size: 1.5rem;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
+    border-color: #d1d5db;
 }
 
 #Dashboard .card-container {
-    padding: 1rem;
+    padding: 1.25rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    height: 100%;
 }
 
-#Dashboard .page-description {
-    font-size: 1.25rem;    
+#Dashboard .card-container > div:first-child {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+#Dashboard .menu-icon {
+    width: 1.7rem;
+    height: 1.7rem;
+    color: #0D6CF2;
+}
+
+#Dashboard .card-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #111827;
+}
+
+#Dashboard .card-description {
+    font-size: 0.95rem;
+    color: #6b7280;
+    line-height: 1.4;
 }

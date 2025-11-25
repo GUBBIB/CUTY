@@ -1,6 +1,92 @@
+#UserInfo {
+    min-height: 100vh;
+    background-color: #f3f4f6;
+}
+
+#UserInfo .Header {
+    background-color: #ffffff;
+}
+
 #UserInfo > .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 3rem;
     display: flex;
     flex-direction: column;
+    gap: 1.8rem;
+}
+
+#UserInfo h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #111827;
+    display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 0.4rem;
+}
+
+#UserInfo .user-card {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    border: 1px solid #e5e7eb;
+    padding: 1.8rem 2rem;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+    font-size: 0.95rem;
+    color: #374151;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+#UserInfo .user-card p:first-of-type {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.4rem;
+}
+
+#UserInfo .user-card p {
+    margin: 0;
+}
+
+#UserInfo h3 {
+    margin-top: 1.4rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #111827;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+#UserInfo ul {
+    margin-top: 0.5rem;
+    padding-left: 0;
+    list-style: none;
+}
+
+#UserInfo li {
+    margin-bottom: 0.35rem;
+}
+
+#UserInfo li::before {
+    content: "📄";
+    margin-right: 0.4rem;
+    font-size: 0.9rem;
+}
+
+#UserInfo a {
+    color: #0D6CF2;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+#UserInfo a:hover {
+    text-decoration: underline;
+}
+
+#UserInfo .error-msg {
+    color: #dc2626;
+    font-weight: 500;
+    margin-top: 1rem;
 }

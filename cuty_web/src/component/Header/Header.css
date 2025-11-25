@@ -1,39 +1,60 @@
 #Header {
-    background-color: white;
-    border-bottom: 1px solid lightgray;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    width: 100%;
 }
 
 #Header .container {
     display: flex;
     justify-content: space-between;
-    justify-items: center;
     align-items: center;
-    width: 100%;
-    height: 15vh;
-    max-height: 15vh;
-}
-
-#Header .logout-btn {
-    background-color: #F9FAFB;
-    color: black;
-    border: 1px solid lightgray;
-    border-radius: 0.5rem;
-    height: 50%;
-    margin: 0 1rem;
+    height: 12vh;
+    max-height: 12vh;
+    padding: 0 1.5rem;
 }
 
 #Header .title-user {
-    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-#Header .title-user  h1 {
+#Header .title-user h1 {
     font-size: 2rem;
-    margin: 1rem 0 0 0;
-    
+    font-weight: 700;
+    color: #0D6CF2;
+    margin: 0;
+    padding: 0;
+    letter-spacing: 1px;
 }
 
 #Header .title-user .user-name {
-    color: #242424;
-    margin: 1rem 0 0 0;
-    padding: 0;
+    color: #555;
+    font-size: 0.95rem;
+    margin-top: 0.35rem;
+}
+
+#Header .logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: #F3F4F6;
+    border: 1px solid #d1d5db;
+    color: #333;
+    padding: 0.6rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#Header .logout-btn:hover {
+    background-color: #e5e7eb;
+    border-color: #c5c7cb;
+    transform: translateY(-2px);
+}
+
+#Header .logout-btn svg {
+    width: 18px;
+    height: 18px;
 }

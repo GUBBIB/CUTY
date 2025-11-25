@@ -30,7 +30,7 @@ interface SelectUser {
     };
 }
 
-const Select = () => {
+const Search = () => {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [userEmail, setUserEmail] = useState("");
@@ -66,12 +66,12 @@ const Select = () => {
     }
 
     return (
-        <div id="Select">
+        <div id="Search">
             <div className="header">
                 <Header />
             </div>
             <div className="container">
-                <div className="select-section">
+                <div className="search-section">
                     <form onSubmit={selectUserHandler}>
                         <input type="text" placeholder="email을 입력하세요" value={userEmail} onChange={(e) => setUserEmail(e.target.value)} />
                         <button type="submit">검색</button>
@@ -114,4 +114,4 @@ const Select = () => {
     );
 }
 
-export default Select;
+export default Search;

@@ -5,6 +5,16 @@ import { Link } from "react-router-dom";
 import "./Requests.css";
 import { useAuth } from "../../../context/useAuth";
 
+interface RequestUser {
+  id: number;
+  name: string | null;
+  email: string | null;
+  country: string | null;
+  school: string | null;
+  college: string | null;
+  department: string | null;
+}
+
 interface RequestItem {
   requestsId: number;
   reqType: string;
@@ -12,7 +22,9 @@ interface RequestItem {
   createdAt: string | null;
   userId: number;
   userName: string | null;
+  user?: RequestUser | null;
 }
+
 
 const Requests = () => {
   const [reqList, setReqList] = useState<RequestItem[]>([]);
@@ -70,16 +82,58 @@ const Requests = () => {
               )}
 
               {hasData && (
-                <ul>
-                  {reqList.map((req, idx) => (
-                    <li key={req.requestsId ?? idx}>
-                      <Link to={`/user-info/${req.userId}`}>
-                        {(req.userName ?? "이름 없음")}님의 신청서 보기
-                      </Link>
-                    </li>
-                  ))}
+                <ul className="request-list">
+                  {reqList.map((req, idx) => {
+                    const name = req.user?.name ?? "이름 없음";
+
+                    const formatDate = (date: string | null) => {
+                      if (!date) return "날짜 없음";
+                      return new Date(date).toLocaleDateString("ko-KR");
+                    };
+
+                    const statusLabel = (() => {
+                      if (req.status === "APPROVED") return "승인";
+                      if (req.status === "PENDING") return "대기";
+                      return req.status;
+                    })();
+
+                    const statusClass = (() => {
+                      if (req.status === "APPROVED") return "status-approved";
+                      if (req.status === "PENDING") return "status-pending";
+                      return "status-etc";
+                    })();
+
+                    return (
+                      <li key={req.requestsId ?? idx} className="request-item">
+                        <Link to={`/user-info/${req.user?.id}`} className="request-card">
+                          <div className="request-main">
+                            <div className="request-left">
+                              <div className="request-name">{name}</div>
+                              <div className="request-sub">
+                                학과: {req.user?.department ?? "없음"}
+                              </div>
+                            </div>
+
+                            <div className="request-right">
+                              <div className="request-info">
+                                이메일: {req.user?.email}
+                              </div>
+                              <div className="request-info">
+                                신청일: {formatDate(req.createdAt)}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className={`status-badge ${statusClass}`}>
+                            {statusLabel}
+                          </div>
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               )}
+
             </div>
           </div>
         ) : (

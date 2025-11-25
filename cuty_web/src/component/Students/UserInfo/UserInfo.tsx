@@ -88,7 +88,7 @@ const UserInfo = () => {
                 {error && <p style={{ color: "red" }}>{error}</p>}
 
                 {!loading && !error && user && (
-                    <div>
+                    <div className="user-card">
                         <p>이름: {user.user.name}</p>
                         <p>이메일: {user.user.email}</p>
 
@@ -101,19 +101,20 @@ const UserInfo = () => {
                         <ul>
                             {user.documents.map(doc => (
                                 <li key={doc.id}>
-                                <a 
-                                    href={doc.image.url} 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    download
-                                >
-                                    {doc.name} ({doc.type})
-                                </a>
-                            </li>
+                                    <a
+                                        href={doc.image.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        download
+                                    >
+                                        {doc.name} ({doc.type})
+                                    </a>
+                                </li>
                             ))}
                         </ul>
                     </div>
                 )}
+
 
             </div>
         </div>

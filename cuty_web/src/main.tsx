@@ -12,7 +12,7 @@ import { AuthProvider } from './context/AuthContext'
 import Error from './component/Error/Error'
 import ProtectedRoute from './component/Auth/ProtectedRoute/ProtectedRoute'
 import Dashboard from './component/DashBoard/Dashboard'
-import Select from './component/Students/SelectSection/Select'
+import Select from './component/Students/SelectSection/Search'
 
 
 createRoot(document.getElementById('root')!).render(
