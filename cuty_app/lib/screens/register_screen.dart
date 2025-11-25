@@ -68,8 +68,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Future<void> _selectSchool() async {
-    if (_selectedCountry == null) return;
-
     await Navigator.push<School>(
       context,
       MaterialPageRoute(
@@ -77,7 +75,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           title: '학교 선택',
           searchHint: '학교 검색',
           onLoad: (page, search) => _schoolService.getSchools(
-            _selectedCountry!.id,
             page: page,
             search: search,
           ),
@@ -101,7 +98,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Future<void> _selectCollege() async {
-    if (_selectedCountry == null || _selectedSchool == null) return;
+    if (_selectedSchool == null) return;
 
     await Navigator.push<College>(
       context,
@@ -110,7 +107,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           title: '단과대학 선택',
           searchHint: '단과대학 검색',
           onLoad: (page, search) => _schoolService.getColleges(
-            _selectedCountry!.id,
             _selectedSchool!.id,
             page: page,
             search: search,
@@ -134,8 +130,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Future<void> _selectDepartment() async {
-    if (_selectedCountry == null ||
-        _selectedSchool == null ||
+    if (_selectedSchool == null ||
         _selectedCollege == null) return;
 
     await Navigator.push<Department>(
@@ -145,7 +140,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           title: '학과 선택',
           searchHint: '학과 검색',
           onLoad: (page, search) => _schoolService.getDepartments(
-            _selectedCountry!.id,
             _selectedSchool!.id,
             _selectedCollege!.id,
             page: page,

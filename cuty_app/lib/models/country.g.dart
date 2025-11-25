@@ -9,11 +9,13 @@ part of 'country.dart';
 Country _$CountryFromJson(Map<String, dynamic> json) => Country(
       id: (json['id'] as num).toInt(),
       name: json['name'] as String,
+      eng_name: json['eng_name'] as String,
       code: json['code'] as String,
     );
 
 Map<String, dynamic> _$CountryToJson(Country instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'eng_name': instance.eng_name,
       'code': instance.code,
     };

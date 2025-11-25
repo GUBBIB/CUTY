@@ -130,7 +130,6 @@ class _PostListScreenState extends State<PostListScreen> {
           title: '학교 선택',
           searchHint: '학교 검색',
           onLoad: (page, search) => _schoolService.getSchools(
-            _selectedCountry!.id,
             page: page,
             search: search,
           ),

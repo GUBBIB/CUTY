@@ -6,11 +6,13 @@ part 'country.g.dart';
 class Country {
   final int id;
   final String name;
+  final String eng_name;
   final String code;
 
   Country({
     required this.id,
     required this.name,
+    required this.eng_name,
     required this.code,
   });
 

@@ -8,8 +8,7 @@ import '../models/department.dart';
 class SchoolService {
   final String baseUrl = AppConfig.baseApiUrl;
 
-  Future<Map<String, dynamic>> getSchools(
-    int countryId, {
+  Future<Map<String, dynamic>> getSchools({
     int page = 1,
     int perPage = 10,
     String search = '',
@@ -17,7 +16,7 @@ class SchoolService {
     try {
       final response = await http.get(
         Uri.parse(
-            '$baseUrl/countries/$countryId/schools?page=$page&per_page=$perPage&search=$search'),
+            '$baseUrl/schools/?page=$page&per_page=$perPage&search=$search'),
       );
 
       if (response.statusCode == 200) {
@@ -36,7 +35,7 @@ class SchoolService {
           'search': data['search'],
         };
       } else if (response.statusCode == 404) {
-        throw Exception('존재하지 않는 국가입니다');
+        throw Exception('학교 정보를 찾을 수 없습니다.');
       } else {
         throw Exception('학교 목록을 불러오는데 실패했습니다');
       }
@@ -46,7 +45,6 @@ class SchoolService {
   }
 
   Future<Map<String, dynamic>> getColleges(
-    int countryId,
     int schoolId, {
     int page = 1,
     int perPage = 10,
@@ -55,7 +53,7 @@ class SchoolService {
     try {
       final response = await http.get(
         Uri.parse(
-            '$baseUrl/countries/$countryId/schools/$schoolId/colleges?page=$page&per_page=$perPage&search=$search'),
+            '$baseUrl/schools/$schoolId/colleges?page=$page&per_page=$perPage&search=$search'),
       );
 
       if (response.statusCode == 200) {
@@ -73,9 +71,7 @@ class SchoolService {
           'search': data['search'],
         };
       } else if (response.statusCode == 404) {
-        throw Exception('존재하지 않는 국가 또는 학교입니다');
-      } else if (response.statusCode == 400) {
-        throw Exception('해당 국가의 학교가 아닙니다');
+        throw Exception('존재하지 않는 학교입니다');
       } else {
         throw Exception('단과대학 목록을 불러오는데 실패했습니다');
       }
@@ -86,7 +82,6 @@ class SchoolService {
   }
 
   Future<Map<String, dynamic>> getDepartments(
-    int countryId,
     int schoolId,
     int collegeId, {
     int page = 1,
@@ -96,7 +91,7 @@ class SchoolService {
     try {
       final response = await http.get(
         Uri.parse(
-            '$baseUrl/countries/$countryId/schools/$schoolId/colleges/$collegeId/departments?page=$page&per_page=$perPage&search=$search'),
+            '$baseUrl/schools/$schoolId/colleges/$collegeId/departments?page=$page&per_page=$perPage&search=$search'),
       );
 
       if (response.statusCode == 200) {
@@ -114,9 +109,9 @@ class SchoolService {
           'search': data['search'],
         };
       } else if (response.statusCode == 404) {
-        throw Exception('존재하지 않는 국가, 학교 또는 단과대학입니다');
+        throw Exception('존재하지 않는 학교 또는 단과대학입니다');
       } else if (response.statusCode == 400) {
-        throw Exception('해당 국가의 학교가 아니거나 해당 학교의 단과대학이 아닙니다');
+        throw Exception('해당 학교의 단과대학이 아닙니다');
       } else {
         throw Exception('학과 목록을 불러오는데 실패했습니다');
       }

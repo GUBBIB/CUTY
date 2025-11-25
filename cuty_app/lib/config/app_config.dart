@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'dart:io';
 
 class AppConfig {
-  static String _environment =' kReleaseMode ? 'production' : 'development'';
+  static String _environment = 'production';
 
   static const String _devPort = '5012';
 
