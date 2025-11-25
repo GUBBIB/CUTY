@@ -101,6 +101,18 @@ class RequestsService:
 
         try:
             for req in pagination.items:
+                user_data = None
+                if req.user:
+                    user_data = {
+                        "id": req.user.id,
+                        "name": req.user.name,
+                        "email": req.user.email,
+                        "country": req.user.country.name if getattr(req.user, "country", None) else None,
+                        "school": req.user.school.name if getattr(req.user, "school", None) else None,
+                        "college": req.user.college.name if getattr(req.user, "college", None) else None,
+                        "department": req.user.department.name if getattr(req.user, "department", None) else None,
+                    }
+
                 items.append({
                     "requestsId": req.id,
                     "reqType": req.req_type.value if hasattr(req.req_type, "value") else req.req_type,
@@ -108,6 +120,7 @@ class RequestsService:
                     "createdAt": req.created_at.isoformat() if req.created_at else None,
                     "userId": req.user_id,
                     "userName": req.user.name if req.user else None,
+                    "user": user_data,
                 })
 
         except Exception as e:
@@ -115,6 +128,7 @@ class RequestsService:
                 message="요청 항목 변환 중 오류가 발생했습니다.",
                 details={"error": str(e)}
             )
+
 
         return {
             "items": items,
