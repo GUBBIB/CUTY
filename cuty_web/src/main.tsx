@@ -13,6 +13,7 @@ import Error from './component/Error/Error'
 import ProtectedRoute from './component/Auth/ProtectedRoute/ProtectedRoute'
 import Dashboard from './component/DashBoard/Dashboard'
 import Select from './component/Students/SelectSection/Search'
+import AdminSchoolProtectRoute from './component/Auth/ProtectedRoute/AdminSchoolProtectRoute'
 
 
 createRoot(document.getElementById('root')!).render(
@@ -24,13 +25,15 @@ createRoot(document.getElementById('root')!).render(
 
 
           <Route element={<ProtectedRoute />}>
-            {/* 관리자 페이지 */}
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/applicants" element={<Rquests />} />
-            <Route path='/search-student' element={<Select />} />
+            <Route element={<AdminSchoolProtectRoute />} >
+              {/* 관리자 페이지 */}
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/applicants" element={<Rquests />} />
+              <Route path='/search-student' element={<Select />} />
 
-            {/* 유저 상세 정보 */}
-            <Route path="/user-info/:userId" element={<UserInfo />} />
+              {/* 유저 상세 정보 */}
+              <Route path="/user-info/:userId" element={<UserInfo />} />
+            </Route>
           </Route>
 
 
@@ -41,10 +44,12 @@ createRoot(document.getElementById('root')!).render(
 
           {/* 정책 페이지 */}
           <Route path="/privacy-policy" element={<Privacy />} />
+          
           {/* 미할당 에러 페이지 */}
+          <Route path="/no-permission" element={<Error message='접근 권한이 없습니다.' />} />
           <Route path='*' element={<Error />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
-  </StrictMode>,
+  </StrictMode >,
 )
