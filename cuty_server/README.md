@@ -323,6 +323,9 @@ flask db upgrade
 
 # 프로덕션 환경
 ENV=prod flask db upgrade
+
+# 또는
+
 ```
 
 마이그레이션이 성공하면 데이터베이스에 모든 테이블이 생성됩니다.

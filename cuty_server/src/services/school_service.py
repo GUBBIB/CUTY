@@ -7,47 +7,10 @@ from src.utils.formatters import (
 
 class SchoolService:
     @staticmethod
-    def get_countries(page, per_page, search=''):
-        # 국가 쿼리 생성
-        countries_query = Country.query
-        
-        # 검색어가 있는 경우 필터 적용
-        if search:
-            countries_query = countries_query.filter(
-                or_(
-                    Country.name.ilike(f'%{search}%'),
-                    Country.code.ilike(f'%{search}%')
-                )
-            )
-        
-        # 정렬 적용
-        countries_query = countries_query.order_by(Country.name.asc())
-        
-        # 페이지네이션 적용
-        pagination = countries_query.paginate(page=page, per_page=per_page, error_out=False)
-        
-        # 결과 포맷팅
-        countries = [get_country_data(country) for country in pagination.items]
-        
-        return {
-            'countries': countries,
-            'total': pagination.total,
-            'pages': pagination.pages,
-            'current_page': page,
-            'per_page': per_page,
-            'search': search
-        }
+    def get_schools(page, per_page, search=''):
 
-    @staticmethod
-    def get_schools_by_country(country_id, page, per_page, search=''):
-        # 국가 존재 여부 확인
-        country = Country.query.get(country_id)
-        if not country:
-            raise ValueError('존재하지 않는 국가입니다')
-        
-        # 학교 쿼리 생성
-        schools_query = School.query.filter_by(country_id=country_id)
-        
+        schools_query = School.query
+
         if search:
             schools_query = schools_query.filter(School.name.ilike(f'%{search}%'))
         
@@ -66,19 +29,12 @@ class SchoolService:
         }
 
     @staticmethod
-    def get_colleges(country_id, school_id, page, per_page, search=''):
-        # 국가 존재 여부 확인
-        country = Country.query.get(country_id)
-        if not country:
-            raise ValueError('존재하지 않는 국가입니다')
-        
-        # 학교 존재 여부와 국가 관계 확인
+    def get_colleges(school_id, page, per_page, search=''):
+        # 학교 존재 여부 확인
         school = School.query.get(school_id)
         if not school:
             raise ValueError('존재하지 않는 학교입니다')
-        if school.country_id != country_id:
-            raise ValueError('해당 국가의 학교가 아닙니다')
-        
+
         # 단과대학 쿼리 생성
         colleges_query = College.query.filter_by(school_id=school_id)
         
@@ -100,19 +56,12 @@ class SchoolService:
         }
 
     @staticmethod
-    def get_departments(country_id, school_id, college_id, page, per_page, search=''):
-        # 국가 존재 여부 확인
-        country = Country.query.get(country_id)
-        if not country:
-            raise ValueError('존재하지 않는 국가입니다')
-        
-        # 학교 존재 여부와 국가 관계 확인
+    def get_departments(school_id, college_id, page, per_page, search=''):
+        # 학교 존재 여부 확인
         school = School.query.get(school_id)
         if not school:
             raise ValueError('존재하지 않는 학교입니다')
-        if school.country_id != country_id:
-            raise ValueError('해당 국가의 학교가 아닙니다')
-        
+            
         # 단과대학 존재 여부와 학교 관계 확인
         college = College.query.get(college_id)
         if not college:

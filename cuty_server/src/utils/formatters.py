@@ -5,7 +5,7 @@ def get_country_data(country):
         'id': country.id,
         'name': country.name,
         'code': country.code,
-
+        'eng_name': country.eng_name,
     }
 
 
