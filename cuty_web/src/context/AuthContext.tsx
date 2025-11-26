@@ -9,7 +9,7 @@ type LoginParam = {
 
 type RegisterParam = {
     email: string;
-    pw: string;
+    password: string;
     name: string;
     country_id?: number;
     school_id?: number;
@@ -140,7 +140,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const Register = async (params: RegisterParam): Promise<boolean> => {
         try {
-            const res = await axios.post("/api/v1/auth/register", params);
+            const res = await axios.post("/api/v1/auth/register", {
+                email: params.email,
+                password: params.password,
+                name: params.name,
+                country_id: params.country_id,
+                school_id: params.school_id,
+                college_id: params.college_id,
+                department_id: params.department_id,
+            });
 
             const token = res.data.access_token;
             localStorage.setItem("accessToken", token);

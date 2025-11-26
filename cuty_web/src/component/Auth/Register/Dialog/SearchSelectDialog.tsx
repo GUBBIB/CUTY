@@ -4,6 +4,7 @@ import "./SearchSelectDialog.css";
 export interface OptionItem {
   id: number;
   label: string;
+  eng_name: string | null;
 }
 
 interface SearchSelectDialogProps {
