@@ -20,12 +20,9 @@ class AuthService:
         school = School.query.get(data['school_id'])
         if not school:
             raise ValueError('유효하지 않은 학교 ID입니다')
-        if school.country_id != data['country_id']:
-            raise ValueError('해당 국가의 학교가 아닙니다')
             
         # 단과대학 존재 여부와 학교 관계 확인
         college = College.query.filter_by(
-            id=data['college_id'], 
             school_id=data['school_id']
         ).first()
         if not college:
