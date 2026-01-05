@@ -14,8 +14,13 @@ class HomeMenuCard extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+
+    double screenWidth = MediaQuery.of(context).size.width;
+    double actualAvailableWidth = screenWidth - 40;
+    double cardSize = (actualAvailableWidth / 3.5) - 10;
+
     return Container(
-      width: 100, height: 100, // 일단 고정
+      width: cardSize, height: cardSize, // 일단 고정
       margin: EdgeInsets.only(right: 12),
       decoration: BoxDecoration(
         color: backgroundColor,
