@@ -12,6 +12,8 @@ import 'package:cuty_app/screens/change_password_screen.dart';
 import 'package:cuty_app/screens/my_posts_screen.dart';
 import 'package:cuty_app/screens/my_comments_screen.dart';
 
+import 'package:cuty_app/common/layout/root_tab.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
           ),
         );
       },
-      home: const HomeScreen(),
+      home: const RootTab(),
       routes: {
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
@@ -52,7 +54,7 @@ class MyApp extends StatelessWidget {
             commentId: args['commentId'] as int,
           );
         },
-        '/home': (context) => const HomeScreen(),
+        '/home': (context) => const RootTab(),
         '/changePassword': (context) => const ChangePasswordScreen(),
         '/myPosts': (context) => const MyPostsScreen(),
         '/myComments': (context) => const MyCommentsScreen(),
