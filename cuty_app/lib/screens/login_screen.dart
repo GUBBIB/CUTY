@@ -67,148 +67,156 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-
-                  Text(
-                    "CUTY",
-                    style: TextStyle(
-                      fontSize: 52,
-                      fontWeight: FontWeight.w900,
-                      color:  Color(0xFF1D3561)
-                    ),
-                  ),
-                  Text(
-                    "Welcome!",
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color:  Color(0xFF1D3561)
-                    )
-                  ),
-
-                  SizedBox(height: 20),
-
-                  Image.asset(
-                    'assets/images/Character_Notebook.png',
-                    height: 250,
-                    fit: BoxFit.contain,
-                    width: 250,
-                  ),
-
-                  SizedBox(height: 1),
-
-                  CustomTextField(
-                    controller: _emailController,
-                    hintText: 'Email',
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return '이메일을 입력해주세요';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  CustomTextField(
-                    controller: _passwordController,
-                    hintText: 'Password',
-                    obscureText: true,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return '비밀번호를 입력해주세요';
-                      }
-                      return null;
-                    },
-                  ),
-
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () {
-                        // 로직 추가
-                      },
-                      child: Text(
-                        "Forgot Password?",
-                        style: TextStyle(color: Colors.grey, fontSize: 12),
-                      )
-                    )
-                  ),
-
-                  SizedBox(height: 3),
-
-                  CustomButton(
-                    text: 'Login',
-                    onPressed: _login,
-                    isLoading: _isLoading,
-                  ),
-
-                  Row(
-                    children: [
-                      Expanded(child: Divider(color: Colors.grey)),
-
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Text("Or continue with", style: TextStyle(color: Colors.black)),
-                      ),
-
-                      Expanded(child: Divider(color: Colors.grey)),
-                    ],
-                  ),
-
-                  SizedBox(height: 5),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SocialLoginButton(assetPath: 'assets/images/google_login_btn.png', onTap: _onGoogleLogin),
-                      const SizedBox(width: 20),
-                      SocialLoginButton(assetPath: 'assets/images/apple_login_btn.png', onTap: _onAppleLogin, backgroundColor: Colors.black,),  // 애플
-                      const SizedBox(width: 20),
-                      SocialLoginButton(assetPath: 'assets/images/kakao_login_btn.png', onTap: _onKakaoLogin,),  // 카카오
-                    ],
-                  ),
-
-
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/register');
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+
                         Text(
-                          "Don't have an account?",
+                          "CUTY",
                           style: TextStyle(
-                            color: AppColors.textPrimary,
+                              fontSize: 52,
+                              fontWeight: FontWeight.w900,
+                              color:  Color(0xFF1D3561)
                           ),
                         ),
-                        const SizedBox(width: 8),
                         Text(
-                          'Sign Up',
-                          style: TextStyle(
-                            color: AppColors.primaryColor,
-                            fontWeight: FontWeight.w800,
+                            "Welcome!",
+                            style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color:  Color(0xFF1D3561)
+                            )
+                        ),
+
+                        SizedBox(height: 20),
+
+                        Image.asset(
+                          'assets/images/Character/Character_9.png',
+                          height: 250,
+                          fit: BoxFit.contain,
+                          width: 250,
+                        ),
+
+                        SizedBox(height: 20),
+
+                        CustomTextField(
+                          controller: _emailController,
+                          hintText: 'Email',
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return '이메일을 입력해주세요';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        CustomTextField(
+                          controller: _passwordController,
+                          hintText: 'Password',
+                          obscureText: true,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return '비밀번호를 입력해주세요';
+                            }
+                            return null;
+                          },
+                        ),
+
+                        Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton(
+                                onPressed: () {
+                                  // 로직 추가
+                                },
+                                child: Text(
+                                  "Forgot Password?",
+                                  style: TextStyle(color: Colors.grey, fontSize: 12),
+                                )
+                            )
+                        ),
+
+                        SizedBox(height: 10),
+
+                        CustomButton(
+                          text: 'Login',
+                          onPressed: _login,
+                          isLoading: _isLoading,
+                        ),
+
+                        Row(
+                          children: [
+                            Expanded(child: Divider(color: Colors.grey)),
+
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: Text("Or continue with", style: TextStyle(color: Colors.black)),
+                            ),
+
+                            Expanded(child: Divider(color: Colors.grey)),
+                          ],
+                        ),
+
+                        SizedBox(height: 20),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SocialLoginButton(assetPath: 'assets/images/google_login_btn.png', onTap: _onGoogleLogin),
+                            const SizedBox(width: 20),
+                            SocialLoginButton(assetPath: 'assets/images/apple_login_btn.png', onTap: _onAppleLogin, backgroundColor: Colors.black,),  // 애플
+                            const SizedBox(width: 20),
+                            SocialLoginButton(assetPath: 'assets/images/kakao_login_btn.png', onTap: _onKakaoLogin,),  // 카카오
+                          ],
+                        ),
+
+                        SizedBox(width: 10),
+
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/register');
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Don't have an account?",
+                                style: TextStyle(
+                                  color: AppColors.textPrimary,
+                                ),
+                              ),
+                              SizedBox(width: 8),
+                              Text(
+                                'Sign Up',
+                                style: TextStyle(
+                                  color: AppColors.primaryColor,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
+                        SizedBox(width: 10),
                       ],
                     ),
                   ),
-
-
-                ],
-              ),
-            ),
-          ),
-        ),
+                ),
+              )
+            );
+          },
+        )
       )
-
     );
   }
 
