@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:cuty_app/config/app_config.dart';
 import 'package:cuty_app/services/token_service.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class AuthService {
   final TokenService _tokenService = TokenService();
@@ -88,7 +89,20 @@ class AuthService {
   Future<bool> isLoggedIn() async {
     try {
       final token = await _tokenService.getToken();
-      return token != null;
+
+      if (token == null || token.isEmpty) {
+        return false;
+      }
+
+      bool isExpired = JwtDecoder.isExpired(token);
+
+      if(isExpired) {
+        await _tokenService.removeToken();
+        return false;
+      }
+
+      return true;
+
     } catch (e) {
       throw Exception('로그인 상태 확인 중 오류가 발생했습니다: ${e.toString()}');
     }
