@@ -14,6 +14,7 @@ class UserService {
         final response = await http.get(
           Uri.parse('$baseUrl/users/me'),
           headers: {
+            'Content-Type': 'application/json',
             'Authorization': 'Bearer $token',
           },
         );
@@ -23,9 +24,11 @@ class UserService {
           return User.fromJson(data);
         } else {
           final error = json.decode(response.body);
+          print('사용자 정보를 불러오는데 실패했습니다');
           throw Exception(error['error'] ?? '사용자 정보를 불러오는데 실패했습니다');
         }
       } catch (e) {
+        print('서버 연결에 실패했습니다. api');
         throw Exception('서버 연결에 실패했습니다: ${e.toString()}');
       }
     });
