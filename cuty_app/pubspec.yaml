@@ -43,6 +43,7 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^31.1.18
   pdfx: ^2.9.2
   path_provider: ^2.1.5
+  jwt_decoder: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +69,10 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/
+    - assets/images/Character/
+    - assets/images/Card/
+
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
