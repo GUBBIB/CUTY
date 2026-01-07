@@ -1,3 +1,4 @@
+import 'package:cuty_app/common/View/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cuty_app/config/app_theme.dart';
 import 'package:cuty_app/config/app_colors.dart';
@@ -7,7 +8,6 @@ import 'package:cuty_app/screens/post_list_screen.dart';
 import 'package:cuty_app/screens/post_write_screen.dart';
 import 'package:cuty_app/screens/post_detail_screen.dart';
 import 'package:cuty_app/screens/post_comment_detail_screen.dart';
-import 'package:cuty_app/screens/home_screen.dart';
 import 'package:cuty_app/screens/change_password_screen.dart';
 import 'package:cuty_app/screens/my_posts_screen.dart';
 import 'package:cuty_app/screens/my_comments_screen.dart';
@@ -15,7 +15,7 @@ import 'package:cuty_app/screens/my_comments_screen.dart';
 import 'package:cuty_app/common/layout/root_tab.dart';
 
 void main() {
-  runApp(const MyApp());
+ runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
           ),
         );
       },
-      home: const RootTab(),
+      home: const SplashScreen(),
       routes: {
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
