@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:cuty_app/common/component/schedule_ticket.dart';
 import 'package:cuty_app/common/component/home_menu_card.dart';
+import 'package:cuty_app/common/component/notice_banner.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -56,8 +57,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
               const Expanded(
                 flex: 2,
-                child: Center(
-                  child: ScheduleTicket(startTime: "10:00 AM", subject: "Economic", room: "304"),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ScheduleTicket(startTime: "10:00 AM", subject: "Economic", room: "304"), // api 로 다음 수업 정보 들고와서 넣어야 함
+
+                        const SizedBox(height: 15),
+
+                        NoticeBanner(content: "TestContent", icon: "testIcon"),
+                      ],
+                    )
+                  )
                 )
               )
             ],

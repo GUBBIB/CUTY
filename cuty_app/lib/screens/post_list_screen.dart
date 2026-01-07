@@ -37,6 +37,7 @@ class _PostListScreenState extends State<PostListScreen> {
   Country? _selectedCountry;
   School? _selectedSchool;
 
+  // 게시판 카테고리
   final List<CategoryItem> _categories = [
     CategoryItem(label: '자유', value: 'free'),
     CategoryItem(label: '중고', value: 'market'),
@@ -62,6 +63,7 @@ class _PostListScreenState extends State<PostListScreen> {
     }
   }
 
+  // 로그인 확인 및 학교 게시판 연결
   Future<void> _checkLoginStatus() async {
     try {
       final user = await _userService.getCurrentUser();
@@ -89,6 +91,7 @@ class _PostListScreenState extends State<PostListScreen> {
     }
   }
 
+  // 국가 검색
   Future<void> _selectCountry() async {
     final country = await Navigator.push<Country>(
       context,
@@ -120,6 +123,7 @@ class _PostListScreenState extends State<PostListScreen> {
     );
   }
 
+  // 학교  ( 국가 선택 후 나옴 )
   Future<void> _selectSchool() async {
     if (_selectedCountry == null) return;
 
@@ -151,6 +155,7 @@ class _PostListScreenState extends State<PostListScreen> {
     );
   }
 
+  // 스크롤 시, 로딩 더 시키기
   Future<void> _loadMore() async {
     if (_isLoading || !_hasMore) return;
 
@@ -213,6 +218,7 @@ class _PostListScreenState extends State<PostListScreen> {
     _loadMore();
   }
 
+  //
   Widget _buildEmptyState() {
     return Center(
       child: Column(
