@@ -13,12 +13,16 @@ class User(db.Model, TimestampMixin):
     college_id = db.Column(db.Integer, db.ForeignKey('colleges.id'), nullable=False)
     department_id = db.Column(db.Integer, db.ForeignKey('departments.id'), nullable=False)
     register_type = db.Column(db.Enum(UserType), nullable=False, default=UserType.USER)
+    is_visa = db.Column(db.Boolean, default=False, nullable=False) # 비자 여부
+    point = db.Column(db.Integer, default=0, nullable=False) # 포인트
 
     # Relationships
     posts = db.relationship('Post', backref='user', lazy=True)
     post_comments = db.relationship('PostComment', backref='user', lazy=True)
     post_likes = db.relationship('PostLike', backref='user', lazy=True)
     post_views = db.relationship('PostView', backref='user', lazy=True)
+    point_logs = db.relationship('PointLog', backref='user', lazy=True)
+    attendances = db.relationship('Attendance', backref='user', lazy=True)
     
     @property
     def display_nickname(self):
