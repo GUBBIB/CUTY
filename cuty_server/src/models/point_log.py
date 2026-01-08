@@ -12,3 +12,12 @@ class PointLog(db.Model, TimestampMixin): # 포인트 내역
 
     def __repr__(self):
         return f'<PointLog User:{self.user_id} {self.amount:+d} ({self.description})>'
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'amount': self.amount,
+            'description': self.description,
+            'created_at': self.created_at.isoformat()
+        }
