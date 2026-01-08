@@ -10,6 +10,8 @@ from src.routes.v1.image_routes import images_bp
 from src.routes.v1.requests_routes import requests_bp
 from src.routes.v1.management_routes import management_bp
 from src.routes.v1.country_routes import country_bp
+from src.routes.v1.attendance_routes import attendance_bp
+from src.routes.v1.point_log_routes import point_log_bp
 
 def init_routes(app):
     """애플리케이션의 모든 라우트를 등록합니다."""
@@ -48,3 +50,9 @@ def init_routes(app):
 
     # ADMIN, SCHOOL의 관리 관련 라우트
     app.register_blueprint(management_bp, url_prefix='/api/v1/managements')
+
+    # 출석 체크 관련 라우트
+    app.register_blueprint(attendance_bp, url_prefix='/api/v1/attendances')
+
+    # 포인트 내역 관련 라우트
+    app.register_blueprint(point_log_bp, url_prefix='/api/v1/point-logs')
