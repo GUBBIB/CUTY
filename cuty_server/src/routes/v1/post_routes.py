@@ -94,3 +94,22 @@ def delete_post(current_user, post_id):
         return jsonify({'error': str(e)}), 404 if '존재하지 않는' in str(e) else 403
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@post_bp.route('/popular', methods=['GET'])
+def get_popular_posts():
+    try:
+        category = request.args.get('category')
+        limit = request.args.get('limit', default=10, type=int)
+
+        posts = PostService.get_popular_posts(category=category, limit=limit)
+
+        return jsonify({
+            'success': True,
+            'data': posts
+        }), 200
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'message': str(e)
+        }), 500
