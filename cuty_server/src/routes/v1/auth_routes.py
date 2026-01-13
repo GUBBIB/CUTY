@@ -51,8 +51,7 @@ def login():
     except ValueError as e:
         return jsonify({'error': str(e)}), 401
     except Exception as e:
-        return jsonify({'error': '서버 오류가 발생했습니다'}), 500
-
+        return jsonify({'error': str(e)}), 500
 
 @auth_bp.route("/ping", methods=["GET"])
 def ping():

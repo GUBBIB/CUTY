@@ -165,22 +165,23 @@ def get_current_user_data(user):
         'country': {
             'id': user.country.id,
             'name': user.country.name,
-            'code': user.country.code
-        },
+            'code': user.country.code,
+            'eng_name': user.country.eng_name,
+        } if user.country else None,        
         'school': {
             'id': user.school.id,
             'name': user.school.name
-        },
+        } if user.school else None,
         'college': {
             'id': user.college.id,
             'name': user.college.name
-        },
+        } if user.college else None,
         'department': {
             'id': user.department.id,
             'name': user.department.name
-        },
-        'created_at': user.created_at.isoformat(),
-        'updated_at': user.updated_at.isoformat()
+        } if user.department else None,
+        'created_at': user.created_at.isoformat() if user.created_at else None,
+        'updated_at': user.updated_at.isoformat() if user.updated_at else None
     }
 
 def get_presigned_url_data(image_store, presigned_post):
