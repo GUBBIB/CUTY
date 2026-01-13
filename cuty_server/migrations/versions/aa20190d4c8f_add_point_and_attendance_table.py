@@ -41,8 +41,8 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     with op.batch_alter_table('users', schema=None) as batch_op:
-        batch_op.add_column(sa.Column('is_visa', sa.Boolean(), nullable=False, server_default=False))
-        batch_op.add_column(sa.Column('point', sa.Integer(), nullable=False, server_default=0))
+        batch_op.add_column(sa.Column('is_visa', sa.Boolean(), nullable=False, server_default=sa.text('false')))
+        batch_op.add_column(sa.Column('point', sa.Integer(), nullable=False, server_default=sa.text('0')))
 
     # ### end Alembic commands ###
 
