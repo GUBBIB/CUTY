@@ -49,7 +49,6 @@ def create_requests(current_user):
 def list_requests(current_user):
     """
     요청 목록 조회
-    :param user: 로그인된 사용자 객체
     :param page: 페이지 번호 (기본 1)
     :param per_page: 페이지당 항목 개수 (기본 10)
     :param status: 요청 상태 필터 (None이면 전체)
