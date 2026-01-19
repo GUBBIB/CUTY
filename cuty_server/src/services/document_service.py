@@ -290,7 +290,7 @@ class DocumentService:
 
         pdf_writer = PdfWriter()
 
-        or doc in user.documents:
+        for doc in user.documents:
             if not doc.image_store:
                 continue
 

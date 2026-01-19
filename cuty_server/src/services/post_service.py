@@ -291,18 +291,18 @@ class PostService:
             raise e
 
     @staticmethod
-        def get_popular_posts(category=None, limit=5):
-            """
-            인기 점수(popularity_score) 순으로 게시글 목록을 가져옵니다.
-            """
-            query = Post.query.filter(Post.deleted_at == None)
+    def get_popular_posts(category=None, limit=5):
+        """
+        인기 점수(popularity_score) 순으로 게시글 목록을 가져옵니다.
+        """
+        query = Post.query.filter(Post.deleted_at == None)
 
-            if category:
-                query = query.filter(Post.category == category)
+        if category:
+            query = query.filter(Post.category == category)
 
-            popular_posts = query.order_by(
-                Post.popularity_score.desc(), 
-                Post.created_at.desc()
-            ).limit(limit).all()
+        popular_posts = query.order_by(
+            Post.popularity_score.desc(), 
+            Post.created_at.desc()
+        ).limit(limit).all()
 
-            return [get_post_list_data(post) for post in popular_posts]
+        return [get_post_list_data(post) for post in popular_posts]

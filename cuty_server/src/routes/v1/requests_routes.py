@@ -15,7 +15,7 @@ def create_requests(current_user):
     
     :param user: 로그인된 사용자 객체
     :param req_type: 요청 타입(예: "PART_TIME" 등 [ 추후 추가 예정 ] )
-        :req_type: [ PENDING, REJECTED, APPROVED, CANCELED ]
+    :req_type: [ PENDING, REJECTED, APPROVED, CANCELED ]
     :param idempotency_key: 중복 요청 방지를 위한 키(선택)
     :return: dict 응답 데이터
     :raises ValidationError, DuplicateRequestsError, InternalServiceError
