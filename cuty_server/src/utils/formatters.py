@@ -169,6 +169,7 @@ def get_user_data(user):
         'country': {
             'id': user.country.id,
             'name': user.country.name,
+            'eng_name': user.country.eng_name,
             'code': user.country.code
         },
         'school': {

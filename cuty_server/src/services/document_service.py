@@ -8,6 +8,7 @@ from src.utils.formatters import get_document_data
 from pypdf import PdfWriter, PdfReader
 import img2pdf
 from src.services.s3_service import s3_client, BUCKET_NAME
+import io
 
 # 로거 설정
 logger = logging.getLogger(__name__)
@@ -301,7 +302,7 @@ class DocumentService:
                 )
                 file_content = file_obj['Body'].read() 
 
-                filename = doc.image_store.original_name.lower() if doc.image_store.original_name else ""
+                filename = doc.image_store.original_filename.lower() if doc.image_store.original_filename else ""                
                 
                 if filename.endswith(('.jpg', '.jpeg', '.png')):
                     img_pdf_bytes = img2pdf.convert(file_content)

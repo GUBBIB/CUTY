@@ -305,7 +305,7 @@ def get_document_types(current_user):
 @document_bp.route('/requests/<int:user_id>/merged-document', methods=['GET'])
 @token_required
 @admin_or_school_required
-def get_studnet_merged_document(user_id):
+def get_studnet_merged_document(current_user, user_id):
     """
     특정 유저의 모든 PDF/이미지 서류를 하나로 합쳐서 반환    
     """
