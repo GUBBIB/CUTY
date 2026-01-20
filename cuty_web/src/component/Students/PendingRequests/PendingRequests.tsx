@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import axios from "axios";
 // 1. 여기서 react-icons를 불러옵니다.
 import { FiFileText } from "react-icons/fi";
