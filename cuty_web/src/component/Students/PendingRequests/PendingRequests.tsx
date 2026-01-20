@@ -154,7 +154,7 @@ const PendingRequests = () => {
                                     </td>
                                     <td className="td-center">
                                         <div className="icon-btn-file">
-                                            <Link to={`/documents/${item.user?.id}`} target="_blank" rel="noopener noreferrer">
+                                            <Link to={`/documents/${item.userId}`} target="_blank" rel="noopener noreferrer">
                                                 <FiFileText size={18} />
                                             </Link>
                                         </div>

@@ -13,10 +13,10 @@ const Documents = () => {
       try {
         const token = localStorage.getItem("accessToken");
         
-        const response = await axios.get(`/api/v1/requests/${userId}/merged-document`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+        const response = await axios.get(`/api/v1/documents/requests/${userId}/merged-document`, {
+          headers: token
+                    ? { Authorization: `Bearer ${token}` }
+                    : undefined,
           responseType: "blob", // 중요: PDF 데이터 받기
         });
 
