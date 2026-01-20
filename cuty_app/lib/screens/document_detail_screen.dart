@@ -132,7 +132,7 @@ class _DocumentDetailScreenState extends State<DocumentDetailScreen> {
         imageStoreId: presignedResponse.image.id,
         name: name,
       );
-      print('서류 생성 완료');
+      print('✅서류 생성 완료');
 
       // 4. 목록 새로고침
       print('4단계: 목록 새로고침...');
