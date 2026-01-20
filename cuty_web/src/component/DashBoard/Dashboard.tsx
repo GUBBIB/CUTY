@@ -1,5 +1,3 @@
-import { useNavigate } from "react-router-dom";
-import { Search, FileText } from "lucide-react";
 import SideBar from "../SideBar/SideBar";
 import "./Dashboard.css";
 import Header from "../Header/Header";
@@ -27,7 +25,7 @@ const Dashboard = () => {
         <div className="dashboard-stats">
           <div style={{ padding: "30px" }}>
             <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
-              {cardData.map((data, index) => (
+              {cardData.map((data) => (
                 <StatCard
                   label={data.label}
                   color={data.color}

@@ -1,4 +1,3 @@
-import React from "react";
 import { FiFolder, FiBell } from "react-icons/fi"; 
 import "./Header.css";
 

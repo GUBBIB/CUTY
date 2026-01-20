@@ -1,10 +1,7 @@
-import React from "react";
 import "./PartTimeManagement.css";
 import Header from "../Header/Header";
 import SideBar from "../SideBar/SideBar";
 import PendingRequests from "../Students/PendingRequests/PendingRequests";
-
-
 
 const PartTimeManagement = () => {
 
