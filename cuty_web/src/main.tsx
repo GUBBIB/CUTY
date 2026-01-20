@@ -14,6 +14,7 @@ import Dashboard from './component/DashBoard/Dashboard'
 import Select from './component/Students/SelectSection/Search'
 import AdminSchoolProtectRoute from './component/Auth/ProtectedRoute/AdminSchoolProtectRoute'
 import PartTimeManagement from './component/PartTimeManagement/PartTimeManagement'
+import Documents from './component/Documents/Documents'
 
 
 createRoot(document.getElementById('root')!).render(
@@ -30,6 +31,8 @@ createRoot(document.getElementById('root')!).render(
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/part-time-management" element={<PartTimeManagement />} />
               <Route path='/search-student' element={<Select />} />
+
+              <Route path="/documents/:userId" element={<Documents />} />
 
               {/* 유저 상세 정보 */}
               <Route path="/user-info/:userId" element={<UserInfo />} />
