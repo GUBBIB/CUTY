@@ -1,4 +1,4 @@
-import Header from "../Header/Header";
+import Header from "../SideBar/SideBar";
 import "./Error.css";
 
 interface ErrorProps {

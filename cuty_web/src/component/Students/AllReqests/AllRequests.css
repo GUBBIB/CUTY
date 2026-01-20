@@ -1,0 +1,133 @@
+/* AllRequests.css */
+
+/* 전체 컨테이너 */
+#AllRequests .table-container {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+
+/* 상단 헤더 영역 */
+#AllRequests .table-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+#AllRequests .table-header-row h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #334155;
+}
+
+/* 다운로드 버튼 */
+#AllRequests .download-btn {
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* 테이블 래퍼 */
+#AllRequests .table-wrapper {
+    overflow-x: auto;
+}
+
+/* 테이블 스타일 */
+#AllRequests .custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+/* 헤더 셀 (th) */
+#AllRequests .custom-table thead th {
+    background-color: #f8fafc;
+    color: #64748b;
+    font-weight: 600;
+    padding: 16px 24px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+/* 바디 셀 (td) */
+#AllRequests .custom-table tbody td {
+    padding: 16px 24px;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+}
+
+#AllRequests .custom-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* 텍스트 유틸리티 */
+#AllRequests .td-name {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+#AllRequests .sub-text {
+    font-weight: 400;
+    color: #94a3b8;
+    margin-left: 4px;
+    font-size: 13px;
+}
+
+#AllRequests .td-gray {
+    color: #64748b;
+}
+
+/* 정렬 */
+#AllRequests .th-center,
+#AllRequests .td-center {
+    text-align: center;
+}
+
+#AllRequests .th-right,
+#AllRequests .td-right {
+    text-align: right;
+}
+
+/* 상태 뱃지 공통 */
+#AllRequests .status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+    border: 1px solid transparent;
+}
+
+/* 상태별 색상 */
+#AllRequests .badge-submitted {
+    background-color: #eff6ff;
+    color: #2563eb;
+    border-color: #bfdbfe;
+}
+
+#AllRequests .badge-rejected {
+    background-color: #fef2f2;
+    color: #dc2626;
+    border-color: #fecaca;
+}
+
+#AllRequests .badge-approved {
+    background-color: #f0fdf4;
+    color: #16a34a;
+    border-color: #bbf7d0;
+}
+
+#AllRequests .badge-default {
+    background-color: #fffbeb;
+    color: #d97706;
+    border-color: #fcd34d;
+}

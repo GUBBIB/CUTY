@@ -1,0 +1,152 @@
+/* PendingRequests.css */
+
+/* 전체 영역 컨테이너 */
+#PendingRequests .pending-container {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+
+/* 상단 헤더 (타이틀 + 버튼) */
+#PendingRequests .pending-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+#PendingRequests .pending-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+#PendingRequests .count-text {
+    color: #94a3b8;
+    font-weight: 400;
+    font-size: 16px;
+    margin-left: 5px;
+}
+
+/* 우측 파란색 버튼 */
+#PendingRequests .approve-btn {
+    background-color: #3b82f6; /* 밝은 파란색 */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#PendingRequests .approve-btn:hover {
+    background-color: #2563eb;
+}
+
+/* 테이블 스타일 */
+#PendingRequests .table-wrapper {
+    overflow-x: auto;
+}
+
+#PendingRequests .pending-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+/* 테이블 헤더 */
+#PendingRequests .pending-table thead th {
+    background-color: #f8fafc;
+    color: #64748b;
+    font-weight: 600;
+    padding: 14px 20px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+    white-space: nowrap;
+}
+
+/* 테이블 바디 */
+#PendingRequests .pending-table tbody td {
+    padding: 14px 20px;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+    color: #334155;
+}
+
+/* 행 호버 및 선택 효과 */
+#PendingRequests .pending-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+#PendingRequests .pending-table tbody tr.row-selected {
+    background-color: #eff6ff; /* 선택 시 연한 파란 배경 */
+}
+
+/* 체크박스 정렬 */
+#PendingRequests .checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#PendingRequests .checkbox-label {
+    font-size: 13px;
+    color: #64748b;
+}
+
+/* 텍스트 스타일 */
+#PendingRequests .td-name {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+#PendingRequests .td-gray {
+    color: #64748b;
+}
+
+#PendingRequests .td-center, 
+#PendingRequests .th-center {
+    text-align: center;
+}
+
+#PendingRequests .td-check, 
+#PendingRequests .th-check {
+    width: 40px;
+    text-align: center;
+}
+
+/* 파일 아이콘 버튼 */
+#PendingRequests .icon-btn-file {
+    background: none;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 4px;
+    color: #94a3b8;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#PendingRequests .icon-btn-file:hover {
+    background-color: #f1f5f9;
+    color: #64748b;
+}
+
+/* 상태 뱃지 (노란색 - 승인 대기 전용) */
+#PendingRequests .status-badge-pending {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+    background-color: #fffbeb; /* 연한 노랑 배경 */
+    color: #d97706;            /* 진한 노랑 글씨 */
+    border: 1px solid #fcd34d; /* 노란 테두리 */
+}

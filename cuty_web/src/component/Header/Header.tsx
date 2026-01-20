@@ -1,31 +1,31 @@
-import { Link } from "react-router-dom";
-import { LogOut } from "lucide-react";
-import { useAuth } from "../../context/useAuth";
+import React from "react";
+import { FiFolder, FiBell } from "react-icons/fi"; 
 import "./Header.css";
 
-const Header = () => {
-    const { Logout, user } = useAuth();
-
-    const handleLogout = () => {
-        Logout();
-    }
-
-    return (
-        <div id="Header">
-            <div className="container">
-                <div className="title-user">
-                    <Link to="/dashboard">
-                        <h1 className="title">CUTY</h1>
-                    </Link>
-                    <p className="user-name">{user?.email}</p>
-                </div>
-                <button className="logout-btn" onClick={handleLogout}>
-                    <LogOut className="h-4 w-4   mr-2" />
-                    로그아웃
-                </button>
-            </div>
-        </div>
-    );
+interface HeaderProps {
+    title: string;
 }
+
+const Header = ({title}: HeaderProps) => {
+    return (
+        <header id="Header">
+            <div className="header-left">
+                <h2>{title}</h2>
+            </div>
+
+            <div className="header-right">
+                <button className="icon-btn">
+                    <FiFolder />
+                </button>
+                <button className="icon-btn">
+                    <FiBell />
+                </button>
+                
+                <div className="user-profile">
+                </div>
+            </div>
+        </header>
+    );
+};
 
 export default Header;

@@ -1,0 +1,76 @@
+/* SideBar.css */
+
+/* 사이드바 전체 컨테이너 (최상위 ID) */
+#SideBar {
+    width: 250px;
+    height: 100vh;
+    background-color: #1e293b; /* 어두운 남색 */
+    color: #94a3b8;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000; /* 다른 요소 위에 오도록 추가 */
+}
+
+/* 내부 컨테이너 */
+#SideBar .container {
+    padding: 0;
+    width: 100%;
+}
+
+/* 로고 영역 */
+#SideBar .logo-area {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding-left: 24px;
+    margin-bottom: 20px;
+}
+
+#SideBar .logo-area h1 {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+/* 메뉴 리스트 */
+#SideBar .menu-list {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 개별 메뉴 아이템 */
+#SideBar .menu-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 24px;
+    text-decoration: none;
+    color: #94a3b8; /* 비활성 색상 */
+    font-size: 15px;
+    transition: all 0.2s ease;
+    border-left: 4px solid transparent;
+}
+
+#SideBar .menu-item .icon {
+    margin-right: 12px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+}
+
+/* 마우스 호버 효과 */
+#SideBar .menu-item:hover {
+    background-color: #2c364c;
+    color: #ffffff;
+}
+
+/* 활성화(Active) 상태 */
+#SideBar .menu-item.active {
+    background-color: #334155;
+    color: white;
+    border-left-color: #ffffff;
+}

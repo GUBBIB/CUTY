@@ -4,11 +4,11 @@ body {
     background-color: #f1f5f9; /* 전체 배경색 (연한 회색) */
 }
 
-#Dashboard .dashboard-container {
+#PartTimeManagement .part-time-management-container {
     display: flex; /* 사이드바와 메인 컨텐츠를 가로로 배치 */
 }
 
-#Dashboard .dashboard-content {
+#PartTimeManagement .part-time-management-content {
     flex: 1; /* 남은 공간을 모두 차지 */
     margin-left: 250px; /* 사이드바 너비(250px)만큼 띄우기 */
     display: flex;
