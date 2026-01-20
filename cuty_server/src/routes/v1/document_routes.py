@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from src.services.document_service import DocumentService
-from src.utils.auth import token_required
+from src.utils.auth import token_required, admin_or_school_required
+from flask import send_file
 
 document_bp = Blueprint('document', __name__)
 
@@ -300,3 +301,23 @@ def get_document_types(current_user):
             'success': False,
             'error': '서류 타입을 가져오는 중 오류가 발생했습니다'
         }), 500
+
+@document_bp.route('/requests/<int:user_id>/merged-document', methods=['GET'])
+@token_required
+@admin_or_school_required
+def get_studnet_merged_document(user_id):
+    """
+    특정 유저의 모든 PDF/이미지 서류를 하나로 합쳐서 반환    
+    """
+    try:
+        pdf_stream = DocumentService.get_merged_pdf(user_id)
+
+        return send_file(
+            pdf_stream,
+            mimetype='application/pdf',
+            as_attachment=False,
+            download_name=f'student_{user_id}_documents.pdf'
+        )
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

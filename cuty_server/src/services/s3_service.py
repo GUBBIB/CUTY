@@ -8,6 +8,8 @@ from src.config.env import (
 # 로거 설정
 # logger = logging.getLogger(__name__)
 
+BUCKET_NAME = AWS_S3_BUCKET
+
 # S3 클라이언트 반환 함수
 def get_s3_client():
     return boto3.client(
@@ -16,6 +18,8 @@ def get_s3_client():
         aws_access_key_id=AWS_ACCESS_KEY_ID,
         aws_secret_access_key=AWS_SECRET_ACCESS_KEY
     )
+    
+s3_client = get_s3_client()
 
 # presigned post 발급 함수
 def generate_presigned_post(key, content_type, max_file_size=MAX_FILE_SIZE, expires_in=600, bucket_name=AWS_S3_BUCKET):

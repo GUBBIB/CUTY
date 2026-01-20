@@ -10,6 +10,8 @@ from .enums import UserType, DocumentType
 from .image_store import ImageStore
 from .document import Document
 from .requests import Requests
+from .point_log import PointLog
+from .attendacne import Attendance
 
 __all__ = [
     'db',
@@ -27,5 +29,7 @@ __all__ = [
     'DocumentType',
     'ImageStore',
     'Document',
-    'Requests'
+    'Requests',
+    'PointLog',
+    'Attendance',
 ]

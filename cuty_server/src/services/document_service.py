@@ -5,6 +5,9 @@ from sqlalchemy import and_
 from src.models import db, Document, ImageStore, User
 from src.models.enums import DocumentType
 from src.utils.formatters import get_document_data
+from pypdf import PdfWriter, PdfReader
+import img2pdf
+from src.services.s3_service import s3_client, BUCKET_NAME
 
 # 로거 설정
 logger = logging.getLogger(__name__)
@@ -271,3 +274,52 @@ class DocumentService:
             }
             for doc_type in DocumentType
         ]
+
+    @staticmethod
+    def get_merged_pdf(user_id):
+        """
+        특정 유저의 모든 PDF/이미지 서류를 하나로 합쳐서 반환
+        """
+
+        user = User.query.get(user_id)
+        if not user:
+            raise ValidationError("사용자를 찾을 수 없습니다.")
+            
+        if not user.documents:
+            raise ValidationError("서류가 없습니다.")
+
+        pdf_writer = PdfWriter()
+
+        for doc in user.documents:
+            if not doc.image_store:
+                continue
+
+            try:
+                file_obj = s3_client.get_object(
+                    Bucket=BUCKET_NAME, 
+                    Key=doc.image_store.relative_path
+                )
+                file_content = file_obj['Body'].read() 
+
+                filename = doc.image_store.original_name.lower() if doc.image_store.original_name else ""
+                
+                if filename.endswith(('.jpg', '.jpeg', '.png')):
+                    img_pdf_bytes = img2pdf.convert(file_content)
+                    pdf_writer.append(io.BytesIO(img_pdf_bytes))
+
+                elif filename.endswith('.pdf'):
+                    pdf_writer.append(io.BytesIO(file_content))
+                
+                else:
+                    print(f"지원하지 않는 파일 형식입니다: {filename}")
+                    continue
+
+            except Exception as e:
+                print(f"파일 병합 중 오류 발생 ({doc.id}): {e}")
+                continue
+
+        output_stream = io.BytesIO()
+        pdf_writer.write(output_stream)
+        output_stream.seek(0) 
+        
+        return output_stream

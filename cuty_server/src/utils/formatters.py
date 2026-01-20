@@ -94,6 +94,35 @@ def get_post_data(post, view_count, comment_count, like_count, dislike_count, us
         'deleted_at': None
     }
 
+def get_post_list_data(post):
+    """
+    게시글 목록(인기글 등)을 위한 가벼운 포매팅 함수입니다.
+    """
+    if post.deleted_at:
+        return {
+            'id': post.id,
+            'title': "삭제된 게시글입니다",
+            'category': post.category,
+            'nickname': None,
+            'view_count': post.views_count,
+            'comment_count': post.comments_count,
+            'like_count': post.likes_count,
+            'created_at': post.created_at.isoformat(),
+            'is_deleted': True
+        }
+
+    return {
+        'id': post.id,
+        'title': post.title,
+        'category': post.category,
+        'nickname': post.nickname,
+        'view_count': post.views_count,
+        'comment_count': post.comments_count,
+        'like_count': post.likes_count,
+        'created_at': post.created_at.isoformat(),
+        'is_deleted': False
+    }
+
 
 def get_comment_data(comment, reply_count):
     # 삭제된 댓글인 경우
@@ -165,22 +194,23 @@ def get_current_user_data(user):
         'country': {
             'id': user.country.id,
             'name': user.country.name,
-            'code': user.country.code
-        },
+            'code': user.country.code,
+            'eng_name': user.country.eng_name,
+        } if user.country else None,        
         'school': {
             'id': user.school.id,
             'name': user.school.name
-        },
+        } if user.school else None,
         'college': {
             'id': user.college.id,
             'name': user.college.name
-        },
+        } if user.college else None,
         'department': {
             'id': user.department.id,
             'name': user.department.name
-        },
-        'created_at': user.created_at.isoformat(),
-        'updated_at': user.updated_at.isoformat()
+        } if user.department else None,
+        'created_at': user.created_at.isoformat() if user.created_at else None,
+        'updated_at': user.updated_at.isoformat() if user.updated_at else None
     }
 
 def get_presigned_url_data(image_store, presigned_post):
@@ -229,7 +259,7 @@ def get_document_data(document):
     """서류 데이터를 포맷팅합니다."""
     return {
         'id': document.id,
-        'name': document.name,
+        'name': document.name or "",
         'document_type': document.document_type.value,
         'user': get_user_data(document.user) if document.user else None,
         'image_store': get_image_store_data(document.image_store) if document.image_store else None,

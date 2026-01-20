@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../screens/home_screen.dart';
 import '../../screens/login_screen.dart';
+import '../../screens/my_page_screen.dart';
 
 class RootTab extends StatefulWidget{
   const RootTab({super.key});
@@ -14,7 +15,7 @@ class _RootTabState extends State<RootTab> {
   int index = 1;
 
   List<Widget> screens = [
-    Center(child: Text("Shop Screen")), // ShopScreen() 으로 변경 필요
+    MyPageScreen(), // ShopScreen() 으로 변경 필요
     HomeScreen(),
     LoginScreen(),    // MyScreen() 으로 변경 필요
   ];

@@ -15,7 +15,7 @@ def create_requests(current_user):
     
     :param user: 로그인된 사용자 객체
     :param req_type: 요청 타입(예: "PART_TIME" 등 [ 추후 추가 예정 ] )
-        :req_type: [ PENDING, REJECTED, APPROVED, CANCELED ]
+    :req_type: [ PENDING, REJECTED, APPROVED, CANCELED ]
     :param idempotency_key: 중복 요청 방지를 위한 키(선택)
     :return: dict 응답 데이터
     :raises ValidationError, DuplicateRequestsError, InternalServiceError
@@ -49,7 +49,6 @@ def create_requests(current_user):
 def list_requests(current_user):
     """
     요청 목록 조회
-    :param user: 로그인된 사용자 객체
     :param page: 페이지 번호 (기본 1)
     :param per_page: 페이지당 항목 개수 (기본 10)
     :param status: 요청 상태 필터 (None이면 전체)

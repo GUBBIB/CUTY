@@ -23,6 +23,7 @@ class AuthService:
             
         # 단과대학 존재 여부와 학교 관계 확인
         college = College.query.filter_by(
+            id=data['college_id'],
             school_id=data['school_id']
         ).first()
         if not college:

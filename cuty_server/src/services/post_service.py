@@ -7,7 +7,7 @@ from src.models import (
 )
 from src.utils.formatters import (
     get_post_data, get_school_data, get_college_data, 
-    get_department_data
+    get_department_data, get_post_list_data
 )
 from src.services.nickname_service import NicknameService
 
@@ -289,3 +289,20 @@ class PostService:
         except Exception as e:
             db.session.rollback()
             raise e
+
+    @staticmethod
+    def get_popular_posts(category=None, limit=5):
+        """
+        인기 점수(popularity_score) 순으로 게시글 목록을 가져옵니다.
+        """
+        query = Post.query.filter(Post.deleted_at == None)
+
+        if category:
+            query = query.filter(Post.category == category)
+
+        popular_posts = query.order_by(
+            Post.popularity_score.desc(), 
+            Post.created_at.desc()
+        ).limit(limit).all()
+
+        return [get_post_list_data(post) for post in popular_posts]

@@ -7,43 +7,26 @@ class LikeService:
     @staticmethod
     def _get_post_data(post_id, user_id):
         """게시글 데이터를 조회합니다."""
-        post_data = db.session.query(
-            Post,
-            func.count(distinct(PostView.id)).label('view_count'),
-            func.count(distinct(case(
-                (PostComment.parent_id == None, PostComment.id)
-            ))).label('comment_count'),
-            func.count(distinct(case((PostLike.type == 'like', PostLike.id)))).label('like_count'),
-            func.count(distinct(case((PostLike.type == 'dislike', PostLike.id)))).label('dislike_count'),
-            func.count(distinct(case(
-                (and_(PostLike.type == 'like', PostLike.user_id == user_id), PostLike.id)
-            ))).label('user_like_status'),
-            func.count(distinct(case(
-                (and_(PostLike.type == 'dislike', PostLike.user_id == user_id), PostLike.id)
-            ))).label('user_dislike_status')
-        ).outerjoin(PostView, Post.id == PostView.post_id)\
-        .outerjoin(PostComment, Post.id == PostComment.post_id)\
-        .outerjoin(PostLike, Post.id == PostLike.post_id)\
-        .filter(Post.id == post_id)\
-        .group_by(Post.id)\
-        .first()
-
-        if not post_data:
-            raise ValueError('존재하지 않는 게시글입니다')
-
-        post, view_count, comment_count, like_count, dislike_count, user_like_status, user_dislike_status = post_data
         
+        post = Post.query.get(post_id)
+        if not post:
+            raise ValueError('존재하지 않는 게시글입니다')
         if post.deleted_at:
             raise ValueError('삭제된 게시글입니다')
-            
+
+        user_status = db.session.query(
+            func.max(case((PostLike.type == 'like', 1), else_=0)).label('is_like'),
+            func.max(case((PostLike.type == 'dislike', 1), else_=0)).label('is_dislike')
+        ).filter(PostLike.post_id == post_id, PostLike.user_id == user_id).first()
+
         return get_post_data(
             post, 
-            view_count, 
-            comment_count, 
-            like_count, 
-            dislike_count,
-            bool(user_like_status),
-            bool(user_dislike_status)
+            post.views_count, 
+            post.comments_count, 
+            post.likes_count, 
+            post.dislikes_count,
+            bool(user_status.is_like if user_status else False),
+            bool(user_status.is_dislike if user_status else False)
         )
 
     @staticmethod
@@ -72,6 +55,8 @@ class LikeService:
                 raise ValueError('이미 좋아요한 게시글입니다')
             # 싫어요를 좋아요로 변경
             existing_like.type = 'like'
+            post.dislikes_count -= 1
+            post.likes_count += 1
             existing_like.updated_at = datetime.utcnow()
         else:
             # 새로운 좋아요 생성
@@ -81,6 +66,9 @@ class LikeService:
                 type='like'
             )
             db.session.add(new_like)
+            post.likes_count += 1
+
+        post.update_popularity_score()
 
         try:
             db.session.commit()
