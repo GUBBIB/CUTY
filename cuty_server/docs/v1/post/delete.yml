@@ -1,0 +1,21 @@
+tags:
+  - "Post"
+summary: "게시글 삭제"
+description: "자신이 작성한 게시글을 삭제합니다. (Soft Delete)"
+parameters:
+  - name: "Authorization"
+    in: "header"
+    type: "string"
+    required: true
+    description: "Bearer {Access Token}"
+  - name: "post_id"
+    in: "path"
+    type: "integer"
+    required: true
+responses:
+  204:
+    description: "삭제 성공"
+  403:
+    description: "권한 없음"
+  404:
+    description: "게시글 없음"

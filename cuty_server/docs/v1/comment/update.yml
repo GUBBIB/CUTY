@@ -1,0 +1,36 @@
+tags:
+  - "Comment"
+summary: "댓글 수정"
+description: "자신이 작성한 댓글을 수정합니다."
+parameters:
+  - name: "Authorization"
+    in: "header"
+    type: "string"
+    required: true
+    description: "Bearer {Access Token}"
+  - name: "post_id"
+    in: "path"
+    type: "integer"
+    required: true
+  - name: "comment_id"
+    in: "path"
+    type: "integer"
+    required: true
+  - name: "body"
+    in: "body"
+    required: true
+    schema:
+      type: "object"
+      required:
+        - "content"
+      properties:
+        content:
+          type: "string"
+          example: "수정된 댓글 내용입니다."
+responses:
+  200:
+    description: "수정 성공"
+  403:
+    description: "권한 없음 (본인 댓글 아님)"
+  404:
+    description: "댓글 없음"

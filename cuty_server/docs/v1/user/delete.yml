@@ -1,0 +1,17 @@
+tags:
+  - "User"
+summary: "회원 탈퇴"
+description: "현재 로그인한 사용자의 계정을 삭제(Soft Delete)합니다."
+parameters:
+  - name: "Authorization"
+    in: "header"
+    type: "string"
+    required: true
+    description: "Bearer {Access Token}"
+responses:
+  204:
+    description: "탈퇴 성공"
+  400:
+    description: "잘못된 요청"
+  500:
+    description: "서버 에러"

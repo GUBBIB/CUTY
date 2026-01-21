@@ -1,0 +1,21 @@
+tags:
+  - "Like"
+summary: "게시글 싫어요 취소"
+description: "싫어요를 취소합니다."
+parameters:
+  - name: "Authorization"
+    in: "header"
+    type: "string"
+    required: true
+    description: "Bearer {Access Token}"
+  - name: "post_id"
+    in: "path"
+    type: "integer"
+    required: true
+responses:
+  200:
+    description: "취소 성공 (갱신된 게시글 정보 반환)"
+  400:
+    description: "싫어요 하지 않은 상태"
+  404:
+    description: "게시글 없음"

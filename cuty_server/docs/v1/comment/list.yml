@@ -1,0 +1,51 @@
+tags:
+  - "Comment"
+summary: "게시글 댓글 조회"
+description: "특정 게시글의 최상위 댓글 목록을 조회합니다. (대댓글 제외)"
+parameters:
+  - name: "post_id"
+    in: "path"
+    type: "integer"
+    required: true
+    description: "게시글 ID"
+  - name: "page"
+    in: "query"
+    type: "integer"
+    default: 1
+    description: "페이지 번호"
+  - name: "per_page"
+    in: "query"
+    type: "integer"
+    default: 10
+    description: "페이지 당 댓글 수"
+responses:
+  200:
+    description: "조회 성공"
+    schema:
+      type: "object"
+      properties:
+        comments:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "integer"
+              content:
+                type: "string"
+              nickname:
+                type: "string"
+              created_at:
+                type: "string"
+              reply_count:
+                type: "integer"
+        total:
+          type: "integer"
+        pages:
+          type: "integer"
+        current_page:
+          type: "integer"
+  404:
+    description: "게시글 없음"
+  500:
+    description: "서버 에러"

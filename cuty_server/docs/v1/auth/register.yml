@@ -1,0 +1,63 @@
+tags:
+  - "Auth"
+summary: "회원가입"
+description: "학교, 학과 정보 등을 입력받아 회원을 생성하고 토큰을 발급합니다."
+parameters:
+  - name: "body"
+    in: "body"
+    required: true
+    schema:
+      type: "object"
+      required:
+        - "email"
+        - "password"
+        - "name"
+        - "country_id"
+        - "school_id"
+        - "college_id"
+        - "department_id"
+      properties:
+        email:
+          type: "string"
+          example: "student@university.ac.kr"
+        password:
+          type: "string"
+          example: "password1234!"
+        name:
+          type: "string"
+          example: "김철수"
+        country_id:
+          type: "integer"
+          example: 1
+        school_id:
+          type: "integer"
+          example: 10
+        college_id:
+          type: "integer"
+          example: 5
+        department_id:
+          type: "integer"
+          example: 20
+responses:
+  201:
+    description: "회원가입 성공"
+    schema:
+      type: "object"
+      properties:
+        access_token:
+          type: "string"
+        token_type:
+          type: "string"
+          example: "bearer"
+        user_type:
+          type: "string"
+          description: "유저 타입 (예: STUDENT)"
+  400:
+    description: "필수 필드 누락 또는 유효하지 않은 ID/이메일 중복"
+    schema:
+      type: "object"
+      properties:
+        error:
+          type: "string"
+  500:
+    description: "서버 에러"

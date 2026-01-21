@@ -1,0 +1,28 @@
+tags:
+  - "Document"
+summary: "서류 상세 조회"
+description: "특정 서류의 상세 정보를 조회합니다."
+parameters:
+  - name: "Authorization"
+    in: "header"
+    type: "string"
+    required: true
+    description: "Bearer {Access Token}"
+  - name: "document_id"
+    in: "path"
+    type: "integer"
+    required: true
+responses:
+  200:
+    description: "조회 성공"
+    schema:
+      type: "object"
+      properties:
+        success:
+          type: "boolean"
+        data:
+          type: "object"
+  404:
+    description: "서류 없음"
+  410:
+    description: "삭제된 서류"

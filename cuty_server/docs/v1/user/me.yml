@@ -1,0 +1,28 @@
+tags:
+  - "User"
+summary: "내 정보 조회"
+description: "현재 로그인한 사용자의 상세 정보를 조회합니다."
+parameters:
+  - name: "Authorization"
+    in: "header"
+    type: "string"
+    required: true
+    description: "Bearer {Access Token}"
+responses:
+  200:
+    description: "조회 성공"
+    schema:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        email:
+          type: "string"
+        name:
+          type: "string"
+        school:
+          type: "object"
+        country:
+          type: "object"
+  500:
+    description: "서버 에러"

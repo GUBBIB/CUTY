@@ -1,0 +1,33 @@
+tags:
+  - "Document"
+summary: "서류 수정"
+description: "기존 서류 정보를 업데이트합니다."
+parameters:
+  - name: "Authorization"
+    in: "header"
+    type: "string"
+    required: true
+    description: "Bearer {Access Token}"
+  - name: "document_id"
+    in: "path"
+    type: "integer"
+    required: true
+  - name: "body"
+    in: "body"
+    required: true
+    schema:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        document_type:
+          type: "string"
+        image_store_id:
+          type: "integer"
+responses:
+  200:
+    description: "수정 성공"
+  400:
+    description: "잘못된 요청"
+  410:
+    description: "삭제된 서류/이미지"

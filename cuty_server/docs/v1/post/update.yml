@@ -1,0 +1,33 @@
+tags:
+  - "Post"
+summary: "게시글 수정"
+description: "자신이 작성한 게시글을 수정합니다."
+parameters:
+  - name: "Authorization"
+    in: "header"
+    type: "string"
+    required: true
+    description: "Bearer {Access Token}"
+  - name: "post_id"
+    in: "path"
+    type: "integer"
+    required: true
+  - name: "body"
+    in: "body"
+    required: true
+    schema:
+      type: "object"
+      properties:
+        title:
+          type: "string"
+        content:
+          type: "string"
+        category:
+          type: "string"
+responses:
+  200:
+    description: "수정 성공"
+  403:
+    description: "권한 없음 (본인 글 아님)"
+  404:
+    description: "게시글 없음"

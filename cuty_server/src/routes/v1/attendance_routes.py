@@ -2,11 +2,14 @@ from flask import Blueprint, request, jsonify
 from src.services.attendance_service import AttendanceService
 from src.utils.auth import token_required
 from datetime import date
+from flasgger import swag_from
+from src.utils.swagger_helper import get_swagger_config  
 
 attendance_bp = Blueprint('attendance', __name__)
 
 @attendance_bp.route('/', methods=['POST'])
 @token_required
+@swag_from(get_swagger_config('docs/v1/attendance/check.yml'))  
 def check_attendance(current_user):
     """
     출석 체크 및 포인트 적립
@@ -28,6 +31,7 @@ def check_attendance(current_user):
 
 @attendance_bp.route('/me', methods=['GET'])
 @token_required
+@swag_from(get_swagger_config('docs/v1/attendance/me.yml'))  
 def get_my_attendance(current_user):
     """
     내 출석 기록 조회

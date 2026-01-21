@@ -3,12 +3,14 @@ from src.services.requests_service import RequestsService
 from src.utils.formatters import get_current_user_data
 from src.utils.auth import token_required, admin_or_school_required
 from src.utils.exceptions import ValidationError, PermissionDeniedError, DuplicateRequestError, InternalServiceError
-
+from flasgger import swag_from
+from src.utils.swagger_helper import get_swagger_config
 
 requests_bp = Blueprint('requests', __name__)
 
 @requests_bp.route('/', methods=['POST'])
 @token_required
+@swag_from(get_swagger_config('docs/v1/requests/create.yml'))
 def create_requests(current_user):
     """
     신청 요청을 생성합니다.
@@ -46,6 +48,7 @@ def create_requests(current_user):
 @requests_bp.route('/', methods=['GET'])
 @token_required
 @admin_or_school_required
+@swag_from(get_swagger_config('docs/v1/requests/list.yml'))
 def list_requests(current_user):
     """
     요청 목록 조회

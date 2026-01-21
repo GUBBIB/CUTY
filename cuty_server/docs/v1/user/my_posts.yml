@@ -1,0 +1,34 @@
+tags:
+  - "User"
+summary: "내 게시글 조회"
+description: "내가 작성한 게시글 목록을 조회합니다."
+parameters:
+  - name: "Authorization"
+    in: "header"
+    type: "string"
+    required: true
+    description: "Bearer {Access Token}"
+  - name: "page"
+    in: "query"
+    type: "integer"
+    default: 1
+  - name: "per_page"
+    in: "query"
+    type: "integer"
+    default: 10
+responses:
+  200:
+    description: "조회 성공"
+    schema:
+      type: "object"
+      properties:
+        posts:
+          type: "array"
+          items:
+            type: "object"
+        total:
+          type: "integer"
+        pages:
+          type: "integer"
+  500:
+    description: "서버 에러"

@@ -1,0 +1,24 @@
+tags:
+  - "Document"
+summary: "서류 통합 다운로드 (PDF)"
+description: "관리자 또는 학교 관계자가 특정 학생의 서류를 PDF 하나로 병합하여 다운로드합니다."
+parameters:
+  - name: "Authorization"
+    in: "header"
+    type: "string"
+    required: true
+    description: "Bearer {Access Token}"
+  - name: "user_id"
+    in: "path"
+    type: "integer"
+    required: true
+    description: "대상 학생 ID"
+produces:
+  - "application/pdf"
+responses:
+  200:
+    description: "파일 다운로드 성공"
+    schema:
+      type: "file"
+  500:
+    description: "병합 실패"

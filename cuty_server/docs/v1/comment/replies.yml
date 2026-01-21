@@ -1,0 +1,36 @@
+tags:
+  - "Comment"
+summary: "대댓글 조회"
+description: "특정 댓글의 하위 댓글(대댓글) 목록을 조회합니다."
+parameters:
+  - name: "post_id"
+    in: "path"
+    type: "integer"
+    required: true
+  - name: "comment_id"
+    in: "path"
+    type: "integer"
+    required: true
+    description: "부모 댓글 ID"
+  - name: "page"
+    in: "query"
+    type: "integer"
+    default: 1
+  - name: "per_page"
+    in: "query"
+    type: "integer"
+    default: 10
+responses:
+  200:
+    description: "조회 성공"
+    schema:
+      type: "object"
+      properties:
+        replies:
+          type: "array"
+          items:
+            type: "object"
+        total:
+          type: "integer"
+  404:
+    description: "게시글 또는 부모 댓글 없음"

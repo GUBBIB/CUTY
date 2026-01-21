@@ -1,9 +1,12 @@
 from flask import Blueprint, request, jsonify
 from src.services.auth_service import AuthService
+from flasgger import swag_from
+from src.utils.swagger_helper import get_swagger_config 
 
 auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.route('/register', methods=['POST'])
+@swag_from(get_swagger_config('docs/v1/auth/register.yml'))
 def register():
     data = request.get_json()
     
@@ -29,6 +32,7 @@ def register():
         return jsonify({'error': '서버 오류가 발생했습니다'}), 500
 
 @auth_bp.route('/login', methods=['POST'])
+@swag_from(get_swagger_config('docs/v1/auth/login.yml'))  
 def login():
     data = request.get_json()
     

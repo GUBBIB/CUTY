@@ -14,7 +14,8 @@ from src.config.env import (
 )
 from src.config.database import DatabaseConfig
 from flask_cors import CORS
-
+from flasgger import Swagger
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 def create_app(config_name='local'):
     app = Flask(__name__)
@@ -48,6 +49,46 @@ def create_app(config_name='local'):
     # 라우트 등록
     init_routes(app)
     
+    # swagger 등록
+    app.wsgi_app = ProxyFix(
+        app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
+    )
+    
+    swagger_template = {
+        "swagger": "2.0",
+        "info": {
+            "title": "My University API", 
+            "description": "API 명세서입니다.", 
+            "version": "1.0.0"
+        },
+        "schemes": ["https", "http"], 
+        "securityDefinitions": {
+            "Bearer": {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header",
+                "description": "Bearer Token을 입력하세요."
+            }
+        },
+    }
+    
+    swagger_config = {
+        "headers": [],
+        "specs": [
+            {
+                "endpoint": 'apispec_1',
+                "route": '/apispec_1.json',
+                "rule_filter": lambda rule: True,
+                "model_filter": lambda tag: True,
+            }
+        ],
+        "static_url_path": "/flasgger_static",
+        "swagger_ui": True,
+        "specs_route": "/apidocs/"
+    }
+    
+    Swagger(app, template=swagger_template, config=swagger_config)
+
     return app
 
 app = create_app(FLASK_ENV)

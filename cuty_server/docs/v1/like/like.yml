@@ -1,0 +1,35 @@
+tags:
+  - "Like"
+summary: "게시글 좋아요"
+description: "게시글에 좋아요를 누릅니다. 이미 싫어요를 누른 상태라면 싫어요가 취소되고 좋아요로 변경됩니다."
+parameters:
+  - name: "Authorization"
+    in: "header"
+    type: "string"
+    required: true
+    description: "Bearer {Access Token}"
+  - name: "post_id"
+    in: "path"
+    type: "integer"
+    required: true
+    description: "게시글 ID"
+responses:
+  200:
+    description: "성공 (갱신된 게시글 정보 반환)"
+    schema:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        likes_count:
+          type: "integer"
+        dislikes_count:
+          type: "integer"
+        is_like:
+          type: "boolean"
+        is_dislike:
+          type: "boolean"
+  400:
+    description: "이미 좋아요 함 / 타 학교 게시글"
+  404:
+    description: "게시글 없음"

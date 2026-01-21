@@ -1,0 +1,32 @@
+tags:
+  - "Post"
+summary: "게시글 상세 조회"
+description: "특정 게시글의 상세 정보를 조회합니다. 조회수가 증가합니다."
+parameters:
+  - name: "Authorization"
+    in: "header"
+    type: "string"
+    required: false
+    description: "Bearer {Access Token} (로그인 시 본인의 좋아요 여부 등 확인 가능)"
+  - name: "post_id"
+    in: "path"
+    type: "integer"
+    required: true
+responses:
+  200:
+    description: "조회 성공"
+    schema:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        title:
+          type: "string"
+        content:
+          type: "string"
+        view_count:
+          type: "integer"
+        like_count:
+          type: "integer"
+  404:
+    description: "게시글 없음"

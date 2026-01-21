@@ -1,0 +1,46 @@
+tags:
+  - "School"
+summary: "단과대학 목록 조회"
+description: "특정 학교에 소속된 단과대학 목록을 조회합니다."
+parameters:
+  - name: "school_id"
+    in: "path"
+    type: "integer"
+    required: true
+    description: "학교 ID"
+  - name: "page"
+    in: "query"
+    type: "integer"
+    default: 1
+  - name: "per_page"
+    in: "query"
+    type: "integer"
+    default: 10
+  - name: "search"
+    in: "query"
+    type: "string"
+    required: false
+    description: "검색어 (단과대학명)"
+responses:
+  200:
+    description: "조회 성공"
+    schema:
+      type: "object"
+      properties:
+        colleges:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "integer"
+              name:
+                type: "string"
+              school_id:
+                type: "integer"
+        total:
+          type: "integer"
+  404:
+    description: "학교 없음"
+  500:
+    description: "서버 에러"

@@ -1,12 +1,14 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, send_file
 from src.services.document_service import DocumentService
 from src.utils.auth import token_required, admin_or_school_required
-from flask import send_file
+from flasgger import swag_from
+from src.utils.swagger_helper import get_swagger_config
 
 document_bp = Blueprint('document', __name__)
 
 @document_bp.route('', methods=['GET'])
 @token_required
+@swag_from(get_swagger_config('docs/v1/document/list.yml'))
 def get_documents(current_user):
     """사용자의 서류 목록을 조회합니다."""
     try:
@@ -39,6 +41,7 @@ def get_documents(current_user):
 
 @document_bp.route('/<int:document_id>', methods=['GET'])
 @token_required
+@swag_from(get_swagger_config('docs/v1/document/detail.yml'))
 def get_document(current_user, document_id):
     """서류 상세 정보를 조회합니다."""
     try:
@@ -73,6 +76,7 @@ def get_document(current_user, document_id):
 
 @document_bp.route('', methods=['POST'])
 @token_required
+@swag_from(get_swagger_config('docs/v1/document/create.yml'))
 def create_document(current_user):
     """새로운 서류를 생성합니다."""
     try:
@@ -133,6 +137,7 @@ def create_document(current_user):
 
 @document_bp.route('/<int:document_id>', methods=['PUT'])
 @token_required
+@swag_from(get_swagger_config('docs/v1/document/update.yml'))
 def update_document(current_user, document_id):
     """서류 정보를 업데이트합니다."""
     try:
@@ -188,6 +193,7 @@ def update_document(current_user, document_id):
 
 @document_bp.route('/<int:document_id>', methods=['DELETE'])
 @token_required
+@swag_from(get_swagger_config('docs/v1/document/delete.yml'))
 def delete_document(current_user, document_id):
     """서류를 삭제합니다."""
     try:
@@ -222,6 +228,7 @@ def delete_document(current_user, document_id):
 
 @document_bp.route('/bulk-delete', methods=['DELETE'])
 @token_required
+@swag_from(get_swagger_config('docs/v1/document/bulk_delete.yml'))
 def delete_multiple_documents(current_user):
     """여러 서류를 한 번에 삭제합니다."""
     try:
@@ -286,6 +293,7 @@ def delete_multiple_documents(current_user):
 
 @document_bp.route('/types', methods=['GET'])
 @token_required
+@swag_from(get_swagger_config('docs/v1/document/types.yml'))
 def get_document_types(current_user):
     """사용 가능한 서류 타입 목록을 조회합니다."""
     try:
@@ -305,6 +313,7 @@ def get_document_types(current_user):
 @document_bp.route('/requests/<int:user_id>/merged-document', methods=['GET'])
 @token_required
 @admin_or_school_required
+@swag_from(get_swagger_config('docs/v1/document/merge.yml'))
 def get_studnet_merged_document(current_user, user_id):
     """
     특정 유저의 모든 PDF/이미지 서류를 하나로 합쳐서 반환    
