@@ -3,7 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../config/app_assets.dart';
 import '../../models/schedule_item.dart';
 import '../../models/community_post.dart';
-import '../../services/mock_home_repository.dart';
+import '../../services/mock_home_repository.dart'; // Keep for provider access? Or change later
+import '../../services/home_repository.dart'; // Import Interface
 
 // State class
 class HomeState {
@@ -40,7 +41,7 @@ class HomeState {
 
 // ViewModel
 class HomeViewModel extends StateNotifier<HomeState> {
-  final MockHomeRepository _repository;
+  final HomeRepository _repository; // Use interface, not implementation class
 
   HomeViewModel(this._repository)
       : super(HomeState(characterImage: AppAssets.capyFortuneHold)) {
@@ -81,6 +82,6 @@ class HomeViewModel extends StateNotifier<HomeState> {
 }
 
 final homeViewModelProvider = StateNotifierProvider<HomeViewModel, HomeState>((ref) {
-  final repository = ref.watch(homeRepositoryProvider) as MockHomeRepository;
+  final repository = ref.watch(homeRepositoryProvider);
   return HomeViewModel(repository);
 });

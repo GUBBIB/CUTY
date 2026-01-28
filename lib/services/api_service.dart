@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
 import '../models/auth_response.dart';
 import '../models/post_model.dart';
@@ -62,7 +63,7 @@ class ApiService {
       return [];
     } catch (e) {
       // Return empty list or throw depending on UI requirements
-      print('Fetch Popular Posts Error: $e');
+      debugPrint('Fetch Popular Posts Error: $e');
       return [];
     }
   }
@@ -84,7 +85,7 @@ class ApiService {
       }
       return [];
     } catch (e) {
-      print('Fetch Posts Error: $e');
+      debugPrint('Fetch Posts Error: $e');
       return [];
     }
   }

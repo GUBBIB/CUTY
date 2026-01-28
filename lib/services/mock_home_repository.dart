@@ -1,10 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/schedule_item.dart';
 import '../models/community_post.dart';
+import 'package:dio/dio.dart'; // Import Dio
+import '../data/repositories/real_home_repository.dart'; // Import Real Repo
 import 'home_repository.dart';
 
 final homeRepositoryProvider = Provider<HomeRepository>((ref) {
-  return MockHomeRepository();
+  // Use RealHomeRepository with Dio
+  // For now, let's create a placeholder Dio. In a real app, you might provide Dio separately.
+  final dio = Dio(BaseOptions(
+    baseUrl: 'https://api.university.ac.kr', // Base URL from API Spec context (implied)
+    connectTimeout: const Duration(seconds: 5),
+    receiveTimeout: const Duration(seconds: 3),
+  ));
+  return RealHomeRepository(dio);
 });
 
 class MockHomeRepository implements HomeRepository {

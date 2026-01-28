@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'screens/home/home_screen.dart';
+
+
+import 'config/theme.dart';
+import 'screens/main_screen.dart';
 
 void main() {
   runApp(
@@ -19,23 +21,8 @@ class CutyApp extends StatelessWidget {
     return MaterialApp(
       title: 'CUTY',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1E2B4D)),
-        useMaterial3: true,
-        // Apply global text style: Dark Navy color and heavier weights
-        textTheme: GoogleFonts.notoSansKrTextTheme().apply(
-          bodyColor: const Color(0xFF1A1A2E), 
-          displayColor: const Color(0xFF1A1A2E),
-        ).copyWith(
-          bodyLarge: GoogleFonts.notoSansKr(fontWeight: FontWeight.w700),
-          bodyMedium: GoogleFonts.notoSansKr(fontWeight: FontWeight.w700),
-          bodySmall: GoogleFonts.notoSansKr(fontWeight: FontWeight.w700),
-          titleLarge: GoogleFonts.notoSansKr(fontWeight: FontWeight.w700),
-          titleMedium: GoogleFonts.notoSansKr(fontWeight: FontWeight.w700),
-          titleSmall: GoogleFonts.notoSansKr(fontWeight: FontWeight.w700),
-        ),
-      ),
-      home: const HomeScreen(),
+      theme: AppTheme.lightTheme,
+      home: const MainScreen(),
     );
   }
 }
