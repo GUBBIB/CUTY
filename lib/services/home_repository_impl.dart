@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/schedule_item.dart';
 import '../models/community_post.dart';
+import '../models/job_post.dart';
+import '../models/banner_item.dart';
 import 'api_service.dart';
 import 'home_repository.dart';
 
@@ -39,6 +41,17 @@ class HomeRepositoryImpl implements HomeRepository {
       // In production, might want to log this or rethrow specific error
       throw Exception('Failed to fetch popular posts: $e');
     }
+  }
+
+  @override
+  Future<List<JobPost>> fetchJobPosts() async {
+    // Placeholder - ApiService support needed
+    return [];
+  }
+
+  @override
+  Future<List<BannerItem>> fetchBanners(int categoryIndex) async {
+    return [];
   }
 }
 

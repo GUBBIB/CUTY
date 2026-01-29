@@ -20,16 +20,16 @@ class HomeBottomNavBar extends ConsumerWidget {
       unselectedLabelStyle: GoogleFonts.notoSansKr(fontWeight: FontWeight.w700),
       showUnselectedLabels: true,
       items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.work_outline), label: '취업'),
-        BottomNavigationBarItem(icon: Icon(Icons.forum_outlined), label: '커뮤니티'),
-        BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: '내정보'),
+        BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Shop'),
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'My'),
       ],
       currentIndex: currentIndex,
       onTap: (index) {
         // Logic: If tapping 'Home' (1) while already on 'Home' (1), reset view to dashboard
-        // if (index == 1 && currentIndex == 1) {
-        //    ref.read(homeViewProvider.notifier).state = 'dashboard';
-        // }
+        if (index == 1 && currentIndex == 1) {
+           ref.read(homeViewProvider.notifier).state = 'dashboard';
+        }
         
         ref.read(bottomNavIndexProvider.notifier).state = index;
       },

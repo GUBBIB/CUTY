@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../community/community_main_screen.dart';
 
 class CommunitySection extends StatelessWidget {
   const CommunitySection({super.key});
@@ -35,7 +36,10 @@ class CommunitySection extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      debugPrint('더보기 클릭됨');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const CommunityMainScreen()),
+                      );
                     },
                     child: Text(
                       '더보기', // See more

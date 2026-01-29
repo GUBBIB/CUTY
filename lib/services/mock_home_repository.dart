@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/schedule_item.dart';
 import '../models/community_post.dart';
+import '../models/job_post.dart';
+import '../models/banner_item.dart'; // Import BannerItem
 import 'package:dio/dio.dart'; // Import Dio
 import '../data/repositories/real_home_repository.dart'; // Import Real Repo
 import 'home_repository.dart';
@@ -42,5 +44,23 @@ class MockHomeRepository implements HomeRepository {
         timeAgo: '2시간',
       ),
     ];
+  }
+  @override
+  Future<List<JobPost>> fetchJobPosts() async {
+    await Future.delayed(const Duration(seconds: 1));
+    return [
+      JobPost(
+        title: '꿀알바 급구',
+        hourlyWage: 12000,
+        tags: ['단기', '카페'],
+        imageUrl: '',
+        isVerified: true,
+      ),
+    ];
+  }
+
+  @override // Updated to match HomeRepository abstract class
+  Future<List<BannerItem>> fetchBanners(int categoryIndex) async {
+    return [];
   }
 }

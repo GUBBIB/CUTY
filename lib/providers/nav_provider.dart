@@ -1,3 +1,3 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final bottomNavIndexProvider = StateProvider<int>((ref) => 0); // Default to Jobs (index 0)
+final bottomNavIndexProvider = StateProvider<int>((ref) => 1); // Default to Home (index 1)

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'home_view_model.dart';
 import '../../providers/home_view_provider.dart';
-import '../job/jobs_screen.dart';
+import '../jobs/jobs_home_screen.dart';
 import 'widgets/home_header.dart';
 import 'widgets/home_menu_grid.dart';
 import 'widgets/schedule_list.dart';
@@ -24,7 +24,7 @@ class HomeScreen extends ConsumerWidget {
         height: double.infinity,
         child: const SafeArea(
           bottom: false,
-          child: JobScreen(),
+          child: JobHomeScreen(),
         ),
       );
     }

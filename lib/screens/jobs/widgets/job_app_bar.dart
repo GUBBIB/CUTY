@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../../../providers/home_view_provider.dart';
+import '../providers/job_providers.dart';
 
 class JobAppBar extends ConsumerWidget {
   const JobAppBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final category = ref.watch(selectedJobCategoryProvider);
+    final iconColor = category == 0 ? const Color(0xFF26A69A) : const Color(0xFF1A237E);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Row(
@@ -21,34 +24,27 @@ class JobAppBar extends ConsumerWidget {
                   ref.read(homeViewProvider.notifier).state = 'dashboard';
                 },
                 icon: const Icon(Icons.arrow_back_ios_new, size: 24),
-                color: const Color(0xFF1E2B4D),
+                color: iconColor,
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),
               ),
               const SizedBox(width: 8),
               Text(
                 'CUTY', // Logo
-                style: GoogleFonts.poppins(
+                style: TextStyle(
+                  fontFamily: 'Poppins', // Assuming font is available or fallback to default
                   fontSize: 28,
                   fontWeight: FontWeight.w900,
-                  color: const Color(0xFF1E2B4D),
+                  color: iconColor,
                 ),
               ),
             ],
           ),
-          Row(
-            children: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.qr_code_scanner, size: 28),
-                color: const Color(0xFF1E2B4D),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.notifications_none, size: 28),
-                color: const Color(0xFF1E2B4D),
-              ),
-            ],
+          // Actions
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.notifications_none_outlined, size: 28),
+            color: iconColor,
           ),
         ],
       ),

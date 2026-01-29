@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import '../../../../config/theme.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart'; // Import Cupertino for clock icon
 
-class SalaryDashboard extends StatelessWidget {
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../providers/job_providers.dart';
+
+class SalaryDashboard extends ConsumerWidget {
   const SalaryDashboard({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final currencyFormat = NumberFormat("#,###");
+    final theme = ref.watch(jobThemeProvider);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -48,16 +51,17 @@ class SalaryDashboard extends StatelessWidget {
                   debugPrint('기록하기 Click!');
                 },
                 borderRadius: BorderRadius.circular(8),
-                child: Container(
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
-                    color: AppTheme.softMint,
+                    color: theme.secondaryColor.withValues(alpha: 0.2), // Light background based on secondary
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
                     '기록하기',
                     style: TextStyle(
-                      color: AppTheme.darkGreen,
+                      color: theme.primaryColor, // Text matches primary
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
                     ),
@@ -70,12 +74,7 @@ class SalaryDashboard extends StatelessWidget {
           const Icon(
             CupertinoIcons.time,
             size: 80,
-            color: Color(0xFFDEDCBA), // Beige-ish clock but icon color usually solid. 
-            // Mockup shows filled circle with clock face. 
-            // Using Icon might not match exactly if we want the background circle.
-            // Let's use Stack with Icon if needed or just Icon.
-            // Directive says: "use cupertino_icons of clock or time, and place it large."
-            // Simple approach: Large Icon.
+            color: Color(0xFFDEDCBA), 
           ),
         ],
       ),

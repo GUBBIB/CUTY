@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
-import '../../../../config/theme.dart';
 
-class JobCategoryTab extends StatefulWidget {
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../providers/job_providers.dart';
+
+class JobCategoryTab extends ConsumerStatefulWidget {
   const JobCategoryTab({super.key});
 
   @override
-  State<JobCategoryTab> createState() => _JobCategoryTabState();
+  ConsumerState<JobCategoryTab> createState() => _JobCategoryTabState();
 }
 
-class _JobCategoryTabState extends State<JobCategoryTab> {
-  int _selectedIndex = 0;
+class _JobCategoryTabState extends ConsumerState<JobCategoryTab> {
+  // Local state not needed if fully driving from provider, but setState used for animation might benefit from local + sync. 
+  // Let's rely on provider.
 
   @override
   Widget build(BuildContext context) {
+    final selectedIndex = ref.watch(selectedJobCategoryProvider);
+
     return Container(
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -20,28 +25,29 @@ class _JobCategoryTabState extends State<JobCategoryTab> {
       ),
       child: Row(
         children: [
-          _buildTab('알바', '(Part-Time)', 0),
-          _buildTab('취업', '(Career)', 1),
+          _buildTab('알바', '(Part-Time)', 0, selectedIndex, ref),
+          _buildTab('취업', '(Career)', 1, selectedIndex, ref),
         ],
       ),
     );
   }
 
-  Widget _buildTab(String title, String subtitle, int index) {
-    final bool isSelected = _selectedIndex == index;
+  Widget _buildTab(String title, String subtitle, int index, int selectedIndex, WidgetRef ref) {
+    final bool isSelected = selectedIndex == index;
+    final theme = ref.watch(jobThemeProvider);
+
     return Expanded(
       child: InkWell(
         onTap: () {
-          setState(() {
-            _selectedIndex = index;
-          });
+          ref.read(selectedJobCategoryProvider.notifier).state = index;
         },
-        child: Container(
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
           padding: const EdgeInsets.symmetric(vertical: 12),
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                color: isSelected ? AppTheme.darkGreen : Colors.transparent,
+                color: isSelected ? theme.primaryColor : Colors.transparent,
                 width: 3,
               ),
             ),
@@ -53,7 +59,7 @@ class _JobCategoryTabState extends State<JobCategoryTab> {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: isSelected ? AppTheme.darkGreen : Colors.grey[400],
+                  color: isSelected ? theme.primaryColor : Colors.grey[400],
                 ),
               ),
               const SizedBox(height: 2),
@@ -61,7 +67,7 @@ class _JobCategoryTabState extends State<JobCategoryTab> {
                 subtitle,
                 style: TextStyle(
                   fontSize: 12,
-                  color: isSelected ? AppTheme.darkGreen : Colors.grey[400],
+                  color: isSelected ? theme.primaryColor : Colors.grey[400],
                 ),
               ),
             ],

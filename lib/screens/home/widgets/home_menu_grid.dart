@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../providers/home_view_provider.dart';
+import '../../visa/visa_main_screen.dart';
+import '../../wallet/wallet_main_screen.dart';
+import '../../jobs/jobs_home_screen.dart';
+import '../../academic/academic_main_screen.dart';
+
 
 class HomeMenuGrid extends StatelessWidget {
   const HomeMenuGrid({super.key});
@@ -62,6 +67,7 @@ class HomeMenuGrid extends StatelessWidget {
   }
 }
 
+
 class _MenuCard extends ConsumerWidget {
   final IconData icon;
   final String label;
@@ -98,8 +104,31 @@ class _MenuCard extends ConsumerWidget {
         child: InkWell(
           onTap: () {
             debugPrint('$label 메뉴 클릭됨');
-            if (label == '알바/취업') {
-              ref.read(homeViewProvider.notifier).state = 'job'; // Switch view in Home
+            switch (label) {
+              case '비자':
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const VisaMainScreen()),
+                );
+                break;
+              case '서류지갑':
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const WalletMainScreen()),
+                );
+                break;
+              case '알바/취업':
+                 ref.read(homeViewProvider.notifier).state = 'job';
+                break;
+              case '학사정보':
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AcademicMainScreen()),
+                );
+                break;
+              case '맛집':
+                // Matjib no screen request, keeping log
+                break;
             }
           },
           child: Padding(
@@ -137,3 +166,4 @@ class _MenuCard extends ConsumerWidget {
     );
   }
 }
+

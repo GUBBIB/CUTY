@@ -2,44 +2,24 @@ import 'package:flutter/material.dart';
 import '../../../../models/job_post.dart';
 import '../../../../config/theme.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../providers/job_providers.dart';
+import '../job_detail_screen.dart';
 
 class JobListView extends StatelessWidget {
-  const JobListView({super.key});
+  final List<JobPost> jobs;
+
+  const JobListView({super.key, required this.jobs});
 
   @override
   Widget build(BuildContext context) {
-    // Mock Data
-    final List<JobPost> jobs = [
-      JobPost(
-        title: '부산 서면 카페 서빙',
-        hourlyWage: 10000,
-        tags: ['식사 제공', '한국어 상'],
-        imageUrl: '', // Asset placeholder
-        isVerified: true,
-      ),
-      JobPost(
-        title: '센텀시티 아웃백스테이크',
-        hourlyWage: 10500,
-        tags: ['식사 제공', '한국어 중'],
-        imageUrl: '',
-        isVerified: true,
-      ),
-      JobPost(
-        title: '해운대 편의점 야간',
-        hourlyWage: 11000,
-        tags: ['경력 무관'],
-        imageUrl: '',
-        isVerified: false,
-      ),
-    ];
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            '맞춤 알바 공고',
+            '맞춤 알바 찾기',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -71,29 +51,42 @@ class _JobCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final currencyFormat = NumberFormat("#,###");
 
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
+    return Consumer(
+      builder: (context, ref, child) {
+         final categoryIndex = ref.watch(selectedJobCategoryProvider);
+         final isCareer = categoryIndex == 1;
+
+         return Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: isCareer 
+                  ? const Color(0xFF1A237E).withValues(alpha: 0.3) // Indigo Shadow for Career (Darker)
+                  : const Color(0xFF26A69A).withValues(alpha: 0.35), // Mint Shadow for Part-Time (Increased from 0.2)
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
           ),
-        ],
-      ),
-      padding: EdgeInsets.zero, // Padding handling inside InkWell or outside?
-      // Better to wrap Container contents with InkWell
-      clipBehavior: Clip.hardEdge, // Ensure ripple respects radius
-      child: InkWell(
-        onTap: () {
-          debugPrint('${job.title} Click!');
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
+          padding: EdgeInsets.zero, // Padding handling inside InkWell or outside?
+          // Better to wrap Container contents with InkWell
+          clipBehavior: Clip.hardEdge, // Ensure ripple respects radius
+          child: InkWell(
+            onTap: () {
+              // Navigation Stub for JobDetailScreen
+              Navigator.push(
+                context, 
+                MaterialPageRoute(
+                  builder: (context) => JobDetailScreen(job: job),
+                ),
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
               // Image
               Container(
                 width: 80,
@@ -137,13 +130,23 @@ class _JobCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 4),
-                    Text(
-                      '시급 ${currencyFormat.format(job.hourlyWage)}원↑',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        color: AppTheme.darkGreen,
-                      ),
+                    Builder(
+                      builder: (context) {
+                        // Prototype logic: Big number = Annual Salary
+                        final isAnnual = (job.hourlyWage ?? 0) > 1000000;
+                        final wageString = isAnnual 
+                            ? '연봉 ${currencyFormat.format(((job.hourlyWage ?? 0) / 10000).round())}만원'
+                            : '시급 ${currencyFormat.format(job.hourlyWage ?? 0)}원';
+                        
+                        return Text(
+                          '$wageString↑',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: AppTheme.darkGreen,
+                          ),
+                        );
+                      }
                     ),
                     const SizedBox(height: 8),
                     Row(
@@ -169,5 +172,7 @@ class _JobCard extends StatelessWidget {
         ),
       ),
     );
+  },
+);
   }
 }
