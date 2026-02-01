@@ -29,7 +29,7 @@ class CommunitySection extends StatelessWidget {
                   Text(
                     '커뮤니티',
                     style: GoogleFonts.notoSansKr(
-                      fontSize: 18,
+                      fontSize: 15, // Reduced from 16
                       fontWeight: FontWeight.bold,
                       color: const Color(0xFF1A1A2E),
                     ),
@@ -42,9 +42,9 @@ class CommunitySection extends StatelessWidget {
                       );
                     },
                     child: Text(
-                      '더보기', // See more
+                      '더보기', 
                       style: GoogleFonts.notoSansKr(
-                        fontSize: 14,
+                        fontSize: 11, // Reduced from 12
                         color: Colors.grey,
                         fontWeight: FontWeight.w700,
                       ),
@@ -53,65 +53,65 @@ class CommunitySection extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 10), // Reduced gap (15->10)
+            const SizedBox(height: 6), // Tight gap (8->6)
             // Horizontal List
             SizedBox(
-              height: 100, // Reduced List Height (110->100)
+              height: 70, // Ultra Compact Height
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 itemCount: 3,
-                separatorBuilder: (context, index) => const SizedBox(width: 15),
+                separatorBuilder: (context, index) => const SizedBox(width: 8), // Gap 12->8
                 itemBuilder: (context, index) {
                   return Container(
-                    width: 240,
+                    width: 190, // Slightly narrower
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: const Color(0xFFEEEEEE)),
                     ),
                     child: Material(
                       color: const Color(0xFFF9F9F9),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(12),
                       clipBehavior: Clip.hardEdge,
                       child: InkWell(
                         onTap: () {
                           debugPrint('${index == 0 ? "인기글" : "정보"} 클릭됨');
                         },
                         child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 15), // Further reduced vertical padding (8->4)
+                          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10), // Tight Padding
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
                                 decoration: BoxDecoration(
                                   color: const Color(0xFFFFF3E0),
-                                  borderRadius: BorderRadius.circular(8),
+                                  borderRadius: BorderRadius.circular(4),
                                 ),
                                 child: Text(
                                   index == 0 ? "🔥 인기글" : "💡 정보",
-                                  style: GoogleFonts.notoSansKr(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.orange),
+                                  style: GoogleFonts.notoSansKr(fontSize: 8, fontWeight: FontWeight.bold, color: Colors.orange),
                                 ),
                               ),
-                              const SizedBox(height: 8),
+                              const SizedBox(height: 3), // Gap 4->3
                               Text(
                                 index == 0 ? "수강신청 꿀팁!" : "오늘 학식 추천",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.notoSansKr(
-                                  fontSize: 13,
+                                  fontSize: 12, // 13->12
                                   fontWeight: FontWeight.bold,
                                   color: const Color(0xFF1A1A2E),
                                 ),
                               ),
-                              const SizedBox(height: 4),
+                              const SizedBox(height: 1), // Gap 2->1
                               Text(
                                 "성공하셨나요? 저는...",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.notoSansKr(
-                                  fontSize: 11,
+                                  fontSize: 10, // 11->10
                                   color: const Color(0xFF9E9E9E),
                                 ),
                               ),
@@ -124,8 +124,7 @@ class CommunitySection extends StatelessWidget {
                 },
               ),
             ),
-            // Extra space for visual balance
-            const SizedBox(height: 40),
+            // NO Bottom Spacing - Removed SizedBox
           ],
         ),
       ),

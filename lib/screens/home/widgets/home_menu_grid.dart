@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../providers/home_view_provider.dart';
 import '../../visa/visa_main_screen.dart';
-import '../../wallet/wallet_main_screen.dart';
+import '../../spec/spec_wallet_screen.dart';
 import '../../jobs/jobs_home_screen.dart';
 import '../../academic/academic_main_screen.dart';
 
@@ -84,22 +84,22 @@ class _MenuCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      width: 72,
-      height: 88,
+      width: 60, // Reduced from 72
+      height: 74, // Reduced from 88
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+            blurRadius: 8,
+            offset: const Offset(0, 3),
           ),
         ],
       ),
       child: Material(
         color: Colors.transparent,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(20),
         clipBehavior: Clip.hardEdge,
         child: InkWell(
           onTap: () {
@@ -114,7 +114,7 @@ class _MenuCard extends ConsumerWidget {
               case '서류지갑':
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const WalletMainScreen()),
+                  MaterialPageRoute(builder: (context) => const SpecWalletScreen()),
                 );
                 break;
               case '알바/취업':
@@ -132,27 +132,27 @@ class _MenuCard extends ConsumerWidget {
             }
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: 48, // Adjusted width to fit smoothly within 72 - 16 padding
-                  height: 40, // Height matching design feel
+                  width: 38, // Reduced from 48
+                  height: 34, // Reduced from 40
                   decoration: BoxDecoration(
                     color: backgroundColor,
-                    borderRadius: BorderRadius.circular(18),
+                    borderRadius: BorderRadius.circular(14),
                   ),
                   alignment: Alignment.center,
-                  child: Icon(icon, color: iconColor, size: 24),
+                  child: Icon(icon, color: iconColor, size: 20),
                 ),
-                const SizedBox(height: 4), // Tight spacing
+                const SizedBox(height: 3), // Tight spacing
                 Text(
                   label,
                   style: GoogleFonts.notoSansKr(
-                    fontSize: 11, // Slightly smaller for compact feel
+                    fontSize: 10, // Reduced from 11
                     fontWeight: FontWeight.w700,
-                    color: const Color(0xFF1A1A2E), // Dark Navy
+                    color: const Color(0xFF1A1A2E),
                   ),
                   textAlign: TextAlign.center,
                   maxLines: 1,

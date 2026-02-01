@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../providers/home_providers.dart';
+import '../../../../providers/schedule_provider.dart';
+import '../../../../models/schedule_item.dart';
 import 'schedule_card.dart';
 
 class ScheduleList extends ConsumerWidget {
@@ -8,21 +9,26 @@ class ScheduleList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final scheduleAsync = ref.watch(scheduleListProvider);
+    // 1. Get next class from ScheduleProvider
+    final notifier = ref.watch(scheduleProvider.notifier);
+    final nextClass = notifier.getNextClass();
 
-    return scheduleAsync.when(
-      data: (schedule) {
-        if (schedule.isEmpty) {
-          return const Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Center(child: Text("일정이 없습니다.")),
-          );
-        }
-        // Design shows first item featured
-        return ScheduleCard(item: schedule.first);
-      },
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (err, stack) => Center(child: Text('Error: $err')),
+    // 2. Map to UI Model (ScheduleItem)
+    // If title is empty, it means 'No Class' or 'End of Day'
+    if (nextClass.title.isEmpty) {
+        return ScheduleCard(item: ScheduleItem(
+          title: "오늘 수업 끝! 🎉",
+          time: "--:--",
+          subtitle: "푹 쉬세요!",
+        ));
+    }
+
+    final displayItem = ScheduleItem(
+      title: nextClass.title,
+      time: "${nextClass.startTime}:00", // Convert int hour to string time
+      subtitle: nextClass.room, // Room maps to subtitle
     );
+
+    return ScheduleCard(item: displayItem);
   }
 }

@@ -4,6 +4,7 @@ import '../../providers/nav_provider.dart';
 import 'home/home_screen.dart';
 import 'mypage/my_page_screen.dart';
 import 'home/widgets/home_bottom_nav_bar.dart';
+import 'shop/shop_screen.dart';
 
 class MainScreen extends ConsumerWidget {
   const MainScreen({super.key});
@@ -16,8 +17,8 @@ class MainScreen extends ConsumerWidget {
       body: IndexedStack(
         index: currentIndex,
         children: const [
-          Center(child: Text('상점 (준비중)')), // Shop as placeholder
-          HomeScreen(),       // Home Tab (Logic inside will handle JobView)
+          ShopScreen(),       // Shop Tab
+          HomeScreen(),       // Home Tab
           MyPageScreen(),     // My Page
         ],
       ),

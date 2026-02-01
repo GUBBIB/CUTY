@@ -3,11 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'home_view_model.dart';
 import '../../providers/home_view_provider.dart';
 import '../jobs/jobs_home_screen.dart';
-import 'widgets/home_header.dart';
+import 'widgets/home_header_v2.dart';
 import 'widgets/home_menu_grid.dart';
 import 'widgets/schedule_list.dart';
 import 'widgets/character_section.dart';
 import 'widgets/community_section.dart';
+import '../schedule/schedule_screen.dart';
+import 'widgets/fortune_cookie_dialog.dart';
+import 'widgets/fortune_cookie_widget.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -75,7 +78,15 @@ class HomeScreen extends ConsumerWidget {
                         bottom: 0,
                         left: 0,
                         right: 0,
-                        child: const ScheduleList(),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const ScheduleScreen()),
+                            );
+                          },
+                          child: const ScheduleList(),
+                        ),
                       ),
                       // Layer 2: Contact Shadow (Middle - On top of Card)
                       Positioned(
@@ -97,15 +108,20 @@ class HomeScreen extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      // Layer 3: Character (Front - Standing on everything)
+                      // Layer 3: Character (Front - Visual Only, Clicks pass through)
                       Positioned(
                         bottom: 80, // Lowered from 85 for alignment
                         left: 0,
                         right: 0,
-                        child: CharacterSection(
-                          imagePath: state.characterImage,
-                          message: "오늘도 힘내보자!",
+                        child: const IgnorePointer(
+                          child: CharacterSection(),
                         ),
+                      ),
+                      // Layer 4: Fortune Cookie Interaction (Top Layer)
+                      Positioned(
+                        bottom: 120, // Positioned near user's hand/visual center interaction area
+                        right: 40,   // Right side access
+                        child: const FortuneCookieWidget(),
                       ),
                     ],
                   ),

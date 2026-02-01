@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../models/banner_item.dart';
 import '../providers/job_providers.dart';
+// import '../../diagnosis/diagnosis_screen.dart'; // Removed broken import
+import '../../alba/permit_application_wizard.dart';
+import '../../alba/part_time_apply_consent_screen.dart';
+
+import 'package:cuty_app/providers/survey_provider.dart';
+import 'package:cuty_app/providers/diagnosis_provider.dart';
+import '../../career/survey_screen.dart';
+import '../../career/new_career_diagnosis_screen.dart';
 
 class PromotionBanner extends ConsumerStatefulWidget {
   const PromotionBanner({super.key});
@@ -218,10 +226,19 @@ class AlbaPermitBanner extends StatelessWidget {
       subtitle: item.subtitle,
       buttonStyle: _AlbaButtonStyle.white,
       leadingAlignment: Alignment.bottomCenter,
-      onButtonTap: () => debugPrint("Clicked: 시간제 취업 허가"),
+      onButtonTap: () {
+        debugPrint("Clicked: 시간제 취업 허가");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const PermitApplicationWizard(),
+          ),
+        );
+      },
     );
   }
 }
+
 
 // -------------------------------------------------------
 // 🟧 2. 첫 알바, 무엇부터? (Peach-Yellow / 아이콘형)
@@ -272,12 +289,17 @@ class AlbaContractBanner extends StatelessWidget {
 // -------------------------------------------------------
 // 🟥 4. 취업 탭 메인 배너 (독립 위젯)
 // -------------------------------------------------------
-class CareerMainBanner extends StatelessWidget {
+class CareerMainBanner extends ConsumerWidget {
   final BannerItem item;
   const CareerMainBanner({super.key, required this.item});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final surveyState = ref.watch(surveyProvider);
+    final diagnosisState = ref.watch(diagnosisProvider);
+    final isCompleted = surveyState.isSurveyCompleted;
+    final score = diagnosisState.resultData.score;
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
       decoration: BoxDecoration(
@@ -296,9 +318,9 @@ class CareerMainBanner extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               // const 제거 (버튼 때문에)
               children: [ 
-                const Text(
-                  "취업역량 점수: --점", 
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)
+                Text(
+                  "취업역량 점수: ${isCompleted ? score : '--'}점", 
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)
                 ),
                 const Text(
                   "취업비자연계 진단", 
@@ -306,7 +328,14 @@ class CareerMainBanner extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 GestureDetector(
-                  onTap: () => debugPrint("Clicked: 스펙 진단하기"),
+                  onTap: () {
+                    debugPrint("Clicked: 스펙 진단하기 (Unified)");
+                     if (isCompleted) {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const NewCareerDiagnosisScreen()));
+                     } else {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const SurveyScreen()));
+                     }
+                  },
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     decoration: BoxDecoration(
@@ -314,7 +343,7 @@ class CareerMainBanner extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
-                      "스펙 진단하기",
+                      isCompleted ? "결과 다시보기" : "스펙 진단하기",
                       style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Theme.of(context).primaryColor),
                     ),
                   ),
