@@ -1,0 +1,35 @@
+PostComment:
+  allOf:
+    - $ref: './common_model.yml#/definitions/TimestampFields'
+    - type: object
+      description: 게시글 댓글
+      properties:
+        id:
+          type: integer
+          example: 1
+        content:
+          type: string
+          example: "댓글 내용입니다."
+        display_content:
+          type: string
+          description: 삭제 여부를 고려한 실제 표시 내용
+          example: "댓글 내용입니다."
+        user_id:
+          type: integer
+          example: 10
+        post_id:
+          type: integer
+          example: 3
+        parent_id:
+          type: integer
+          nullable: true
+          description: 부모 댓글 ID (대댓글인 경우)
+          example: null
+        nickname:
+          type: string
+          example: "moon"
+        replies:
+          type: array
+          description: 대댓글 목록
+          items:
+            $ref: "#/PostComment"

@@ -1,0 +1,13 @@
+School:
+  allOf:
+    - $ref: './common_model.yml#/definitions/TimestampFields'
+    - type: object
+      description: 학교 정보
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          description: 학교명
+          example: 서울대학교

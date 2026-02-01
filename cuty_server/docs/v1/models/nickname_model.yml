@@ -1,0 +1,13 @@
+Nickname:
+  allOf:
+    - $ref: './common_model.yml#/definitions/TimestampFields'
+    - type: object
+      description: 사용자 닉네임 정보
+      properties:
+        id:
+          type: integer
+          example: 1
+        nickname:
+          type: string
+          description: 사용자 닉네임 (고유값)
+          example: moon_yung

@@ -1,0 +1,69 @@
+swagger: "2.0"
+
+tags:
+  - name: Models
+    description: API에서 사용되는 공용 모델 정의 (Swagger 문서용)
+
+paths:
+  /__models:
+    get:
+      tags:
+        - Models
+      summary: All API Models
+      description: |
+        실제 호출용 API가 아니라
+        Swagger 문서에서 모델을 노출하기 위한 더미 엔드포인트입니다.
+      responses:
+        200:
+          description: OK
+
+definitions:
+  # [핵심 수정] ./models/... 대신 docs/v1/models/... 로 전체 경로 명시
+
+  TimestampFields:
+    $ref: 'docs/v1/models/common_model.yml#/definitions/TimestampFields'
+
+  Attendance:
+    $ref: 'docs/v1/models/attendance_model.yml#/Attendance'
+
+  College:
+    $ref: 'docs/v1/models/college_model.yml#/College'
+
+  Comment:
+    $ref: 'docs/v1/models/comment_model.yml#/PostComment'
+
+  Common:
+    $ref: 'docs/v1/models/common_model.yml#/Common'
+
+  Country:
+    $ref: 'docs/v1/models/country_model.yml#/Country'
+
+  Department:
+    $ref: 'docs/v1/models/department_model.yml#/Department'
+
+  Document:
+    $ref: 'docs/v1/models/document_model.yml#/Document'
+
+  ImageStore:
+    $ref: 'docs/v1/models/image_store_model.yml#/ImageStore'
+
+  PostLike:
+    $ref: 'docs/v1/models/like_model.yml#/PostLike'
+
+  Nickname:
+    $ref: 'docs/v1/models/nickname_model.yml#/Nickname'
+
+  PointLog:
+    $ref: 'docs/v1/models/point_log_model.yml#/PointLog'
+
+  Post:
+    $ref: 'docs/v1/models/post_model.yml#/Post'
+
+  Requests:
+    $ref: 'docs/v1/models/request_model.yml#/Requests'
+
+  School:
+    $ref: 'docs/v1/models/school_model.yml#/School'
+
+  User:
+    $ref: 'docs/v1/models/user_model.yml#/User'

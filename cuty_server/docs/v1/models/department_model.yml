@@ -1,0 +1,17 @@
+Department:
+  allOf:
+    - $ref: './common_model.yml#/definitions/TimestampFields'
+    - type: object
+      description: 학과 정보
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          description: 학과명
+          example: 컴퓨터공학과
+        college_id:
+          type: integer
+          description: 소속 단과대학 ID
+          example: 5
