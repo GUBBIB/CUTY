@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../models/user_model.dart';
 import '../wallet/my_point_screen.dart';
+import '../spec/spec_wallet_screen.dart';
 
 class MyPageScreen extends StatelessWidget {
   const MyPageScreen({super.key});
@@ -441,7 +442,14 @@ class _MenuList extends StatelessWidget {
         ),
       ),
       trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 16, color: Colors.grey),
-      onTap: () {},
+      onTap: () {
+        if (title == '서류 지갑') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const SpecWalletScreen()),
+          );
+        }
+      },
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
     );
   }

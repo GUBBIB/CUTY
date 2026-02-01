@@ -6,6 +6,7 @@ import '../../visa/visa_main_screen.dart';
 import '../../spec/spec_wallet_screen.dart';
 import '../../jobs/jobs_home_screen.dart';
 import '../../academic/academic_main_screen.dart';
+import '../../schedule/schedule_screen.dart';
 
 
 class HomeMenuGrid extends StatelessWidget {
@@ -32,6 +33,12 @@ class HomeMenuGrid extends StatelessWidget {
         'icon': Icons.work_outline,
         'bg': const Color(0xFFE0F2F1), // Light Mint
         'iconColor': const Color(0xFF00695C), // Deep Teal
+      },
+      {
+        'label': '시간표',
+        'icon': Icons.calendar_today_outlined,
+        'bg': const Color(0xFFE3F2FD), // Light Blue
+        'iconColor': const Color(0xFF1565C0), // Deep Blue
       },
       {
         'label': '학사정보',
@@ -124,6 +131,12 @@ class _MenuCard extends ConsumerWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const AcademicMainScreen()),
+                );
+                break;
+              case '시간표':
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ScheduleScreen()),
                 );
                 break;
               case '맛집':

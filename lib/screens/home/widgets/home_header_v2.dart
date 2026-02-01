@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../providers/point_provider.dart';
+import '../../wallet/my_point_screen.dart';
 
 class HomeHeader extends ConsumerWidget {
   const HomeHeader({super.key});
@@ -29,35 +30,42 @@ class HomeHeader extends ConsumerWidget {
         // Point Display & Notification
         Row(
           children: [
-             // Points Chip
-             Container(
-               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-               decoration: BoxDecoration(
-                 color: Colors.white,
-                 borderRadius: BorderRadius.circular(20),
-                 boxShadow: [
-                   BoxShadow(
-                     color: Colors.black.withOpacity(0.05),
-                     blurRadius: 4,
-                     offset: const Offset(0, 2),
-                   )
-                 ],
-                 border: Border.all(color: Colors.grey.shade200),
-               ),
-               child: Row(
-                 mainAxisSize: MainAxisSize.min,
-                 children: [
-                   const Text("💰"), 
-                   const SizedBox(width: 4),
-                   Text(
-                     "$points P", 
-                     style: GoogleFonts.notoSansKr(
-                       fontSize: 13, 
-                       fontWeight: FontWeight.bold,
-                       color: const Color(0xFF1A1A2E),
+              GestureDetector(
+               onTap: () {
+                 Navigator.push(
+                   context,
+                   MaterialPageRoute(builder: (context) => const MyPointScreen()),
+                 );
+               },
+               child: Container(
+                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                 decoration: BoxDecoration(
+                   color: Colors.white,
+                   borderRadius: BorderRadius.circular(20),
+                   boxShadow: [
+                     BoxShadow(
+                       color: Colors.black.withOpacity(0.05),
+                       blurRadius: 4,
+                       offset: const Offset(0, 2),
                      )
-                   ),
-                 ],
+                   ],
+                   border: Border.all(color: Colors.grey.shade200),
+                 ),
+                 child: Row(
+                   mainAxisSize: MainAxisSize.min,
+                   children: [
+                     const Text("💰"), 
+                     const SizedBox(width: 4),
+                     Text(
+                       "$points P", 
+                       style: GoogleFonts.notoSansKr(
+                         fontSize: 13, 
+                         fontWeight: FontWeight.bold,
+                         color: const Color(0xFF1A1A2E),
+                       )
+                     ),
+                   ],
+                 ),
                ),
              ),
              const SizedBox(width: 12),
