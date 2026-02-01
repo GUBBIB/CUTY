@@ -13,142 +13,245 @@ class ScheduleScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('강의 시간표'),
         centerTitle: true,
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.add)), // Placeholder for add
-        ],
       ),
-      body: Column(
-        children: [
-          // 1. Header Row (Mon-Fri)
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            decoration: BoxDecoration(
-              color: Colors.grey[100],
-              border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
-            ),
-            child: Row(
-              children: [
-                const SizedBox(width: 40), // Time column width
-                ...List.generate(5, (index) {
-                  final day = ["월", "화", "수", "목", "금"][index];
-                  return Expanded(
-                    child: Center(
-                      child: Text(day, style: const TextStyle(fontWeight: FontWeight.bold)),
-                    ),
-                  );
-                }),
-              ],
-            ),
-          ),
-          
-          // 2. Time Grid
-          Expanded(
-            child: SingleChildScrollView(
-              child: Stack(
-                children: [
-                  // Background Grid Lines
-                  Column(
-                    children: List.generate(9, (index) { // 9 AM to 6 PM
-                      final time = index + 9;
-                      return Container(
-                        height: 60,
-                        decoration: BoxDecoration(
-                          border: Border(bottom: BorderSide(color: Colors.grey[200]!)),
-                        ),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 40,
-                              child: Center(
-                                child: Text(
-                                  "$time:00",
-                                  style: TextStyle(fontSize: 10, color: Colors.grey[600]),
-                                ),
-                              ),
-                            ),
-                            const Expanded(child: SizedBox()), // Grid cell content
-                          ],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _showAddClassDialog(context, ref),
+        child: const Icon(Icons.add),
+      ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final width = constraints.maxWidth;
+          final timeColWidth = 40.0;
+          final cellWidth = (width - timeColWidth) / 7; // 7일 기준
+
+          return Column(
+            children: [
+              // 1. Header Row (Mon-Sun)
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                decoration: BoxDecoration(
+                  color: Colors.grey[100],
+                  border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(width: timeColWidth), // Time column width
+                    ...List.generate(7, (index) {
+                      final day = ["월", "화", "수", "목", "금", "토", "일"][index];
+                      return SizedBox(
+                        width: cellWidth,
+                        child: Center(
+                          child: Text(
+                              day, 
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: index >= 5 ? Colors.red : Colors.black, // 주말 빨간색
+                              )
+                          ),
                         ),
                       );
                     }),
-                  ),
-
-                  // Class Items
-                  ...classList.map((item) {
-                     // Calculate position
-                     // 1 hour = 60 pixels height. Start time 9:00 is offset 0.
-                     // item.startTime (e.g., 10) -> (10-9) * 60
-                     final top = (item.startTime - 9) * 60.0;
-                     final height = item.duration * 60.0;
-                     
-                     // Width calculation: (ScreenWidth - 40) / 5
-                     // We need LayoutBuilder for exact width, but flexible approach:
-                     // We use Positioned with fractional calculation if possible, or simpler absolute logic.
-                     // Since we are in Stack, let's assume fixed column width logic or use Row/Column approach.
-                     // Actually, easiest valid way in Stack without known width is using left/right margins or `Positioned`.
-                     // Let's use `LayoutBuilder` wrapping the Stack to be safe, but `SingleChildScrollView` complicates it.
-                     // Simplified: Assume device width logic or use percentages roughly. 
-                     // Better: `Row` with `Expanded` placeholders? No, items overlap cells.
-                     // Best for "Simplicity": `Positioned` with relative coordinates.
-                     
-                     // Day 1(Mon) -> Index 0. 
-                     // Left = 40 + (Day-1) * (Width/5)
-                     // But we don't know Width inside this Stack easily without LayoutBuilder.
-                     
-                     // Alternative: Render grid using Row(Column(Cells)) structure instead of Stack?
-                     // No, "Merge cells" is hard.
-                     
-                     // Let's use a LayoutBuilder OUTSIDE the SingleChildScrollView for width, then pass it down?
-                     // Or just generic safe width.
-                     
-                     // Hacky but robust for "fast implementation":
-                     // Use `Align` and `FractionallySizedBox`? 
-                     // No, `Positioned` works best if we know constraints.
-                     
-                     // Let's stick to a simpler list view if grid is too complex? 
-                     // User said "Schedule Screen", usually implies grid.
-                     // Let's try `Positioned` with `left` and `width` based on `MediaQuery`.
-                     
-                     return Positioned(
-                       top: top,
-                       left: 40 + ((item.day - 1) * ((MediaQuery.of(context).size.width - 40) / 5)), // Approximate
-                       width: (MediaQuery.of(context).size.width - 40) / 5,
-                       height: height,
-                       child: Container(
-                         margin: const EdgeInsets.all(1),
-                         padding: const EdgeInsets.all(4),
-                         decoration: BoxDecoration(
-                           color: item.color,
-                           borderRadius: BorderRadius.circular(4),
-                           border: Border.all(color: Colors.black12),
-                         ),
-                         child: Column(
-                           mainAxisAlignment: MainAxisAlignment.center,
-                           children: [
-                             Text(
-                               item.title,
-                               style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
-                               textAlign: TextAlign.center,
-                               maxLines: 2,
-                               overflow: TextOverflow.ellipsis,
-                             ),
-                             if (item.room.isNotEmpty)
-                               Text(
-                                 item.room,
-                                 style: const TextStyle(fontSize: 8),
-                                 textAlign: TextAlign.center,
-                               ),
-                           ],
-                         ),
-                       ),
-                     );
-                  }),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ),
-        ],
+              
+              // 2. Time Grid
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Stack(
+                    children: [
+                      // Background Grid Lines
+                      Column(
+                        children: List.generate(12, (index) { // 9 AM to 8 PM (12 hours)
+                          final time = index + 9;
+                          return Container(
+                            height: 60,
+                            decoration: BoxDecoration(
+                              border: Border(bottom: BorderSide(color: Colors.grey[200]!)),
+                            ),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: timeColWidth,
+                                  child: Center(
+                                    child: Text(
+                                      "$time:00",
+                                      style: TextStyle(fontSize: 10, color: Colors.grey[600]),
+                                    ),
+                                  ),
+                                ),
+                                const Expanded(child: SizedBox()), // Grid cell content
+                              ],
+                            ),
+                          );
+                        }),
+                      ),
+
+                      // Class Items
+                      ...classList.map((item) {
+                         // Calculate position
+                         // 1 hour = 60 pixels height. Start time 9:00 is offset 0.
+                         final top = (item.startTime - 9) * 60.0;
+                         final height = item.duration * 60.0;
+                         
+                         // Day 1(Mon) -> Index 0. 
+                         final left = timeColWidth + ((item.day - 1) * cellWidth);
+                         
+                         return Positioned(
+                           top: top,
+                           left: left,
+                           width: cellWidth,
+                           height: height,
+                           child: Container(
+                             margin: const EdgeInsets.all(1),
+                             padding: const EdgeInsets.all(2), // 1. Reduced Padding
+                             decoration: BoxDecoration(
+                               color: item.color,
+                               borderRadius: BorderRadius.circular(4),
+                               border: Border.all(color: Colors.black12),
+                             ),
+                             child: FittedBox( // 2. FittedBox for auto-scaling
+                               fit: BoxFit.scaleDown,
+                               alignment: Alignment.center, // Center alignment looks better usually
+                               child: Column(
+                                 mainAxisAlignment: MainAxisAlignment.center,
+                                 children: [
+                                   Text(
+                                     item.title,
+                                     style: const TextStyle(
+                                         fontSize: 11, // 3. Reduced Font Size
+                                         fontWeight: FontWeight.bold
+                                     ),
+                                     textAlign: TextAlign.center,
+                                     maxLines: 2,
+                                     overflow: TextOverflow.ellipsis,
+                                   ),
+                                   if (item.room.isNotEmpty)
+                                     Text(
+                                       item.room,
+                                       style: const TextStyle(fontSize: 9), // 3. Reduced Font Size
+                                       textAlign: TextAlign.center,
+                                       maxLines: 1,
+                                       overflow: TextOverflow.ellipsis,
+                                     ),
+                                 ],
+                               ),
+                             ),
+                           ),
+                         );
+                      }),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          );
+        }
       ),
+    );
+  }
+
+  void _showAddClassDialog(BuildContext context, WidgetRef ref) {
+    final titleController = TextEditingController();
+    final roomController = TextEditingController();
+    int selectedDay = 1; // Mon
+    int selectedTime = 9; // 9 AM
+    int selectedDuration = 1; // 1 Hour
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: const Text("수업 추가"),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      controller: titleController,
+                      decoration: const InputDecoration(labelText: "과목명"),
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: roomController,
+                      decoration: const InputDecoration(labelText: "강의실"),
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        const Text("요일: "),
+                        const SizedBox(width: 8),
+                        DropdownButton<int>(
+                          value: selectedDay,
+                          items: List.generate(7, (index) => DropdownMenuItem(
+                            value: index + 1,
+                            child: Text(["월", "화", "수", "목", "금", "토", "일"][index]),
+                          )),
+                          onChanged: (val) => setState(() => selectedDay = val!),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Text("시간: "),
+                        const SizedBox(width: 8),
+                         DropdownButton<int>(
+                          value: selectedTime,
+                          items: List.generate(12, (index) => DropdownMenuItem( // 9 to 20
+                            value: index + 9,
+                            child: Text("${index + 9}시"),
+                          )),
+                          onChanged: (val) => setState(() => selectedTime = val!),
+                        ),
+                      ],
+                    ),
+                    Row(
+                       children: [
+                        const Text("시간(H): "),
+                        const SizedBox(width: 8),
+                         DropdownButton<int>(
+                          value: selectedDuration,
+                          items: [1, 2, 3, 4].map((e) => DropdownMenuItem(value: e, child: Text("$e시간"))).toList(),
+                          onChanged: (val) => setState(() => selectedDuration = val!),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(onPressed: () => Navigator.pop(context), child: const Text("취소")),
+                ElevatedButton(
+                  onPressed: () {
+                    if (titleController.text.isEmpty) return;
+                    
+                    final newItem = ClassItem(
+                      title: titleController.text,
+                      room: roomController.text,
+                      day: selectedDay,
+                      startTime: selectedTime,
+                      duration: selectedDuration,
+                      color: Colors.blue[100]!, // Default color
+                    );
+                    
+                    final success = ref.read(scheduleProvider.notifier).addClass(newItem);
+                    Navigator.pop(context);
+                    
+                    if (success) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("수업이 등록되었습니다.")));
+                    } else {
+                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("해당 시간에 이미 수업이 있습니다.")));
+                    }
+                  },
+                  child: const Text("등록"),
+                ),
+              ],
+            );
+          }
+        );
+      },
     );
   }
 }

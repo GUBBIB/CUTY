@@ -41,7 +41,7 @@ class ScheduleNotifier extends StateNotifier<List<ClassItem>> {
     }
   }
 
-  // --- [기능 1] 홈 화면용: 다음 수업 찾기 (이게 없어서 에러남) ---
+  // --- [기능 1] 홈 화면용: 다음 수업 찾기 ---
   ClassItem getNextClass() {
     final now = DateTime.now();
     final currentDay = now.weekday; // 1(월)~7(일)
@@ -60,15 +60,29 @@ class ScheduleNotifier extends StateNotifier<List<ClassItem>> {
       }
     }
     
-    // 수업 없으면 빈 객체 반환 (ScheduleList에서 예외처리됨)
-    // 원래는 null을 반환하고 싶었지만, ScheduleList 위젯이 Non-nullable ClassItem을 기대하는 코드로 작성되어 있을 수 있어
-    // 안전하게 '비어있는' ClassItem을 반환합니다. -> ScheduleItem 매핑 시 time이 비어있으면 처리됨.
+    // 수업 없으면 빈 객체 반환
     return ClassItem(title: "", room: "오늘 수업 끝! 🎉", day: 0, startTime: 0, color: Colors.transparent);
   }
 
+  // --- [기능 2] 마이페이지 주간 시간표용 ---
+  List<ClassItem> getClassesForDay(int day) {
+    return state.where((item) => item.day == day).toList();
+  }
+
   // --- [기능 2] 시간표 관리용: 추가/삭제 ---
-  void addClass(ClassItem item) {
+  bool addClass(ClassItem item) {
+    // 1. 중복 체크: 같은 요일, 같은 시간대에 수업이 있는지 확인
+    final isDuplicate = state.any((existing) => 
+      existing.day == item.day && 
+      existing.startTime == item.startTime // 단순화: 시작 시간이 같으면 중복으로 처리 (겹치는 시간 정교한 로직은 추후)
+    );
+
+    if (isDuplicate) {
+      return false; // 추가 실패
+    }
+
     state = [...state, item];
+    return true; // 추가 성공
   }
 
   void removeClass(String title) {

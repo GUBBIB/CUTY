@@ -56,7 +56,7 @@ class HomeMenuGrid extends StatelessWidget {
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 12), // Removed bottom padding
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20), // Increased padding
       child: Row(
         children: [
           for (int i = 0; i < menuItems.length; i++) ...[
@@ -66,7 +66,7 @@ class HomeMenuGrid extends StatelessWidget {
               backgroundColor: menuItems[i]['bg'] as Color,
               iconColor: menuItems[i]['iconColor'] as Color,
             ),
-            if (i < menuItems.length - 1) const SizedBox(width: 12),
+            if (i < menuItems.length - 1) const SizedBox(width: 16), // Increased spacing
           ],
         ],
       ),
@@ -91,8 +91,8 @@ class _MenuCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      width: 60, // Reduced from 72
-      height: 74, // Reduced from 88
+      width: 72, // Increased from 60
+      height: 90, // Increased from 74
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -150,20 +150,20 @@ class _MenuCard extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: 38, // Reduced from 48
-                  height: 34, // Reduced from 40
+                  width: 48, // Increased from 38
+                  height: 40, // Increased from 34
                   decoration: BoxDecoration(
                     color: backgroundColor,
                     borderRadius: BorderRadius.circular(14),
                   ),
                   alignment: Alignment.center,
-                  child: Icon(icon, color: iconColor, size: 20),
+                  child: Icon(icon, color: iconColor, size: 24), // Increased size
                 ),
-                const SizedBox(height: 3), // Tight spacing
+                const SizedBox(height: 6), // Increased spacing
                 Text(
                   label,
                   style: GoogleFonts.notoSansKr(
-                    fontSize: 10, // Reduced from 11
+                    fontSize: 12, // Increased from 10
                     fontWeight: FontWeight.w700,
                     color: const Color(0xFF1A1A2E),
                   ),

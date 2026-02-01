@@ -11,7 +11,7 @@ class CommunitySection extends StatelessWidget {
     return Container(
       width: double.infinity, // Key: Full Width
       margin: EdgeInsets.zero, // Key: No Margins
-      padding: const EdgeInsets.fromLTRB(0, 12, 0, 0), // Key: Internal Padding Reduced (15->12)
+      padding: const EdgeInsets.fromLTRB(0, 12, 0, 20), // Reduced bottom padding
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(30)), // Key: Top Radius Only
@@ -56,7 +56,7 @@ class CommunitySection extends StatelessWidget {
             const SizedBox(height: 6), // Tight gap (8->6)
             // Horizontal List
             SizedBox(
-              height: 70, // Ultra Compact Height
+              height: 100, // Increased height (1.4x)
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 24),

@@ -53,87 +53,77 @@ class HomeScreen extends ConsumerWidget {
           onRefresh: () async {
             ref.read(homeViewModelProvider.notifier).refresh();
           },
-          child: SingleChildScrollView(
+          child: CustomScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(20, 5, 12, 0),
-                  child: HomeHeader(),
-                ),
-                const HomeMenuGrid(),
-                // [Layout Logic] Top Gap Added to Push Content Down (Re-balancing)
-                const SizedBox(height: 30), 
+            slivers: [
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.fromLTRB(20, 5, 12, 0),
+                      child: HomeHeader(),
+                    ),
+                    const HomeMenuGrid(),
+                    
+                    // Flexible Gap 1
+                    const Spacer(flex: 2),
 
-                // [Z-Layered Hero Stack]
-                SizedBox(
-                  height: 345, // Reduced from 380 to pull everything up
-                  child: Stack(
-                    alignment: Alignment.topCenter,
-                    clipBehavior: Clip.none,
-                    children: [
-                      // Layer 1: Schedule Card (Background Platform)
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => const ScheduleScreen()),
-                            );
-                          },
-                          child: const ScheduleList(),
-                        ),
-                      ),
-                      // Layer 2: Contact Shadow (Middle - On top of Card)
-                      Positioned(
-                        bottom: 80, // Lowered from 85 to match slimmer card
-                        child: Container(
-                          height: 6,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            color: Colors.black.withValues(alpha: 0.15),
-                            borderRadius: const BorderRadius.all(Radius.elliptical(100, 10)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.1),
-                                blurRadius: 10,
-                                spreadRadius: 2,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
+                    // [Character Hero Section]
+                    // Removed ScheduleList and Shadow from here to separate them
+                    SizedBox(
+                      height: 300, 
+                      child: Stack(
+                        alignment: Alignment.topCenter,
+                        clipBehavior: Clip.none,
+                        children: [
+                          // Character (Centered)
+                          Positioned(
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            child: const IgnorePointer(
+                              child: CharacterSection(),
+                            ),
                           ),
-                        ),
+                          // Fortune Cookie (Character's Right Hand -> Screen Left)
+                          Positioned(
+                            bottom: 110, 
+                            right: 80,   
+                            child: const FortuneCookieWidget(),
+                          ),
+                        ],
                       ),
-                      // Layer 3: Character (Front - Visual Only, Clicks pass through)
-                      Positioned(
-                        bottom: 80, // Lowered from 85 for alignment
-                        left: 0,
-                        right: 0,
-                        child: const IgnorePointer(
-                          child: CharacterSection(),
-                        ),
+                    ),
+
+                    // Flexible Gap 2
+                    const Spacer(flex: 1),
+
+                    // [Status Message Card] (ScheduleList)
+                    // Moved out of Stack to be a standalone element
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const ScheduleScreen()),
+                          );
+                        },
+                        child: const ScheduleList(),
                       ),
-                      // Layer 4: Fortune Cookie Interaction (Top Layer)
-                      Positioned(
-                        bottom: 120, // Positioned near user's hand/visual center interaction area
-                        right: 40,   // Right side access
-                        child: const FortuneCookieWidget(),
-                      ),
-                    ],
-                  ),
+                    ),
+
+                    // Flexible Gap 3
+                    const Spacer(flex: 1),
+
+                    // [Community Section] - FULL WIDTH SHEET
+                    const CommunitySection(),
+                  ],
                 ),
-
-                // Gap between Card and Community
-                const SizedBox(height: 20),
-
-                // [Community Section] - FULL WIDTH SHEET
-                const CommunitySection(),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

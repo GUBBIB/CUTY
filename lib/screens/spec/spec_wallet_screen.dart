@@ -16,27 +16,35 @@ class SpecDocDefinition {
 class SpecWalletScreen extends ConsumerWidget {
   const SpecWalletScreen({super.key});
 
-  // 화면에 표시할 서류 종류 정의 (순서대로)
-  static const List<SpecDocDefinition> definitions = [
-    SpecDocDefinition(name: "외국인등록증", icon: Icons.badge_outlined), // Added for required check
+  // 1. 필수 신분/체류 (Identity & Residence)
+  static const List<SpecDocDefinition> identityDocs = [
+    SpecDocDefinition(name: "외국인등록증", icon: Icons.badge_outlined),
     SpecDocDefinition(name: "학생증", icon: Icons.badge),
     SpecDocDefinition(name: "여권사본", icon: Icons.airplanemode_active),
-    SpecDocDefinition(name: "재학증명서", icon: Icons.school),
-    SpecDocDefinition(name: "성적증명서", icon: Icons.grade),
-    SpecDocDefinition(name: "토픽증명서", icon: Icons.language),
-    SpecDocDefinition(name: "사회통합프로그램증명서", icon: Icons.diversity_3),
-    SpecDocDefinition(name: "거주지 증빙", icon: Icons.home_work_outlined), // Added per request
+    SpecDocDefinition(name: "거주지 증빙", icon: Icons.home_work_outlined),
     SpecDocDefinition(name: "거주지증명서", icon: Icons.home),
     SpecDocDefinition(name: "임대차증명서", icon: Icons.article),
     SpecDocDefinition(name: "기숙사 거주 인증서", icon: Icons.apartment),
     SpecDocDefinition(name: "거주지 제공확인서", icon: Icons.check_circle_outline),
-    SpecDocDefinition(name: "봉사활동 인증서", icon: Icons.volunteer_activism),
+  ];
+
+  // 2. 학업 및 어학 (Academics & Language)
+  static const List<SpecDocDefinition> academicDocs = [
+    SpecDocDefinition(name: "재학증명서", icon: Icons.school),
+    SpecDocDefinition(name: "성적증명서", icon: Icons.grade),
+    SpecDocDefinition(name: "수료증", icon: Icons.card_membership),
+    SpecDocDefinition(name: "토픽증명서", icon: Icons.language),
+    SpecDocDefinition(name: "사회통합프로그램증명서", icon: Icons.diversity_3),
     SpecDocDefinition(name: "외국어 증명서", icon: Icons.translate),
+  ];
+
+  // 3. 커리어 및 스펙 (Career & Achievements)
+  static const List<SpecDocDefinition> careerDocs = [
+    SpecDocDefinition(name: "봉사활동 인증서", icon: Icons.volunteer_activism),
     SpecDocDefinition(name: "경력인증서", icon: Icons.work),
     SpecDocDefinition(name: "상장", icon: Icons.emoji_events),
-    SpecDocDefinition(name: "수료증", icon: Icons.card_membership),
-    SpecDocDefinition(name: "면허", icon: Icons.drive_eta),
     SpecDocDefinition(name: "자격증", icon: Icons.verified),
+    SpecDocDefinition(name: "면허", icon: Icons.drive_eta),
     SpecDocDefinition(name: "기타", icon: Icons.folder_open),
   ];
 
@@ -46,7 +54,7 @@ class SpecWalletScreen extends ConsumerWidget {
     final myDocs = ref.watch(documentProvider);
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: Colors.grey[50], // Light background
       appBar: AppBar(
         title: const Text('스펙 지갑'),
         backgroundColor: Colors.white,
@@ -54,29 +62,57 @@ class SpecWalletScreen extends ConsumerWidget {
         elevation: 0,
         centerTitle: true,
       ),
-      body: GridView.builder(
-        padding: const EdgeInsets.all(16),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          crossAxisSpacing: 12,
-          mainAxisSpacing: 12,
-          childAspectRatio: 0.8,
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
+        child: Column(
+          children: [
+            _buildSection(context, "🪪 필수 신분/체류", "안전한 체류를 위한 필수 서류", identityDocs, myDocs, ref),
+            const SizedBox(height: 32),
+            _buildSection(context, "🎓 학업 및 어학", "학교 생활과 어학 능력 증명", academicDocs, myDocs, ref),
+            const SizedBox(height: 32),
+            _buildSection(context, "🏆 커리어 및 스펙", "나만의 경쟁력을 증명하는 곳", careerDocs, myDocs, ref),
+          ],
         ),
-        itemCount: definitions.length,
-        itemBuilder: (context, index) {
-          final def = definitions[index];
-          
-          // 보유 여부 확인 (제목으로 매칭)
-          final matchingDoc = myDocs.firstWhere(
-            (doc) => doc.title == def.name || doc.title.startsWith(def.name),
-            orElse: () => DocumentItem(id: "", title: "", expiryDate: "none", isVerified: false),
-          );
-          
-          final isRegistered = matchingDoc.isVerified;
-
-          return _buildDocCard(context, def, isRegistered, matchingDoc.expiryDate, ref);
-        },
       ),
+    );
+  }
+
+  Widget _buildSection(BuildContext context, String title, String subtitle, List<SpecDocDefinition> docs, List<DocumentItem> myDocs, WidgetRef ref) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Section Header
+        Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF1A1A2E))),
+        const SizedBox(height: 4),
+        Text(subtitle, style: TextStyle(fontSize: 13, color: Colors.grey[600])),
+        const SizedBox(height: 16),
+        
+        // Grid
+        GridView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: 0.8, // Slightly taller cards
+          ),
+          itemCount: docs.length,
+          itemBuilder: (context, index) {
+            final def = docs[index];
+            
+            // 보유 여부 확인
+            final matchingDoc = myDocs.firstWhere(
+              (doc) => doc.title == def.name || doc.title.startsWith(def.name),
+              orElse: () => DocumentItem(id: "", title: "", expiryDate: "none", isVerified: false),
+            );
+            
+            final isRegistered = matchingDoc.isVerified;
+
+            return _buildDocCard(context, def, isRegistered, matchingDoc.expiryDate, ref);
+          },
+        ),
+      ],
     );
   }
 
@@ -105,8 +141,10 @@ class SpecWalletScreen extends ConsumerWidget {
             Text(
               def.name,
               textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontSize: 13,
+                fontSize: 12, // Slightly smaller font for dense grid
                 fontWeight: isRegistered ? FontWeight.bold : FontWeight.w500,
                 color: isRegistered ? Colors.black87 : Colors.grey[600],
               ),
@@ -114,7 +152,7 @@ class SpecWalletScreen extends ConsumerWidget {
              if (isRegistered && expiryDate != "none") ...[
                const SizedBox(height: 6),
                Container(
-                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                  decoration: BoxDecoration(
                    color: Colors.indigo.withOpacity(0.08),
                    borderRadius: BorderRadius.circular(6),
@@ -122,7 +160,7 @@ class SpecWalletScreen extends ConsumerWidget {
                  child: Text(
                    expiryDate,
                    style: const TextStyle(
-                     fontSize: 11,
+                     fontSize: 10,
                      color: Colors.indigo,
                      fontWeight: FontWeight.w700,
                    ),

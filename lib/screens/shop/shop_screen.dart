@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/shop_provider.dart';
 import '../../providers/nav_provider.dart';
 import '../../providers/point_provider.dart';
-import 'widgets/shop_banner_carousel.dart';
+import 'dart:async'; // For Timer
 import '../../widgets/shop/shop_list_item.dart';
 import '../home/widgets/fortune_cookie_dialog.dart';
 import 'shop_detail_screen.dart';
@@ -123,7 +123,7 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
               slivers: [
                 // Carousel Banner
                  const SliverToBoxAdapter(
-                  child: ShopBannerCarousel(),
+                  child: _ShopBanner(),
                 ),
 
                 // Category Chips
@@ -184,7 +184,6 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
                   ),
                 ),
 
-                // Product List (Horizontal Layout)
                 SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   sliver: SliverList(
@@ -215,6 +214,217 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
                 )
               ],
             ),
+    );
+  }
+}
+
+class _ShopBanner extends StatefulWidget {
+  const _ShopBanner();
+
+  @override
+  State<_ShopBanner> createState() => _ShopBannerState();
+}
+
+class _ShopBannerState extends State<_ShopBanner> {
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
+  late final Timer _timer;
+
+  // Using dynamic list for simplicity or clean model
+  // Using dynamic list for simplicity or clean model
+  final List<Map<String, dynamic>> _banners = [
+    {
+      'color': const Color(0xFFFCE4EC), // Pink.shade50
+      'title': '광고 보고\n포인트 받기',
+      'image': 'assets/images/capy_AD.png', // User requested
+      'tag': 'AD',
+      'titleColor': const Color(0xFFE91E63), // Pink
+      'tagColor': const Color(0xFFC2185B),
+    },
+    {
+      'color': const Color(0xFFE8EAF6), // Indigo.shade50
+      'title': '신규 입점\n할인 이벤트',
+      'image': 'assets/images/capy_business.png',
+      'tag': 'EVENT',
+      'titleColor': const Color(0xFF3F51B5), // Indigo
+      'tagColor': const Color(0xFF303F9F),
+    },
+    {
+      'color': const Color(0xFFE8F5E9), // Green.shade50
+      'title': '친구 초대하면\n+500P 증정!',
+      'image': 'assets/images/capy_friend.png', 
+      'tag': 'INVITE',
+      'titleColor': const Color(0xFF2E7D32), // Green
+      'tagColor': const Color(0xFF1B5E20),
+    },
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 6), (timer) { // Adjusted to 6 seconds
+      if (_pageController.hasClients) {
+         int nextPage = _pageController.page!.toInt() + 1;
+         _pageController.animateToPage(
+           nextPage,
+           duration: const Duration(milliseconds: 500),
+           curve: Curves.easeInOut,
+         );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+       height: 160,
+       margin: const EdgeInsets.all(20),
+       child: Stack(
+         alignment: Alignment.center,
+         children: [
+           PageView.builder(
+             controller: _pageController,
+             onPageChanged: (index) {
+               setState(() => _currentPage = index % _banners.length);
+             },
+             itemBuilder: (context, index) {
+               final banner = _banners[index % _banners.length];
+               return Container(
+                 margin: const EdgeInsets.symmetric(horizontal: 4), 
+                 decoration: BoxDecoration(
+                   color: banner['color'],
+                   borderRadius: BorderRadius.circular(16),
+                 ),
+                 child: Stack(
+                   children: [
+                     // Text Content
+                     Positioned(
+                       top: 30,
+                       left: 24,
+                       child: Column(
+                         crossAxisAlignment: CrossAxisAlignment.start,
+                         children: [
+                           Container(
+                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                             decoration: BoxDecoration(
+                               color: banner['tagColor'].withOpacity(0.1),
+                               borderRadius: BorderRadius.circular(8),
+                             ),
+                             child: Text(
+                               banner['tag'],
+                               style: TextStyle(
+                                 fontSize: 10,
+                                 fontWeight: FontWeight.bold,
+                                 color: banner['tagColor'],
+                               ),
+                             ),
+                           ),
+                           const SizedBox(height: 12),
+                           Text(
+                             banner['title'],
+                             style: TextStyle(
+                               fontSize: 20,
+                               fontWeight: FontWeight.bold,
+                               color: banner['titleColor'],
+                               height: 1.3,
+                             ),
+                           ),
+                         ],
+                       ),
+                     ),
+                     // Image (Right)
+                     Positioned(
+                       right: 10,
+                       bottom: 10,
+                       width: 100,
+                       height: 100,
+                       child: Image.asset(
+                         banner['image'],
+                         fit: BoxFit.contain,
+                         errorBuilder: (context, error, stackTrace) {
+                           return Icon(Icons.image_not_supported, size: 50, color: Colors.grey[400]);
+                         },
+                       ),
+                     ),
+                   ],
+                 ),
+               );
+             },
+           ),
+           
+           // Indicators
+           Positioned(
+             bottom: 16,
+             left: 0,
+             right: 0,
+             child: Row(
+               mainAxisAlignment: MainAxisAlignment.center,
+               children: List.generate(_banners.length, (index) {
+                 final isActive = _currentPage == index;
+                 return AnimatedContainer(
+                   duration: const Duration(milliseconds: 300),
+                   margin: const EdgeInsets.symmetric(horizontal: 3),
+                   width: isActive ? 16 : 6,
+                   height: 6,
+                   decoration: BoxDecoration(
+                     color: isActive ? Colors.black87 : Colors.black12,
+                     borderRadius: BorderRadius.circular(3),
+                   ),
+                 );
+               }),
+             ),
+           ),
+
+           // Left Arrow
+           Positioned(
+             left: 10,
+             child: GestureDetector(
+               onTap: () {
+                 _pageController.previousPage(
+                   duration: const Duration(milliseconds: 300),
+                   curve: Curves.easeInOut,
+                 );
+               },
+               child: Container(
+                 padding: const EdgeInsets.all(8),
+                 decoration: BoxDecoration(
+                   color: Colors.white.withOpacity(0.5),
+                   shape: BoxShape.circle,
+                 ),
+                 child: const Icon(Icons.arrow_back_ios_new, size: 16, color: Colors.black54),
+               ),
+             ),
+           ),
+
+           // Right Arrow
+           Positioned(
+             right: 10,
+             child: GestureDetector(
+               onTap: () {
+                 _pageController.nextPage(
+                   duration: const Duration(milliseconds: 300),
+                   curve: Curves.easeInOut,
+                 );
+               },
+               child: Container(
+                 padding: const EdgeInsets.all(8),
+                 decoration: BoxDecoration(
+                   color: Colors.white.withOpacity(0.5),
+                   shape: BoxShape.circle,
+                 ),
+                 child: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.black54),
+               ),
+             ),
+           ),
+         ],
+       ),
     );
   }
 }

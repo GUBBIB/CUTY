@@ -3,6 +3,12 @@ import '../../models/user_model.dart';
 import '../wallet/my_point_screen.dart';
 import '../spec/spec_wallet_screen.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import '../../providers/point_provider.dart';
+import '../schedule/schedule_screen.dart';
+import '../../providers/schedule_provider.dart';
+
 class MyPageScreen extends StatelessWidget {
   const MyPageScreen({super.key});
 
@@ -44,15 +50,17 @@ class MyPageScreen extends StatelessWidget {
   }
 }
 
-class _ProfileHeader extends StatelessWidget {
+
+
+class _ProfileHeader extends ConsumerWidget {
   final UserModel user;
   const _ProfileHeader({required this.user});
 
   @override
-  Widget build(BuildContext context) {
-    // Number formatter removed since points are hardcoded to '- P'
-    // final pointsFormatted = user.points.toString().replaceAllMapped(
-    //     RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Watch PointProvider for real-time balance
+    final pointState = ref.watch(pointProvider);
+    final formattedPoints = NumberFormat('#,###').format(pointState.totalBalance);
 
     return Row(
       children: [
@@ -110,9 +118,9 @@ class _ProfileHeader extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const MyPointScreen()),
                 );
               },
-              child: const Text(
-                '- P', // explicitly set to "- P" as requested
-                style: TextStyle(
+              child: Text(
+                '$formattedPoints P', 
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF1A1A2E), // Navy
@@ -305,11 +313,17 @@ class _VisaDashboard extends StatelessWidget {
   }
 }
 
-class _WeeklySchedule extends StatelessWidget {
+
+
+class _WeeklySchedule extends ConsumerWidget {
   const _WeeklySchedule();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final scheduleNotifier = ref.read(scheduleProvider.notifier);
+    // Watch provider to rebuild when schedule changes
+    ref.watch(scheduleProvider); 
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -326,49 +340,61 @@ class _WeeklySchedule extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            '주간 시간표',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF1A1A2E),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                '주간 시간표',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF1A1A2E),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ScheduleScreen()),
+                  );
+                },
+                child: const Padding(
+                  padding: EdgeInsets.all(4.0),
+                  child: Text(
+                    '수정하기',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 16),
           // Table Layout
           Table(
-            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+            defaultVerticalAlignment: TableCellVerticalAlignment.top,
             children: [
               // Header Row
               const TableRow(
                 children: [
-                  Center(child: Text('Mon', style: TextStyle(fontWeight: FontWeight.bold))),
-                  Center(child: Text('Tue', style: TextStyle(fontWeight: FontWeight.bold))),
-                  Center(child: Text('Wed', style: TextStyle(fontWeight: FontWeight.bold))),
-                  Center(child: Text('Thu', style: TextStyle(fontWeight: FontWeight.bold))),
-                  Center(child: Text('Fri', style: TextStyle(fontWeight: FontWeight.bold))),
+                  Center(child: Text('Mon', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13))),
+                  Center(child: Text('Tue', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13))),
+                  Center(child: Text('Wed', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13))),
+                  Center(child: Text('Thu', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13))),
+                  Center(child: Text('Fri', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13))),
+                  Center(child: Text('Sat', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.red))),
+                  Center(child: Text('Sun', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.red))),
                 ],
               ),
-              const TableRow(children: [SizedBox(height: 12), SizedBox(height: 12), SizedBox(height: 12), SizedBox(height: 12), SizedBox(height: 12)]),
-              // Row 1: Classes
+              const TableRow(children: [SizedBox(height: 12), SizedBox(height: 12), SizedBox(height: 12), SizedBox(height: 12), SizedBox(height: 12), SizedBox(height: 12), SizedBox(height: 12)]),
+              // Row 1: Classes Chips
               TableRow(
                 children: [
-                  _buildEventBlock('수업', const Color(0xFFE3F2FD), const Color(0xFF1565C0)),
-                  _buildEventBlock('수업', const Color(0xFFE8F5E9), const Color(0xFF2E7D32)),
-                  _buildEventBlock('수업', const Color(0xFFE3F2FD), const Color(0xFF1565C0)),
-                  _buildEventBlock('수업', const Color(0xFFE8F5E9), const Color(0xFF2E7D32)),
-                  const SizedBox(), // Empty
-                ],
-              ),
-               const TableRow(children: [SizedBox(height: 8), SizedBox(height: 8), SizedBox(height: 8), SizedBox(height: 8), SizedBox(height: 8)]),
-              // Row 2: Part-time
-              TableRow(
-                children: [
-                   const SizedBox(), // Empty
-                   _buildEventBlock('알바', const Color(0xFFFFF3E0), const Color(0xFFEF6C00)),
-                   const SizedBox(), // Empty
-                   const SizedBox(), // Empty
-                   _buildEventBlock('알바', const Color(0xFFFFF3E0), const Color(0xFFEF6C00)),
+                  for (int i = 1; i <= 7; i++)
+                    _buildDayCell(scheduleNotifier.getClassesForDay(i)),
                 ],
               ),
             ],
@@ -378,21 +404,27 @@ class _WeeklySchedule extends StatelessWidget {
     );
   }
 
-  Widget _buildEventBlock(String text, Color bgColor, Color textColor) {
+  Widget _buildDayCell(List<ClassItem> classes) {
+    if (classes.isEmpty) {
+      return const SizedBox(height: 30, child: Center(child: Icon(Icons.circle, size: 6, color: Colors.grey)));
+    }
+    
+    // Check if there are mainly classes or alba (if implemented later). For now, just '수업' blue chip.
+    // If multiple classes, just show one '수업' chip to indicate busy.
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 2),
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 6),
       decoration: BoxDecoration(
-        color: bgColor,
+        color: const Color(0xFFE3F2FD),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Text(
-        text,
+      child: const Text(
+        '수업',
         textAlign: TextAlign.center,
         style: TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.bold,
-          color: textColor,
+          color: Color(0xFF1565C0),
         ),
       ),
     );
@@ -418,19 +450,19 @@ class _MenuList extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _buildMenuItem(Icons.folder_outlined, '서류 지갑'),
+          _buildMenuItem(context, Icons.folder_outlined, '서류 지갑'),
           const Divider(height: 1, indent: 20, endIndent: 20),
-          _buildMenuItem(Icons.chat_bubble_outline_rounded, '커뮤니티 활동'),
+          _buildMenuItem(context, Icons.chat_bubble_outline_rounded, '커뮤니티 활동'),
           const Divider(height: 1, indent: 20, endIndent: 20),
-          _buildMenuItem(Icons.person_outline_rounded, '개인 정보 관리'),
+          _buildMenuItem(context, Icons.person_outline_rounded, '개인 정보 관리'),
           const Divider(height: 1, indent: 20, endIndent: 20),
-          _buildMenuItem(Icons.settings_outlined, '설정'),
+          _buildMenuItem(context, Icons.settings_outlined, '설정'),
         ],
       ),
     );
   }
 
-  Widget _buildMenuItem(IconData icon, String title) {
+  Widget _buildMenuItem(BuildContext context, IconData icon, String title) {
     return ListTile(
       leading: Icon(icon, color: Colors.black87),
       title: Text(
