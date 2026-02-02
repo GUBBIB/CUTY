@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/user_model.dart';
+import '../models/user.dart';
 import '../services/api_service.dart';
 
 class UserNotifier extends StateNotifier<User?> {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../models/user_model.dart';
+import '../../models/user.dart';
 import '../wallet/my_point_screen.dart';
 import '../spec/spec_wallet_screen.dart';
 
