@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import '../job_detail_screen_career.dart';
+import '../../diagnosis/consulting_screen.dart';
 
-class CareerTabContent extends StatelessWidget {
-  final bool isAnalyzed = false; 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../providers/diagnosis_provider.dart';
 
+class CareerTabContent extends ConsumerWidget { // Changed to ConsumerWidget
   const CareerTabContent({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final diagnosisState = ref.watch(diagnosisProvider);
+    final isAnalyzed = diagnosisState.isAnalysisDone;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -18,7 +22,7 @@ class CareerTabContent extends StatelessWidget {
         // -------------------------------------------------------
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: isAnalyzed ? _buildResultDashboard(context) : _buildLockedDashboard(),
+          child: isAnalyzed ? _buildResultDashboard(context) : _buildLockedDashboard(context),
         ),
 
         const SizedBox(height: 32),
@@ -79,7 +83,7 @@ class CareerTabContent extends StatelessWidget {
   }
 
   // 🔒 잠금 상태 대시보드
-  Widget _buildLockedDashboard() {
+  Widget _buildLockedDashboard(BuildContext context) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
@@ -116,7 +120,10 @@ class CareerTabContent extends StatelessWidget {
           GestureDetector(
             onTap: () {
                debugPrint(">>> [클릭] 비자 진단하러 가기 (Locked)");
-               // TODO: 진단 페이지로 이동
+               Navigator.push(
+                 context,
+                 MaterialPageRoute(builder: (context) => const ConsultingScreen()),
+               );
             },
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),

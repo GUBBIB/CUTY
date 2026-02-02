@@ -1,109 +1,235 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../models/diagnosis_model.dart';
+import '../models/document_model.dart';
+import 'document_provider.dart';
 
-// Riverpod Provider Definition
-final diagnosisProvider = ChangeNotifierProvider<DiagnosisProvider>((ref) {
-  return DiagnosisProvider();
-});
+class DiagnosisState {
+  final SurveyAnswer answer;
+  final DiagnosisResult? result;
+  final bool isAnalyzing;
 
-class DiagnosisProvider with ChangeNotifier {
-  // 1. State Variables
-  final Map<String, dynamic> _answers = {
-    'target_job': '',
-    'major': '',
-    'topik': '',
-    'exp': '',
-  };
+  DiagnosisState({
+    required this.answer,
+    this.result,
+    this.isAnalyzing = false,
+  });
 
-  final Map<String, dynamic> _result = {
-    'visa_status': '',
-    'total_score': 0,
-    'score_major': 0,
-    'score_exp': 0,
-    'score_lang': 0,
-    'score_extra': 0,
-  };
-
-  // Getters
-  Map<String, dynamic> get answers => _answers;
-  Map<String, dynamic> get result => _result;
+  DiagnosisState copyWith({
+    SurveyAnswer? answer,
+    DiagnosisResult? result,
+    bool? isAnalyzing,
+  }) {
+    return DiagnosisState(
+      answer: answer ?? this.answer,
+      result: result ?? this.result,
+      isAnalyzing: isAnalyzing ?? this.isAnalyzing,
+    );
+  }
   
-  bool get isAnalysisDone => _result['visa_status'] != '';
+  bool get isAnalysisDone => result != null;
+}
 
-  // New Getter for Riverpod Consumers expecting resultData (Adapter)
-  // Warning: This is a temporary adapter. Use 'result' map directly if possible.
-  // We'll update consumers to use 'result' map.
+class DiagnosisNotifier extends StateNotifier<DiagnosisState> {
+  final Ref ref;
 
-  // Update Answer
-  void updateAnswer(String key, dynamic value) {
-    _answers[key] = value;
-    notifyListeners();
+  DiagnosisNotifier(this.ref)
+      : super(DiagnosisState(answer: SurveyAnswer()));
+
+  // 1. Update Survey Input
+  void updateAnswer(SurveyAnswer newAnswer) {
+    state = state.copyWith(answer: newAnswer);
   }
 
-  // 2. Core Logic: Analyze Spec
-  void analyzeSpec() {
-    // Null Safety defaults
-    final String targetJob = _answers['target_job'] ?? '';
-    final String major = _answers['major'] ?? '';
-    final String topik = _answers['topik'] ?? '';
-    final String exp = _answers['exp'] ?? '';
-
-    // Track 1: Visa Status (Eligibility)
-    String visaStatus = 'INELIGIBLE';
+  // 2. Perform Analysis
+  Future<void> analyze({required bool useDocuments}) async {
+    state = state.copyWith(isAnalyzing: true);
     
-    // Define Mapping
-    if (targetJob == 'IT개발' && major == '공학계열') {
-      visaStatus = 'ELIGIBLE';
-    } else if (targetJob == '디자인' && major == '예체능') {
-      visaStatus = 'ELIGIBLE';
-    } else if ((targetJob == '마케팅' || targetJob == '무역') && (major == '상경계열' || major == '인문계열')) {
-      visaStatus = 'ELIGIBLE';
+    // Simulate thinking time for UX
+    // If using documents, it takes longer (Wallet opening)
+    await Future.delayed(Duration(seconds: useDocuments ? 3 : 2));
+
+    // Get Objective Data (Documents)
+    final myDocs = useDocuments ? ref.read(documentProvider) : <Document>[];
+    
+    // Logic Execution
+    final result = _calculateResult(state.answer, myDocs);
+
+    state = state.copyWith(
+      result: result,
+      isAnalyzing: false,
+    );
+  }
+
+  // Core Business Logic
+  DiagnosisResult _calculateResult(SurveyAnswer answer, List<Document> docs) {
+    // -------------------------------------------------------------
+    // 1. Scoring Logic (5 Axis)
+    // -------------------------------------------------------------
+    
+    // A. Language (TOPIK + Survey)
+    int langScore = 0;
+    switch (answer.koreanLevel) {
+      case '기초 (인사말 정도)': langScore = 20; break;
+      case '일상회화 (식당/마트 이용)': langScore = 40; break;
+      case '비즈니스 (토론 가능)': langScore = 70; break;
+      case '원어민 수준': langScore = 100; break;
+      default: langScore = 10;
+    }
+    bool hasTopik = docs.any((d) => d.name.toUpperCase().contains('TOPIK'));
+    if (hasTopik) langScore = (langScore + 30).clamp(0, 100);
+
+    // B. Experience (Intern, Alba, E7)
+    int expScore = 0;
+    for (var exp in answer.experiences) {
+      if (exp.category == '인턴십') expScore += 30;
+      else if (exp.category == '시간제 취업(알바)') expScore += 20;
+      else if (exp.category == '과거 E-7 근무') expScore += 50;
+    }
+    expScore = expScore.clamp(0, 100);
+
+    // C. Expertise (Job Match + Degree)
+    int expertiseScore = 40; // Base
+    bool hasDegree = docs.any((d) => d.name.contains('졸업') || d.name.contains('학위'));
+    if (hasDegree) expertiseScore += 40;
+    // Boost if experience details match target job
+    // Simple check: if any target job matches experience detail
+    bool expMatch = false;
+    for (var job in answer.targetJobs) {
+       // Check detailType and customInput
+       if (answer.experiences.any((e) {
+          final detail = e.detailType;
+          final custom = e.customInput ?? '';
+          return (detail.contains(job) || custom.contains(job)) || (detail.contains('호텔') && job.contains('관광'));
+       })) {
+          expMatch = true;
+       }
+    }
+    if (expMatch) expertiseScore += 20;
+    expertiseScore = expertiseScore.clamp(0, 100);
+
+    // D. Korea Understanding (Duration + Culture) - Simulated
+    int koreaScore = 60; // Default
+    if (langScore > 70) koreaScore += 20;
+    if (docs.any((d) => d.name.contains('GKS') || d.name.contains('사회통합'))) koreaScore += 20;
+    koreaScore = koreaScore.clamp(0, 100);
+
+    // E. Sincerity/Reputation (GPA + Attendance) - Simulated
+    int sincerityScore = 70; // Default
+    if (expScore > 50) sincerityScore += 10;
+    if (hasDegree) sincerityScore += 10;
+    sincerityScore = sincerityScore.clamp(0, 100);
+
+    // -------------------------------------------------------------
+    // 2. Benchmarking & Result Generation
+    // -------------------------------------------------------------
+    Map<String, JobAnalysisData> results = {};
+    List<String> solutions = [];
+
+    // Common Solutions
+    if (!hasTopik) solutions.add("TOPIK 보완 (3급 이상 권장)");
+    if (!hasDegree) solutions.add("전공 학위 증명서");
+    if (answer.experiences.isEmpty) solutions.add("관련 인턴십 경험");
+
+    // Helper to Create Data
+    void addResult(String code, String name, int avgSalaryInt, {int bonus = 0}) {
+      VisaStatus status = VisaStatus.RED;
+      // Simple Pass Logic
+      if (expertiseScore + bonus >= 70 && langScore >= 40) status = VisaStatus.GREEN;
+      else if (expertiseScore + bonus >= 50) status = VisaStatus.YELLOW;
+
+      results[code] = JobAnalysisData(
+        jobCode: code,
+        jobName: name,
+        visaStatus: status,
+        myScores: {
+          "언어": langScore,
+          "전문성": (expertiseScore + bonus).clamp(0, 100),
+          "경력": expScore,
+          "한국이해": koreaScore,
+          "성실성": sincerityScore,
+        },
+        avgScores: {
+          "언어": 85,
+          "전문성": 80,
+          "경력": 70,
+          "한국이해": 75,
+          "성실성": 90,
+        },
+        avgSalary: "${avgSalaryInt}만원",
+      );
     }
 
-    // Track 2: Competitiveness Score (Max 100)
-    int scoreMajor = 0; // Max 40
-    int scoreExp = 0;   // Max 30
-    int scoreLang = 0;  // Max 20
-    int scoreExtra = 10; // Max 10 (Base score)
-
-    // Calculate Major Score (40)
-    if (visaStatus == 'ELIGIBLE') {
-      scoreMajor = 40;
-    } else {
-      scoreMajor = 20; // Partial score
+    // Generate Results based on Multi-select Targets
+    for (var job in answer.targetJobs) {
+      if (job.contains('IT') || job.contains('기술')) {
+          addResult('1332', '응용 S/W 개발자', 3800);
+          addResult('2351', '데이터 전문가', 4200, bonus: -10);
+      } else if (job.contains('마케팅') || job.contains('무역')) {
+          addResult('2733', '해외 영업원', 3400);
+          addResult('2742', '상품 기획 전문가', 3200, bonus: -5);
+      } else if (job.contains('관광') || job.contains('서비스') || job.contains('호텔')) {
+          addResult('3991', '관광 통역 안내원', 2800);
+          addResult('3910', '호텔 접수 사무원', 2900, bonus: 10);
+      } else if (job.contains('교육')) {
+          addResult('2591', '외국어 강사', 3000);
+      } else if (job.contains('의료')) {
+          addResult('S392', '의료 코디네이터', 3100);
+      } else {
+         // Default fallback
+         addResult('3922', '여행 상품 개발자', 3000);
+      }
+    }
+    
+    // Fallback if no jobs generated
+    if (results.isEmpty) {
+       addResult('3991', '관광 통역 안내원', 2800);
     }
 
-    // Calculate Experience Score (30)
-    if (exp == '2회 이상') {
-      scoreExp = 30;
-    } else if (exp == '1회') {
-      scoreExp = 20;
-    } else {
-      scoreExp = 0;
-    }
+    // -------------------------------------------------------------
+    // 3. Total Score & Tier Calculation
+    // -------------------------------------------------------------
+    int totalScore = 50; // Base Score
 
-    // Calculate Language Score (20)
-    if (topik == '5급 이상') {
-      scoreLang = 20;
-    } else if (topik == '4급') {
-      scoreLang = 15;
-    } else if (topik == '3급 이하') {
-      scoreLang = 10;
-    } else {
-      scoreLang = 0;
-    }
+    // Lang (+10 ~ +30)
+    if (answer.koreanLevel.contains('기초')) totalScore += 10;
+    else if (answer.koreanLevel.contains('일상')) totalScore += 20;
+    else if (answer.koreanLevel.contains('비즈니스') || answer.koreanLevel.contains('원어민')) totalScore += 30;
 
-    // Total
-    int totalScore = scoreMajor + scoreExp + scoreLang + scoreExtra;
+    // Edu (+10 ~ +20)
+    // Simple heuristic: if any degree doc exists, give +20 for now as we don't distinguish degree types yet
+    if (hasDegree) totalScore += 20;
 
-    // Save Results
-    _result['visa_status'] = visaStatus;
-    _result['total_score'] = totalScore;
-    _result['score_major'] = scoreMajor;
-    _result['score_exp'] = scoreExp;
-    _result['score_lang'] = scoreLang;
-    _result['score_extra'] = scoreExtra;
+    // Experience (+5 per item, max 10)
+    int expBonus = (answer.experiences.length * 5).clamp(0, 10);
+    totalScore += expBonus;
 
-    notifyListeners();
+    totalScore = totalScore.clamp(0, 100);
+
+    // Tier
+    String totalTier = "Silver";
+    String tierDescription = "가능성의 씨앗! 이제부터 하나씩 준비해보아요.";
+    
+    if (totalScore >= 90) {
+      totalTier = "Diamond";
+      tierDescription = "준비된 인재! 이미 충분한 경쟁력을 갖추셨군요.";
+    } else if (totalScore >= 80) {
+      totalTier = "Platinum";
+      tierDescription = "우수 인재! 조금만 더 다듬으면 완벽합니다.";
+    } else if (totalScore >= 70) {
+      totalTier = "Gold";
+      tierDescription = "성장하는 인재! 기본 역량을 잘 갖추고 계시네요.";
+    } 
+
+    return DiagnosisResult(
+      analysisResults: results,
+      solutionDocs: solutions,
+      totalScore: totalScore,
+      totalTier: totalTier,
+      tierDescription: tierDescription,
+    );
   }
 }
+
+final diagnosisProvider = StateNotifierProvider<DiagnosisNotifier, DiagnosisState>((ref) {
+  return DiagnosisNotifier(ref);
+});

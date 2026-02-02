@@ -7,12 +7,9 @@ import '../providers/job_providers.dart';
 import '../../alba/permit_application_wizard.dart';
 import '../../alba/part_time_apply_consent_screen.dart';
 
-import 'package:cuty_app/providers/survey_provider.dart';
 import 'package:cuty_app/providers/diagnosis_provider.dart';
-import '../../career/survey_screen.dart';
-// import '../../career/new_career_diagnosis_screen.dart'; // Removed
-import '../../diagnosis/diagnosis_screen.dart'; // New Entry Point
-import '../../diagnosis/result_screen.dart'; // New Result Screen
+import '../../diagnosis/consulting_screen.dart'; // Consulting (Entry)
+import '../../diagnosis/result_screen.dart'; // Result
 
 class PromotionBanner extends ConsumerStatefulWidget {
   const PromotionBanner({super.key});
@@ -301,8 +298,8 @@ class CareerMainBanner extends ConsumerWidget {
     final diagnosisState = ref.watch(diagnosisProvider);
     final isCompleted = diagnosisState.isAnalysisDone;
     
-    // Updated: Use result map access
-    final score = diagnosisState.result['total_score'] ?? 0;
+    // Updated: Use model getter
+    final score = diagnosisState.result?.totalScore ?? 0;
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
@@ -335,14 +332,9 @@ class CareerMainBanner extends ConsumerWidget {
                   onTap: () {
                     debugPrint("Clicked: 스펙 진단하기 (Unified)");
                      if (isCompleted) {
-                        // Navigate to new ResultScreen via Provider-aware wrapper if needed
-                        // But since we use Global Provider now, we can just push DiagnosisScreen or ResultScreen.
-                        // However, ResultScreen expects to find Provider. 
-                        // Since we are now using Riverpod global provider, we might need to bridge it.
-                        // Best way: Use DiagnosisScreen which is the entry point.
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const DiagnosisScreen()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const ResultScreen()));
                      } else {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const DiagnosisScreen()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const ConsultingScreen()));
                      }
                   },
                   child: Container(
