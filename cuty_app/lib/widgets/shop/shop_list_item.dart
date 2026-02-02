@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../providers/shop_provider.dart';
+import '../../models/shop_model.dart';
+// import '../../providers/shop_provider.dart'; // No longer needed if using model directly
 
 class ShopListItem extends StatelessWidget {
-  final ShopProduct product;
+  final Shop product; // Changed ShopProduct to Shop
   final VoidCallback onTap;
 
   const ShopListItem({

@@ -15,7 +15,8 @@ class ScheduleList extends ConsumerWidget {
 
     // 2. Map to UI Model (ScheduleItem)
     // If title is empty, it means 'No Class' or 'End of Day'
-    if (nextClass.title.isEmpty) {
+    // If title is empty, it means 'No Class' or 'End of Day'
+    if (nextClass?.title.isEmpty ?? true) {
         return ScheduleCard(item: ScheduleItem(
           title: "오늘 수업 끝! 🎉",
           time: "--:--",
@@ -24,9 +25,9 @@ class ScheduleList extends ConsumerWidget {
     }
 
     final displayItem = ScheduleItem(
-      title: nextClass.title,
-      time: "${nextClass.startTime}:00", // Convert int hour to string time
-      subtitle: nextClass.room, // Room maps to subtitle
+      title: nextClass?.title ?? '수업 없음',
+      time: "${nextClass?.startTime ?? 9}:00", // Convert int hour to string time
+      subtitle: nextClass?.classroom ?? '', // Room maps to subtitle
     );
 
     return ScheduleCard(item: displayItem);

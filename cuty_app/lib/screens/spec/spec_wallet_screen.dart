@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cuty_app/providers/document_provider.dart';
+import '../../models/document_model.dart';
+import 'dart:math';
 
 // UI 정의용 정적 클래스
 class SpecDocDefinition {
@@ -77,7 +79,7 @@ class SpecWalletScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildSection(BuildContext context, String title, String subtitle, List<SpecDocDefinition> docs, List<DocumentItem> myDocs, WidgetRef ref) {
+  Widget _buildSection(BuildContext context, String title, String subtitle, List<SpecDocDefinition> docs, List<Document> myDocs, WidgetRef ref) { // Changed DocumentItem to Document
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -102,14 +104,17 @@ class SpecWalletScreen extends ConsumerWidget {
             final def = docs[index];
             
             // 보유 여부 확인
+            // We use .name or .title (compatibility getter)
+            // But 'firstWhere' requires a return value if not found. 
+            // We return a dummy Document with id 0 for "not found".
             final matchingDoc = myDocs.firstWhere(
-              (doc) => doc.title == def.name || doc.title.startsWith(def.name),
-              orElse: () => DocumentItem(id: "", title: "", expiryDate: "none", isVerified: false),
+              (doc) => doc.name == def.name || doc.name.startsWith(def.name),
+              orElse: () => Document(id: 0, name: "", type: "", createdAt: DateTime.now(), imageUrl: ""),
             );
             
-            final isRegistered = matchingDoc.isVerified;
+            final isRegistered = matchingDoc.id != 0;
 
-            return _buildDocCard(context, def, isRegistered, matchingDoc.expiryDate, ref);
+            return _buildDocCard(context, def, isRegistered, isRegistered ? matchingDoc.expiryDate : "none", ref);
           },
         ),
       ],
@@ -154,7 +159,7 @@ class SpecWalletScreen extends ConsumerWidget {
                Container(
                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                  decoration: BoxDecoration(
-                   color: Colors.indigo.withOpacity(0.08),
+                   color: Colors.indigo.withValues(alpha: 0.08),
                    borderRadius: BorderRadius.circular(6),
                  ),
                  child: Text(
@@ -210,7 +215,7 @@ class SpecWalletScreen extends ConsumerWidget {
                        Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
-                          color: Colors.green.withOpacity(0.1),
+                          color: Colors.green.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: const Text("등록됨", style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold, fontSize: 12)),
@@ -245,11 +250,12 @@ class SpecWalletScreen extends ConsumerWidget {
                     onTap: () {
                       // 실제 등록 로직
                       ref.read(documentProvider.notifier).addDocumentWithReward(
-                          DocumentItem(
-                            id: DateTime.now().toString(),
-                            title: def.name,  // 클릭한 서류 이름으로 등록
-                            expiryDate: "2026-12-31",
-                            isVerified: true,
+                          Document(
+                            id: Random().nextInt(10000), // generated id
+                            name: def.name,  // 클릭한 서류 이름으로 등록
+                            type: 'pdf',
+                            createdAt: DateTime.now(),
+                            imageUrl: 'assets/images/doc_placeholder.png', // dummy
                           )
                       );
                       Navigator.pop(context);
@@ -272,11 +278,12 @@ class SpecWalletScreen extends ConsumerWidget {
                     onTap: () {
                       // 실제 등록 로직
                       ref.read(documentProvider.notifier).addDocumentWithReward(
-                          DocumentItem(
-                            id: DateTime.now().toString(),
-                            title: def.name, // 클릭한 서류 이름으로 등록
-                            expiryDate: "2026-12-31",
-                            isVerified: true,
+                          Document(
+                            id: Random().nextInt(10000), // generated id
+                            name: def.name, 
+                            type: 'image',
+                            createdAt: DateTime.now(),
+                            imageUrl: 'assets/images/doc_placeholder.png',
                           )
                       );
                       Navigator.pop(context);

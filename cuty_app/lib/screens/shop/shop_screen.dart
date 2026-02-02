@@ -5,6 +5,7 @@ import '../../providers/nav_provider.dart';
 import '../../providers/point_provider.dart';
 import 'dart:async'; // For Timer
 import '../../widgets/shop/shop_list_item.dart';
+import '../../models/shop_model.dart';
 import '../home/widgets/fortune_cookie_dialog.dart';
 import 'shop_detail_screen.dart';
 import 'storage_screen.dart';
@@ -39,6 +40,7 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
             String catId = categories.firstWhere((c) => c['label'] == _selectedCategory)['id'] as String;
             return p.category == catId;
           }).toList();
+
 
     return Scaffold(
       backgroundColor: Colors.white,

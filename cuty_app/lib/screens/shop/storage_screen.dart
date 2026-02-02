@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/shop_provider.dart';
+import '../../models/shop_model.dart';
 
 class StorageScreen extends ConsumerWidget {
   const StorageScreen({super.key});
@@ -57,7 +58,9 @@ class StorageScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildInventoryItem(BuildContext context, ShopProduct item) {
+  Widget _buildInventoryItem(BuildContext context, Shop item) { // Changed ShopProduct to Shop
+    final imgUrl = item.imageUrl ?? 'assets/images/placeholder.png'; // Null check
+    
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
@@ -66,7 +69,7 @@ class StorageScreen extends ConsumerWidget {
         border: Border.all(color: Colors.grey[200]!),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -84,7 +87,7 @@ class StorageScreen extends ConsumerWidget {
             ),
              child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: Image.asset(item.imageUrl, fit: BoxFit.cover),
+              child: Image.asset(imgUrl, fit: BoxFit.cover, errorBuilder: (c,e,s) => const Icon(Icons.image)),
             ),
           ),
           const SizedBox(width: 16),
@@ -116,7 +119,7 @@ class StorageScreen extends ConsumerWidget {
     );
   }
 
-  void _showBarcodeDialog(BuildContext context, ShopProduct item) {
+  void _showBarcodeDialog(BuildContext context, Shop item) { // Changed ShopProduct to Shop
     showDialog(
       context: context,
       builder: (context) {

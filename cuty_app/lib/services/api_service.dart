@@ -1,106 +1,76 @@
-import 'package:flutter/foundation.dart';
-import 'package:dio/dio.dart';
-import '../models/auth_response.dart';
-import '../models/post_model.dart';
-import '../models/attendance_response.dart';
-
-// [API Service]
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../models/user_model.dart';
 
 class ApiService {
-  final Dio _dio;
+  // Singleton Pattern
+  static final ApiService instance = ApiService._internal();
+  ApiService._internal();
 
-  // Base URL should be configured here or passed in
-  static const String baseUrl = 'https://api.example.com'; 
+  // Configuration
+  static const String baseUrl = ""; // To be filled
 
-  ApiService({Dio? dio})
-      : _dio = dio ??
-            Dio(
-              BaseOptions(
-                baseUrl: baseUrl,
-                connectTimeout: const Duration(seconds: 5),
-                receiveTimeout: const Duration(seconds: 3),
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Accept': 'application/json',
-                },
-              ),
-            );
-
-  void setToken(String token) {
-    _dio.options.headers['Authorization'] = 'Bearer $token';
-  }
+  final _storage = const FlutterSecureStorage();
 
   // 1. Login
-  Future<AuthResponse> login(String email, String password) async {
+  Future<bool> login(String email, String password) async {
+    // Prevent parsing error if baseUrl is empty
+    if (baseUrl.isEmpty) {
+      print("[API] Base URL is empty. Login simulation.");
+      return false; 
+    }
+
+    final url = Uri.parse('$baseUrl/api/v1/auth/login');
     try {
-      final response = await _dio.post(
-        '/api/v1/auth/login',
-        data: {
-          'email': email,
-          'password': password,
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'email': email, 'password': password}),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final accessToken = data['access_token'];
+        if (accessToken != null) {
+          await _storage.write(key: 'access_token', value: accessToken);
+          return true;
+        }
+      } else {
+        print('Login Failed: ${response.statusCode} - ${response.body}');
+      }
+    } catch (e) {
+      print('Login Error: $e');
+    }
+    return false;
+  }
+
+  // 2. Fetch My Info
+  Future<User?> fetchMyInfo() async {
+    if (baseUrl.isEmpty) return null;
+    
+    final url = Uri.parse('$baseUrl/api/v1/users/me');
+    try {
+      final accessToken = await _storage.read(key: 'access_token');
+      if (accessToken == null) return null;
+
+      final response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $accessToken',
         },
       );
-      return AuthResponse.fromJson(response.data);
-    } catch (e) {
-      throw Exception('Login Failed: $e');
-    }
-  }
 
-  // 2. Fetch Popular Posts
-  Future<List<PostModel>> fetchPopularPosts({int limit = 10}) async {
-    try {
-      final response = await _dio.get(
-        '/api/v1/posts/popular',
-        queryParameters: {'limit': limit},
-      );
-      // Response structure: { "success": true, "data": { "items": [...] } }
-      final data = response.data['data'];
-      if (data != null && data['items'] != null) {
-        return (data['items'] as List)
-            .map((item) => PostModel.fromJson(item))
-            .toList();
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body); // Directly expects User JSON
+        return User.fromJson(data);
+      } else {
+        print('Fetch Info Failed: ${response.statusCode}');
       }
-      return [];
     } catch (e) {
-      // Return empty list or throw depending on UI requirements
-      debugPrint('Fetch Popular Posts Error: $e');
-      return [];
+      print('Fetch Info Error: $e');
     }
-  }
-
-  // 3. Fetch Posts by Category (e.g., INFO)
-  Future<List<PostModel>> fetchPosts({required String category, int page = 1}) async {
-    try {
-      final response = await _dio.get(
-        '/api/v1/posts',
-        queryParameters: {
-          'category': category,
-          'page': page,
-        },
-      );
-      // Response structure: { "posts": [...], "total": ... }
-      final posts = response.data['posts'];
-      if (posts != null) {
-        return (posts as List).map((item) => PostModel.fromJson(item)).toList();
-      }
-      return [];
-    } catch (e) {
-      debugPrint('Fetch Posts Error: $e');
-      return [];
-    }
-  }
-
-  // 4. Attendance Check
-  Future<AttendanceResponse> checkAttendance() async {
-    try {
-      final response = await _dio.post('/api/v1/attendances/');
-      return AttendanceResponse.fromJson(response.data);
-    } catch (e) {
-      if (e is DioException && e.response?.statusCode == 400) {
-         // Already attended today
-         throw Exception(e.response?.data['error'] ?? 'Already checked attendance');
-      }
-      throw Exception('Attendance Check Failed: $e');
-    }
+    return null;
   }
 }

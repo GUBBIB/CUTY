@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/schedule_provider.dart';
+import '../../models/schedule_model.dart';
+import 'dart:math';
 
 class ScheduleScreen extends ConsumerWidget {
   const ScheduleScreen({super.key});
@@ -94,8 +96,11 @@ class ScheduleScreen extends ConsumerWidget {
                          final top = (item.startTime - 9) * 60.0;
                          final height = item.duration * 60.0;
                          
-                         // Day 1(Mon) -> Index 0. 
-                         final left = timeColWidth + ((item.day - 1) * cellWidth);
+                         // Map "Mon" -> 0, "Tue" -> 1 ...
+                         final dayMap = {"Mon": 0, "Tue": 1, "Wed": 2, "Thu": 3, "Fri": 4, "Sat": 5, "Sun": 6};
+                         final dayIndex = dayMap[item.day] ?? 0;
+                         
+                         final left = timeColWidth + (dayIndex * cellWidth);
                          
                          return Positioned(
                            top: top,
@@ -106,7 +111,7 @@ class ScheduleScreen extends ConsumerWidget {
                              margin: const EdgeInsets.all(1),
                              padding: const EdgeInsets.all(2), // 1. Reduced Padding
                              decoration: BoxDecoration(
-                               color: item.color,
+                               color: Colors.blue[100], // Default color since model has no color
                                borderRadius: BorderRadius.circular(4),
                                border: Border.all(color: Colors.black12),
                              ),
@@ -126,9 +131,9 @@ class ScheduleScreen extends ConsumerWidget {
                                      maxLines: 2,
                                      overflow: TextOverflow.ellipsis,
                                    ),
-                                   if (item.room.isNotEmpty)
+                                   if (item.classroom.isNotEmpty)
                                      Text(
-                                       item.room,
+                                       item.classroom,
                                        style: const TextStyle(fontSize: 9), // 3. Reduced Font Size
                                        textAlign: TextAlign.center,
                                        maxLines: 1,
@@ -227,13 +232,15 @@ class ScheduleScreen extends ConsumerWidget {
                   onPressed: () {
                     if (titleController.text.isEmpty) return;
                     
-                    final newItem = ClassItem(
+                    final dayMap = {1: "Mon", 2: "Tue", 3: "Wed", 4: "Thu", 5: "Fri", 6: "Sat", 7: "Sun"};
+
+                    final newItem = Schedule(
+                      id: Random().nextInt(10000), // Random ID
                       title: titleController.text,
-                      room: roomController.text,
-                      day: selectedDay,
+                      classroom: roomController.text,
+                      day: dayMap[selectedDay] ?? "Mon",
                       startTime: selectedTime,
                       duration: selectedDuration,
-                      color: Colors.blue[100]!, // Default color
                     );
                     
                     final success = ref.read(scheduleProvider.notifier).addClass(newItem);

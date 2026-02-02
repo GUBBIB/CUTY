@@ -1,32 +1,38 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../models/user_model.dart';
+import '../services/api_service.dart';
 
-class UserState {
-  final String name;
-  final String university;
-  final String major;
-  final String visaType; // Added field
+class UserNotifier extends StateNotifier<User?> {
+  UserNotifier() : super(null); // Init with null (logged out)
   
-  UserState({
-    this.name = '김쿠티',
-    this.university = '한국대학교',
-    this.major = '경영학과',
-    this.visaType = 'D-2', // Default value
-  });
-}
+  // Login: Use ApiService
+  Future<bool> login(String email, String password) async {
+    print("Attempting login for $email...");
+    final success = await ApiService.instance.login(email, password);
+    
+    if (success) {
+      print("Login successful. Fetching user info...");
+      final user = await ApiService.instance.fetchMyInfo();
+      if (user != null) {
+        state = user;
+        print("User info loaded: ${user.name}");
+        return true;
+      } else {
+        print("Failed to fetch user info after login.");
+      }
+    } else {
+      print("Login failed.");
+    }
+    return false;
+  }
 
-class UserNotifier extends StateNotifier<UserState> {
-  UserNotifier() : super(UserState());
-  
-  void updateUser({String? name, String? university, String? major, String? visaType}) {
-    state = UserState(
-      name: name ?? state.name,
-      university: university ?? state.university,
-      major: major ?? state.major,
-      visaType: visaType ?? state.visaType,
-    );
+  // Logout: Clear state
+  void logout() {
+    state = null;
+    // ApiService.instance.logout(); // Implement storage clear if needed
   }
 }
 
-final userProvider = StateNotifierProvider<UserNotifier, UserState>((ref) {
+final userProvider = StateNotifierProvider<UserNotifier, User?>((ref) {
   return UserNotifier();
 });

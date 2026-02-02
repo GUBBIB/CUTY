@@ -1,0 +1,96 @@
+Resolving dependencies...
+Downloading packages...
+  _fe_analyzer_shared 93.0.0 (94.0.0 available)
+  analyzer 10.0.1 (10.0.2 available)
+  characters 1.4.0 (1.4.1 available)
+  code_assets 0.19.10 (1.0.0 available)
+  dart_style 3.1.4 (3.1.5 available)
+  dio 5.9.0 (5.9.1 available)
+  fl_chart 0.70.2 (1.1.1 available)
+  flutter_riverpod 2.6.1 (3.2.0 available)
+  google_fonts 6.3.3 (8.0.0 available)
+  hooks 0.20.5 (1.0.0 available)
+  intl 0.19.0 (0.20.2 available)
+  json_annotation 4.9.0 (4.10.0 available)
+  json_serializable 6.11.4 (6.12.0 available)
+  lints 6.0.0 (6.1.0 available)
+  matcher 0.12.17 (0.12.18 available)
+  material_color_utilities 0.11.1 (0.13.0 available)
+  meta 1.17.0 (1.18.1 available)
+  mime 1.0.6 (2.0.0 available)
+  native_toolchain_c 0.17.2 (0.17.4 available)
+  objective_c 9.2.2 (9.2.5 available)
+  riverpod 2.6.1 (3.2.0 available)
+  share_plus 7.2.2 (12.0.1 available)
+  share_plus_platform_interface 3.4.0 (6.1.0 available)
+  test_api 0.7.7 (0.7.9 available)
+Got dependencies!
+24 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Analyzing cuty_app...                                           
+
+warning - Unused import: '../models/post_dto.dart' - lib\data\repositories\real_home_repository.dart:7:8 - unused_import
+warning - The value of the field '_dio' isn't used - lib\data\repositories\real_home_repository.dart:23:13 - unused_field
+warning - Unused import: 'package:flutter/material.dart' - lib\providers\document_provider.dart:1:8 - unused_import
+warning - Unused import: 'dart:math' - lib\providers\point_provider.dart:1:8 - unused_import
+warning - Unused import: 'package:flutter/material.dart' - lib\providers\schedule_provider.dart:1:8 - unused_import
+warning - Unused import: 'dart:ui' - lib\screens\alba\permit_application_wizard.dart:4:8 - unused_import
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alba\permit_application_wizard.dart:59:193 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alba\permit_application_wizard.dart:87:250 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alba\permit_application_wizard.dart:87:426 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alba\permit_application_wizard.dart:87:869 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alba\permit_application_wizard.dart:87:1346 - deprecated_member_use
+warning - The value of the local variable 'isLinked' isn't used - lib\screens\alba\permit_application_wizard.dart:121:10 - unused_local_variable
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alba\permit_application_wizard.dart:276:143 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps - lib\screens\alba\permit_application_wizard.dart:296:309 - use_build_context_synchronously
+   info - Statements in a for should be enclosed in a block - lib\screens\alba\permit_application_wizard.dart:400:49 - curly_braces_in_flow_control_structures
+   info - Statements in a for should be enclosed in a block - lib\screens\alba\permit_application_wizard.dart:405:44 - curly_braces_in_flow_control_structures
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alba\permit_application_wizard.dart:468:57 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alba\permit_application_wizard.dart:549:175 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alba\permit_application_wizard.dart:692:204 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\career\widgets\diagnosis_radar_chart.dart:28:55 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\career\widgets\diagnosis_radar_chart.dart:42:48 - deprecated_member_use
+   info - 'swapAnimationDuration' is deprecated and shouldn't be used. Please use [duration] instead - lib\screens\career\widgets\diagnosis_radar_chart.dart:50:7 - deprecated_member_use
+   info - 'swapAnimationCurve' is deprecated and shouldn't be used. Please use [curve] instead - lib\screens\career\widgets\diagnosis_radar_chart.dart:51:7 - deprecated_member_use
+   info - Unnecessary braces in a string interpolation - lib\screens\diagnosis\result_screen.dart:28:72 - unnecessary_brace_in_string_interps
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\diagnosis\result_screen.dart:111:32 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\diagnosis\result_screen.dart:144:46 - deprecated_member_use
+   info - 'swapAnimationDuration' is deprecated and shouldn't be used. Please use [duration] instead - lib\screens\diagnosis\result_screen.dart:157:15 - deprecated_member_use
+   info - 'swapAnimationCurve' is deprecated and shouldn't be used. Please use [curve] instead - lib\screens\diagnosis\result_screen.dart:158:15 - deprecated_member_use
+warning - Unused import: 'widgets/fortune_cookie_dialog.dart' - lib\screens\home\home_screen.dart:12:8 - unused_import
+warning - The value of the local variable 'state' isn't used - lib\screens\home\home_screen.dart:20:11 - unused_local_variable
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\home\widgets\character_section.dart:22:39 - deprecated_member_use
+warning - Unused import: '../../../../providers/point_provider.dart' - lib\screens\home\widgets\fortune_cookie_widget.dart:6:8 - unused_import
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\home\widgets\home_header_v2.dart:47:44 - deprecated_member_use
+warning - Unused import: '../../jobs/jobs_home_screen.dart' - lib\screens\home\widgets\home_menu_grid.dart:7:8 - unused_import
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\home\widgets\schedule_card.dart:20:33 - deprecated_member_use
+  error - The property 'title' can't be unconditionally accessed because the receiver can be 'null' - lib\screens\home\widgets\schedule_list.dart:18:19 - unchecked_use_of_nullable_value
+  error - The property 'title' can't be unconditionally accessed because the receiver can be 'null' - lib\screens\home\widgets\schedule_list.dart:27:24 - unchecked_use_of_nullable_value
+  error - The property 'startTime' can't be unconditionally accessed because the receiver can be 'null' - lib\screens\home\widgets\schedule_list.dart:28:26 - unchecked_use_of_nullable_value
+  error - The property 'room' can't be unconditionally accessed because the receiver can be 'null' - lib\screens\home\widgets\schedule_list.dart:29:27 - unchecked_use_of_nullable_value
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\home\widgets\speech_bubble_widget.dart:29:35 - deprecated_member_use
+   info - Unnecessary use of multiple underscores - lib\screens\jobs\jobs_home_screen.dart:109:35 - unnecessary_underscores
+   info - Unnecessary use of multiple underscores - lib\screens\jobs\jobs_home_screen.dart:110:30 - unnecessary_underscores
+warning - Unused import: '../../alba/part_time_apply_consent_screen.dart' - lib\screens\jobs\widgets\promotion_banner.dart:8:8 - unused_import
+warning - Unused import: 'package:cuty_app/providers/survey_provider.dart' - lib\screens\jobs\widgets\promotion_banner.dart:10:8 - unused_import
+warning - Unused import: '../../career/survey_screen.dart' - lib\screens\jobs\widgets\promotion_banner.dart:12:8 - unused_import
+warning - Unused import: '../../diagnosis/result_screen.dart' - lib\screens\jobs\widgets\promotion_banner.dart:15:8 - unused_import
+warning - This class (or a class that this class inherits from) is marked as '@immutable', but one or more of its instance fields aren't final: _WeeklySchedule.import - lib\screens\mypage\my_page_screen.dart:318:7 - must_be_immutable
+  error - Can't define a const constructor for a class with non-final fields - lib\screens\mypage\my_page_screen.dart:319:9 - const_constructor_with_non_final_field
+   info - An uninitialized field should have an explicit type annotation - lib\screens\mypage\my_page_screen.dart:407:1 - prefer_typing_uninitialized_variables
+   info - Missing type annotation - lib\screens\mypage\my_page_screen.dart:407:1 - strict_top_level_inference
+  error - Expected to find ';' - lib\screens\mypage\my_page_screen.dart:407:1 - expected_token
+  error - Variables must be declared using the keywords 'const', 'final', 'var' or a type name - lib\screens\mypage\my_page_screen.dart:407:1 - missing_const_final_var_or_type
+  error - Expected a class member - lib\screens\mypage\my_page_screen.dart:407:8 - expected_class_member
+  error - Expected a class member - lib\screens\mypage\my_page_screen.dart:407:42 - expected_class_member
+  error - The name 'Schedule' isn't a type, so it can't be used as a type argument - lib\screens\mypage\my_page_screen.dart:409:29 - non_type_as_type_argument
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\screens\shop\shop_detail_screen.dart:40:15 - argument_type_not_assignable
+warning - Unused import: '../../models/shop_model.dart' - lib\screens\shop\shop_screen.dart:8:8 - unused_import
+warning - Unused import: '../home/widgets/fortune_cookie_dialog.dart' - lib\screens\shop\shop_screen.dart:9:8 - unused_import
+   info - Unnecessary use of multiple underscores - lib\screens\shop\shop_screen.dart:141:43 - unnecessary_underscores
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\shop\shop_screen.dart:159:64 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\shop\shop_screen.dart:400:40 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\shop\shop_screen.dart:421:40 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\shop\widgets\shop_banner_carousel.dart:49:39 - deprecated_member_use
+
+63 issues found. (ran in 4.4s)

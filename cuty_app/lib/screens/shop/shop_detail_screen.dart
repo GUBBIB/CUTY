@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/shop_provider.dart';
 import '../../providers/point_provider.dart';
+import '../../models/shop_model.dart';
 
 class ShopDetailScreen extends ConsumerWidget {
-  final ShopProduct product;
+  final Shop product; // Changed ShopProduct to Shop
 
   const ShopDetailScreen({super.key, required this.product});
 
@@ -36,7 +37,7 @@ class ShopDetailScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 20),
             Text(
-              product.description,
+              product.description ?? '설명 없음',
               style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 30),

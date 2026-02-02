@@ -8,13 +8,14 @@ import 'package:intl/intl.dart';
 import '../../providers/point_provider.dart';
 import '../schedule/schedule_screen.dart';
 import '../../providers/schedule_provider.dart';
+import '../../models/schedule_model.dart';
 
 class MyPageScreen extends StatelessWidget {
   const MyPageScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final user = UserModel.dummy();
+    final user = User.dummy();
 
     return Scaffold(
       backgroundColor: Colors.grey[50], // Light background
@@ -53,7 +54,7 @@ class MyPageScreen extends StatelessWidget {
 
 
 class _ProfileHeader extends ConsumerWidget {
-  final UserModel user;
+  final User user;
   const _ProfileHeader({required this.user});
 
   @override
@@ -163,7 +164,7 @@ class _ProfileHeader extends ConsumerWidget {
 }
 
 class _VisaDashboard extends StatelessWidget {
-  final UserModel user;
+  final User user;
   const _VisaDashboard({required this.user});
 
   @override
@@ -404,7 +405,9 @@ class _WeeklySchedule extends ConsumerWidget {
     );
   }
 
-  Widget _buildDayCell(List<ClassItem> classes) {
+
+
+  Widget _buildDayCell(List<Schedule> classes) { // Changed ClassItem to Schedule
     if (classes.isEmpty) {
       return const SizedBox(height: 30, child: Center(child: Icon(Icons.circle, size: 6, color: Colors.grey)));
     }
