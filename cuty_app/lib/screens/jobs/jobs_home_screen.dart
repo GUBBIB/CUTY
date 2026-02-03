@@ -7,6 +7,7 @@ import 'widgets/career_tab_content.dart';
 import 'widgets/job_filter_chips.dart';
 import 'widgets/job_list_view.dart';
 
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'providers/job_providers.dart';
 

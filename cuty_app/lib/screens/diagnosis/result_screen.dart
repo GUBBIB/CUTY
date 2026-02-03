@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:math';
+import 'package:fl_chart/fl_chart.dart';
 import '../../providers/diagnosis_provider.dart';
 import '../../models/diagnosis_model.dart';
 
@@ -69,7 +70,8 @@ class ResultScreen extends ConsumerWidget {
         body: TabBarView(
           children: [
             // View A: Total Score
-            _buildTotalResultView(result),
+            // View A: Total Score
+            _buildTotalResultView(context, result),
             // View B: Job Details
             ...jobResultList.map((jobData) => _buildJobDetailView(context, jobData, result.solutionDocs)),
           ],
@@ -78,84 +80,263 @@ class ResultScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildTotalResultView(DiagnosisResult result) {
+  Widget _buildTotalResultView(BuildContext context, DiagnosisResult result) {
+    // 1. Prepare Donut Chart Data
+    final double score = result.totalScore.toDouble();
+    final double remaining = 100 - score;
+    
+    // Calculate section values for display
+    final int valLang = (score * 0.4).round();
+    final int valExp = (score * 0.3).round();
+    final int valMajor = (score * 0.3).round();
+
+    // 2. Prepare Radar Data (5 Axes)
+    final primary = result.primary;
+    Map<String, int> my5Scores = {};
+    Map<String, int> avg5Scores = {};
+    
+    if (primary != null) {
+      my5Scores = {
+        "언어": primary.myScores["언어"] ?? 0,
+        "전공": primary.myScores["전문성"] ?? 0,
+        "경력": primary.myScores["경력"] ?? 0,
+        "자격": primary.myScores["성실성"] ?? 0,
+        "문화": primary.myScores["한국이해"] ?? 0,
+      };
+      avg5Scores = {
+        "언어": primary.avgScores["언어"] ?? 80,
+        "전공": primary.avgScores["전문성"] ?? 80,
+        "경력": primary.avgScores["경력"] ?? 70,
+        "자격": primary.avgScores["성실성"] ?? 70,
+        "문화": primary.avgScores["한국이해"] ?? 70,
+      };
+    }
+
+    // 3. AI Comment Logic
+    String advice = "모든 역량이 균형 잡혀있습니다!";
+    String bestJobName = primary?.jobName ?? "IT 전문가";
+    
+    if (my5Scores.isNotEmpty) {
+       var sortedEntries = my5Scores.entries.toList()..sort((a, b) => a.value.compareTo(b.value));
+       var weakest = sortedEntries.first;
+       
+       switch(weakest.key) {
+         case "언어": advice = "하지만 **한국어 능력**을 조금 더 보완하면 합격률이 급상승할 거예요!"; break;
+         case "전공": advice = "하지만 **전공 관련 학점**이나 프로젝트 경험을 더 어필해보세요!"; break;
+         case "경력": advice = "하지만 관련 **인턴십 경력**을 한 번 더 쌓는 것을 추천해요!"; break;
+         case "자격": advice = "하지만 **직무 관련 자격증**이나 성실성을 증명할 서류를 챙겨보세요!"; break;
+         case "문화": advice = "하지만 **한국 문화 이해도**를 높이는 활동(봉사 등)이 도움이 될 거예요!"; break;
+       }
+    }
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(24),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 20),
-          // Circle Progress
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              SizedBox(
-                width: 200, height: 200,
-                child: CircularProgressIndicator(
-                  value: result.totalScore / 100,
-                  strokeWidth: 20,
-                  backgroundColor: Colors.grey[200],
-                  valueColor: const AlwaysStoppedAnimation(Colors.indigo),
-                ),
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
+          const SizedBox(height: 10),
+          // -----------------------------------------------------------------
+          // 1. Comprehensive Donut Chart
+          // -----------------------------------------------------------------
+          Center(
+            child: SizedBox(
+              height: 220,
+              child: Stack(
                 children: [
-                  Text("${result.totalScore}", style: const TextStyle(fontSize: 48, fontWeight: FontWeight.bold, color: Colors.indigo)),
-                  const Text("점 / 100", style: TextStyle(fontSize: 16, color: Colors.grey)),
-                  const SizedBox(height: 8),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(20)
-                    ),
-                    child: Text(result.totalTier, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14)),
-                  )
+                   PieChart(
+                     PieChartData(
+                       sectionsSpace: 4,
+                       centerSpaceRadius: 70,
+                       startDegreeOffset: 270,
+                       sections: [
+                         PieChartSectionData(color: Colors.indigo, value: valLang.toDouble(), radius: 20, showTitle: false),
+                         PieChartSectionData(color: Colors.teal, value: valExp.toDouble(), radius: 20, showTitle: false),
+                         PieChartSectionData(color: Colors.orange, value: valMajor.toDouble(), radius: 20, showTitle: false),
+                         if (remaining > 0)
+                           PieChartSectionData(color: Colors.grey[200], value: remaining, radius: 15, showTitle: false),
+                       ],
+                     ),
+                   ),
+                   Center(
+                     child: Column(
+                       mainAxisSize: MainAxisSize.min,
+                       children: [
+                         Text(
+                           "${result.totalScore}", 
+                           style: const TextStyle(fontSize: 42, fontWeight: FontWeight.bold, color: Colors.indigo)
+                         ),
+                         const Text("점 / 100", style: TextStyle(fontSize: 14, color: Colors.grey)),
+                         const SizedBox(height: 4),
+                         Container(
+                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                           decoration: BoxDecoration(color: Colors.amber, borderRadius: BorderRadius.circular(12)),
+                           child: Text(result.totalTier, style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)),
+                         )
+                       ],
+                     ),
+                   ),
                 ],
-              )
-            ],
+              ),
+            ),
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 20),
           
-          // Advice Card
+          // Chart Legend
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+            decoration: BoxDecoration(
+              color: Colors.grey[50], 
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _buildLegendItem(Colors.indigo, "한국어", valLang),
+                _buildLegendItem(Colors.teal, "실무경력", valExp),
+                _buildLegendItem(Colors.orange, "전공/자격", valMajor),
+              ],
+            ),
+          ),
+          const SizedBox(height: 40),
+
+          // -----------------------------------------------------------------
+          // 2. Job Suitability Ranking
+          // -----------------------------------------------------------------
+          const Text("🏆 직무별 매칭 점수", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 16),
+          ...result.analysisResults.values.map((job) {
+             double avg = job.myScores.values.reduce((a, b) => a + b) / 5;
+             double displayScore = avg.clamp(0, 100);
+             
+             return Padding(
+               padding: const EdgeInsets.only(bottom: 12.0),
+               child: Column(
+                 crossAxisAlignment: CrossAxisAlignment.start,
+                 children: [
+                   Row(
+                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                     children: [
+                       Text("${job.jobName} (${job.jobCode})", style: const TextStyle(fontWeight: FontWeight.w600)),
+                       Text("${displayScore.toInt()}점", style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.indigo)),
+                     ],
+                   ),
+                   const SizedBox(height: 6),
+                   ClipRRect(
+                     borderRadius: BorderRadius.circular(4),
+                     child: LinearProgressIndicator(
+                       value: displayScore / 100,
+                       backgroundColor: Colors.grey[200],
+                       color: _getStatusColor(job.visaStatus),
+                       minHeight: 8,
+                     ),
+                   ),
+                 ],
+               ),
+             );
+          }),
+          const SizedBox(height: 40),
+
+          // -----------------------------------------------------------------
+          // 3. 5-Axis Radar Chart
+          // -----------------------------------------------------------------
+          const Text("📊 기초 역량 분석 (5대 요소)", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 20),
+          if (my5Scores.isNotEmpty)
+             SizedBox(
+               height: 300,
+               width: double.infinity,
+               child: CustomPaint(
+                 painter: RadarChartPainter(my5Scores, avg5Scores),
+               ),
+             ),
+          
+          const SizedBox(height: 30),
+
+          // -----------------------------------------------------------------
+          // 4. AI Consultant Comment
+          // -----------------------------------------------------------------
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: Colors.indigo.withOpacity(0.05),
+              color: const Color(0xFFF3E5F5), // Lavender Light
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: Colors.indigo.withOpacity(0.2))
+              border: Border.all(color: Colors.purple.withOpacity(0.2)),
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text("💡 AI 컨설턴트 한마디", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.indigo)),
-                const SizedBox(height: 8),
-                Text(result.tierDescription, textAlign: TextAlign.center, style: const TextStyle(fontSize: 16, height: 1.5)),
+                const Row(
+                  children: [
+                    Icon(Icons.auto_awesome, color: Colors.purple, size: 20),
+                    SizedBox(width: 8),
+                    Text("AI 컨설턴트 한마디", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.purple, fontSize: 16)),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      const TextSpan(text: "현재 분석 결과, "),
+                      TextSpan(
+                        text: bestJobName, 
+                        style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black87)
+                      ),
+                      const TextSpan(text: " 직무가 가장 적합해 보입니다.\n"),
+                      TextSpan(text: advice),
+                    ],
+                    style: const TextStyle(fontSize: 14, height: 1.6, color: Colors.black87),
+                  ),
+                ),
               ],
             ),
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 40),
 
-          // Basic Competency Radar (Simply using primary job's common scores)
-          if (result.primary != null) ...[
-             const Text("기초 역량 분석", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-             const SizedBox(height: 20),
-             SizedBox(
-               height: 250,
-               width: double.infinity,
-               child: CustomPaint(
-                 painter: RadarChartPainter(
-                    // Filter to 3 basic axes
-                    Map.fromEntries(result.primary!.myScores.entries.where((e) => ["언어", "성실성", "한국이해"].contains(e.key))),
-                    Map.fromEntries(result.primary!.avgScores.entries.where((e) => ["언어", "성실성", "한국이해"].contains(e.key))),
-                 ),
-               ),
-             ),
-          ]
+          // -----------------------------------------------------------------
+          // 5. Action Buttons
+          // -----------------------------------------------------------------
+          SizedBox(
+            width: double.infinity,
+            height: 56,
+            child: ElevatedButton.icon(
+              onPressed: () => Navigator.pop(context),
+              icon: const Icon(Icons.work, color: Colors.white),
+              label: const Text("맞춤 공고 보러가기", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.indigo,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            height: 56,
+            child: TextButton.icon(
+              onPressed: () => debugPrint(">>> [클릭] 결과 공유하기"),
+              icon: const Icon(Icons.share, color: Colors.grey),
+              label: const Text("결과 공유하기", style: TextStyle(fontSize: 16, color: Colors.grey)),
+            ),
+          ),
+          const SizedBox(height: 20),
         ],
       ),
     );
   }
+
+  Widget _buildLegendItem(Color color, String label, int score) {
+    return Row(
+      children: [
+        Container(width: 12, height: 12, decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
+        const SizedBox(width: 6),
+        Text(label, style: const TextStyle(fontSize: 12, color: Colors.black54)),
+        const SizedBox(width: 4),
+        Text("$score점", style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black87)),
+      ],
+    );
+  }
+
 
   Widget _buildJobDetailView(BuildContext context, JobAnalysisData data, List<String> docs) {
     return SingleChildScrollView(

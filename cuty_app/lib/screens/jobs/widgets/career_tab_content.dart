@@ -4,6 +4,7 @@ import '../../diagnosis/consulting_screen.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../providers/diagnosis_provider.dart';
+import '../../../../models/diagnosis_model.dart';
 
 class CareerTabContent extends ConsumerWidget { // Changed to ConsumerWidget
   const CareerTabContent({super.key});
@@ -22,7 +23,9 @@ class CareerTabContent extends ConsumerWidget { // Changed to ConsumerWidget
         // -------------------------------------------------------
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: isAnalyzed ? _buildResultDashboard(context) : _buildLockedDashboard(context),
+          child: (isAnalyzed && diagnosisState.result != null)
+              ? _buildResultDashboard(context, diagnosisState.result!, diagnosisState.answer)
+              : _buildLockedDashboard(context),
         ),
 
         const SizedBox(height: 32),
@@ -144,7 +147,27 @@ class CareerTabContent extends ConsumerWidget { // Changed to ConsumerWidget
   }
 
   // 🔓 진단 결과 대시보드
-  Widget _buildResultDashboard(BuildContext context) {
+  Widget _buildResultDashboard(BuildContext context, DiagnosisResult result, SurveyAnswer answer) {
+    // 1. Primary Job (First one)
+    final primary = result.primary;
+    
+    // Fallback if no jobs or primary is null
+    if (primary == null) {
+       return Container(
+         width: double.infinity,
+         padding: const EdgeInsets.all(20),
+         decoration: BoxDecoration(
+           color: Colors.white,
+           borderRadius: BorderRadius.circular(16),
+           border: Border.all(color: Colors.indigo.withValues(alpha: 0.2)),
+         ),
+         child: const Center(child: Text("추천 가능한 직무가 없습니다.")),
+      );
+    }
+
+    // Generate Insight Comment
+    final String comment = _generateInsightComment(result, answer);
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
@@ -176,27 +199,117 @@ class CareerTabContent extends ConsumerWidget { // Changed to ConsumerWidget
             ],
           ),
           const SizedBox(height: 16),
-          _buildInfoRow("E-7 코드", "전자공학(2351) 외 2건 매칭", Colors.blue),
-          const SizedBox(height: 8),
-          _buildInfoRow("거주지", "부산 서구 (인구소멸지역 해당)", Colors.teal),
-          const SizedBox(height: 8),
-          _buildInfoRow("희망연봉", "3,500만원 이상 (GNI 70% 충족 가능)", Colors.orange),
+          
+          // Row 1: Tier Score
+          _buildRichInfoRow(
+            label: "등급/점수",
+            content: Text.rich(
+              TextSpan(
+                children: [
+                  const TextSpan(text: "축하해요! "),
+                  TextSpan(
+                    text: "'${result.totalTier}'",
+                    style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.indigo),
+                  ),
+                  const TextSpan(text: " 등급 달성! 🏆"),
+                ],
+                style: const TextStyle(fontSize: 13, color: Colors.black87),
+              ),
+            ),
+            iconColor: Colors.teal,
+          ),
+          const SizedBox(height: 10),
+
+          // Row 2: Recommended Job
+          _buildRichInfoRow(
+            label: "추천 직무",
+            content: Text.rich(
+              TextSpan(
+                children: [
+                  const TextSpan(text: "가장 잘 맞는 옷은 "),
+                  TextSpan(
+                    text: "[${primary.jobName}]",
+                    style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blueAccent),
+                  ),
+                  const TextSpan(text: " 입니다."),
+                ],
+                style: const TextStyle(fontSize: 13, color: Colors.black87),
+              ),
+            ),
+            iconColor: Colors.blue,
+          ),
+          const SizedBox(height: 10),
+
+          // Row 3: Insight Comment (Highlight)
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.orange.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.orange.withValues(alpha: 0.3)),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Icon(Icons.lightbulb, size: 16, color: Colors.deepOrange),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    comment,
+                    style: const TextStyle(
+                      fontSize: 13, 
+                      fontWeight: FontWeight.bold, 
+                      color: Colors.deepOrange,
+                      height: 1.3
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildInfoRow(String label, String value, Color color) {
+  String _generateInsightComment(DiagnosisResult result, SurveyAnswer answer) {
+    final primary = result.primary!;
+    
+    // 1. IF Visa Status is GREEN
+    if (primary.visaStatus == VisaStatus.GREEN) {
+      return "완벽해요! 👏 지금 바로 이력서를 등록해보세요.";
+    }
+
+    // 2. IF Low Korean Level
+    if (answer.koreanLevel.contains('기초')) {
+      return "💡 TOPIK 점수만 보완하면 'Diamond' 등급 가능해요!";
+    }
+
+    // 3. IF Low Experience (Assuming expScore is mapped to '경력' key)
+    final expScore = primary.myScores['경력'] ?? 0;
+    if (expScore == 0 || answer.experiences.isEmpty) {
+      return "💡 인턴십 경험 1개만 더하면 합격률이 20% 올라가요!";
+    }
+
+    // 4. ELSE (General)
+    // Calculate simple percentile logic for display
+    final score = result.totalScore;
+    int percentile = (100 - score).clamp(1, 99);
+    return "현재 상위 $percentile% 인재입니다! 상세 전략을 확인하세요.";
+  }
+
+  Widget _buildRichInfoRow({required String label, required Widget content, required Color iconColor}) {
     return Row(
       children: [
-        Container(width: 4, height: 14, decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(2))),
+        Container(width: 4, height: 14, decoration: BoxDecoration(color: iconColor, borderRadius: BorderRadius.circular(2))),
         const SizedBox(width: 8),
         Text(label, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black54)),
         const SizedBox(width: 8),
-        Expanded(child: Text(value, style: const TextStyle(fontSize: 12, color: Colors.black87))),
+        Expanded(child: content),
       ],
     );
   }
+
 
   Widget _buildJobCard(BuildContext context, int index) {
     final jobs = [
