@@ -4,6 +4,7 @@ import 'community_feed_screen.dart';
 import 'community_board_screen.dart';
 import 'popular_posts_screen.dart';
 
+
 class CommunityMainScreen extends StatelessWidget {
   const CommunityMainScreen({super.key});
 
@@ -21,12 +22,22 @@ class CommunityMainScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         children: [
-          _BigMenuCard(
+          // Pattern Card: Popular Posts
+          _PatternMenuCard(
             title: '🔥 인기게시글',
             subtitle: '지금 가장 핫한 이야기 모음',
-            icon: Icons.whatshot_rounded,
             color: const Color(0xFFFFF3E0), // Orange[50]
-            iconColor: const Color(0xFFF57C00), // Orange[700]
+            patternColor: Colors.orange.withValues(alpha: 0.15),
+            patternIcons: const [
+              Icons.local_fire_department,
+              Icons.favorite,
+              Icons.thumb_up,
+              Icons.whatshot,
+              Icons.star,
+            ],
+            characterAsset: 'assets/images/community_hot.png',
+            imageHeight: 160,       // Increased size (approx 1.25x)
+            imageRightOffset: 30,   // Shifted left (closer to center)
             onTap: () {
               Navigator.push(
                 context,
@@ -34,22 +45,32 @@ class CommunityMainScreen extends StatelessWidget {
               );
             },
           ),
-          const SizedBox(height: 12),
-          _BigMenuCard(
+          const SizedBox(height: 16),
+          // Pattern Card: Free Board
+          _PatternMenuCard(
             title: '🗣️ 자유게시판',
             subtitle: '유학생들의 솔직한 수다 공간',
-            icon: Icons.forum_rounded,
             color: const Color(0xFFE3F2FD), // Blue[50]
-            iconColor: const Color(0xFF1976D2), // Blue[700]
-             onTap: () {
+            patternColor: Colors.blue.withValues(alpha: 0.15),
+            patternIcons: const [
+              Icons.chat_bubble,
+              Icons.forum,
+              Icons.tag_faces,
+              Icons.sms,
+              Icons.record_voice_over,
+            ],
+            characterAsset: 'assets/images/community_free.png',
+            // Default image size/offset is fine, text constraint handled in widget
+            onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const CommunityFeedScreen()),
               );
             },
           ),
-          const SizedBox(height: 12),
-          _BigMenuCard(
+          const SizedBox(height: 16),
+          // Simple Card: Info Board
+          _SimpleMenuCard(
             title: '🎓 정보게시판',
             subtitle: '학교 생활 꿀팁 & 강의 정보',
             icon: Icons.school_rounded,
@@ -58,41 +79,26 @@ class CommunityMainScreen extends StatelessWidget {
             onTap: () => _navigateToBoard(context, '정보게시판'),
           ),
           const SizedBox(height: 12),
-          _BigMenuCard(
-            title: '🔒 비밀게시판',
-            subtitle: '익명 보장! 속마음 털어놓기',
-            icon: Icons.lock_outline_rounded,
-            color: const Color(0xFFF5F5F5), // Grey[100]
-            iconColor: const Color(0xFF616161), // Grey[700]
-            onTap: () => _navigateToBoard(context, '비밀게시판'),
-          ),
-          const SizedBox(height: 12),
-          _BigMenuCard(
-            title: '🛒 장터',
+          // Simple Card: Second-hand Market
+          _SimpleMenuCard(
+            title: '📦 중고장터',
             subtitle: '전공책, 자취용품 사고 팔기',
-            icon: Icons.shopping_cart_outlined,
+            icon: Icons.shopping_bag_outlined,
             color: const Color(0xFFE8F5E9), // Green[50]
             iconColor: const Color(0xFF388E3C), // Green[700]
-            onTap: () => _navigateToBoard(context, '장터'),
+            onTap: () => _navigateToBoard(context, '중고장터'),
           ),
-          const SizedBox(height: 12),
-          _BigMenuCard(
-            title: '🏫 학교생활',
-            subtitle: '동아리, 행사, 학생회 소식',
-            icon: Icons.apartment_rounded,
-            color: const Color(0xFFF3E5F5), // Purple[50]
-            iconColor: const Color(0xFF7B1FA2), // Purple[700]
-            onTap: () => _navigateToBoard(context, '학교생활'),
-          ),
-          const SizedBox(height: 24), // Extra spacing for the action button
-          _BigMenuCard(
+          const SizedBox(height: 24),
+          // Create Board Button
+          _SimpleMenuCard(
             title: '게시판 개설 신청',
             subtitle: '원하는 주제가 없나요? 직접 만들어보세요!',
             icon: Icons.add_circle_outline_rounded,
             color: Colors.white,
             iconColor: Colors.grey[600]!,
-            border: Border.all(color: Colors.grey[300]!, width: 1.5), // Grey Outline
+            border: Border.all(color: Colors.grey[300]!, width: 1.5),
             onTap: () => _showCreateBoardDialog(context),
+            isCompact: true,
           ),
           const SizedBox(height: 20),
         ],
@@ -133,23 +139,27 @@ class CommunityMainScreen extends StatelessWidget {
   }
 }
 
-class _BigMenuCard extends StatelessWidget {
+class _PatternMenuCard extends StatelessWidget {
   final String title;
   final String subtitle;
-  final IconData icon;
   final Color color;
-  final Color iconColor;
+  final Color patternColor;
+  final List<IconData> patternIcons;
+  final String characterAsset;
   final VoidCallback onTap;
-  final BoxBorder? border;
+  final double imageHeight;
+  final double imageRightOffset;
 
-  const _BigMenuCard({
+  const _PatternMenuCard({
     required this.title,
     required this.subtitle,
-    required this.icon,
     required this.color,
-    required this.iconColor,
+    required this.patternColor,
+    required this.patternIcons,
+    required this.characterAsset,
     required this.onTap,
-    this.border,
+    this.imageHeight = 130,     // Default height
+    this.imageRightOffset = 10, // Default right margin
   });
 
   @override
@@ -157,17 +167,154 @@ class _BigMenuCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 125, // Increased from 110
+        height: 160,
         width: double.infinity,
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(24),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Stack(
+              children: [
+                // Layer 1: Pattern
+                ...List.generate(8, (index) {
+                  final icon = patternIcons[index % patternIcons.length];
+                  // Fixed positions for scattered look
+                  final positions = [
+                    const Offset(20, 80),
+                    const Offset(100, 20),
+                    const Offset(180, 70),
+                    const Offset(250, 30),
+                    const Offset(300, 100),
+                    const Offset(60, 130),
+                    const Offset(200, 140),
+                    const Offset(320, 10),
+                  ];
+                  final pos = positions[index % positions.length];
+                  
+                  return Positioned(
+                    left: pos.dx,
+                    top: pos.dy,
+                    child: Transform.rotate(
+                      angle: (index * 0.5),
+                      child: Icon(
+                        icon,
+                        size: 24 + (index % 3) * 10, // Varying sizes
+                        color: patternColor,
+                      ),
+                    ),
+                  );
+                }),
+
+                // Layer 2: Character Image (Adjusted size & margins)
+                Positioned(
+                  right: imageRightOffset, 
+                  bottom: -10, // Slight overflow at bottom check
+                  child: Image.asset(
+                    characterAsset,
+                    height: imageHeight, 
+                    fit: BoxFit.contain,
+                  ),
+                ),
+
+                // Layer 3: Text Content (Constrained width to 60%)
+                Positioned(
+                  left: 24,
+                  top: 24,
+                  width: constraints.maxWidth * 0.6, // Enforce 60% text width safe zone
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: GoogleFonts.notoSansKr(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w800,
+                          color: const Color(0xFF1E2B4D),
+                          height: 1.2,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        subtitle,
+                        style: GoogleFonts.notoSansKr(
+                          fontSize: 14,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          }
+        ),
+      ),
+    );
+  }
+}
+
+class _SimpleMenuCard extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final IconData icon;
+  final Color color;
+  final Color iconColor;
+  final VoidCallback onTap;
+  final BoxBorder? border;
+  final bool isCompact;
+
+  const _SimpleMenuCard({
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.color,
+    required this.iconColor,
+    required this.onTap,
+    this.border,
+    this.isCompact = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: isCompact ? 100 : 120,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(20),
           border: border,
+           boxShadow: border == null ? [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.03),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ] : null,
         ),
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Row(
           children: [
-            Icon(icon, size: 40, color: iconColor), // Increased from 32
+            Container(
+              padding: const EdgeInsets.all(16), // Increased from 12 (1.3x area -> approx 1.15x padding dimension)
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.6),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(icon, size: 30, color: iconColor), // Increased from 28
+            ),
             const SizedBox(width: 16),
             Expanded(
               child: Column(
@@ -186,7 +333,7 @@ class _BigMenuCard extends StatelessWidget {
                   Text(
                     subtitle,
                     style: GoogleFonts.notoSansKr(
-                      fontSize: 14,
+                      fontSize: 13,
                       color: Colors.grey[700],
                       fontWeight: FontWeight.w500,
                     ),
@@ -196,7 +343,7 @@ class _BigMenuCard extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(Icons.chevron_right_rounded, color: Colors.grey[400], size: 28),
+            Icon(Icons.chevron_right_rounded, color: Colors.grey[400], size: 24),
           ],
         ),
       ),
