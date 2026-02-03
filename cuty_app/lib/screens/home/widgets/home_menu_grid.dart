@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../providers/home_view_provider.dart';
-import '../../visa/visa_main_screen.dart';
+import '../../visa/visa_screen_wrapper.dart';
 import '../../spec/spec_wallet_screen.dart';
-import '../../jobs/jobs_home_screen.dart';
 import '../../academic/academic_main_screen.dart';
 import '../../schedule/schedule_screen.dart';
 import '../../community/community_main_screen.dart';
@@ -122,7 +121,7 @@ class _MenuCard extends ConsumerWidget {
               case '비자':
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const VisaMainScreen()),
+                  MaterialPageRoute(builder: (context) => const VisaScreenWrapper()),
                 );
                 break;
               case '서류지갑':

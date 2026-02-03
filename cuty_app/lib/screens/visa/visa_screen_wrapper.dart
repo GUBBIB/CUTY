@@ -1,0 +1,45 @@
+import 'package:flutter/material.dart';
+import 'visa_goal_selection_screen.dart';
+import 'visa_dashboard_screen.dart';
+
+// Mock State for session persistence
+class VisaState {
+  static String? userGoal;
+}
+
+class VisaScreenWrapper extends StatefulWidget {
+  const VisaScreenWrapper({super.key});
+
+  @override
+  State<VisaScreenWrapper> createState() => _VisaScreenWrapperState();
+}
+
+class _VisaScreenWrapperState extends State<VisaScreenWrapper> {
+  
+  void _updateGoal(String? goal) {
+    setState(() {
+      VisaState.userGoal = goal;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // If goal is null, show selection screen
+    if (VisaState.userGoal == null) {
+      return VisaGoalSelectionScreen(
+        onGoalSelected: (selectedGoal) {
+          _updateGoal(selectedGoal);
+        },
+      );
+    } 
+    // Otherwise, show dashboard
+    else {
+      return VisaDashboardScreen(
+        userGoal: VisaState.userGoal!,
+        onGoalChangeRequested: () {
+          _updateGoal(null); // Reset goal to trigger selection screen
+        },
+      );
+    }
+  }
+}
