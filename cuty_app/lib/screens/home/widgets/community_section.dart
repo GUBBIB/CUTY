@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../community/community_main_screen.dart';
+import '../../community/community_feed_screen.dart';
+import '../../community/board_list_screen.dart';
+import '../../community/popular_posts_screen.dart';
 
 class CommunitySection extends StatelessWidget {
   const CommunitySection({super.key});
@@ -63,6 +66,33 @@ class CommunitySection extends StatelessWidget {
                 itemCount: 3,
                 separatorBuilder: (context, index) => const SizedBox(width: 8), // Gap 12->8
                 itemBuilder: (context, index) {
+                  // Determine Content based on Index
+                  String tag;
+                  String title;
+                  String subtitle;
+                  Color tagColor;
+                  Color tagTextColor;
+
+                  if (index == 0) {
+                    tag = "🔥 인기글";
+                    title = "수강신청 꿀팁!";
+                    subtitle = "성공하셨나요? 저는...";
+                    tagColor = const Color(0xFFFFF3E0);
+                    tagTextColor = Colors.orange;
+                  } else if (index == 1) {
+                    tag = "💡 정보";
+                    title = "오늘 학식 추천";
+                    subtitle = "맛있는거 뭐 나옴?";
+                    tagColor = const Color(0xFFFFF9C4);
+                    tagTextColor = const Color(0xFFFBC02D);
+                  } else {
+                    tag = "🗣️ 자유";
+                    title = "심심한 사람 드루와";
+                    subtitle = "놀아줘요...";
+                    tagColor = const Color(0xFFE3F2FD);
+                    tagTextColor = const Color(0xFF1976D2);
+                  }
+
                   return Container(
                     width: 190, // Slightly narrower
                     decoration: BoxDecoration(
@@ -75,7 +105,25 @@ class CommunitySection extends StatelessWidget {
                       clipBehavior: Clip.hardEdge,
                       child: InkWell(
                         onTap: () {
-                          debugPrint('${index == 0 ? "인기글" : "정보"} 클릭됨');
+                          if (index == 0) {
+                            // Popular -> Leading to PopularPostsScreen
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const PopularPostsScreen()),
+                            );
+                          } else if (index == 1) {
+                             // Info -> Leading to BoardListScreen (List)
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const BoardListScreen(title: '꿀팁 정보게시판')),
+                            );
+                          } else {
+                            // Free/Other -> Leading to CommunityFeedScreen (Feed)
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const CommunityFeedScreen()),
+                            );
+                          }
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10), // Tight Padding
@@ -86,17 +134,17 @@ class CommunitySection extends StatelessWidget {
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFFFFF3E0),
+                                  color: tagColor,
                                   borderRadius: BorderRadius.circular(4),
                                 ),
                                 child: Text(
-                                  index == 0 ? "🔥 인기글" : "💡 정보",
-                                  style: GoogleFonts.notoSansKr(fontSize: 8, fontWeight: FontWeight.bold, color: Colors.orange),
+                                  tag,
+                                  style: GoogleFonts.notoSansKr(fontSize: 8, fontWeight: FontWeight.bold, color: tagTextColor),
                                 ),
                               ),
                               const SizedBox(height: 3), // Gap 4->3
                               Text(
-                                index == 0 ? "수강신청 꿀팁!" : "오늘 학식 추천",
+                                title,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.notoSansKr(
@@ -107,7 +155,7 @@ class CommunitySection extends StatelessWidget {
                               ),
                               const SizedBox(height: 1), // Gap 2->1
                               Text(
-                                "성공하셨나요? 저는...",
+                                subtitle,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.notoSansKr(

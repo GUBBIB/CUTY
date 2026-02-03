@@ -7,6 +7,7 @@ import '../../spec/spec_wallet_screen.dart';
 import '../../jobs/jobs_home_screen.dart';
 import '../../academic/academic_main_screen.dart';
 import '../../schedule/schedule_screen.dart';
+import '../../community/community_main_screen.dart';
 
 
 class HomeMenuGrid extends StatelessWidget {
@@ -21,6 +22,12 @@ class HomeMenuGrid extends StatelessWidget {
         'icon': Icons.public_outlined,
         'bg': const Color(0xFFE1F5FE), // Light Blue
         'iconColor': const Color(0xFF0277BD), // Deep Blue
+      },
+      {
+        'label': '커뮤니티',
+        'icon': Icons.chat_bubble_outline_rounded,
+        'bg': const Color(0xFFE1F5FE), // Same as Visa (Primary Blue Light)
+        'iconColor': const Color(0xFF0277BD), // Same as Visa (Primary Blue Deep)
       },
       {
         'label': '서류지갑',
@@ -137,6 +144,12 @@ class _MenuCard extends ConsumerWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const ScheduleScreen()),
+                );
+                break;
+              case '커뮤니티':
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CommunityMainScreen()),
                 );
                 break;
               case '맛집':
