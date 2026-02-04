@@ -37,7 +37,7 @@ class CommunityMainScreen extends StatelessWidget {
             ],
             characterAsset: 'assets/images/community_hot.png',
             imageHeight: 160,       // Increased size (approx 1.25x)
-            imageRightOffset: 30,   // Shifted left (closer to center)
+            imageRightOffset: 30,   // Standardized right margin (15.0)
             onTap: () {
               Navigator.push(
                 context,
@@ -60,6 +60,7 @@ class CommunityMainScreen extends StatelessWidget {
               Icons.record_voice_over,
             ],
             characterAsset: 'assets/images/community_free.png',
+            imageRightOffset: 15, // Standardized right margin (15.0)
             // Default image size/offset is fine, text constraint handled in widget
             onTap: () {
               Navigator.push(
@@ -70,22 +71,43 @@ class CommunityMainScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           // Simple Card: Info Board
-          _SimpleMenuCard(
+          _PatternMenuCard(
             title: '🎓 정보게시판',
             subtitle: '학교 생활 꿀팁 & 강의 정보',
-            icon: Icons.school_rounded,
             color: const Color(0xFFFFF9C4), // Yellow[100]
-            iconColor: const Color(0xFFFBC02D), // Yellow[700]
+            patternColor: const Color(0xFFFBC02D).withValues(alpha: 0.1),
+            patternIcons: const [
+              Icons.school,
+              Icons.menu_book,
+              Icons.auto_stories,
+              Icons.assignment,
+              Icons.lightbulb_outline,
+            ],
+            characterAsset: 'assets/images/community_info.png',
+            imageHeight: 130,       // Increased to match top cards (approx 130px)
+            imageRightOffset: 45,   // Standardized right margin (15.0)
+            imageBottomOffset: -5,  // Slight overflow for grounded look
+            // cardHeight: 160,     // Default is 160, so we can omit this or explicitly set it if needed. Removing to use default.
             onTap: () => _navigateToBoard(context, '정보게시판'),
           ),
           const SizedBox(height: 12),
           // Simple Card: Second-hand Market
-          _SimpleMenuCard(
+          _PatternMenuCard(
             title: '📦 중고장터',
             subtitle: '전공책, 자취용품 사고 팔기',
-            icon: Icons.shopping_bag_outlined,
             color: const Color(0xFFE8F5E9), // Green[50]
-            iconColor: const Color(0xFF388E3C), // Green[700]
+            patternColor: const Color(0xFF388E3C).withValues(alpha: 0.1),
+            patternIcons: const [
+              Icons.shopping_bag,
+              Icons.inventory_2,
+              Icons.local_offer,
+              Icons.card_giftcard,
+              Icons.store,
+            ],
+            characterAsset: 'assets/images/community_used.png',
+            imageHeight: 115,       // Requested approx 110-120px
+            imageRightOffset: 15,   // Requested standard 40px
+            imageBottomOffset: 0,
             onTap: () => _navigateToBoard(context, '중고장터'),
           ),
           const SizedBox(height: 24),
@@ -149,6 +171,8 @@ class _PatternMenuCard extends StatelessWidget {
   final VoidCallback onTap;
   final double imageHeight;
   final double imageRightOffset;
+  final double imageBottomOffset;
+  final double cardHeight;
 
   const _PatternMenuCard({
     required this.title,
@@ -160,6 +184,8 @@ class _PatternMenuCard extends StatelessWidget {
     required this.onTap,
     this.imageHeight = 130,     // Default height
     this.imageRightOffset = 10, // Default right margin
+    this.imageBottomOffset = -10, // Default bottom offset (slight overflow)
+    this.cardHeight = 160,      // Default card height
   });
 
   @override
@@ -167,7 +193,7 @@ class _PatternMenuCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 160,
+        height: cardHeight,
         width: double.infinity,
         decoration: BoxDecoration(
           color: color,
@@ -218,7 +244,7 @@ class _PatternMenuCard extends StatelessWidget {
                 // Layer 2: Character Image (Adjusted size & margins)
                 Positioned(
                   right: imageRightOffset, 
-                  bottom: -10, // Slight overflow at bottom check
+                  bottom: imageBottomOffset,
                   child: Image.asset(
                     characterAsset,
                     height: imageHeight, 

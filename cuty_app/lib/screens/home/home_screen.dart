@@ -87,6 +87,45 @@ class HomeScreen extends ConsumerWidget {
                               child: CharacterSection(),
                             ),
                           ),
+                          // Speech Bubble (Above Character)
+                          Positioned(
+                            top: 30, 
+                            left: 0,
+                            right: 0,
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withValues(alpha: 0.1),
+                                          blurRadius: 4,
+                                          offset: const Offset(0, 2),
+                                        ),
+                                      ],
+                                    ),
+                                    child: const Text(
+                                      "오늘도 힘내! 🍀",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black87,
+                                      ),
+                                    ),
+                                  ),
+                                  // Optional Triangle Tail
+                                  CustomPaint(
+                                    painter: _TrianglePainter(Colors.white),
+                                    size: const Size(12, 8),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                           // Fortune Cookie (Character's Right Hand -> Screen Left)
                           Positioned(
                             bottom: 110, 
@@ -129,4 +168,28 @@ class HomeScreen extends ConsumerWidget {
       ),
     );
   }
+}
+
+class _TrianglePainter extends CustomPainter {
+  final Color color;
+
+  _TrianglePainter(this.color);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.fill;
+
+    final path = Path();
+    path.moveTo(0, 0);
+    path.lineTo(size.width / 2, size.height);
+    path.lineTo(size.width, 0);
+    path.close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
