@@ -53,8 +53,8 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                 _buildVerticalClassCard(
                   context,
                   title: '연구/거주형',
-                  subtitle: '대학원 진학 & 영주권\n(F-2-7 비자)',
-                  description: '깊이 있는 연구와 F-2-7 점수제 비자를 목표로 하시나요? 논문 일정 관리와 가산점 항목들을 놓치지 않게 도와드릴게요.',
+                  subtitle: '대학원 진학 예정 &\nF-2-7(거주) 목표',
+                  description: '단순 취업비자(E-7)에 만족하지 마세요.\n석사 학위를 활용해 더 자유로운 F-2-7(거주 비자)로 바로 업그레이드할 수 있습니다. 80점 달성을 위한 족집게 전략을 알려드릴게요.',
                   imagePath: 'assets/images/class_academic.jpg',
                   goalKey: 'residency',
                   color: Colors.purple[50]!,
@@ -63,7 +63,7 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                 _buildVerticalClassCard(
                   context,
                   title: '실전 취업형',
-                  subtitle: '졸업 후 한국 기업 취업\n(E-7 비자)',
+                  subtitle: '학부 졸업 후\n한국 기업 바로 취업',
                   description: '졸업 후 한국 기업에 취업하는 것이 목표시군요! E-7 비자 발급 조건부터 인턴십, 면접 꿀팁까지 제가 꼼꼼하게 챙겨드릴게요.',
                   imagePath: 'assets/images/class_job.jpg',
                   goalKey: 'job',
@@ -73,7 +73,7 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                 _buildVerticalClassCard(
                   context,
                   title: '창업형',
-                  subtitle: '나만의 스타트업 시작\n(D-8-4 비자)',
+                  subtitle: '나만의 아이디어로\n기술 창업 도전',
                   description: '멋진 아이디어가 있으시군요! D-8-4 비자 취득을 위한 OASIS 프로그램과 법인 설립 절차를 함께 준비해 봐요.',
                   imagePath: 'assets/images/class_startup.jpg',
                   goalKey: 'startup',
@@ -83,7 +83,7 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                 _buildVerticalClassCard(
                   context,
                   title: '글로벌형',
-                  subtitle: '학위 취득 후\n본국/해외 진출',
+                  subtitle: '한국 학위 취득 후\n본국/해외 진출',
                   description: '한국에서의 학업을 마치고 더 넓은 세상으로! 원활한 귀국 준비나 제3국 진출을 위한 서류 작업을 도와드릴게요.',
                   imagePath: 'assets/images/class_global.png',
                   goalKey: 'global',

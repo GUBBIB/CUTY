@@ -184,7 +184,8 @@ class _PatternMenuCard extends StatelessWidget {
     required this.onTap,
     this.imageHeight = 130,     // Default height
     this.imageRightOffset = 10, // Default right margin
-    this.imageBottomOffset = -10,      // Default card height
+    this.imageBottomOffset = -10,
+    this.cardHeight = 160.0,    // Default card height
   });
 
   @override

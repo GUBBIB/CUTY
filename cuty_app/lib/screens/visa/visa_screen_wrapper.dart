@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'visa_goal_selection_screen.dart';
-import 'visa_dashboard_screen.dart';
+import '../roadmap/visa_roadmap_screen.dart';
 
 // Mock State for session persistence
 class VisaState {
@@ -32,9 +32,9 @@ class _VisaScreenWrapperState extends State<VisaScreenWrapper> {
         },
       );
     } 
-    // Otherwise, show dashboard
+    // Otherwise, show dashboard (now Roadmap)
     else {
-      return VisaDashboardScreen(
+      return VisaRoadmapScreen(
         userGoal: VisaState.userGoal!,
         onGoalChangeRequested: () {
           _updateGoal(null); // Reset goal to trigger selection screen

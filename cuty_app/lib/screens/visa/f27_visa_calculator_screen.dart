@@ -84,8 +84,8 @@ class _F27VisaCalculatorScreenState extends State<F27VisaCalculatorScreen> {
 
                     // --- 학력 ---
                     _buildCard(
-                      title: '학력 (Education)',
-                      subtitle: '최종 학력 및 전공',
+                      title: '비자 신청 시 학력 (졸업 예정 포함)',
+                      subtitle: 'D-2 유학생 중 졸업 예정자는 취득할 학위(석사 등)를 선택하세요.',
                       children: [
                         SwitchListTile(
                           title: Text('이공계 전공 또는 복수 전공 (2개 학위)', style: GoogleFonts.notoSansKr(fontSize: 14, fontWeight: FontWeight.w600)),
@@ -220,71 +220,82 @@ class _F27VisaCalculatorScreenState extends State<F27VisaCalculatorScreen> {
                 ),
               ),
               
-              // --- 하단 고정 바 ---
+
+              
+              // --- 하단 고정 바 (Updated: '완료' 버튼) ---
               Container(
+                width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 10, offset: const Offset(0, -5))],
+                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 10, offset: const Offset(0, -5))],
                   borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
                 ),
-                padding: const EdgeInsets.fromLTRB(24, 20, 24, 30),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                padding: const EdgeInsets.fromLTRB(24, 20, 24, 40), // Bottom padding for safe area
+                child: Row(
                   children: [
-                    // 스펙 지갑 연동 토글
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // Score Text
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            Icon(Icons.account_balance_wallet, color: store.isSpecWalletLinked ? const Color(0xFF0277BD) : Colors.grey),
-                            const SizedBox(width: 8),
-                            Text('내 스펙지갑 연동', style: GoogleFonts.notoSansKr(fontWeight: FontWeight.w600, color: Colors.black87)),
-                          ],
-                        ),
-                        Switch(
-                          value: store.isSpecWalletLinked,
-                          activeThumbColor: const Color(0xFF0277BD),
-                          onChanged: (val) {
-                            store.toggleSpecWallet(val);
-                            if (val) {
-                               _regionScoreController.text = store.regionalScore.toString();
-                               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('스펙지갑에서 데이터를 불러왔습니다.')));
-                            } else {
-                               _regionScoreController.clear();
-                            }
-                          },
-                        )
+                        Text('현재 예측 점수', style: GoogleFonts.notoSansKr(color: Colors.grey[600], fontSize: 12)),
+                        Text('$currentScore점', style: GoogleFonts.notoSansKr(fontSize: 24, fontWeight: FontWeight.w800, color: const Color(0xFF1E2B4D))),
                       ],
                     ),
-                    const Divider(height: 24),
-                    // 점수 표시
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('현재 예측 점수', style: GoogleFonts.notoSansKr(color: Colors.grey[600], fontSize: 12)),
-                            Text('$currentScore점', style: GoogleFonts.notoSansKr(fontSize: 28, fontWeight: FontWeight.w800, color: isPass ? const Color(0xFF0277BD) : Colors.orange)),
-                          ],
+                    const SizedBox(width: 20),
+                    // Action Button
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // Calculate breakdown
+                          int totalScore = store.calculateTotalScore();
+                          bool isMasters = store.educationLevel == '석사' || store.educationLevel == '박사';
+                          
+                          // Calculate specific scores for advice
+                          int koreanScore = 0;
+                          if (store.koreanLevel?.contains('5단계') == true || store.koreanLevel?.contains('5~6급') == true) koreanScore = 20;
+                          else if (store.koreanLevel?.contains('4단계') == true || store.koreanLevel?.contains('4급') == true) koreanScore = 15;
+                          else if (store.koreanLevel?.contains('3단계') == true || store.koreanLevel?.contains('3급') == true) koreanScore = 10;
+                          else if (store.koreanLevel?.contains('2단계') == true || store.koreanLevel?.contains('2급') == true) koreanScore = 5;
+                          else if (store.koreanLevel?.contains('1단계') == true || store.koreanLevel?.contains('1급') == true) koreanScore = 3;
+
+                          int volunteerScore = 0;
+                          if (store.volunteerBonus == '3년 이상') volunteerScore = 7;
+                          else if (store.volunteerBonus == '2년 이상') volunteerScore = 5;
+                          else if (store.volunteerBonus == '1년 이상') volunteerScore = 1;
+
+                          int incomeScore = 0;
+                          if (store.incomeBracket == '1억 원 이상') incomeScore = 60;
+                          else if (store.incomeBracket == '9천만 ~ 1억 미만') incomeScore = 58;
+                          else if (store.incomeBracket == '8천만 ~ 9천만 미만') incomeScore = 56;
+                          else if (store.incomeBracket == '7천만 ~ 8천만 미만') incomeScore = 53;
+                          else if (store.incomeBracket == '6천만 ~ 7천만 미만') incomeScore = 50;
+                          else if (store.incomeBracket == '5천만 ~ 6천만 미만') incomeScore = 45;
+                          else if (store.incomeBracket == '4천만 ~ 5천만 미만') incomeScore = 40;
+                          else if (store.incomeBracket == '3천만 ~ 4천만 미만') incomeScore = 30;
+                          else if (store.incomeBracket == '최저임금 ~ 3천만 미만') incomeScore = 10;
+
+                          Navigator.pop(context, {
+                            'totalScore': totalScore,
+                            'isMasters': isMasters,
+                            'isStem': store.isStemOrDoubleMajor,
+                            'volunteer': volunteerScore,
+                            'korean': koreanScore,
+                            'income': incomeScore,
+                            'age': store.selectedAge,
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF673AB7),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                          elevation: 0,
                         ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                          decoration: BoxDecoration(
-                            color: isPass ? const Color(0xFF0277BD) : Colors.orange.withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(
-                            isPass ? '안정권이에요! 🎉' : '조금만 더! 💪',
-                            style: GoogleFonts.notoSansKr(
-                              fontWeight: FontWeight.w700,
-                              color: isPass ? Colors.white : Colors.orange,
-                            ),
-                          ),
-                        )
-                      ],
-                    )
+                        child: Text(
+                          '완료',
+                          style: GoogleFonts.notoSansKr(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               )
