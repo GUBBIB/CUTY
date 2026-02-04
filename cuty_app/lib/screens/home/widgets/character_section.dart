@@ -28,7 +28,7 @@ class CharacterSection extends StatelessWidget {
           ),
           // Character Image
           Image.asset(
-            'assets/images/capy_hello.png',
+            'assets/images/capy_happy.png',
             width: MediaQuery.of(context).size.width * 0.45,
             fit: BoxFit.contain,
           ),

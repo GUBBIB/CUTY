@@ -3,7 +3,6 @@ import 'fortune_cookie_dialog.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../providers/fortune_provider.dart';
-import '../../../../providers/point_provider.dart';
 
 class FortuneCookieWidget extends ConsumerWidget {
   const FortuneCookieWidget({super.key});

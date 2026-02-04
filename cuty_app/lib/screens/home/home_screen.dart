@@ -9,14 +9,41 @@ import 'widgets/schedule_list.dart';
 import 'widgets/character_section.dart';
 import 'widgets/community_section.dart';
 import '../schedule/schedule_screen.dart';
-import 'widgets/fortune_cookie_dialog.dart';
 import 'widgets/fortune_cookie_widget.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 2000), // Relaxed breathing (2s)
+    )..repeat(reverse: true);
+
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.03).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Note: In ConsumerState, ref is available directly as a property
     final state = ref.watch(homeViewModelProvider);
 
     // View Switching Logic
@@ -74,65 +101,68 @@ class HomeScreen extends ConsumerWidget {
                     // Removed ScheduleList and Shadow from here to separate them
                     SizedBox(
                       height: 300, 
-                      child: Stack(
-                        alignment: Alignment.topCenter,
-                        clipBehavior: Clip.none,
-                        children: [
-                          // Character (Centered)
-                          Positioned(
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            child: const IgnorePointer(
-                              child: CharacterSection(),
-                            ),
-                          ),
-                          // Speech Bubble (Above Character)
-                          Positioned(
-                            top: 30, 
-                            left: 0,
-                            right: 0,
-                            child: Center(
-                              child: Column(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(20),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withValues(alpha: 0.1),
-                                          blurRadius: 4,
-                                          offset: const Offset(0, 2),
-                                        ),
-                                      ],
-                                    ),
-                                    child: const Text(
-                                      "오늘도 힘내! 🍀",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black87,
-                                      ),
-                                    ),
-                                  ),
-                                  // Optional Triangle Tail
-                                  CustomPaint(
-                                    painter: _TrianglePainter(Colors.white),
-                                    size: const Size(12, 8),
-                                  ),
-                                ],
+                      child: ScaleTransition(
+                        scale: _scaleAnimation,
+                        child: Stack(
+                          alignment: Alignment.topCenter,
+                          clipBehavior: Clip.none,
+                          children: [
+                            // Character (Centered)
+                            Positioned(
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              child: const IgnorePointer(
+                                child: CharacterSection(),
                               ),
                             ),
-                          ),
-                          // Fortune Cookie (Character's Right Hand -> Screen Left)
-                          Positioned(
-                            bottom: 110, 
-                            right: 80,   
-                            child: const FortuneCookieWidget(),
-                          ),
-                        ],
+                            // Speech Bubble (Above Character)
+                            Positioned(
+                              top: 30, 
+                              left: 0,
+                              right: 0,
+                              child: Center(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(20),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black.withValues(alpha: 0.1),
+                                            blurRadius: 4,
+                                            offset: const Offset(0, 2),
+                                          ),
+                                        ],
+                                      ),
+                                      child: const Text(
+                                        "오늘도 힘내! 🍀",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                    ),
+                                    // Optional Triangle Tail
+                                    CustomPaint(
+                                      painter: _TrianglePainter(Colors.white),
+                                      size: const Size(12, 8),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            // Fortune Cookie (Character's Right Hand -> Screen Left)
+                            Positioned(
+                              bottom: 110, 
+                              right: 80,   
+                              child: const FortuneCookieWidget(),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
 

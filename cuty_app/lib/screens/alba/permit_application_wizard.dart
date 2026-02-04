@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:ui' as ui;
 // import 'package:url_launcher/url_launcher.dart'; // simulation for now
 import '../../providers/alba_permit_provider.dart';
 import '../../providers/document_provider.dart';
@@ -397,12 +396,16 @@ class _SignaturePainter extends CustomPainter {
          c.scale(scale);
          c.translate(-(minX + w/2), -(minY + h/2));
          paint.strokeWidth = 2.0 / scale;
-         for (int i = 0; i < p.length - 1; i++) if (p[i] != null && p[i+1] != null) c.drawLine(p[i]!, p[i+1]!, paint);
+         for (int i = 0; i < p.length - 1; i++) {
+           if (p[i] != null && p[i+1] != null) c.drawLine(p[i]!, p[i+1]!, paint);
+         }
          c.restore();
          return;
        }
     }
-    for (int i = 0; i < p.length - 1; i++) if (p[i] != null && p[i+1] != null) c.drawLine(p[i]!, p[i+1]!, paint); 
+    for (int i = 0; i < p.length - 1; i++) {
+      if (p[i] != null && p[i+1] != null) c.drawLine(p[i]!, p[i+1]!, paint);
+    } 
   }
   @override bool shouldRepaint(covariant CustomPainter o) => true;
 }

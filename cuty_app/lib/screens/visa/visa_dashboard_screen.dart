@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import '../../providers/f27_visa_provider.dart';
+import 'f27_visa_calculator_screen.dart';
 
-class VisaDashboardScreen extends StatelessWidget {
+class VisaDashboardScreen extends StatefulWidget {
   final String userGoal; // 'novice', 'residency', 'job', etc.
   final VoidCallback? onGoalChangeRequested; // Callback to reset goal
 
@@ -11,6 +14,11 @@ class VisaDashboardScreen extends StatelessWidget {
     this.onGoalChangeRequested,
   });
 
+  @override
+  State<VisaDashboardScreen> createState() => _VisaDashboardScreenState();
+}
+
+class _VisaDashboardScreenState extends State<VisaDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,12 +38,12 @@ class VisaDashboardScreen extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.black87),
         actions: [
           IconButton(
-            onPressed: onGoalChangeRequested ?? () {
+            onPressed: widget.onGoalChangeRequested ?? () {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('목표 설정 변경 기능 준비 중')),
               );
             },
-            icon: const Icon(Icons.edit_road), // Changed icon to suggest modification
+            icon: const Icon(Icons.edit_road),
             tooltip: '목표 변경',
           ),
         ],
@@ -47,9 +55,9 @@ class VisaDashboardScreen extends StatelessWidget {
           children: [
             _buildHeader(),
             const SizedBox(height: 20),
-            if (userGoal == 'novice') _buildNoviceContent(),
-            if (userGoal == 'residency') _buildResidencyContent(),
-            if (userGoal == 'job') _buildJobContent(),
+            if (widget.userGoal == 'novice') _buildNoviceContent(),
+            if (widget.userGoal == 'residency') _buildResidencyContent(context),
+            if (widget.userGoal == 'job') _buildJobContent(),
           ],
         ),
       ),
@@ -136,15 +144,32 @@ class VisaDashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildResidencyContent() {
+  Widget _buildResidencyContent(BuildContext context) {
+    // Get live score from Store
+    final currentScore = Provider.of<VisaScoreProvider>(context).calculateTotalScore();
+    final isPass = currentScore >= 80;
+
     return Column(
       children: [
         _buildInfoCard(
           title: 'F-2-7 점수 예측',
-          value: '65점 / 80점',
-          description: '목표 점수까지 15점 남았습니다.',
+          value: '$currentScore점 / 80점',
+          description: isPass 
+              ? '축하합니다! 목표 점수를 달성했습니다.' 
+              : '목표 점수까지 ${80 - currentScore}점 남았습니다.\n터치하여 상세 점수 계산하기',
           icon: Icons.calculate_outlined,
-          color: Colors.blue,
+          color: isPass ? Colors.green : Colors.blue,
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const F27VisaCalculatorScreen(),
+              ),
+            ).then((_) {
+               setState(() {});
+            });
+
+          },
         ),
         const SizedBox(height: 16),
          _buildInfoCard(
@@ -186,63 +211,69 @@ class VisaDashboardScreen extends StatelessWidget {
     required String description,
     required IconData icon,
     required Color color,
+    VoidCallback? onTap,
   }) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(12),
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 2),
             ),
-            child: Icon(icon, color: color, size: 28),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: GoogleFonts.notoSansKr(
-                    fontSize: 14,
-                    color: Colors.grey[600],
-                  ),
-                ),
-                Text(
-                  value,
-                  style: GoogleFonts.notoSansKr(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black87,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  description,
-                  style: GoogleFonts.notoSansKr(
-                    fontSize: 12,
-                    color: Colors.grey[500],
-                  ),
-                ),
-              ],
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(icon, color: color, size: 28),
             ),
-          ),
-        ],
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: GoogleFonts.notoSansKr(
+                      fontSize: 14,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                  Text(
+                    value,
+                    style: GoogleFonts.notoSansKr(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    description,
+                    style: GoogleFonts.notoSansKr(
+                      fontSize: 12,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
+

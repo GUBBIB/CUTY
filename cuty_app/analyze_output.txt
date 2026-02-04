@@ -1,0 +1,47 @@
+Analyzing 3 items...                                            
+
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:150:68 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:151:39 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:152:39 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:153:39 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:154:39 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:160:40 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:161:38 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:162:40 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:167:54 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:168:52 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:169:52 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:170:52 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:175:48 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:176:47 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:177:47 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:178:47 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:179:47 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:180:47 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:181:47 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:182:48 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:192:42 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:193:40 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:197:43 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:198:40 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:210:43 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\providers\f27_visa_provider.dart:211:41 - curly_braces_in_flow_control_structures
+   info - 'groupValue' is deprecated and shouldn't be used. Use a RadioGroup ancestor to manage group value instead. This feature was deprecated after v3.32.0-0.0.pre - lib\screens\visa\f27_visa_calculator_screen.dart:150:27 - deprecated_member_use
+   info - 'onChanged' is deprecated and shouldn't be used. Use RadioGroup to handle value change instead. This feature was deprecated after v3.32.0-0.0.pre - lib\screens\visa\f27_visa_calculator_screen.dart:151:27 - deprecated_member_use
+   info - 'groupValue' is deprecated and shouldn't be used. Use a RadioGroup ancestor to manage group value instead. This feature was deprecated after v3.32.0-0.0.pre - lib\screens\visa\f27_visa_calculator_screen.dart:157:27 - deprecated_member_use
+   info - 'onChanged' is deprecated and shouldn't be used. Use RadioGroup to handle value change instead. This feature was deprecated after v3.32.0-0.0.pre - lib\screens\visa\f27_visa_calculator_screen.dart:159:27 - deprecated_member_use
+   info - 'groupValue' is deprecated and shouldn't be used. Use a RadioGroup ancestor to manage group value instead. This feature was deprecated after v3.32.0-0.0.pre - lib\screens\visa\f27_visa_calculator_screen.dart:165:27 - deprecated_member_use
+   info - 'onChanged' is deprecated and shouldn't be used. Use RadioGroup to handle value change instead. This feature was deprecated after v3.32.0-0.0.pre - lib\screens\visa\f27_visa_calculator_screen.dart:167:27 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\visa\f27_visa_calculator_screen.dart:227:61 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\visa\f27_visa_calculator_screen.dart:275:85 - deprecated_member_use
+   info - Statements in an if should be enclosed in a block - lib\screens\visa\f27_visa_calculator_screen.dart:329:31 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\screens\visa\f27_visa_calculator_screen.dart:330:30 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\screens\visa\f27_visa_calculator_screen.dart:331:29 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\screens\visa\f27_visa_calculator_screen.dart:332:29 - curly_braces_in_flow_control_structures
+   info - 'groupValue' is deprecated and shouldn't be used. Use a RadioGroup ancestor to manage group value instead. This feature was deprecated after v3.32.0-0.0.pre - lib\screens\visa\f27_visa_calculator_screen.dart:353:7 - deprecated_member_use
+   info - 'onChanged' is deprecated and shouldn't be used. Use RadioGroup to handle value change instead. This feature was deprecated after v3.32.0-0.0.pre - lib\screens\visa\f27_visa_calculator_screen.dart:357:7 - deprecated_member_use
+   info - Statements in an if should be enclosed in a block - lib\screens\visa\f27_visa_calculator_screen.dart:360:35 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\screens\visa\f27_visa_calculator_screen.dart:361:34 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\screens\visa\f27_visa_calculator_screen.dart:362:33 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\screens\visa\f27_visa_calculator_screen.dart:363:33 - curly_braces_in_flow_control_structures
+

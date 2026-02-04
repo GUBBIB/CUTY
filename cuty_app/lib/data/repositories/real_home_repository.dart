@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../services/home_repository.dart';
 import '../../models/schedule_item.dart';
 import '../../models/community_post.dart';
-import '../models/post_dto.dart';
 import '../../models/job_post.dart';
 import '../../models/banner_item.dart';
 import '../../config/app_assets.dart'; // Ensure AppAssets is accessible for the Capybara image

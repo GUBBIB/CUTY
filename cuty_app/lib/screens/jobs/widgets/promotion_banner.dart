@@ -5,7 +5,6 @@ import '../../../../models/banner_item.dart';
 import '../providers/job_providers.dart';
 // import '../../diagnosis/diagnosis_screen.dart'; // Removed broken import
 import '../../alba/permit_application_wizard.dart';
-import '../../alba/part_time_apply_consent_screen.dart';
 
 import 'package:cuty_app/providers/diagnosis_provider.dart';
 import '../../diagnosis/consulting_screen.dart'; // Consulting (Entry)

@@ -323,8 +323,9 @@ class VisaReportCard extends ConsumerWidget {
     // Assuming VisaStatus string or enum. 
     // Checking string representation or enum value
     Color color = Colors.grey;
-    if (status.toString().contains('GREEN')) color = Colors.green;
-    else if (status.toString().contains('YELLOW')) color = Colors.amber;
+    if (status.toString().contains('GREEN')) {
+      color = Colors.green;
+    } else if (status.toString().contains('YELLOW')) color = Colors.amber;
     else if (status.toString().contains('RED')) color = Colors.red;
 
     return Icon(Icons.circle, size: 12, color: color);

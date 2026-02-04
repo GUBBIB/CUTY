@@ -525,20 +525,28 @@ class RadarChartPainter extends CustomPainter {
       double angle = i * step - (pi / 2);
       double x = cx + r * cos(angle);
       double y = cy + r * sin(angle);
-      if (i == 0) path.moveTo(x, y); else path.lineTo(x, y);
+      if (i == 0) {
+        path.moveTo(x, y);
+      } else {
+        path.lineTo(x, y);
+      }
     }
     path.close();
     canvas.drawPath(path, paint);
   }
 
-  void _drawDataPolygon(Canvas canvas, double cx, double cy, double r, double step, List<String> keys, Map<String, int> scores, Paint paint, {bool fill = true, Paint? borderPaint}) {
+  void _drawDataPolygon(Canvas canvas, double cx, double cy, double r, double step, List<String> keys, Map<String, int> scores, Paint paint, {Paint? borderPaint}) {
     Path path = Path();
     for (int i = 0; i < keys.length; i++) {
       double val = (scores[keys[i]] ?? 0) / 100.0;
       double angle = i * step - (pi / 2);
       double x = cx + r * val * cos(angle);
       double y = cy + r * val * sin(angle);
-      if (i == 0) path.moveTo(x, y); else path.lineTo(x, y);
+      if (i == 0) {
+        path.moveTo(x, y);
+      } else {
+        path.lineTo(x, y);
+      }
     }
     path.close();
     canvas.drawPath(path, paint); // Fill

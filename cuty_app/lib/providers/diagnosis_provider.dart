@@ -81,8 +81,9 @@ class DiagnosisNotifier extends StateNotifier<DiagnosisState> {
     // B. Experience (Intern, Alba, E7)
     int expScore = 0;
     for (var exp in answer.experiences) {
-      if (exp.category == '인턴십') expScore += 30;
-      else if (exp.category == '시간제 취업(알바)') expScore += 20;
+      if (exp.category == '인턴십') {
+        expScore += 30;
+      } else if (exp.category == '시간제 취업(알바)') expScore += 20;
       else if (exp.category == '과거 E-7 근무') expScore += 50;
     }
     expScore = expScore.clamp(0, 100);
@@ -134,8 +135,9 @@ class DiagnosisNotifier extends StateNotifier<DiagnosisState> {
     void addResult(String code, String name, int avgSalaryInt, {int bonus = 0}) {
       VisaStatus status = VisaStatus.RED;
       // Simple Pass Logic
-      if (expertiseScore + bonus >= 70 && langScore >= 40) status = VisaStatus.GREEN;
-      else if (expertiseScore + bonus >= 50) status = VisaStatus.YELLOW;
+      if (expertiseScore + bonus >= 70 && langScore >= 40) {
+        status = VisaStatus.GREEN;
+      } else if (expertiseScore + bonus >= 50) status = VisaStatus.YELLOW;
 
       results[code] = JobAnalysisData(
         jobCode: code,
@@ -155,7 +157,7 @@ class DiagnosisNotifier extends StateNotifier<DiagnosisState> {
           "한국이해": 75,
           "성실성": 90,
         },
-        avgSalary: "${avgSalaryInt}만원",
+        avgSalary: "$avgSalaryInt만원",
       );
     }
 
@@ -191,8 +193,9 @@ class DiagnosisNotifier extends StateNotifier<DiagnosisState> {
     int totalScore = 50; // Base Score
 
     // Lang (+10 ~ +30)
-    if (answer.koreanLevel.contains('기초')) totalScore += 10;
-    else if (answer.koreanLevel.contains('일상')) totalScore += 20;
+    if (answer.koreanLevel.contains('기초')) {
+      totalScore += 10;
+    } else if (answer.koreanLevel.contains('일상')) totalScore += 20;
     else if (answer.koreanLevel.contains('비즈니스') || answer.koreanLevel.contains('원어민')) totalScore += 30;
 
     // Edu (+10 ~ +20)

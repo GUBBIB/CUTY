@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart' as p;
+import 'providers/f27_visa_provider.dart';
 
 
 import 'dart:io';
@@ -28,8 +30,13 @@ void main() async {
   }
 
   runApp(
-    const ProviderScope(
-      child: CutyApp(),
+    ProviderScope(
+      child: p.MultiProvider(
+        providers: [
+          p.ChangeNotifierProvider(create: (_) => VisaScoreProvider()),
+        ],
+        child: const CutyApp(),
+      ),
     ),
   );
 }

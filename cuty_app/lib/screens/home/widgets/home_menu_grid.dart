@@ -51,12 +51,14 @@ class HomeMenuGrid extends StatelessWidget {
         'icon': Icons.school_outlined,
         'bg': const Color(0xFFF3E5F5), // Light Purple
         'iconColor': const Color(0xFF6A1B9A), // Deep Purple
+        'isPreparing': true,
       },
       {
         'label': '맛집',
         'icon': Icons.restaurant_menu,
         'bg': const Color(0xFFFFE0B2), // Light Orange
         'iconColor': const Color(0xFFEF6C00), // Deep Orange
+        'isPreparing': true,
       },
     ];
 
@@ -71,6 +73,7 @@ class HomeMenuGrid extends StatelessWidget {
               label: menuItems[i]['label'] as String,
               backgroundColor: menuItems[i]['bg'] as Color,
               iconColor: menuItems[i]['iconColor'] as Color,
+              isPreparing: menuItems[i]['isPreparing'] ?? false,
             ),
             if (i < menuItems.length - 1) const SizedBox(width: 16), // Increased spacing
           ],
@@ -86,12 +89,14 @@ class _MenuCard extends ConsumerWidget {
   final String label;
   final Color backgroundColor;
   final Color iconColor;
+  final bool isPreparing;
 
   const _MenuCard({
     required this.icon,
     required this.label,
     required this.backgroundColor,
     required this.iconColor,
+    this.isPreparing = false,
   });
 
   @override
@@ -115,76 +120,106 @@ class _MenuCard extends ConsumerWidget {
         borderRadius: BorderRadius.circular(20),
         clipBehavior: Clip.hardEdge,
         child: InkWell(
-          onTap: () {
-            debugPrint('$label 메뉴 클릭됨');
-            switch (label) {
-              case '비자':
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const VisaScreenWrapper()),
-                );
-                break;
-              case '서류지갑':
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SpecWalletScreen()),
-                );
-                break;
-              case '알바/취업':
-                 ref.read(homeViewProvider.notifier).state = 'job';
-                break;
-              case '학사정보':
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const AcademicMainScreen()),
-                );
-                break;
-              case '시간표':
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ScheduleScreen()),
-                );
-                break;
-              case '커뮤니티':
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const CommunityMainScreen()),
-                );
-                break;
-              case '맛집':
-                // Matjib no screen request, keeping log
-                break;
-            }
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 48, // Increased from 38
-                  height: 40, // Increased from 34
-                  decoration: BoxDecoration(
-                    color: backgroundColor,
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  alignment: Alignment.center,
-                  child: Icon(icon, color: iconColor, size: 24), // Increased size
+          onTap: isPreparing
+              ? null
+              : () {
+                  debugPrint('$label 메뉴 클릭됨');
+                  switch (label) {
+                    case '비자':
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const VisaScreenWrapper()),
+                      );
+                      break;
+                    case '서류지갑':
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SpecWalletScreen()),
+                      );
+                      break;
+                    case '알바/취업':
+                      ref.read(homeViewProvider.notifier).state = 'job';
+                      break;
+                    case '학사정보':
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AcademicMainScreen()),
+                      );
+                      break;
+                    case '시간표':
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ScheduleScreen()),
+                      );
+                      break;
+                    case '커뮤니티':
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const CommunityMainScreen()),
+                      );
+                      break;
+                    case '맛집':
+                      // Matjib no screen request, keeping log
+                      break;
+                  }
+                },
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 48, // Increased from 38
+                      height: 40, // Increased from 34
+                      decoration: BoxDecoration(
+                        color: backgroundColor,
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      alignment: Alignment.center,
+                      child: Icon(icon, color: iconColor, size: 24), // Increased size
+                    ),
+                    const SizedBox(height: 6), // Increased spacing
+                    Text(
+                      label,
+                      style: GoogleFonts.notoSansKr(
+                        fontSize: 12, // Increased from 10
+                        fontWeight: FontWeight.w700,
+                        color: const Color(0xFF1A1A2E),
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 6), // Increased spacing
-                Text(
-                  label,
-                  style: GoogleFonts.notoSansKr(
-                    fontSize: 12, // Increased from 10
-                    fontWeight: FontWeight.w700,
-                    color: const Color(0xFF1A1A2E),
+              ),
+              if (isPreparing)
+                Positioned.fill(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.6),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      "준비중",
+                      style: GoogleFonts.notoSansKr(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
                 ),
-              ],
-            ),
+            ],
           ),
         ),
       ),
