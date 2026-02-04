@@ -1,14 +1,29 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cuty_app/providers/point_provider.dart';
 import '../models/document_model.dart';
+import '../services/local_storage_service.dart';
 
 class DocumentNotifier extends StateNotifier<List<Document>> {
   final Ref ref;
-  DocumentNotifier(this.ref) : super([]);
+  DocumentNotifier(this.ref) : super([]) {
+    _loadDocuments();
+  }
+
+  void _loadDocuments() {
+    final rawList = LocalStorageService().getDocuments();
+    if (rawList.isNotEmpty) {
+      state = rawList.map((e) => Document.fromJson(e)).toList();
+    }
+  }
 
   void addDocumentWithReward(Document doc) {
     state = [...state, doc];
+    _saveDocuments(); // Save changes
     ref.read(pointProvider.notifier).earnPoints(300, "${doc.name} 인증 보상");
+  }
+
+  void _saveDocuments() {
+    LocalStorageService().saveDocuments(state.map((e) => e.toJson()).toList());
   }
 
   // 시간제 취업 필수 서류 체크 로직

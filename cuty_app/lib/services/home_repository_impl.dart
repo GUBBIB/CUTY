@@ -3,6 +3,7 @@ import '../models/schedule_item.dart';
 import '../models/community_post.dart';
 import '../models/job_post.dart';
 import '../models/banner_item.dart';
+import '../models/post_model.dart';
 import 'api_service.dart';
 import 'home_repository.dart';
 
@@ -58,5 +59,5 @@ class HomeRepositoryImpl implements HomeRepository {
 // Provider
 final homeRepositoryImplProvider = Provider<HomeRepository>((ref) {
   // Assuming generic ApiService is sufficient or configured elsewhere
-  return HomeRepositoryImpl(apiService: ApiService()); 
+  return HomeRepositoryImpl(apiService: ApiService.instance); 
 });

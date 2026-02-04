@@ -17,7 +17,7 @@ final homeRepositoryProvider = Provider<HomeRepository>((ref) {
   } else {
     // In a real app, you might want to provide ApiService via a provider too
     // final apiService = ref.watch(apiServiceProvider);
-    return HomeRepositoryImpl(apiService: ApiService());
+    return HomeRepositoryImpl(apiService: ApiService.instance);
   }
 });
 

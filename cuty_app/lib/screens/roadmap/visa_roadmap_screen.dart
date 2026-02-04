@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../visa/f27_visa_calculator_screen.dart'; // Ensure this import exists
-import 'thesis_schedule_screen.dart'; // Import for ThesisScheduleScreen
+import 'package:provider/provider.dart'; // Add Provider
+import '../../providers/f27_visa_provider.dart'; // Add VisaScoreProvider
+import '../visa/f27_visa_calculator_screen.dart'; 
+import 'thesis_schedule_screen.dart';
 
 class VisaRoadmapScreen extends StatefulWidget {
   final String? userGoal;
@@ -30,9 +32,35 @@ class _VisaRoadmapScreenState extends State<VisaRoadmapScreen> {
   }
 
   void _refreshScore() {
-    setState(() {
-      // TODO: Connect to actual store
-    });
+    // 1. Provider 접근 (listen: false)
+    final provider = Provider.of<VisaScoreProvider>(context, listen: false);
+    
+    // 2. 저장된 데이터가 있는지 확인 (점수 계산 시도)
+    int savedScore = provider.calculateTotalScore();
+    
+    // 3. 점수가 0점보다 크거나, 서류지갑이 연동된 상태라면 화면 갱신
+    if (savedScore > 0 || provider.isSpecWalletLinked) {
+      setState(() {
+        currentScore = savedScore;
+        hasCalculated = true; // ? 대신 점수를 보여주기 위해 true로 설정
+        
+        // detailedResult가 필요하다면 여기서도 재구성하거나 provider에 저장해두는 것이 좋음.
+        // 현재는 점수만 복구하므로 상세 분석 메시지는 일부 제한될 수 있음.
+        // 하지만 calculateTotalScore() 결과가 있다면 점수는 표시됨.
+        
+        // Strategy를 위해 minimal detailedResult 생성
+        detailedResult = {
+            'totalScore': savedScore,
+            'isMasters': (provider.educationLevel == '석사' || provider.educationLevel == '박사'),
+            'isStem': provider.isStemOrDoubleMajor,
+            // 다른 필드들도 필요시 provider에서 가져옴
+            'korean': (provider.koreanLevel == 'TOPIK 5~6급 / KIIP 5단계') ? 20 : 0, // Simplified check for consulting
+            'income': (provider.incomeBracket != null) ? 10 : 0, // Dummy check, logic inside provider is better
+             // NOTE: 실제로는 Provider가 detailedMap을 반환하는 메소드를 가지는게 더 좋음.
+             // 임시로 화면 표시를 위해 점수 기반 활성화만 진행.
+        };
+      });
+    }
   }
 
   @override

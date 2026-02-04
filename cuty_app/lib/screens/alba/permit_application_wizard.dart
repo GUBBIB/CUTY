@@ -616,9 +616,9 @@ class _Step9HiKoreaGuide extends StatelessWidget {
 // -----------------------------------------------------------------------------
 // STEP 10: Final Permit
 // -----------------------------------------------------------------------------
-class _Step10FinalPermit extends StatelessWidget {
+class _Step10FinalPermit extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(backgroundColor: Colors.white, body: Center(child: Padding(padding: const EdgeInsets.all(24), child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
        Container(padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4), decoration: BoxDecoration(color: Colors.yellow[100], borderRadius: BorderRadius.circular(20), border: Border.all(color: Colors.yellow[200]!)), child: Row(mainAxisSize: MainAxisSize.min, children: [Icon(Icons.verified, size: 14, color: Colors.yellow[900]), const SizedBox(width: 4), Text("최종 허가 완료", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.yellow[900]))])),
        const SizedBox(height: 30),
@@ -641,7 +641,11 @@ class _Step10FinalPermit extends StatelessWidget {
          const Text("• 근로계약서는 꼭 보관해두세요!", style: TextStyle(fontSize: 12, color: Colors.grey)),
        ])),
        const SizedBox(height: 40),
-       SizedBox(width: double.infinity, height: 60, child: ElevatedButton(onPressed: () => Navigator.pop(context), style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1A2B49), padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))), child: const Text("내 비자 상태 확인하기 (완료)", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))))
+       SizedBox(width: double.infinity, height: 60, child: ElevatedButton(onPressed: () { 
+          // Reset application state and then pop
+          ref.read(albaPermitProvider.notifier).resetApplication();
+          Navigator.pop(context);
+       }, style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1A2B49), padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))), child: const Text("내 비자 상태 확인하기 (완료)", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))))
     ]))));
   }
 }

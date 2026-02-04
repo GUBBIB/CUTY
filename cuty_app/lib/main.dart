@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart' as p;
 import 'providers/f27_visa_provider.dart';
+import 'services/local_storage_service.dart';
 
 
 import 'dart:io';
@@ -11,6 +12,9 @@ import 'screens/main_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // 로컬 저장소 서비스 초기화 (반드시 runApp 전에 실행)
+  await LocalStorageService().init();
 
   if (Platform.isWindows || Platform.isMacOS) {
     await windowManager.ensureInitialized();

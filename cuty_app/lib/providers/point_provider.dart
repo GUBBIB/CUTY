@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../services/local_storage_service.dart';
 
 // 1. PointHistory Model (Robust & Null-Safe)
 class PointHistory {
@@ -13,6 +14,24 @@ class PointHistory {
     required this.amount,
     required this.type,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'date': date.toIso8601String(),
+      'amount': amount,
+      'type': type,
+    };
+  }
+
+  factory PointHistory.fromJson(Map<String, dynamic> json) {
+    return PointHistory(
+      title: json['title'] as String,
+      date: DateTime.parse(json['date'] as String),
+      amount: json['amount'] as int,
+      type: json['type'] as String,
+    );
+  }
 }
 
 class PointState {
@@ -40,30 +59,50 @@ class PointState {
 }
 
 class PointNotifier extends StateNotifier<PointState> {
-  PointNotifier()
-      : super(PointState(
-          totalBalance: 10000, // Initial dummy balance
-          history: [
-            PointHistory(
-              title: "튜토리얼 완료 🎁",
-              date: DateTime.now().subtract(const Duration(hours: 1)),
-              amount: 300,
-              type: 'earn',
-            ),
-            PointHistory(
-              title: "신규 가입 축하금 🎉",
-              date: DateTime.now().subtract(const Duration(days: 1)),
-              amount: 9650,
-              type: 'earn',
-            ),
-            PointHistory(
-              title: "첫 로그인 보상",
-              date: DateTime.now().subtract(const Duration(days: 1, hours: 2)),
-              amount: 50,
-              type: 'earn',
-            ),
-          ],
-        ));
+  PointNotifier() : super(_initialState());
+
+  static PointState _initialState() {
+    final historyJson = LocalStorageService().getPointHistory();
+    if (historyJson.isNotEmpty) {
+      return PointState(
+        totalBalance: LocalStorageService().getPointBalance(),
+        history: historyJson.map((e) => PointHistory.fromJson(e)).toList(),
+      );
+    }
+    // Default Mock Data
+    return PointState(
+      totalBalance: 10000,
+      history: [
+        PointHistory(
+          title: "튜토리얼 완료 🎁",
+          date: DateTime.now().subtract(const Duration(hours: 1)),
+          amount: 300,
+          type: 'earn',
+        ),
+        PointHistory(
+          title: "신규 가입 축하금 🎉",
+          date: DateTime.now().subtract(const Duration(days: 1)),
+          amount: 9650,
+          type: 'earn',
+        ),
+        PointHistory(
+          title: "첫 로그인 보상",
+          date: DateTime.now().subtract(const Duration(days: 1, hours: 2)),
+          amount: 50,
+          type: 'earn',
+        ),
+      ],
+    );
+  }
+
+  @override
+  set state(PointState value) {
+    super.state = value;
+    LocalStorageService().savePoints(
+      value.totalBalance,
+      value.history.map((e) => e.toJson()).toList(),
+    );
+  }
 
   // Earn Points (External)
   void earnPoints(int amount, String title) {

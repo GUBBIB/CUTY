@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../models/job_post.dart';
 import '../../../models/banner_item.dart';
 import '../../../services/mock_home_repository.dart'; // Currently holds the main provider
+import '../../../services/local_storage_service.dart';
 // import '../../../data/repositories/real_home_repository.dart'; // import if needing specific provider
 
 // Use the main repository provider which is currently wired to RealHomeRepository in mock_home_repository.dart
@@ -10,7 +11,33 @@ import '../../../services/mock_home_repository.dart'; // Currently holds the mai
 // Checked step 98: homeRepositoryProvider is in lib/services/mock_home_repository.dart
 
 final selectedJobCategoryProvider = StateProvider<int>((ref) => 0); // 0: 알바(Part-Time), 1: 취업(Career)
-final jobFilterProvider = StateProvider<List<String>>((ref) => []); // Stores currently active filters
+// Job Filter StateNotifier for persistence
+class JobFilterNotifier extends StateNotifier<List<String>> {
+  JobFilterNotifier() : super([]) {
+    _loadFilter();
+  }
+
+  void _loadFilter() {
+    state = LocalStorageService().getJobFilter();
+  }
+
+  void updateFilter(List<String> newFilter) {
+    state = newFilter;
+    LocalStorageService().saveJobFilter(state);
+  }
+  
+  void toggleFilter(String filter) {
+    if (state.contains(filter)) {
+      updateFilter(state.where((f) => f != filter).toList());
+    } else {
+      updateFilter([...state, filter]);
+    }
+  }
+}
+
+final jobFilterProvider = StateNotifierProvider<JobFilterNotifier, List<String>>((ref) {
+  return JobFilterNotifier();
+});
 
 final jobListProvider = FutureProvider<List<JobPost>>((ref) async {
   final repository = ref.watch(homeRepositoryProvider);

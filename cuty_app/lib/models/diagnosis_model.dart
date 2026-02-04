@@ -10,6 +10,22 @@ class CareerExperience {
     required this.detailType, 
     this.customInput
   });
+
+  factory CareerExperience.fromJson(Map<String, dynamic> json) {
+    return CareerExperience(
+      category: json['category'] ?? '',
+      detailType: json['detailType'] ?? '',
+      customInput: json['customInput'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'category': category,
+      'detailType': detailType,
+      'customInput': customInput,
+    };
+  }
 }
 
 class SurveyAnswer {
@@ -28,6 +44,26 @@ class SurveyAnswer {
     this.koreanLevel = '',
     this.experiences = const [],
   });
+
+  factory SurveyAnswer.fromJson(Map<String, dynamic> json) {
+    return SurveyAnswer(
+      targetJobs: List<String>.from(json['targetJobs'] ?? []),
+      preferredLocations: List<String>.from(json['preferredLocations'] ?? []),
+      koreanLevel: json['koreanLevel'] ?? '',
+      experiences: (json['experiences'] as List<dynamic>?)
+          ?.map((e) => CareerExperience.fromJson(e as Map<String, dynamic>))
+          .toList() ?? [],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'targetJobs': targetJobs,
+      'preferredLocations': preferredLocations,
+      'koreanLevel': koreanLevel,
+      'experiences': experiences.map((e) => e.toJson()).toList(),
+    };
+  }
 
   SurveyAnswer copyWith({
     List<String>? targetJobs,
@@ -63,6 +99,30 @@ class JobAnalysisData {
     required this.avgScores,
     required this.avgSalary,
   });
+
+  factory JobAnalysisData.fromJson(Map<String, dynamic> json) {
+    return JobAnalysisData(
+      jobCode: json['jobCode'] ?? '',
+      jobName: json['jobName'] ?? '',
+      visaStatus: VisaStatus.values.firstWhere(
+          (e) => e.name == json['visaStatus'], 
+          orElse: () => VisaStatus.RED),
+      myScores: Map<String, int>.from(json['myScores'] ?? {}),
+      avgScores: Map<String, int>.from(json['avgScores'] ?? {}),
+      avgSalary: json['avgSalary'] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'jobCode': jobCode,
+      'jobName': jobName,
+      'visaStatus': visaStatus.name,
+      'myScores': myScores,
+      'avgScores': avgScores,
+      'avgSalary': avgSalary,
+    };
+  }
 }
 
 class DiagnosisResult {
@@ -82,6 +142,28 @@ class DiagnosisResult {
     required this.totalTier,
     required this.tierDescription,
   });
+
+  factory DiagnosisResult.fromJson(Map<String, dynamic> json) {
+    return DiagnosisResult(
+      analysisResults: (json['analysisResults'] as Map<String, dynamic>?)?.map(
+        (k, v) => MapEntry(k, JobAnalysisData.fromJson(v as Map<String, dynamic>)),
+      ) ?? {},
+      solutionDocs: List<String>.from(json['solutionDocs'] ?? []),
+      totalScore: json['totalScore'] ?? 0,
+      totalTier: json['totalTier'] ?? "Unranked",
+      tierDescription: json['tierDescription'] ?? "진단을 시작해주세요.",
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'analysisResults': analysisResults.map((k, v) => MapEntry(k, v.toJson())),
+      'solutionDocs': solutionDocs,
+      'totalScore': totalScore,
+      'totalTier': totalTier,
+      'tierDescription': tierDescription,
+    };
+  }
 
   // Factory for empty/initial state
   factory DiagnosisResult.empty() {

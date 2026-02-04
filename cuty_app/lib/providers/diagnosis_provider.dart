@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/diagnosis_model.dart';
 import '../models/document_model.dart';
+import '../services/local_storage_service.dart';
 import 'document_provider.dart';
 
 class DiagnosisState {
@@ -33,11 +34,30 @@ class DiagnosisNotifier extends StateNotifier<DiagnosisState> {
   final Ref ref;
 
   DiagnosisNotifier(this.ref)
-      : super(DiagnosisState(answer: SurveyAnswer()));
+      : super(DiagnosisState(answer: SurveyAnswer())) {
+          _loadDiagnosis();
+      }
+
+  void _loadDiagnosis() {
+    final map = LocalStorageService().getDiagnosis();
+    if (map != null) {
+      final loadedAnswer = map['answer'] != null ? SurveyAnswer.fromJson(map['answer']) : SurveyAnswer();
+      final loadedResult = map['result'] != null ? DiagnosisResult.fromJson(map['result']) : null;
+      state = state.copyWith(answer: loadedAnswer, result: loadedResult);
+    }
+  }
+
+  void _saveDiagnosis() {
+    LocalStorageService().saveDiagnosis({
+      'answer': state.answer.toJson(),
+      'result': state.result?.toJson(),
+    });
+  }
 
   // 1. Update Survey Input
   void updateAnswer(SurveyAnswer newAnswer) {
     state = state.copyWith(answer: newAnswer);
+    _saveDiagnosis();
   }
 
   // 2. Perform Analysis
@@ -58,6 +78,7 @@ class DiagnosisNotifier extends StateNotifier<DiagnosisState> {
       result: result,
       isAnalyzing: false,
     );
+    _saveDiagnosis();
   }
 
   // Core Business Logic

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'visa_goal_selection_screen.dart';
+import 'package:cuty_app/services/local_storage_service.dart';
 import '../roadmap/visa_roadmap_screen.dart';
 
 // Mock State for session persistence
@@ -16,10 +17,28 @@ class VisaScreenWrapper extends StatefulWidget {
 
 class _VisaScreenWrapperState extends State<VisaScreenWrapper> {
   
+  @override
+  void initState() {
+    super.initState();
+    _loadUserGoal();
+  }
+
+  void _loadUserGoal() {
+    final savedGoal = LocalStorageService().getUserGoal();
+    if (savedGoal != null) {
+      VisaState.userGoal = savedGoal;
+    }
+  }
+
   void _updateGoal(String? goal) {
     setState(() {
       VisaState.userGoal = goal;
     });
+    if (goal != null) {
+      LocalStorageService().saveUserGoal(goal);
+    } else {
+      LocalStorageService().removeUserGoal();
+    }
   }
 
   @override

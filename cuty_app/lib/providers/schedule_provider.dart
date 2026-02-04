@@ -1,10 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/schedule_model.dart';
+import '../services/local_storage_service.dart';
 
 // [1] 노티파이어: 시간표 로직 관리
 class ScheduleNotifier extends StateNotifier<List<Schedule>> {
   ScheduleNotifier() : super([]) {
-    // 초기 더미 데이터 설정 (테스트용)
+    // 1. 저장된 데이터 확인
+    final savedJson = LocalStorageService().getSchedule();
+    if (savedJson.isNotEmpty) {
+      state = savedJson.map((e) => Schedule.fromJson(e)).toList();
+      return;
+    }
+
+    // 2. 없으면 초기 더미 데이터 설정 (테스트용)
     state = [
       Schedule(id: 1, title: "경제론", classroom: "경적 304", day: "Mon", startTime: 10, duration: 1), 
       Schedule(id: 2, title: "마케팅원론", classroom: "경영관 B103", day: "Tue", startTime: 14, duration: 1),
@@ -79,6 +87,12 @@ class ScheduleNotifier extends StateNotifier<List<Schedule>> {
 
   void removeClass(String title) {
     state = state.where((item) => item.title != title).toList();
+  }
+
+  @override
+  set state(List<Schedule> value) {
+    super.state = value;
+    LocalStorageService().saveSchedule(value.map((e) => e.toJson()).toList());
   }
 }
 

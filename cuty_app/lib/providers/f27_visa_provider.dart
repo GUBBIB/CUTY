@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../services/local_storage_service.dart';
 
 class VisaScoreProvider extends ChangeNotifier {
   // --- State Variables ---
@@ -7,6 +8,34 @@ class VisaScoreProvider extends ChangeNotifier {
   bool isStemOrDoubleMajor = false; // 이공계 or 복수전공
   String? koreanLevel;
   String? incomeBracket;
+
+  VisaScoreProvider() {
+    _loadAllData();
+  }
+
+  void _loadAllData() {
+    final ls = LocalStorageService();
+    isSpecWalletLinked = ls.getWalletLink();
+    
+    selectedAge = ls.getString('f27_age');
+    educationLevel = ls.getString('f27_education');
+    isStemOrDoubleMajor = ls.getBool('f27_stem');
+    koreanLevel = ls.getString('f27_korean');
+    incomeBracket = ls.getString('f27_income');
+    uniBonusType = ls.getString('f27_uni_bonus');
+    kiipCompleted = ls.getBool('f27_kiip');
+    highTechIndustry = ls.getBool('f27_hightech');
+    govRecommendation = ls.getBool('f27_gov');
+    warVeteran = ls.getBool('f27_veteran');
+    volunteerBonus = ls.getString('f27_volunteer');
+    regionalScore = ls.getInt('f27_region');
+    immigrationViolation = ls.getBool('f27_immigration');
+    criminalPunishment = ls.getBool('f27_criminal');
+
+    if (isSpecWalletLinked && selectedAge == null) {
+       loadMockData();
+    }
+  }
 
   // --- Bonus Items ---
   String? uniBonusType; // 'top_global', 'domestic', or null
@@ -24,86 +53,135 @@ class VisaScoreProvider extends ChangeNotifier {
   bool criminalPunishment = false;
 
   // --- UI State ---
-  bool isSpecWalletLinked = false;
+  bool isSpecWalletLinked = LocalStorageService().getWalletLink();
 
   // --- Actions ---
 
   void updateAge(String? value) {
     selectedAge = value;
+    LocalStorageService().saveString('f27_age', value ?? '');
     notifyListeners();
   }
 
   void updateEducation(String? level) {
     educationLevel = level;
+    LocalStorageService().saveString('f27_education', level ?? '');
     notifyListeners();
   }
 
   void updateStemStatus(bool value) {
     isStemOrDoubleMajor = value;
+    LocalStorageService().saveBool('f27_stem', value);
     notifyListeners();
   }
 
   void updateKoreanLevel(String? level) {
     koreanLevel = level;
+    LocalStorageService().saveString('f27_korean', level ?? '');
     notifyListeners();
   }
 
   void updateIncome(String? bracket) {
     incomeBracket = bracket;
+    LocalStorageService().saveString('f27_income', bracket ?? '');
     notifyListeners();
   }
 
   void updateUniBonus(String? type) {
     uniBonusType = type;
+    LocalStorageService().saveString('f27_uni_bonus', type ?? '');
     notifyListeners();
   }
 
   void updateKiipBonus(bool value) {
     kiipCompleted = value;
+    LocalStorageService().saveBool('f27_kiip', value);
     notifyListeners();
   }
 
   void updateHighTechBonus(bool value) {
     highTechIndustry = value;
+    LocalStorageService().saveBool('f27_hightech', value);
     notifyListeners();
   }
 
   void updateGovBonus(bool value) {
     govRecommendation = value;
+    LocalStorageService().saveBool('f27_gov', value);
     notifyListeners();
   }
 
   void updateVeteranBonus(bool value) {
     warVeteran = value;
+    LocalStorageService().saveBool('f27_veteran', value);
     notifyListeners();
   }
 
   void updateVolunteerBonus(String? val) {
     volunteerBonus = val;
+    LocalStorageService().saveString('f27_volunteer', val ?? '');
     notifyListeners();
   }
 
   void updateRegionalScore(int score) {
     regionalScore = score;
+    LocalStorageService().saveInt('f27_region', score);
     notifyListeners();
   }
 
   void updateImmigrationPenalty(bool value) {
     immigrationViolation = value;
+    LocalStorageService().saveBool('f27_immigration', value);
     notifyListeners();
   }
 
   void updateCriminalPenalty(bool value) {
     criminalPunishment = value;
+    LocalStorageService().saveBool('f27_criminal', value);
     notifyListeners();
   }
 
   void toggleSpecWallet(bool value) {
     isSpecWalletLinked = value;
+    // 상태 변경 시 즉시 저장
+    LocalStorageService().saveWalletLink(value);
+
     if (value) {
-      loadMockData(); // Auto-fill
+      loadMockData(); 
+      // Save all mocked data
+      final ls = LocalStorageService();
+      ls.saveString('f27_age', selectedAge ?? '');
+      ls.saveString('f27_education', educationLevel ?? '');
+      ls.saveBool('f27_stem', isStemOrDoubleMajor);
+      ls.saveString('f27_korean', koreanLevel ?? '');
+      ls.saveString('f27_income', incomeBracket ?? '');
+      ls.saveString('f27_uni_bonus', uniBonusType ?? '');
+      ls.saveBool('f27_kiip', kiipCompleted);
+      ls.saveBool('f27_hightech', highTechIndustry);
+      ls.saveBool('f27_gov', govRecommendation);
+      ls.saveBool('f27_veteran', warVeteran);
+      ls.saveString('f27_volunteer', volunteerBonus ?? '');
+      ls.saveInt('f27_region', regionalScore);
+      ls.saveBool('f27_immigration', immigrationViolation);
+      ls.saveBool('f27_criminal', criminalPunishment);
     } else {
-      reset(); // Or keep data? Request implies explicit reset usually or just unlink. Sticking to reset for clean toggle behavior as per previous code.
+      reset();
+      // Save all reset data (cleared)
+      final ls = LocalStorageService();
+      ls.saveString('f27_age', '');
+      ls.saveString('f27_education', '');
+      ls.saveBool('f27_stem', false);
+      ls.saveString('f27_korean', '');
+      ls.saveString('f27_income', '');
+      ls.saveString('f27_uni_bonus', '');
+      ls.saveBool('f27_kiip', false);
+      ls.saveBool('f27_hightech', false);
+      ls.saveBool('f27_gov', false);
+      ls.saveBool('f27_veteran', false);
+      ls.saveString('f27_volunteer', '');
+      ls.saveInt('f27_region', 0);
+      ls.saveBool('f27_immigration', false);
+      ls.saveBool('f27_criminal', false);
     }
     notifyListeners();
   }

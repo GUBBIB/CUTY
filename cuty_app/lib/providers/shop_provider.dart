@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/shop_model.dart';
+import '../services/local_storage_service.dart';
 // Note: PointNotifier import would be ideal but avoiding circular deps if point_provider imports shop_provider.
 // Assuming dynamic dispatch for now as requested or purely interface based. 
 // Ideally we should import point_provider.dart if point_provider doesn't import shop_provider.
@@ -34,6 +35,19 @@ class ShopState {
 class ShopNotifier extends StateNotifier<ShopState> {
   ShopNotifier() : super(ShopState(products: [], inventory: [])) {
     _loadMockData();
+    _loadInventory(); // Load Persisted
+  }
+
+  void _loadInventory() {
+    final rawInv = LocalStorageService().getInventory();
+    if (rawInv.isNotEmpty) {
+      final loadedInventory = rawInv.map((e) => Shop.fromJson(e)).toList();
+      state = state.copyWith(inventory: loadedInventory);
+    }
+  }
+
+  void _saveInventory(List<Shop> newInventory) {
+    LocalStorageService().saveInventory(newInventory.map((e) => e.toJson()).toList());
   }
 
   void _loadMockData() {
@@ -72,9 +86,11 @@ class ShopNotifier extends StateNotifier<ShopState> {
   // Using PointNotifier
   bool buyItem(Shop product, PointNotifier pointNotifier) {
     if (pointNotifier.usePoints(product.price, "${product.name} 구매")) {
+      final newInventory = [...state.inventory, product];
       state = state.copyWith(
-        inventory: [...state.inventory, product],
+        inventory: newInventory,
       );
+      _saveInventory(newInventory); // Persist
       return true;
     }
     return false;

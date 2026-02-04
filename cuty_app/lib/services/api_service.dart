@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../models/user.dart';
+import '../models/post_model.dart';
 
 class ApiService {
   // Singleton Pattern
@@ -72,5 +73,20 @@ class ApiService {
       print('Fetch Info Error: $e');
     }
     return null;
+  }
+
+  // 3. Fetch Popular Posts (Community)
+  Future<List<PostModel>> fetchPopularPosts() async {
+    // Mock Data for now as endpoint is illustrative
+    // In production:
+    // final url = Uri.parse('$baseUrl/api/v1/posts/popular');
+    // final response = await http.get(url, ...);
+    
+    // Return dummy data immediately
+    return [
+      PostModel(id: 1, title: '한국 알바 꿀팁 공유합니다', content: '시급 높은 곳 찾는 법...', likeCount: 15, viewCount: 120),
+      PostModel(id: 2, title: '편의점 야간 알바 후기', content: '생각보다 할만해요.', likeCount: 8, viewCount: 85),
+      PostModel(id: 3, title: '비자 변경 질문드려요', content: 'D-2에서 F-2-7 갈 때...', likeCount: 24, viewCount: 200),
+    ];
   }
 }

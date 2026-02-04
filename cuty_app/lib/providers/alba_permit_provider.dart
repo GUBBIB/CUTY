@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../services/local_storage_service.dart';
 
 class AlbaPermitState {
   final int currentStep; 
@@ -155,10 +156,92 @@ class AlbaPermitState {
       isPdfDownloaded: isPdfDownloaded ?? this.isPdfDownloaded,
     );
   }
+
+  // --- JSON Serialization ---
+
+  Map<String, dynamic> toJson() {
+    return {
+      'currentStep': currentStep,
+      'isVisaLinked': isVisaLinked,
+      'consentChecked': consentChecked,
+      'purposeChecked': purposeChecked,
+      'cameraStep': cameraStep,
+      'bizLicenseImage': bizLicenseImage,
+      'contractImage': contractImage,
+      'idCardImage': idCardImage,
+      'studentName': studentName,
+      'studentRegNo': studentRegNo,
+      'studentMajor': studentMajor,
+      'studentSemester': studentSemester,
+      'studentPhone': studentPhone,
+      'studentEmail': studentEmail,
+      'companyName': companyName,
+      'bizNo': bizNo,
+      'ownerName': ownerName,
+      'sectors': sectors,
+      'address': address,
+      'employerPhone': employerPhone,
+      'employmentPeriod': employmentPeriod,
+      'hourlyWage': hourlyWage,
+      'weekdayWork': weekdayWork,
+      'weekendWork': weekendWork,
+      'infoCorrectChecked': infoCorrectChecked,
+      'isSignatureSaved': isSignatureSaved,
+      'isPdfDownloaded': isPdfDownloaded,
+      // Simplify signature points for storage (List of maps)
+      'signaturePoints': signaturePoints.map((p) => p == null ? null : {'dx': p.dx, 'dy': p.dy}).toList(),
+    };
+  }
+
+  factory AlbaPermitState.fromJson(Map<String, dynamic> json) {
+    return AlbaPermitState(
+      currentStep: json['currentStep'] ?? 0,
+      isVisaLinked: json['isVisaLinked'] ?? false,
+      consentChecked: json['consentChecked'] ?? false,
+      purposeChecked: json['purposeChecked'] ?? false,
+      cameraStep: json['cameraStep'] ?? 0,
+      bizLicenseImage: json['bizLicenseImage'],
+      contractImage: json['contractImage'],
+      idCardImage: json['idCardImage'],
+      studentName: json['studentName'] ?? '',
+      studentRegNo: json['studentRegNo'] ?? '',
+      studentMajor: json['studentMajor'] ?? '',
+      studentSemester: json['studentSemester'] ?? '',
+      studentPhone: json['studentPhone'] ?? '',
+      studentEmail: json['studentEmail'] ?? '',
+      companyName: json['companyName'] ?? '',
+      bizNo: json['bizNo'] ?? '',
+      ownerName: json['ownerName'] ?? '',
+      sectors: json['sectors'] ?? '',
+      address: json['address'] ?? '',
+      employerPhone: json['employerPhone'] ?? '',
+      employmentPeriod: json['employmentPeriod'] ?? '',
+      hourlyWage: json['hourlyWage'] ?? '',
+      weekdayWork: json['weekdayWork'] ?? '',
+      weekendWork: json['weekendWork'] ?? '',
+      infoCorrectChecked: json['infoCorrectChecked'] ?? false,
+      isSignatureSaved: json['isSignatureSaved'] ?? false,
+      isPdfDownloaded: json['isPdfDownloaded'] ?? false,
+      signaturePoints: (json['signaturePoints'] as List<dynamic>?)?.map((item) {
+        if (item == null) return null;
+        return Offset((item['dx'] as num).toDouble(), (item['dy'] as num).toDouble());
+      }).toList() ?? [],
+    );
+  }
 }
 
 class AlbaPermitNotifier extends StateNotifier<AlbaPermitState> {
-  AlbaPermitNotifier() : super(AlbaPermitState());
+  AlbaPermitNotifier() : super(
+    LocalStorageService().getAlbaData() != null 
+      ? AlbaPermitState.fromJson(LocalStorageService().getAlbaData()!) 
+      : AlbaPermitState()
+  );
+
+  @override
+  set state(AlbaPermitState value) {
+    super.state = value;
+    LocalStorageService().saveAlbaData(value.toJson());
+  }
 
   void setStep(int step) {
     state = state.copyWith(currentStep: step);
@@ -229,6 +312,14 @@ class AlbaPermitNotifier extends StateNotifier<AlbaPermitState> {
   // Step 8: PDF Download
   void downloadPdf() {
     state = state.copyWith(isPdfDownloaded: true);
+  }
+
+  // Reset Application (After final completion)
+  void resetApplication() {
+    state = AlbaPermitState(); // Reset to default initial state
+    LocalStorageService().saveAlbaData(state.toJson()); // Save reset state (or null if we preferred)
+    // Or to plain null if we support it: LocalStorageService().saveAlbaData(null); 
+    // But saving default state is fine too to clear the wizard progress.
   }
 }
 
