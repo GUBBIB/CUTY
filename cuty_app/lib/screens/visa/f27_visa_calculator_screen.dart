@@ -65,6 +65,57 @@ class _F27VisaCalculatorScreenState extends State<F27VisaCalculatorScreen> {
                 child: ListView(
                   padding: const EdgeInsets.all(16),
                   children: [
+                    
+                    // --- 서류지갑 연동하기 (NEW) ---
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 24),
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: const Color(0xFFE0E0E0)),
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Colors.orange.withOpacity(0.1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(Icons.wallet, color: Colors.orange, size: 20),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              '내 서류지갑 연동하기',
+                              style: GoogleFonts.notoSansKr(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: const Color(0xFF1E2B4D),
+                              ),
+                            ),
+                          ),
+                          Switch(
+                            value: store.isSpecWalletLinked,
+                            activeColor: Colors.white,
+                            activeTrackColor: const Color(0xFF673AB7),
+                            onChanged: (value) {
+                              store.toggleSpecWallet(value);
+                              if (value) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('서류지갑 데이터가 연동되었습니다.'),
+                                    duration: Duration(seconds: 1),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+
                     _buildSectionTitle('1. 기본 항목 (최대 130점)'),
                     
                     // --- 나이 ---
