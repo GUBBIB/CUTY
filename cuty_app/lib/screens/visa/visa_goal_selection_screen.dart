@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import '../../providers/visa_provider.dart';
+
+import 'f27_visa_calculator_screen.dart';
+import '../roadmap/visa_roadmap_screen.dart';
+import 'employment_visa_screen.dart';
+import 'startup_visa_screen.dart';
+import 'global_visa_screen.dart';
+import 'school_visa_screen.dart';
 
 class VisaGoalSelectionScreen extends StatelessWidget {
   final Function(String) onGoalSelected;
@@ -56,7 +65,8 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                   subtitle: '대학원 진학 예정 &\nF-2-7(거주) 목표',
                   description: '단순 취업비자(E-7)에 만족하지 마세요.\n석사 학위를 활용해 더 자유로운 F-2-7(거주 비자)로 바로 업그레이드할 수 있습니다. 80점 달성을 위한 족집게 전략을 알려드릴게요.',
                   imagePath: 'assets/images/class_academic.jpg',
-                  goalKey: 'residency',
+                  goalKey: 'research', // Corrected key from 'residency' to 'research' based on VisaProvider default, but waiting, user said 'research' in instruction
+                  // Correction: User instruction says: 1. 연구/거주형: `selectVisaType('research');`
                   color: Colors.purple[50]!,
                   icon: Icons.school_outlined,
                 ),
@@ -66,7 +76,7 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                   subtitle: '학부 졸업 후\n한국 기업 바로 취업',
                   description: '졸업 후 한국 기업에 취업하는 것이 목표시군요! E-7 비자 발급 조건부터 인턴십, 면접 꿀팁까지 제가 꼼꼼하게 챙겨드릴게요.',
                   imagePath: 'assets/images/class_job.jpg',
-                  goalKey: 'job',
+                  goalKey: 'employment',
                   color: Colors.blue[50]!,
                   icon: Icons.work_outline_rounded,
                 ),
@@ -99,8 +109,8 @@ class VisaGoalSelectionScreen extends StatelessWidget {
               title: '학교 생활형',
               subtitle: '일단 학교 생활과 비자 유지에 집중할래요',
               description: '일단은 즐거운 캠퍼스 라이프가 우선이죠! 출석률 관리와 학점, 그리고 비자 연장에 필요한 기본기부터 탄탄하게 다져봐요.',
-              imagePath: 'assets/images/class_basic.png', // Fallback to png as jpg not found
-              goalKey: 'novice',
+              imagePath: 'assets/images/class_basic.png',
+              goalKey: 'school',
               color: Colors.grey[100]!,
               icon: Icons.spa_outlined,
             ),
@@ -245,7 +255,59 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {
                           Navigator.of(context).pop(); // Close dialog
-                          onGoalSelected(goalKey); // Proceed with select
+                          onGoalSelected(goalKey); // Proceed with select (Update State)
+
+                          // Provider에 상태 저장 후 이동
+                          switch (goalKey) {
+                            case 'research':
+                              context.read<VisaProvider>().selectVisaType('research'); 
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const VisaRoadmapScreen(userGoal: 'residency')), // Keeping internal param 'residency' as requested? Or align? User said 'research'. But RoadmapScreen might expect residency. I'll stick to 'residency' for the screen argument if logic needs it, BUT ensuring Provider gets 'research'.
+                              );
+                              break;
+                            case 'employment':
+                              context.read<VisaProvider>().selectVisaType('employment'); 
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const EmploymentVisaScreen()),
+                              );
+                              break;
+                            case 'startup':
+                              context.read<VisaProvider>().selectVisaType('startup'); 
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const StartupVisaScreen()),
+                              );
+                              break;
+                            case 'global':
+                              context.read<VisaProvider>().selectVisaType('global'); 
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const GlobalVisaScreen()),
+                              );
+                              break;
+                            case 'school':
+                              context.read<VisaProvider>().selectVisaType('school'); 
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const SchoolVisaScreen()),
+                              );
+                              break;
+                            default:
+                              debugPrint('Unknown goalKey: $goalKey');
+                              break;
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
@@ -301,7 +363,6 @@ class VisaGoalSelectionScreen extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         child: Column(
           children: [
-            // Top Image - Flex 3 (75%)
             Expanded(
               flex: 3,
               child: Image.asset(
@@ -315,7 +376,6 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                 ),
               ),
             ),
-            // Bottom Info - Flex 1 (25%)
             Expanded(
               flex: 1,
               child: Container(
@@ -391,7 +451,6 @@ class VisaGoalSelectionScreen extends StatelessWidget {
           height: 120, // Fixed height for horizontal card
           child: Row(
             children: [
-              // Left Image - Flex 3 (30%)
               Expanded(
                 flex: 3,
                 child: Image.asset(
@@ -405,7 +464,6 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                 ),
                 ),
               ),
-              // Right Info - Flex 7 (70%)
               Expanded(
                 flex: 7,
                 child: Container(

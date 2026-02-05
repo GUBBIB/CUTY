@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/f27_visa_provider.dart';
 import 'f27_visa_calculator_screen.dart';
 
-class VisaDashboardScreen extends StatefulWidget {
+class VisaDashboardScreen extends ConsumerStatefulWidget {
   final String userGoal; // 'novice', 'residency', 'job', etc.
   final VoidCallback? onGoalChangeRequested; // Callback to reset goal
 
@@ -15,10 +15,10 @@ class VisaDashboardScreen extends StatefulWidget {
   });
 
   @override
-  State<VisaDashboardScreen> createState() => _VisaDashboardScreenState();
+  ConsumerState<VisaDashboardScreen> createState() => _VisaDashboardScreenState();
 }
 
-class _VisaDashboardScreenState extends State<VisaDashboardScreen> {
+class _VisaDashboardScreenState extends ConsumerState<VisaDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -145,8 +145,9 @@ class _VisaDashboardScreenState extends State<VisaDashboardScreen> {
   }
 
   Widget _buildResidencyContent(BuildContext context) {
-    // Get live score from Store
-    final currentScore = Provider.of<VisaScoreProvider>(context).calculateTotalScore();
+    // Get live score from Store (Riverpod)
+    final store = ref.watch(visaScoreProvider);
+    final currentScore = store.calculateTotalScore();
     final isPass = currentScore >= 80;
 
     return Column(
@@ -166,7 +167,7 @@ class _VisaDashboardScreenState extends State<VisaDashboardScreen> {
                 builder: (context) => const F27VisaCalculatorScreen(),
               ),
             ).then((_) {
-               setState(() {});
+               // setState not needed as Riverpod handles rebuilds
             });
 
           },
@@ -236,7 +237,7 @@ class _VisaDashboardScreenState extends State<VisaDashboardScreen> {
               decoration: BoxDecoration(
                 color: color.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
-              ),
+                ),
               child: Icon(icon, color: color, size: 28),
             ),
             const SizedBox(width: 16),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart' as p;
 import 'providers/f27_visa_provider.dart';
+import 'providers/visa_provider.dart';
 import 'services/local_storage_service.dart';
 
 
@@ -38,6 +39,7 @@ void main() async {
       child: p.MultiProvider(
         providers: [
           p.ChangeNotifierProvider(create: (_) => VisaScoreProvider()),
+          p.ChangeNotifierProvider(create: (_) => VisaProvider()),
         ],
         child: const CutyApp(),
       ),

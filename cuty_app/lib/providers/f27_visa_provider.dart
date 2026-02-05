@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import '../services/local_storage_service.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final visaScoreProvider = ChangeNotifierProvider<VisaScoreProvider>((ref) {
+  return VisaScoreProvider();
+});
 
 class VisaScoreProvider extends ChangeNotifier {
   // --- State Variables ---
   String? selectedAge;
   String? educationLevel; // 박사, 석사, 학사, 전문학사
   bool isStemOrDoubleMajor = false; // 이공계 or 복수전공
+  bool _isBachelor = false; // 학사 여부
   String? koreanLevel;
   String? incomeBracket;
 
@@ -19,6 +25,7 @@ class VisaScoreProvider extends ChangeNotifier {
     
     selectedAge = ls.getString('f27_age');
     educationLevel = ls.getString('f27_education');
+    _isBachelor = (educationLevel == '학사' || educationLevel == '전문학사');
     isStemOrDoubleMajor = ls.getBool('f27_stem');
     koreanLevel = ls.getString('f27_korean');
     incomeBracket = ls.getString('f27_income');
@@ -65,6 +72,7 @@ class VisaScoreProvider extends ChangeNotifier {
 
   void updateEducation(String? level) {
     educationLevel = level;
+    _isBachelor = (level == '학사' || level == '전문학사');
     LocalStorageService().saveString('f27_education', level ?? '');
     notifyListeners();
   }
@@ -333,5 +341,90 @@ class VisaScoreProvider extends ChangeNotifier {
     if (criminalPunishment) total -= 40;
 
     return total;
+  }
+
+  List<String> getSmartAdvice() {
+    // 0. Pre-calculate local variables needed for logic
+    int _koreanScore = 0;
+    if (koreanLevel == 'TOPIK 5~6급 / KIIP 5단계') {
+      _koreanScore = 20;
+    } else if (koreanLevel == 'TOPIK 4급 / KIIP 4단계') {
+      _koreanScore = 15;
+    } else if (koreanLevel == 'TOPIK 3급 / KIIP 3단계') {
+      _koreanScore = 10;
+    } else if (koreanLevel == 'TOPIK 2급 / KIIP 2단계') {
+      _koreanScore = 5;
+    } else if (koreanLevel == 'TOPIK 1급 / KIIP 1단계') {
+      _koreanScore = 3;
+    }
+
+    bool _socialIntegrationBonus = kiipCompleted; // +10 bonus
+
+    int _volunteerScore = 0;
+    if (volunteerBonus == '3년 이상') {
+      _volunteerScore = 7;
+    } else if (volunteerBonus == '2년 이상') {
+      _volunteerScore = 5;
+    } else if (volunteerBonus == '1년 이상') {
+      _volunteerScore = 1;
+    }
+
+    // --- User Logic Start ---
+    int currentScore = calculateTotalScore();
+    
+    // [0단계] 블라인드 처리
+    if (currentScore == 0) return [];
+
+    List<String> advice = [];
+    int gap = 80 - currentScore;
+
+    // [1단계] 학사 입구컷 (이미 적용된 로직 유지)
+    if (_isBachelor) {
+      advice.add("🚫 **유학생 특례 대상 아님 (학사)**\n선택하신 학위는 **학사**입니다.\nF-2-7 유학생 특례(D-2 → F-2-7)는 **석사 학위 이상**만 신청 가능합니다.\n점수가 80점을 넘더라도 이 전형으로는 신청할 수 없습니다.");
+      return advice; 
+    }
+
+    // [2단계] 합격권
+    if (gap <= 0) {
+      advice.add("🎉 **축하합니다! 합격 안정권**\n석사 이상의 학위와 80점 이상의 점수를 모두 충족했습니다.");
+      if (currentScore <= 82) {
+        advice.add("⚠️ **나이 감점 주의 (Age Cliff)**\n점수가 합격선에 딱 걸쳐 있습니다. 해가 바뀌어 나이 감점이 발생하기 전에 최대한 빨리 신청하세요.");
+      }
+      return advice;
+    }
+
+    // [3단계] 잠재력 계산
+    int potentialKorean = (30 - (_koreanScore + (_socialIntegrationBonus ? 10 : 0)));
+    int potentialVolunteer = (_volunteerScore == 0) ? 1 : 0;
+
+    // [4단계] 시나리오별 솔루션
+
+    // Case A: 딱 1점 부족 -> 봉사 추천
+    if (gap == 1 && potentialVolunteer > 0) {
+      advice.add("🤝 **초강력 추천: 사회봉사 1년 (+1점)**\n합격까지 딱 **1점** 부족합니다! 어렵게 공부할 필요 없이 사회봉사(헌혈 등 포함)로 1점을 채우면 바로 합격입니다.");
+    }
+
+    // Case B: 한국어만으로 해결 가능
+    else if (potentialKorean >= gap) {
+      if (!_socialIntegrationBonus) {
+        advice.add("💡 **1순위 추천: KIIP 5단계 (+10점)**\n사회통합프로그램 이수증(10점)을 챙기세요. 가장 확실한 합격 전략입니다.");
+      } else {
+        advice.add("📚 **한국어 점수 보강**\n현재 점수에서 **${gap}점**이 더 필요합니다. TOPIK 등급을 올려서 합격선을 넘겨보세요.");
+      }
+    }
+
+    // Case C: [New] 콤보 전략 (한국어 만점 + 봉사 1점 필수)
+    // 예: 69점 -> 한국어(+10) 해도 79점 -> 봉사(+1) 해야 80점
+    else if ((potentialKorean + potentialVolunteer) >= gap) {
+      advice.add("🧩 **최후의 전략 (한국어 만점 + 봉사)**\n한국어 점수를 끝까지 올려도 **1점**이 부족하게 됩니다.\n이 경우 **한국어(TOPIK/KIIP) 최고 등급** 달성과 함께 **사회봉사(1점)**까지 모두 챙겨야 겨우 80점을 맞출 수 있습니다.");
+    }
+
+    // Case D: 불가능
+    else {
+      advice.add("✅ **놓친 항목 체크**\n점수 차이가 큽니다. 혹시 놓친 가점이 있는지 확인해보세요.\n- **이공계 석사** (+3점)\n- **QS 500위 우수 대학** (+15~20점)\n- **국내 대학** 학위 (+5~10점)");
+      advice.add("🛑 **현실적인 조언**\n위 항목 해당사항이 없다면, 올해 소득을 높여 **내년에 재도전**하거나 E-7 등 다른 비자를 고려하는 것이 좋습니다.");
+    }
+
+    return advice;
   }
 }

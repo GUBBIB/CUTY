@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'visa_goal_selection_screen.dart';
+import 'package:provider/provider.dart';
 import 'package:cuty_app/services/local_storage_service.dart';
-import '../roadmap/visa_roadmap_screen.dart';
+import '../../providers/visa_provider.dart';
 
-// Mock State for session persistence
-class VisaState {
-  static String? userGoal;
-}
+// Screens
+import 'visa_goal_selection_screen.dart';
+import '../roadmap/visa_roadmap_screen.dart';
+import 'employment_visa_screen.dart';
+import 'startup_visa_screen.dart';
+import 'global_visa_screen.dart';
+import 'school_visa_screen.dart';
 
 class VisaScreenWrapper extends StatefulWidget {
   const VisaScreenWrapper({super.key});
@@ -16,49 +19,53 @@ class VisaScreenWrapper extends StatefulWidget {
 }
 
 class _VisaScreenWrapperState extends State<VisaScreenWrapper> {
-  
-  @override
-  void initState() {
-    super.initState();
-    _loadUserGoal();
-  }
-
-  void _loadUserGoal() {
-    final savedGoal = LocalStorageService().getUserGoal();
-    if (savedGoal != null) {
-      VisaState.userGoal = savedGoal;
-    }
-  }
-
-  void _updateGoal(String? goal) {
-    setState(() {
-      VisaState.userGoal = goal;
-    });
-    if (goal != null) {
-      LocalStorageService().saveUserGoal(goal);
-    } else {
-      LocalStorageService().removeUserGoal();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    // If goal is null, show selection screen
-    if (VisaState.userGoal == null) {
+    // 1. 상태 구독
+    final visaType = Provider.of<VisaProvider>(context).selectedVisaType;
+
+    // 2. 상태에 따른 화면 반환
+    if (visaType == 'none') {
       return VisaGoalSelectionScreen(
         onGoalSelected: (selectedGoal) {
-          _updateGoal(selectedGoal);
+          // 목표 선택 시 Provider 업데이트 및 로컬 저장
+          context.read<VisaProvider>().selectVisaType(selectedGoal);
+          LocalStorageService().saveUserGoal(selectedGoal);
         },
       );
-    } 
-    // Otherwise, show dashboard (now Roadmap)
-    else {
-      return VisaRoadmapScreen(
-        userGoal: VisaState.userGoal!,
-        onGoalChangeRequested: () {
-          _updateGoal(null); // Reset goal to trigger selection screen
-        },
-      );
+    }
+
+    switch (visaType) {
+      case 'job':
+      case 'employment':
+        return const EmploymentVisaScreen();
+      case 'startup':
+        return const StartupVisaScreen();
+      case 'global':
+        return const GlobalVisaScreen();
+      case 'novice':
+      case 'student':
+      case 'school':
+        return const SchoolVisaScreen();
+      case 'residency':
+      case 'research':
+        return VisaRoadmapScreen(
+          userGoal: 'residency',
+          onGoalChangeRequested: () {
+            // 변경 요청 시 초기화
+            context.read<VisaProvider>().selectVisaType('none');
+            LocalStorageService().removeUserGoal();
+          },
+        );
+      default:
+        // 알 수 없는 타입이거나 기본값일 경우 F27(VisaRoadmap)으로 이동
+         return VisaRoadmapScreen(
+          userGoal: 'residency',
+          onGoalChangeRequested: () {
+            context.read<VisaProvider>().selectVisaType('none');
+            LocalStorageService().removeUserGoal();
+          },
+        );
     }
   }
 }

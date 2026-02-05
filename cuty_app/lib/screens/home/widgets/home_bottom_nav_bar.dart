@@ -26,6 +26,11 @@ class HomeBottomNavBar extends ConsumerWidget {
       ],
       currentIndex: currentIndex,
       onTap: (index) {
+        // [UX Fix] Home 탭(Index 1) 클릭 시 네비게이션 스택 초기화 (First Route까지 Pop)
+        if (index == 1) {
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        }
+
         // Logic: If tapping 'Home' (1) while already on 'Home' (1), reset view to dashboard
         if (index == 1 && currentIndex == 1) {
            ref.read(homeViewProvider.notifier).state = 'dashboard';

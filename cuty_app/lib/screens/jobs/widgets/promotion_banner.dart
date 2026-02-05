@@ -6,9 +6,7 @@ import '../providers/job_providers.dart';
 // import '../../diagnosis/diagnosis_screen.dart'; // Removed broken import
 import '../../alba/permit_application_wizard.dart';
 
-import 'package:cuty_app/providers/diagnosis_provider.dart';
-import '../../diagnosis/consulting_screen.dart'; // Consulting (Entry)
-import '../../diagnosis/result_screen.dart'; // Result
+import '../../../../widgets/job_capability_banner.dart';
 
 class PromotionBanner extends ConsumerStatefulWidget {
   const PromotionBanner({super.key});
@@ -195,7 +193,11 @@ class _PromotionBannerState extends ConsumerState<PromotionBanner> {
     } else if (item.title.contains("근로계약서")) {
       return AlbaContractBanner(item: item);
     } else if (item.imagePath != null && item.imagePath!.contains('semicut')) {
-      return CareerMainBanner(item: item);
+      // 2. Job Capability Banner (Shared Widget)
+      return const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: JobCapabilityBanner(),
+      );
     } else if (item.title.contains("자소서") || item.title.contains("첨삭")) {
       return const CareerResumeBanner();
     } else {
@@ -287,80 +289,7 @@ class AlbaContractBanner extends StatelessWidget {
 // -------------------------------------------------------
 // 🟥 4. 취업 탭 메인 배너 (독립 위젯)
 // -------------------------------------------------------
-class CareerMainBanner extends ConsumerWidget {
-  final BannerItem item;
-  const CareerMainBanner({super.key, required this.item});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // final surveyState = ref.watch(surveyProvider); // Unused
-    final diagnosisState = ref.watch(diagnosisProvider);
-    final isCompleted = diagnosisState.isAnalysisDone;
-    
-    // Updated: Use model getter
-    final score = diagnosisState.result?.totalScore ?? 0;
-
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        gradient: const LinearGradient(
-          colors: [Color(0xFF5C6BC0), Color(0xFF283593)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            left: 24, top: 24,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              // const 제거 (버튼 때문에)
-              children: [ 
-                Text(
-                  "취업역량 점수: ${isCompleted ? score : '--'}점", 
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)
-                ),
-                const Text(
-                  "취업비자연계 진단", 
-                  style: TextStyle(fontSize: 14, color: Colors.white70)
-                ),
-                const SizedBox(height: 16),
-                GestureDetector(
-                  onTap: () {
-                    debugPrint("Clicked: 스펙 진단하기 (Unified)");
-                     if (isCompleted) {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const ResultScreen()));
-                     } else {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const ConsultingScreen()));
-                     }
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      isCompleted ? "결과 다시보기" : "스펙 진단하기",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Theme.of(context).primaryColor),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            right: 15, 
-            bottom: 0, 
-            child: Image.asset('assets/images/capy_corp_semicut.png', height: 130)
-          ),
-        ],
-      ),
-    );
-  }
-}
+// CareerMainBanner removed - replaced by JobCapabilityBanner in lib/widgets/
 
 // -------------------------------------------------------
 // 📄 5. [신규/복구] 자소서 첨삭 배너 (Indigo / 문서 이모지)
