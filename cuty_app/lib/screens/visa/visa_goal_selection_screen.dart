@@ -3,12 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../providers/visa_provider.dart';
 
-import 'f27_visa_calculator_screen.dart';
-import '../roadmap/visa_roadmap_screen.dart';
-import 'employment_visa_screen.dart';
-import 'startup_visa_screen.dart';
-import 'global_visa_screen.dart';
-import 'school_visa_screen.dart';
+
 
 class VisaGoalSelectionScreen extends StatelessWidget {
   final Function(String) onGoalSelected;
@@ -50,7 +45,20 @@ class VisaGoalSelectionScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            // Top Grid - Vertical 1:2 Layout
+            // Top Horizontal Card (School Life)
+            _buildHorizontalClassCard(
+              context,
+              title: '학교 생활형 (기본형)',
+              subtitle: '일단 학교 생활과 비자 유지에 집중할래요',
+              description: '일단은 즐거운 캠퍼스 라이프가 우선이죠! 출석률 관리와 학점, 그리고 비자 연장에 필요한 기본기부터 탄탄하게 다져봐요.',
+              imagePath: 'assets/images/class_basic.png',
+              goalKey: 'school',
+              color: Colors.grey[100]!,
+              icon: Icons.spa_outlined,
+            ),
+            const SizedBox(height: 16),
+            
+            // Grid - Vertical 1:2 Layout
             GridView.count(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -65,16 +73,15 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                   subtitle: '대학원 진학 예정 &\nF-2-7(거주) 목표',
                   description: '단순 취업비자(E-7)에 만족하지 마세요.\n석사 학위를 활용해 더 자유로운 F-2-7(거주 비자)로 바로 업그레이드할 수 있습니다. 80점 달성을 위한 족집게 전략을 알려드릴게요.',
                   imagePath: 'assets/images/class_academic.jpg',
-                  goalKey: 'research', // Corrected key from 'residency' to 'research' based on VisaProvider default, but waiting, user said 'research' in instruction
-                  // Correction: User instruction says: 1. 연구/거주형: `selectVisaType('research');`
+                  goalKey: 'research',
                   color: Colors.purple[50]!,
                   icon: Icons.school_outlined,
                 ),
                 _buildVerticalClassCard(
                   context,
-                  title: '실전 취업형',
+                  title: '실전 취업형 (E-7)',
                   subtitle: '학부 졸업 후\n한국 기업 바로 취업',
-                  description: '졸업 후 한국 기업에 취업하는 것이 목표시군요! E-7 비자 발급 조건부터 인턴십, 면접 꿀팁까지 제가 꼼꼼하게 챙겨드릴게요.',
+                  description: 'D-10 구직비자 자격 진단부터 E-7 직종 코드 확인, 취업 역량 분석까지 한번에! 졸업 후 한국 기업 취업을 위한 A to Z를 이 로드맵에 다 담았어요.',
                   imagePath: 'assets/images/class_job.jpg',
                   goalKey: 'employment',
                   color: Colors.blue[50]!,
@@ -82,9 +89,9 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                 ),
                 _buildVerticalClassCard(
                   context,
-                  title: '창업형',
+                  title: '창업형 (D-8-4)',
                   subtitle: '나만의 아이디어로\n기술 창업 도전',
-                  description: '멋진 아이디어가 있으시군요! D-8-4 비자 취득을 위한 OASIS 프로그램과 법인 설립 절차를 함께 준비해 봐요.',
+                  description: 'D-8-4 기술창업을 위한 필수 요건(OASIS 80점)부터 전국 교육 센터 정보, 그리고 창업 준비 비자(D-10-2) 활용 가이드까지! 막막한 기술 창업의 길을 이 로드맵이 열어드릴게요.',
                   imagePath: 'assets/images/class_startup.jpg',
                   goalKey: 'startup',
                   color: Colors.orange[50]!,
@@ -101,18 +108,6 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                   icon: Icons.public_outlined,
                 ),
               ],
-            ),
-            const SizedBox(height: 16),
-            // Bottom Horizontal Card
-            _buildHorizontalClassCard(
-              context,
-              title: '학교 생활형',
-              subtitle: '일단 학교 생활과 비자 유지에 집중할래요',
-              description: '일단은 즐거운 캠퍼스 라이프가 우선이죠! 출석률 관리와 학점, 그리고 비자 연장에 필요한 기본기부터 탄탄하게 다져봐요.',
-              imagePath: 'assets/images/class_basic.png',
-              goalKey: 'school',
-              color: Colors.grey[100]!,
-              icon: Icons.spa_outlined,
             ),
             const SizedBox(height: 20),
           ],
@@ -279,12 +274,7 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                               break;
                             case 'startup':
                               context.read<VisaProvider>().selectVisaType('startup'); 
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const StartupVisaScreen()),
-                              );
+                              Navigator.pushReplacementNamed(context, '/visa/startup');
                               break;
                             case 'global':
                               context.read<VisaProvider>().selectVisaType('global'); 
