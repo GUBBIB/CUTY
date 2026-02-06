@@ -10,6 +10,7 @@ import 'dart:io';
 import 'package:window_manager/window_manager.dart';
 import 'config/theme.dart';
 import 'screens/main_screen.dart';
+import 'screens/visa/startup_visa_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,6 +58,9 @@ class CutyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       home: const MainScreen(),
+      routes: {
+        '/visa/startup': (context) => const StartupVisaScreen(),
+      },
     );
   }
 }

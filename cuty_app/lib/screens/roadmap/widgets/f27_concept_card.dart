@@ -25,7 +25,7 @@ class F27ConceptCard extends StatelessWidget {
           // Header
           Row(
             children: [
-              const Icon(Icons.school, color: Color(0xFF1E2B4D), size: 24),
+              const Icon(Icons.school, color: Color(0xFF6C63FF), size: 24),
               const SizedBox(width: 8),
               Text(
                 "F-2-7 비자 개념 잡기",
@@ -62,7 +62,7 @@ class F27ConceptCard extends StatelessWidget {
                       child: Icon(Icons.arrow_forward_rounded, size: 16, color: Colors.grey[600]),
                     ),
                     Expanded(
-                      child: _buildFormulaBadge("✨ F-2-7 (거주)", const Color(0xFF673AB7), const Color(0xFFEDE7F6)),
+                      child: _buildFormulaBadge("✨ F-2-7 (거주)", const Color(0xFF6C63FF), const Color(0xFFEDE7F6)),
                     ),
                   ],
                 ),
@@ -100,7 +100,7 @@ class F27ConceptCard extends StatelessWidget {
                   const SizedBox(width: 70), // Spacer for title
                   Expanded(child: Center(child: Text("일반 취업 (E-7)", style: GoogleFonts.notoSansKr(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.bold)))),
                   // SizedBox(width: 20), // Spacer for divider not needed if using Expanded properly, but let's keep consistent
-                  Expanded(child: Center(child: Text("거주 비자 (F-2-7)", style: GoogleFonts.notoSansKr(fontSize: 12, color: const Color(0xFF673AB7), fontWeight: FontWeight.bold)))),
+                  Expanded(child: Center(child: Text("거주 비자 (F-2-7)", style: GoogleFonts.notoSansKr(fontSize: 12, color: const Color(0xFF6C63FF), fontWeight: FontWeight.bold)))),
                 ],
               ),
               const SizedBox(height: 8),
@@ -163,7 +163,7 @@ class F27ConceptCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     good,
-                    style: GoogleFonts.notoSansKr(fontSize: 12, fontWeight: FontWeight.bold, color: const Color(0xFF673AB7)),
+                    style: GoogleFonts.notoSansKr(fontSize: 12, fontWeight: FontWeight.bold, color: const Color(0xFF6C63FF)),
                     textAlign: TextAlign.center,
                   ),
                 ),

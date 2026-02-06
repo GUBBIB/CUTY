@@ -12,12 +12,7 @@ class EmploymentVisaScreen extends StatefulWidget {
 
 class _EmploymentVisaScreenState extends State<EmploymentVisaScreen> {
   // D-10 상태
-  bool _isD10FirstTime = true;
-  int _ageScore = 20;
-  int _eduScore = 20;
-  int _koreanScore = 20;
-  int get _totalD10Score => _ageScore + _eduScore + _koreanScore;
-  bool get _isPass => _totalD10Score >= 60;
+  bool isFirstApplication = true; // Renamed from _isD10FirstTime to match snippet
 
   // [핵심 데이터] E-7 상세 직종 코드 (Code | Job Title)
   final Map<String, List<String>> e7Occupations = {
@@ -47,7 +42,7 @@ class _EmploymentVisaScreenState extends State<EmploymentVisaScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FA),
+      backgroundColor: const Color(0xFFE3F2FD),
       appBar: AppBar(
         title: Text(
           '실전 취업형 로드맵',
@@ -57,7 +52,7 @@ class _EmploymentVisaScreenState extends State<EmploymentVisaScreen> {
             fontSize: 18,
           ),
         ),
-        backgroundColor: const Color(0xFFF5F7FA), // Match background
+        backgroundColor: const Color(0xFFE3F2FD), // Match background
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
@@ -101,102 +96,47 @@ class _EmploymentVisaScreenState extends State<EmploymentVisaScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 10), // AppBar spacing
+            const SizedBox(height: 10),
+            _buildHeroCard(),
+            const SizedBox(height: 24),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: JobCapabilityBanner(), // 공통 배너 위젯
+            ),
+            const SizedBox(height: 30),
             
-            // 1. Header Card (F-2-7 Style)
+            // 3. E-7 직종 코드 카드
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: _buildHeaderCard(),
+              child: _buildE7SectionCard(),
             ),
 
             const SizedBox(height: 24),
 
-            // 2. Capybara Promotion Banner
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: JobCapabilityBanner(),
-            ),
-
-            const SizedBox(height: 24),
-
-            // 3. E-7 Info Section
+            // 4. D-10 가이드 카드
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "E-7 비자 직종 코드",
-                        style: GoogleFonts.poppins(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: const Color(0xFF1A1A2E),
-                        ),
-                      ),
-                      const Icon(Icons.info_outline, size: 20, color: Colors.grey),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    "희망 직무의 정확한 코드를 확인해보세요.",
-                    style: GoogleFonts.poppins(
-                      fontSize: 13,
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  ...e7Occupations.entries.map((entry) => _buildExpansionTile(entry.key, entry.value)),
-                ],
-              ),
+              child: _buildD10SectionCard(),
             ),
-
             const SizedBox(height: 40),
-
-            // 4. D-10 Guide (Optional / Bottom)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildSectionTitle("🛡️ D-10 구직비자 가이드"),
-                  const SizedBox(height: 16),
-                  _buildD10Guide(),
-                ],
-              ),
-            ),
-            
-            const SizedBox(height: 100), // Bottom padding for comfortable scrolling
           ],
         ),
       ),
     );
   }
 
-  // --- Widget Builders ---
-
-  Widget _buildSectionTitle(String title) {
-    return Text(
-      title,
-      style: GoogleFonts.notoSansKr(
-        fontSize: 18,
-        fontWeight: FontWeight.w700,
-        color: const Color(0xFF1E2B4D),
-      ),
-    );
-  }
-
-  Widget _buildHeaderCard() {
+  // [위젯] 상단 목표 카드 (Exact Layout from RoadmapHeaderCard, Modified for E-7)
+  Widget _buildHeroCard() {
     return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 24), // F-2-7 uses Padding(horizontal: 24), so we use margin here to match
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
+        // E-7 Blue Theme Gradient
         gradient: const LinearGradient(
           colors: [
-            Color(0xFF4A90E2), // Deep Blue
-            Color(0xFF87CEFA), // Sky Blue
+            Color(0xFF1565C0), // Darker Blue
+            Color(0xFF42A5F5), // Lighter Blue
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -204,16 +144,16 @@ class _EmploymentVisaScreenState extends State<EmploymentVisaScreen> {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF4A90E2).withOpacity(0.3),
-            blurRadius: 16,
-            offset: const Offset(0, 8),
+            color: const Color(0xFF4A90E2).withOpacity(0.4),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Top Row
+          // Top Row: Goal Title & Icon
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -222,22 +162,33 @@ class _EmploymentVisaScreenState extends State<EmploymentVisaScreen> {
                 children: [
                   Text(
                     '나의 목표',
-                    style: GoogleFonts.notoSansKr(color: Colors.white.withOpacity(0.8), fontSize: 13, fontWeight: FontWeight.w500),
+                    style: GoogleFonts.notoSansKr(
+                      color: Colors.white.withOpacity(0.8),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Row(
-                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        '실전 취업',
-                        style: GoogleFonts.notoSansKr(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w700),
+                        "실전 취업",
+                        style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
-                      const SizedBox(width: 6),
+                      const SizedBox(width: 8),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 3),
+                        padding: const EdgeInsets.only(top: 4),
                         child: Text(
                           '(E-7)',
-                          style: GoogleFonts.poppins(color: Colors.white.withOpacity(0.9), fontSize: 18, fontWeight: FontWeight.w600),
+                          style: GoogleFonts.notoSansKr(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ],
@@ -245,32 +196,55 @@ class _EmploymentVisaScreenState extends State<EmploymentVisaScreen> {
                 ],
               ),
               Container(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.2),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.work_outline_rounded, color: Colors.white, size: 24),
+                child: const Icon(
+                  Icons.business_center_outlined, // E-7 Icon
+                  color: Colors.white,
+                  size: 24,
+                ),
               ),
             ],
           ),
           const SizedBox(height: 24),
           
-          // Flow Chart
+          // Bottom Row: Roadmap Flow
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+             decoration: BoxDecoration(
               color: Colors.black.withOpacity(0.1),
               borderRadius: BorderRadius.circular(16),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildFlowStep("D-2", isCurrent: false),
-                Icon(Icons.arrow_forward_ios_rounded, color: Colors.white.withOpacity(0.5), size: 12),
-                _buildFlowStep("D-10", isCurrent: false),
-                Icon(Icons.arrow_forward_ios_rounded, color: Colors.white.withOpacity(0.5), size: 12),
-                _buildFlowStep("E-7", isCurrent: true), // Target is "Current" highlight style in this context
+                // Step 1: D-2 (Current)
+                _buildStep(
+                  label: 'D-2',
+                  isCurrent: true,
+                ),
+                
+                 // Arrow
+                Icon(Icons.arrow_forward_ios, color: Colors.white.withOpacity(0.5), size: 14),
+
+                // Step 2: D-10
+                _buildStep(
+                  label: 'D-10',
+                  isCurrent: false,
+                ),
+
+                // Arrow
+                Icon(Icons.arrow_forward_ios, color: Colors.white.withOpacity(0.5), size: 14),
+
+                // Step 3: Target (E-7)
+                _buildStep(
+                  label: 'E-7', 
+                  isCurrent: false,
+                  isTarget: true,
+                ),
               ],
             ),
           ),
@@ -279,168 +253,292 @@ class _EmploymentVisaScreenState extends State<EmploymentVisaScreen> {
     );
   }
 
-  Widget _buildFlowStep(String label, {required bool isCurrent}) {
+  Widget _buildStep({
+    required String label,
+    bool isCurrent = false,
+    bool isTarget = false,
+  }) {
+    // Current Step Style
     if (isCurrent) {
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(14),
-            boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 4, offset:const Offset(0, 2))],
+      return Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.center,
+        children: [
+          // Badge
+          Positioned(
+            top: -18,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              decoration: BoxDecoration(
+                color: const Color(0xFFE040FB), // Magenta Badge
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Text(
+                'Current',
+                style: GoogleFonts.poppins(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
           ),
-          child: Text(
-            label,
-            style: GoogleFonts.poppins(color: const Color(0xFF1565C0), fontSize: 14, fontWeight: FontWeight.w700),
-          ),
-        );
-    }
-    return Text(
-      label,
-      style: GoogleFonts.poppins(color: Colors.white.withOpacity(0.8), fontSize: 13, fontWeight: FontWeight.w500),
-    );
-  }
-
-
-  // _buildCapybaraBanner has been replaced by JobCapabilityBanner widget
-
-  Widget _buildExpansionTile(String title, List<String> items) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey.withOpacity(0.1)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.02),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
+          // Main Box
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                )
+              ],
+            ),
+            child: Text(
+              label,
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w700,
+                color: const Color(0xFF4A90E2), // E-7 Blue Text
+                fontSize: 16,
+              ),
+            ),
           ),
         ],
+      );
+    }
+    
+    // Inactive/Target Step Style
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.15),
+        borderRadius: BorderRadius.circular(20),
+        border: isTarget ? Border.all(color: Colors.white.withOpacity(0.5)) : null,
       ),
-      child: Theme(
-        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-        child: ExpansionTile(
-          leading: Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: const Color(0xFFF0F4FF),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: const Icon(Icons.folder_open, color: Color(0xFF4A90E2), size: 20),
-          ),
-          title: Text(
-            title,
-            style: GoogleFonts.poppins(
-              fontWeight: FontWeight.w600,
-              fontSize: 14,
-              color: const Color(0xFF1A1A2E),
-            ),
-          ),
-          children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-              decoration: const BoxDecoration(
-                border: Border(top: BorderSide(color: Color(0xFFF5F5F5))),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: items.map((item) => Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(top: 6),
-                        child: Icon(Icons.circle, size: 4, color: Color(0xFF4A90E2)),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          item,
-                          style: GoogleFonts.poppins(fontSize: 13, color: Colors.grey[700], height: 1.5),
-                        ),
-                      ),
-                    ],
-                  ),
-                )).toList(),
-              ),
-            ),
-          ],
+      child: Text(
+        label,
+        style: GoogleFonts.poppins(
+          fontWeight: FontWeight.w500,
+          color: Colors.white.withOpacity(0.9),
+          fontSize: 14,
         ),
       ),
     );
   }
 
-  Widget _buildD10Guide() {
+  // [신규] E-7 직종 코드 섹션 카드
+  Widget _buildE7SectionCard() {
     return Container(
-      width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: Colors.grey[200]!),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF4A90E2).withOpacity(0.1),
+            blurRadius: 15,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           Row(
+          Row(
             children: [
-              Expanded(
-                child: Text(
-                  "국내 대학 졸업 후\n최초 신청인가요?", // Simplified copy
-                  style: GoogleFonts.notoSansKr(fontSize: 15, fontWeight: FontWeight.w600, color: const Color(0xFF1E2B4D)),
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF0F7FF),
+                  borderRadius: BorderRadius.circular(8),
                 ),
+                child: const Icon(Icons.work_outline, color: Color(0xFF4A90E2), size: 20),
               ),
-              Switch(
-                value: _isD10FirstTime,
-                activeColor: const Color(0xFF2196F3),
-                onChanged: (v) => setState(() => _isD10FirstTime = v),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "E-7 비자 직종 코드",
+                      style: GoogleFonts.poppins(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: const Color(0xFF1A1A2E),
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      "내 전공에 맞는 코드를 찾아보세요.",
+                      style: GoogleFonts.poppins(
+                        fontSize: 12,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
           const SizedBox(height: 20),
-          if (_isD10FirstTime)
-             Container(
-               padding: const EdgeInsets.all(16),
-               decoration: BoxDecoration(color: const Color(0xFFE3F2FD), borderRadius: BorderRadius.circular(16)),
-               child: Row(
-                 mainAxisAlignment: MainAxisAlignment.center,
-                 children: [
-                   const Text("🎉", style: TextStyle(fontSize: 20)),
-                   const SizedBox(width: 8),
-                   Text("점수 계산 없이 발급 가능", style: GoogleFonts.notoSansKr(fontSize: 14, fontWeight: FontWeight.bold, color: const Color(0xFF1565C0))),
-                 ],
-               ),
-             )
-          else 
-             Column(
-               children: [
-                  _buildSimpleCalRow("나이", 20, _ageScore, (v) => setState(() => _ageScore = v)),
-                  const SizedBox(height: 8),
-                  _buildSimpleCalRow("학위", 20, _eduScore, (v) => setState(() => _eduScore = v)),
-                  const SizedBox(height: 8),
-                  _buildSimpleCalRow("한국어", 20, _koreanScore, (v) => setState(() => _koreanScore = v)),
-                  const SizedBox(height: 16),
-                  Text("$_totalD10Score / 60점", style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold, color: _isPass ? Colors.green : Colors.red)),
-               ],
-             ),
+          const Divider(height: 1, color: Color(0xFFEEEEEE)),
+          const SizedBox(height: 10),
+          
+          // 리스트 아이템 (기존 데이터 매핑)
+          ...e7Occupations.entries.map((entry) => _buildSimpleExpansionTile(entry.key, entry.value)),
         ],
       ),
     );
   }
-  
-  Widget _buildSimpleCalRow(String label, int max, int current, Function(int) onChanged) {
-    bool isChecked = current == max;
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+  // [수정] 카드 내부용 심플 아코디언
+  Widget _buildSimpleExpansionTile(String title, List<String> items) {
+    return Theme(
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      child: ExpansionTile(
+        tilePadding: EdgeInsets.zero, // 패딩 제거해서 깔끔하게
+        title: Text(
+          title,
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.w600,
+            fontSize: 14,
+            color: const Color(0xFF1A1A2E),
+          ),
+        ),
+        trailing: const Icon(Icons.keyboard_arrow_down_rounded, color: Colors.grey),
         children: [
-          Text(label, style: GoogleFonts.notoSansKr(fontSize: 14, color: Colors.grey[700])),
-          GestureDetector(
-            onTap: () => onChanged(isChecked ? 0 : max),
-            child: Icon(isChecked ? Icons.check_circle : Icons.check_circle_outline, color: isChecked ? const Color(0xFF2196F3) : Colors.grey[300]),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: Column(
+              children: items.map((item) {
+                final parts = item.split('|');
+                final code = parts[0].trim();
+                final name = parts.length > 1 ? parts[1].trim() : "";
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 8, left: 4),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(code, style: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.bold, color: const Color(0xFF4A90E2))),
+                      const SizedBox(width: 8),
+                      Expanded(child: Text(name, style: GoogleFonts.poppins(fontSize: 12, color: Colors.grey[700]))),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  // [신규] D-10 가이드 섹션 카드
+  Widget _buildD10SectionCard() {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF4A90E2).withOpacity(0.1),
+            blurRadius: 15,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFFF4E5), // 연한 주황색 배경
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Icon(Icons.verified_user_outlined, color: Colors.orange, size: 20),
+              ),
+              const SizedBox(width: 12),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "D-10 구직비자 가이드",
+                    style: GoogleFonts.poppins(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: const Color(0xFF1A1A2E),
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    "취업 전 수습/인턴 기간을 위한 비자",
+                    style: GoogleFonts.poppins(
+                      fontSize: 12,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          const Divider(height: 1, color: Color(0xFFEEEEEE)),
+          const SizedBox(height: 20),
+
+          // 스위치 로직
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Text(
+                  "학사 졸업 후 최초 신청인가요?",
+                  style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w500, color: const Color(0xFF1A1A2E)),
+                ),
+              ),
+              Switch(
+                value: isFirstApplication,
+                activeColor: const Color(0xFF4A90E2),
+                onChanged: (value) => setState(() => isFirstApplication = value),
+              ),
+            ],
+          ),
+          
+          const SizedBox(height: 16),
+          
+          // 결과 박스 (카드 안의 카드 느낌으로 연하게)
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: isFirstApplication ? const Color(0xFFF0FDF4) : const Color(0xFFFFF8F6),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: isFirstApplication ? const Color(0xFFDCFCE7) : const Color(0xFFFFE4E6),
+              ),
+            ),
+            child: isFirstApplication
+                ? Column(
+                    children: [
+                      const Icon(Icons.check_circle, color: Color(0xFF27AE60), size: 32),
+                      const SizedBox(height: 8),
+                      Text("점수제 면제 대상!", style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold, color: const Color(0xFF27AE60))),
+                      Text("최초 1회, 점수 없이 발급 가능", style: GoogleFonts.poppins(fontSize: 12, color: Colors.grey[600])),
+                    ],
+                  )
+                : Column(
+                    children: [
+                      const Icon(Icons.warning_amber_rounded, color: Colors.orange, size: 32),
+                      const SizedBox(height: 8),
+                      Text("점수제 진단 필요", style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.orange)),
+                      Text("60점 이상 획득해야 연장 가능", style: GoogleFonts.poppins(fontSize: 12, color: Colors.grey[600])),
+                    ],
+                  ),
           ),
         ],
       ),

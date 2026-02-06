@@ -9,6 +9,7 @@ import '../../providers/point_provider.dart';
 import '../schedule/schedule_screen.dart';
 import '../../providers/schedule_provider.dart';
 import '../../models/schedule_model.dart';
+import '../community/widgets/privacy_settings_modal.dart' as widgets;
 
 class MyPageScreen extends StatelessWidget {
   const MyPageScreen({super.key});
@@ -482,6 +483,12 @@ class _MenuList extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const SpecWalletScreen()),
+          );
+        } else if (title == '설정') {
+          showModalBottomSheet(
+            context: context,
+            backgroundColor: Colors.transparent,
+            builder: (context) => const widgets.PrivacySettingsModal(),
           );
         }
       },

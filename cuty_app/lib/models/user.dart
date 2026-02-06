@@ -20,7 +20,16 @@ class User {
     required this.college,
     required this.department,
     required this.country,
+    this.isNationalityHidden = false,
+    this.isGenderHidden = false,
+    this.isSchoolHidden = false,
+    this.isNicknameHidden = false,
   });
+
+  final bool isNationalityHidden;
+  final bool isGenderHidden;
+  final bool isSchoolHidden;
+  final bool isNicknameHidden;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   Map<String, dynamic> toJson() => _$UserToJson(this);
@@ -35,6 +44,31 @@ class User {
       college: College.empty(),
       department: Department.empty(),
       country: Country.empty(),
+      isNationalityHidden: false,
+      isGenderHidden: false,
+      isSchoolHidden: false,
+      isNicknameHidden: false,
+    );
+  }
+
+  User copyWith({
+    bool? isNationalityHidden,
+    bool? isGenderHidden,
+    bool? isSchoolHidden,
+    bool? isNicknameHidden,
+  }) {
+    return User(
+      id: id,
+      name: name,
+      email: email,
+      school: school,
+      college: college,
+      department: department,
+      country: country,
+      isNationalityHidden: isNationalityHidden ?? this.isNationalityHidden,
+      isGenderHidden: isGenderHidden ?? this.isGenderHidden,
+      isSchoolHidden: isSchoolHidden ?? this.isSchoolHidden,
+      isNicknameHidden: isNicknameHidden ?? this.isNicknameHidden,
     );
   }
 

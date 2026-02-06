@@ -506,7 +506,7 @@ class SchoolVisaScreen extends StatelessWidget {
                  _buildDifferenceRow("TOPIK은 점수만 보지만, KIIP는 교육 이수(출석)가 필수입니다."),
                  const SizedBox(height: 8),
                  _buildDifferenceRow(
-                   "⚠️ 5단계 주의: 0~4단계는 수업만 들어도 승급되지만, 마지막 5단계는 '종합평가' 합격(60점↑)을 해야 28점 만점을 받습니다.",
+                   "⚠️ 5단계 주의: 0~4단계는 종합평가 불합시 재수강으로 승급되지만, 마지막 5단계는 '종합평가' 합격을 해야 합니다.",
                    isWarning: true
                  ),
               ],

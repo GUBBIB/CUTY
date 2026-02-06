@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'community_feed_screen.dart';
+import 'free_board_screen.dart';
 import 'community_board_screen.dart';
 import 'popular_posts_screen.dart';
+import 'info_board_screen.dart';
+import 'used_market_screen.dart';
+import 'widgets/privacy_settings_modal.dart' as widgets;
 
 
 class CommunityMainScreen extends StatelessWidget {
@@ -17,6 +20,19 @@ class CommunityMainScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings_outlined),
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                backgroundColor: Colors.transparent,
+                builder: (context) => const widgets.PrivacySettingsModal(),
+              );
+            },
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
       backgroundColor: Colors.white,
       body: ListView(
@@ -65,7 +81,7 @@ class CommunityMainScreen extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const CommunityFeedScreen()),
+                MaterialPageRoute(builder: (context) => const FreeBoardScreen()),
               );
             },
           ),
@@ -88,7 +104,12 @@ class CommunityMainScreen extends StatelessWidget {
             imageRightOffset: 45,   // Standardized right margin (15.0)
             imageBottomOffset: -5,  // Slight overflow for grounded look
             // cardHeight: 160,     // Default is 160, so we can omit this or explicitly set it if needed. Removing to use default.
-            onTap: () => _navigateToBoard(context, '정보게시판'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const InfoBoardScreen()),
+              );
+            },
           ),
           const SizedBox(height: 12),
           // Simple Card: Second-hand Market
@@ -108,7 +129,12 @@ class CommunityMainScreen extends StatelessWidget {
             imageHeight: 115,       // Requested approx 110-120px
             imageRightOffset: 15,   // Requested standard 40px
             imageBottomOffset: 0,
-            onTap: () => _navigateToBoard(context, '중고장터'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const UsedMarketScreen()),
+              );
+            },
           ),
           const SizedBox(height: 24),
           // Create Board Button

@@ -34,12 +34,12 @@ class _VisaRoadmapScreenState extends ConsumerState<VisaRoadmapScreen> {
 
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: const Color(0xFFF5F7FA),
+      backgroundColor: const Color(0xFFF3E5F5),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Color(0xFF1A1A2E)),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Color(0xFF6C63FF)),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
@@ -299,7 +299,7 @@ class _VisaRoadmapScreenState extends ConsumerState<VisaRoadmapScreen> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF673AB7), // Brand Color
+                      color: const Color(0xFF6C63FF), // Updated Brand Color
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Row(

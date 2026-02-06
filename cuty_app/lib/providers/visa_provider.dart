@@ -26,6 +26,7 @@ class VisaProvider extends ChangeNotifier {
   // Setter 메서드
   void selectVisaType(String type) {
     _selectedVisaType = type;
+    LocalStorageService().saveUserGoal(type); // Save to local storage
     notifyListeners();
   }
 }

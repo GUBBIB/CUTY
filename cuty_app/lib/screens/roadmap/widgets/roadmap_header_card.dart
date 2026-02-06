@@ -20,8 +20,8 @@ class RoadmapHeaderCard extends StatelessWidget {
         // Purple Theme Gradient
         gradient: const LinearGradient(
           colors: [
-            Color(0xFF4A148C), // Dark Purple
-            Color(0xFF7B1FA2), // Purple Accent
+            Color(0xFF6C63FF), // Brighter Purple
+            Color(0xFF9D50BB), // Deep Purple Accent
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -29,7 +29,7 @@ class RoadmapHeaderCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF4A148C).withOpacity(0.4),
+            color: const Color(0xFF6C63FF).withOpacity(0.4),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -183,7 +183,7 @@ class RoadmapHeaderCard extends StatelessWidget {
               label,
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w700,
-                color: const Color(0xFF4A148C), // Match Theme
+                color: const Color(0xFF6C63FF), // Update to Request Color
                 fontSize: 16,
               ),
             ),

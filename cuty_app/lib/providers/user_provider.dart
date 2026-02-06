@@ -3,7 +3,7 @@ import '../models/user.dart';
 import '../services/api_service.dart';
 
 class UserNotifier extends StateNotifier<User?> {
-  UserNotifier() : super(null); // Init with null (logged out)
+  UserNotifier() : super(User.dummy()); // Mock Login State
   
   // Login: Use ApiService
   Future<bool> login(String email, String password) async {
@@ -30,6 +30,29 @@ class UserNotifier extends StateNotifier<User?> {
   void logout() {
     state = null;
     // ApiService.instance.logout(); // Implement storage clear if needed
+  }
+
+  // Privacy Toggle
+  void togglePrivacy(String fieldName) {
+    if (state == null) return;
+    
+    User updatedUser = state!; // Start with current user
+    
+    if (fieldName == 'nationality') {
+      updatedUser = updatedUser.copyWith(isNationalityHidden: !state!.isNationalityHidden);
+    } else if (fieldName == 'gender') {
+      updatedUser = updatedUser.copyWith(isGenderHidden: !state!.isGenderHidden);
+    } else if (fieldName == 'school') {
+      updatedUser = updatedUser.copyWith(isSchoolHidden: !state!.isSchoolHidden);
+    } else if (fieldName == 'nickname') {
+      updatedUser = updatedUser.copyWith(isNicknameHidden: !state!.isNicknameHidden);
+    }
+
+    state = updatedUser; // Update UI immediately
+    
+    // Simulate API Call
+    print("Updating privacy setting for $fieldName.");
+    // ApiService.instance.updateUser(updatedUser); 
   }
 }
 

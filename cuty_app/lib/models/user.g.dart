@@ -14,6 +14,10 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
   college: College.fromJson(json['college'] as Map<String, dynamic>),
   department: Department.fromJson(json['department'] as Map<String, dynamic>),
   country: Country.fromJson(json['country'] as Map<String, dynamic>),
+  isNationalityHidden: json['isNationalityHidden'] as bool? ?? false,
+  isGenderHidden: json['isGenderHidden'] as bool? ?? false,
+  isSchoolHidden: json['isSchoolHidden'] as bool? ?? false,
+  isNicknameHidden: json['isNicknameHidden'] as bool? ?? false,
 );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -24,6 +28,10 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
   'college': instance.college.toJson(),
   'department': instance.department.toJson(),
   'country': instance.country.toJson(),
+  'isNationalityHidden': instance.isNationalityHidden,
+  'isGenderHidden': instance.isGenderHidden,
+  'isSchoolHidden': instance.isSchoolHidden,
+  'isNicknameHidden': instance.isNicknameHidden,
 };
 
 School _$SchoolFromJson(Map<String, dynamic> json) =>

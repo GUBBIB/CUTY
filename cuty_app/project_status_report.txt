@@ -1,0 +1,63 @@
+[프로젝트 현황 명세서] 📋
+기획자(GEMS) 전달용으로 현재 개발된 플러터 앱(`lib` 폴더)의 구조와 구현 현황을 정리했습니다.
+
+---
+
+### 1. [파일 트리 구조] (주요 화면 위주)
+lib/
+├── main.dart (앱 진입점, 글로벌 Provider 설정)
+├── screens/
+│   ├── home/
+│   │   ├── home_screen.dart (메인 홈 대시보드)
+│   │   ├── home_view_model.dart (홈 화면 로직)
+│   │   └── widgets/ (상단 헤더, 캐릭터 섹션, 포춘쿠키 등)
+│   ├── visa/
+│   │   ├── visa_goal_selection_screen.dart (비자/로드맵 목표 선택 - 학교 생활형 최상단)
+│   │   ├── visa_roadmap_screen.dart (선택된 로드맵 상세 뷰)
+│   │   ├── school_visa_screen.dart (학교 생활형 로드맵)
+│   │   ├── employment_visa_screen.dart (취업형 E-7 로드맵)
+│   │   ├── f-2-7_visa_calculator_screen.dart (점수 계산기)
+│   │   └── global_visa_screen.dart (글로벌형 로드맵)
+│   ├── community/
+│   │   ├── community_main_screen.dart (커뮤니티 메인)
+│   │   ├── info_board_screen.dart (정보게시판 - 매거진 UI)
+│   │   ├── community_feed_screen.dart (자유게시판 피드)
+│   │   └── popular_posts_screen.dart (인기글 모음)
+│   ├── jobs/
+│   │   ├── jobs_home_screen.dart (채용 정보 메인)
+│   │   └── job_detail_screen.dart (채용 상세)
+│   └── diagnosis/
+│       ├── diagnosis_screen.dart (구버전, ConsultingScreen으로 리다이렉트)
+│       └── consulting_screen.dart (신규 진단/상담 화면)
+└── providers/ (상태 관리자 모음 - Riverpod/Provider 혼용)
+
+---
+
+### 2. [주요 파일 요약]
+*   **HomeScreen:** 앱 실행 시 첫 화면. 사용자 상태에 따른 맞춤형 대시보드(캐릭터, 일정, 커뮤니티 요약) 제공.
+*   **VisaGoalSelectionScreen:** 사용자가 자신의 목표(학교생활/취업/창업/연구 등)를 선택하는 진입 화면.
+*   **VisaRoadmapScreen:** 선택한 비자 목표에 맞춰 진행 상황과 가이드를 보여주는 메인 로드맵 화면.
+*   **SchoolVisaScreen:** '학교 생활형' 선택 시 보여지는 상세 가이드. 학년별 체크리스트와 중요 정보 제공.
+*   **CommunityMainScreen:** 각종 게시판(정보/자유/장터)으로 이동할 수 있는 허브 화면.
+*   **InfoBoardScreen:** 꿀팁과 정보를 '피키캐스트' 스타일의 매거진 UI로 보여주는 정보 게시판.
+
+---
+
+### 3. [구현된 기능] (Update 실시간 반영)
+1.  **홈 대시보드 (Home Dashboard)**
+    *   캐릭터 인터랙션: 터치 시 반응 애니메이션 및 말풍선 메시지.
+    *   포춘쿠키 위젯: 매일 새로운 운세 메시지 제공.
+    *   커뮤니티 미리보기: 하단 바텀시트 형태로 최신 인기글 노출.
+
+2.  **비자 로드맵 (Visa Roadmap)**
+    *   **목표 선택 로직:** 5가지 유형(학교/연구/취업/창업/글로벌) 중 택1 하여 상태 저장.
+    *   **학교 생활형:** 아코디언 메뉴 UI로 E-7, F-2 등 비자 개념 설명 (강조 텍스트 적용).
+    *   **F-2-7 계산기:** 나이/학력/소득 입력에 따른 점수 자동 계산 기능.
+
+3.  **커뮤니티 (Community)**
+    *   **정보 게시판:** 상단 롤링 배너 + 하단 그리드(카드뉴스) 형태의 매거진 뷰 구현.
+    *   **게시판 네비게이션:** 메인 화면에서 각 게시판으로의 라우팅 연결 완료.
+
+4.  **기타 (Misc)**
+    *   **진단 기능:** 구버전 화면에서 신규 상담 화면(`ConsultingScreen`)으로 리다이렉트 처리.
+    *   **Riverpod 도입:** 전역 상태 관리를 위해 `main.dart` 레벨에서 Provider 설정 완료.
