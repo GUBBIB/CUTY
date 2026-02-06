@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'widgets/community_post_item.dart'; // Import shared widget
+import '../../widgets/ads/main_ad_banner.dart'; // NEW
 import '../../models/community_model.dart'; // Centralized model
 import '../../data/community_data_manager.dart'; // Centralized Manager
 import 'post_detail_screen.dart';
@@ -24,6 +25,9 @@ class PopularPostsScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Column(
         children: [
+          // Main Ad Banner
+          const MainAdBanner(),
+
           // Header Banner
           Container(
             width: double.infinity,

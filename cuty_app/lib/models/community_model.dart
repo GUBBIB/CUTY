@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 enum BoardType {
   free,
   info,
+  question, // New Board Type
   market,
   secret;
 
@@ -12,6 +13,8 @@ enum BoardType {
         return '자유게시판';
       case BoardType.info:
         return '정보게시판';
+      case BoardType.question:
+        return '질문게시판';
       case BoardType.market:
         return '중고장터';
       case BoardType.secret:
@@ -25,6 +28,8 @@ enum BoardType {
         return Colors.blue[600]!;
       case BoardType.info:
         return Colors.amber[600]!;
+      case BoardType.question:
+        return Colors.purple[600]!;
       case BoardType.market:
         return Colors.green[600]!;
       case BoardType.secret:
@@ -46,6 +51,7 @@ class Post {
   final int commentCount;
   final int price; // For Market
   final String? status; // For Market (selling, reserved, etc.)
+  final int rewardPoints; // For Question (Point Betting)
   final DateTime createdAt; // New field for sorting
 
   Post({
@@ -62,6 +68,7 @@ class Post {
     required this.commentCount,
     this.price = 0,
     this.status,
+    this.rewardPoints = 0,
     required this.createdAt,
   });
 

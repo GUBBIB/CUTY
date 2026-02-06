@@ -4,6 +4,7 @@ import 'free_board_screen.dart';
 import 'community_board_screen.dart';
 import 'popular_posts_screen.dart';
 import 'info_board_screen.dart';
+import 'question_board_screen.dart';
 import 'used_market_screen.dart';
 import 'widgets/privacy_settings_modal.dart' as widgets;
 
@@ -82,6 +83,31 @@ class CommunityMainScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const FreeBoardScreen()),
+              );
+            },
+          ),
+          const SizedBox(height: 16),
+          // Pattern Card: Question Board (NEW)
+          _PatternMenuCard(
+            title: '❓ 질문게시판',
+            subtitle: '한국 생활, 무엇이든 물어보세요!',
+            color: const Color(0xFFF3E5F5), // Purple[50]
+            patternColor: Colors.purple.withValues(alpha: 0.15),
+            patternIcons: const [
+              Icons.help_outline,
+              Icons.question_answer,
+              Icons.live_help,
+              Icons.school,
+              Icons.emoji_people,
+            ],
+            characterAsset: 'assets/images/community_QnA.png',
+            imageHeight: 145,
+            imageRightOffset: 35,
+            imageBottomOffset: 0,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const QuestionBoardScreen()),
               );
             },
           ),
@@ -193,7 +219,8 @@ class _PatternMenuCard extends StatelessWidget {
   final Color color;
   final Color patternColor;
   final List<IconData> patternIcons;
-  final String characterAsset;
+  final String? characterAsset;
+  final Widget? customTrailing; // New: Optional custom widget
   final VoidCallback onTap;
   final double imageHeight;
   final double imageRightOffset;
@@ -206,7 +233,8 @@ class _PatternMenuCard extends StatelessWidget {
     required this.color,
     required this.patternColor,
     required this.patternIcons,
-    required this.characterAsset,
+    this.characterAsset,
+    this.customTrailing,
     required this.onTap,
     this.imageHeight = 130,     // Default height
     this.imageRightOffset = 10, // Default right margin
@@ -271,8 +299,8 @@ class _PatternMenuCard extends StatelessWidget {
                 Positioned(
                   right: imageRightOffset, 
                   bottom: imageBottomOffset,
-                  child: Image.asset(
-                    characterAsset,
+                  child: customTrailing ?? Image.asset(
+                    characterAsset!,
                     height: imageHeight, 
                     fit: BoxFit.contain,
                   ),

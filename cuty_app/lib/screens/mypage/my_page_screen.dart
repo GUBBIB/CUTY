@@ -9,7 +9,10 @@ import '../../providers/point_provider.dart';
 import '../schedule/schedule_screen.dart';
 import '../../providers/schedule_provider.dart';
 import '../../models/schedule_model.dart';
-import '../community/widgets/privacy_settings_modal.dart' as widgets;
+import 'profile_edit_screen.dart'; // NEW
+import 'my_community_activity_screen.dart'; // NEW
+import 'settings_screen.dart'; // NEW
+import '../shop/shop_screen.dart'; // NEW
 
 class MyPageScreen extends StatelessWidget {
   const MyPageScreen({super.key});
@@ -28,7 +31,7 @@ class MyPageScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 20),
-                // 1. Profile Header
+                // 1. Profile Header (Clickable)
                 _ProfileHeader(user: user),
                 const SizedBox(height: 24),
 
@@ -66,50 +69,70 @@ class _ProfileHeader extends ConsumerWidget {
 
     return Row(
       children: [
-          // Avatar
-        Container(
-          width: 60,
-          height: 60,
-          // Removed padding to make the image fill the circle better as per "fit: BoxFit.cover" request
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.grey[200], // Light grey background
-            border: Border.all(color: Colors.grey[300]!),
-          ),
-          child: ClipOval( // ClipOval ensures the square image is clipped to the circle
-            child: Image.asset(
-              'assets/images/unknown_user.png',
-              fit: BoxFit.cover, // Cover to fill the circle
+        // Clickable Profile Area
+        Expanded(
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ProfileEditScreen()),
+              );
+            },
+            behavior: HitTestBehavior.opaque, // Capture taps on empty space
+            child: Row(
+              children: [
+                // Avatar
+                Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.grey[200], 
+                    border: Border.all(color: Colors.grey[300]!),
+                  ),
+                  child: ClipOval( 
+                    child: Image.asset(
+                      'assets/images/unknown_user.png',
+                      fit: BoxFit.cover, 
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                // User Info
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          user.name,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF1A1A2E),
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Icon(Icons.edit_outlined, size: 16, color: Colors.grey[500]),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      user.university,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
-        const SizedBox(width: 16),
-        // User Info
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                user.name,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF1A1A2E),
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                user.university,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-        ),
-        // Points & Shop
+        
+        // Points & Shop (Right Aligned)
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
@@ -132,7 +155,10 @@ class _ProfileHeader extends ConsumerWidget {
             const SizedBox(height: 8),
             GestureDetector(
               onTap: () {
-                // Shop Action
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ShopScreen()),
+                );
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
@@ -457,8 +483,7 @@ class _MenuList extends StatelessWidget {
           _buildMenuItem(context, Icons.folder_outlined, '서류 지갑'),
           const Divider(height: 1, indent: 20, endIndent: 20),
           _buildMenuItem(context, Icons.chat_bubble_outline_rounded, '커뮤니티 활동'),
-          const Divider(height: 1, indent: 20, endIndent: 20),
-          _buildMenuItem(context, Icons.person_outline_rounded, '개인 정보 관리'),
+           // Removed '개인 정보 관리' as it's moved to Profile Header
           const Divider(height: 1, indent: 20, endIndent: 20),
           _buildMenuItem(context, Icons.settings_outlined, '설정'),
         ],
@@ -484,11 +509,15 @@ class _MenuList extends StatelessWidget {
             context,
             MaterialPageRoute(builder: (context) => const SpecWalletScreen()),
           );
+        } else if (title == '커뮤니티 활동') {
+           Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const MyCommunityActivityScreen()),
+          );
         } else if (title == '설정') {
-          showModalBottomSheet(
-            context: context,
-            backgroundColor: Colors.transparent,
-            builder: (context) => const widgets.PrivacySettingsModal(),
+           Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const SettingsScreen()),
           );
         }
       },

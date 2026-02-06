@@ -40,4 +40,14 @@ class CommunityDataManager {
     }
     _posts.insert(0, newPost); // Add to top
   }
+
+  // 4. Get My Posts
+  static List<Post> getMyPosts() {
+    if (_posts.isEmpty) {
+      _posts.addAll(allPosts);
+    }
+    // Mock Logic: Return posts authored by '나' AND some random ones for demo
+    // In real app, check `post.authorId == currentUserId`
+    return _posts.where((post) => post.authorName == '나').toList();
+  }
 }

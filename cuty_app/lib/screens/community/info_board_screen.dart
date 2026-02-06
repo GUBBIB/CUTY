@@ -6,6 +6,8 @@ import '../../models/community_model.dart';
 import '../../data/community_data_manager.dart'; // Import Manager
 import 'post_write_screen.dart';
 import 'post_detail_screen.dart';
+import '../../widgets/ads/main_ad_banner.dart'; // NEW
+import '../../widgets/ads/native_ad_item.dart'; // NEW
 
 class InfoBoardScreen extends StatefulWidget {
   const InfoBoardScreen({super.key});
@@ -33,6 +35,9 @@ class _InfoBoardScreenState extends State<InfoBoardScreen> {
       ),
       body: Column(
         children: [
+          // Main Banner
+          const MainAdBanner(boardType: BoardType.info),
+
           // Filter Section
           Container(
              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -53,13 +58,23 @@ class _InfoBoardScreenState extends State<InfoBoardScreen> {
              ),
           ),
 
-          // List
+          // List (with Native Ads)
           Expanded(
             child: ListView.separated(
-              itemCount: infoPosts.length,
+              itemCount: infoPosts.length + (infoPosts.length ~/ 5), // posts + ads
               separatorBuilder: (context, index) => Divider(height: 1, thickness: 1, color: Colors.grey[100]),
               itemBuilder: (context, index) {
-                 final post = infoPosts[index];
+                 // Ad Logic
+                 if ((index + 1) % 6 == 0) {
+                   return const NativeAdItem(boardType: BoardType.info);
+                 }
+
+                 final adCount = index ~/ 6;
+                 final postIndex = index - adCount;
+
+                 if (postIndex >= infoPosts.length) return const SizedBox.shrink();
+
+                 final post = infoPosts[postIndex];
                  return InkWell(
                     onTap: () {
                       Navigator.push(

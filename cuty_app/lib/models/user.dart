@@ -76,7 +76,7 @@ class User {
   String get university => school.name;
   String get major => department.name; // Added compatibility
   String get visaType => '비자 정보 없음'; // Placeholder: API doesn't provide this yet
-  int get points => 0; // Placeholder: Points might come from separate API
+  int get points => 0;
   String get visaExpiry => '-';
   String get workPermitDate => '- ~ -';
   bool get isWorkPermitApproved => false;

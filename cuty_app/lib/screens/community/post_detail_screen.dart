@@ -67,6 +67,27 @@ class PostDetailScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
 
+                  // Reward Badge (Question Board)
+                  if (post.boardType == BoardType.question && post.rewardPoints > 0) ...[
+                     Container(
+                      margin: const EdgeInsets.only(bottom: 8),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFFF9C4), // Yellow[100]
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(color: const Color(0xFFFBC02D), width: 1), // Yellow[700] border
+                      ),
+                      child: Text(
+                        '💰 채택 시 ${post.rewardPoints}P 지급',
+                        style: GoogleFonts.notoSansKr(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                          color: const Color(0xFFF57F17), // Yellow[900]
+                        ),
+                      ),
+                    ),
+                  ],
+
                   // Title
                   Text(
                     post.title, // Updated

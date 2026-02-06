@@ -1,37 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../providers/user_provider.dart';
 import 'widgets/community_post_item.dart' as widgets;
+import '../../widgets/ads/main_ad_banner.dart'; // NEW
 import '../../models/community_model.dart';
-import '../../data/community_data_manager.dart'; // import Manager
+import '../../data/community_data_manager.dart'; 
 import 'post_write_screen.dart';
 import 'post_detail_screen.dart';
-import '../../widgets/ads/main_ad_banner.dart'; // NEW
-import '../../widgets/ads/native_ad_item.dart'; // NEW
 
-class FreeBoardScreen extends ConsumerStatefulWidget {
-  const FreeBoardScreen({super.key});
+class QuestionBoardScreen extends ConsumerStatefulWidget {
+  const QuestionBoardScreen({super.key});
 
   @override
-  ConsumerState<FreeBoardScreen> createState() => _FreeBoardScreenState();
+  ConsumerState<QuestionBoardScreen> createState() => _QuestionBoardScreenState();
 }
 
-class _FreeBoardScreenState extends ConsumerState<FreeBoardScreen> {
-  // Filter state
-  int _selectedFilterIndex = 0;
-  final List<String> _filters = ['전체', '잡담', '질문', '정보', '후기'];
-
+class _QuestionBoardScreenState extends ConsumerState<QuestionBoardScreen> {
   @override
   Widget build(BuildContext context) {
-    // Centralized Data
-    final List<Post> posts = CommunityDataManager.getPosts(BoardType.free);
+    // Centralized Data for Question Board
+    final List<Post> posts = CommunityDataManager.getPosts(BoardType.question);
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          '자유게시판',
+          '질문게시판',
           style: GoogleFonts.notoSansKr(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.white,
@@ -44,26 +38,17 @@ class _FreeBoardScreenState extends ConsumerState<FreeBoardScreen> {
       body: Column(
         children: [
           // Main Banner
-          const MainAdBanner(boardType: BoardType.free),
-          
-          // Post List (with Native Ads)
+          const MainAdBanner(boardType: BoardType.question),
+
+          // Post List
           Expanded(
-            child: ListView.separated(
-              itemCount: posts.length + (posts.length ~/ 5), // posts + ads
+            child: posts.isEmpty 
+            ? Center(child: Text("등록된 질문이 없습니다.", style: GoogleFonts.notoSansKr(color: Colors.grey)))
+            : ListView.separated(
+              itemCount: posts.length,
               separatorBuilder: (context, index) => Divider(height: 1, thickness: 1, color: Colors.grey[100]),
               itemBuilder: (context, index) {
-                // Ad Logic: Every 6th item (index 5, 11...) is an Ad
-                if ((index + 1) % 6 == 0) {
-                  return const NativeAdItem(boardType: BoardType.free);
-                }
-
-                // Map list index to post index
-                final adCount = index ~/ 6;
-                final postIndex = index - adCount;
-
-                if (postIndex >= posts.length) return const SizedBox.shrink();
-
-                final post = posts[postIndex];
+                final post = posts[index];
                 return InkWell(
                   onTap: () {
                      Navigator.push(
@@ -83,7 +68,7 @@ class _FreeBoardScreenState extends ConsumerState<FreeBoardScreen> {
           final result = await Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const PostWriteScreen(boardType: BoardType.free),
+              builder: (context) => const PostWriteScreen(boardType: BoardType.question),
             ),
           );
 
@@ -91,7 +76,7 @@ class _FreeBoardScreenState extends ConsumerState<FreeBoardScreen> {
              setState(() {});
           }
         },
-        backgroundColor: Colors.blue[600],
+        backgroundColor: Colors.purple[600], // Purple for Question
         shape: const CircleBorder(),
         child: const Icon(Icons.edit, color: Colors.white),
       ),

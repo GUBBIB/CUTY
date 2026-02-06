@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../models/community_model.dart';
 import '../../data/community_data_manager.dart';
+import '../../providers/user_provider.dart';
+import '../../providers/point_provider.dart'; // Shop Points
 
-class PostWriteScreen extends StatefulWidget {
+class PostWriteScreen extends ConsumerStatefulWidget {
   final BoardType boardType;
 
   const PostWriteScreen({
@@ -12,10 +15,10 @@ class PostWriteScreen extends StatefulWidget {
   });
 
   @override
-  State<PostWriteScreen> createState() => _PostWriteScreenState();
+  ConsumerState<PostWriteScreen> createState() => _PostWriteScreenState();
 }
 
-class _PostWriteScreenState extends State<PostWriteScreen> {
+class _PostWriteScreenState extends ConsumerState<PostWriteScreen> {
   final _titleController = TextEditingController();
   final _contentController = TextEditingController();
   final _priceController = TextEditingController(); // For Market
@@ -26,6 +29,7 @@ class _PostWriteScreenState extends State<PostWriteScreen> {
   // State for Info Board
   bool _isCardNewsMode = false;
   bool _isAnonymous = false;
+  int _selectedRewardPoints = 0;
 
   @override
   void dispose() {
@@ -57,9 +61,21 @@ class _PostWriteScreenState extends State<PostWriteScreen> {
       commentCount: 0,
       imageUrl: _selectedImages.isNotEmpty ? _selectedImages.first : null,
       price: _priceController.text.isNotEmpty ? int.tryParse(_priceController.text.replaceAll(',', '')) ?? 0 : 0,
+      rewardPoints: _selectedRewardPoints,
       status: widget.boardType == BoardType.market ? '판매중' : null,
       createdAt: DateTime.now(),
     );
+
+    // Deduct Points (If Betting)
+    if (_selectedRewardPoints > 0) {
+      final success = ref.read(pointProvider.notifier).usePoints(_selectedRewardPoints, '질문 채택 포인트');
+      if (!success) {
+         ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('포인트 사용 중 오류가 발생했습니다.')),
+        );
+        return;
+      }
+    }
 
     // Add to Manager
     CommunityDataManager.addPost(newPost);
@@ -228,6 +244,69 @@ class _PostWriteScreenState extends State<PostWriteScreen> {
                         );
                       },
                     ),
+            ),
+            const Divider(height: 1, thickness: 1, color: Color(0xFFEEEEEE)),
+          ],
+
+          // 3. [Optional] Point Betting (Question Board Only)
+          if (widget.boardType == BoardType.question) ...[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '포인트 걸기', 
+                        style: GoogleFonts.notoSansKr(fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
+                      // Real User Points Linking (Shop Points)
+                      Text(
+                        '보유 포인트: ${(ref.watch(pointProvider).totalBalance).toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}P', 
+                        style: GoogleFonts.notoSansKr(fontSize: 12, color: Colors.grey[600]),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    children: [0, 50, 100, 500].map((points) {
+                      final isSelected = _selectedRewardPoints == points;
+                      return ChoiceChip(
+                        label: Text(
+                          points == 0 ? '없음' : '${points}P',
+                          style: GoogleFonts.notoSansKr(
+                            fontSize: 13,
+                             color: isSelected ? Colors.white : Colors.black87,
+                            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                          ),
+                        ),
+                        selected: isSelected,
+                        onSelected: (selected) {
+                          if (selected) {
+                            final currentPoints = ref.read(pointProvider).totalBalance;
+                            if (points > currentPoints) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('보유 포인트가 부족합니다.')),
+                              );
+                              return;
+                            }
+                            setState(() => _selectedRewardPoints = points);
+                          }
+                        },
+                        selectedColor: Colors.purple[400],
+                        backgroundColor: Colors.grey[100],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          side: BorderSide(color: isSelected ? Colors.transparent : Colors.grey[300]!),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
             ),
             const Divider(height: 1, thickness: 1, color: Color(0xFFEEEEEE)),
           ],

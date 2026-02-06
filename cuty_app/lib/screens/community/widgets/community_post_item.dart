@@ -96,6 +96,32 @@ class CommunityPostItem extends ConsumerWidget {
                           ),
                         ],
 
+                        // Question Reward Badge
+                        if (post.boardType == BoardType.question && post.rewardPoints > 0) ...[
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 4),
+                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFFFF176), // Yellow[300]
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Text('💰 ', style: TextStyle(fontSize: 10)),
+                                Text(
+                                  '${post.rewardPoints}P',
+                                  style: GoogleFonts.notoSansKr(
+                                    fontSize: 11,
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                        
                         // Title
                         Text(
                           post.title,

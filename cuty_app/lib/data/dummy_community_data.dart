@@ -107,6 +107,59 @@ final List<Post> allPosts = [
     createdAt: DateTime.now().subtract(const Duration(days: 1)),
   ),
 
+  // --- Question Board ---
+  Post(
+    id: 'q1',
+    boardType: BoardType.question,
+    title: '외국인 등록증 재발급 기간 얼마나 걸려?',
+    content: '지갑을 잃어버려서 다시 만들어야 하는데...\n보통 신청하면 며칠 안에 나오나? 급해서 ㅠㅠ',
+    authorName: '비자급함',
+    authorSchool: '성균관대',
+    authorNationality: 'CN',
+    likeCount: 5,
+    commentCount: 8,
+    rewardPoints: 500, // Added Reward
+    createdAt: DateTime.now().subtract(const Duration(hours: 1)),
+  ),
+  Post(
+    id: 'q2',
+    boardType: BoardType.question,
+    title: '학교 근처 안과 추천 좀 (다래끼 남 ㅠㅠ)',
+    content: '아침에 일어났는데 눈이 너무 부었어.\n외국인 보험 되는 곳으로 추천 부탁해!\n신촌 근처야.',
+    authorName: '눈아파',
+    authorSchool: '연세대',
+    authorNationality: 'JP',
+    likeCount: 2,
+    commentCount: 3,
+    rewardPoints: 100, // Added Reward
+    createdAt: DateTime.now().subtract(const Duration(hours: 3)),
+  ),
+  Post(
+    id: 'q3',
+    boardType: BoardType.question,
+    title: '교수님한테 메일 보낼 때 첫마디 뭐라고 해?',
+    content: '성적 정정 때문에 메일 써야 하는데...\n"안녕하세요 교수님" 하고 바로 본론 말해도 돼?\n한국 예절 너무 어려워.',
+    authorName: '메일초보',
+    authorSchool: '한양대',
+    authorNationality: 'US',
+    likeCount: 12,
+    commentCount: 15,
+    rewardPoints: 1000, // High Reward
+    createdAt: DateTime.now().subtract(const Duration(minutes: 45)),
+  ),
+  Post(
+    id: 'q4',
+    boardType: BoardType.question,
+    title: '한국 친구 집들이 선물 뭐 사가야 좋아?',
+    content: '초대 받았는데 휴지? 세제? \n요즘 대학생들은 다른 거 좋아하나?\n예산은 3만원 정도야.',
+    authorName: '선물고민',
+    authorSchool: '중앙대',
+    authorNationality: 'FR',
+    likeCount: 8,
+    commentCount: 6,
+    createdAt: DateTime.now().subtract(const Duration(hours: 6)),
+  ),
+
   // --- Info Board ---
   Post(
     id: 'i1',
