@@ -5,13 +5,19 @@ import '../../community/community_feed_screen.dart';
 import '../../community/board_list_screen.dart';
 import '../../community/popular_posts_screen.dart';
 import '../../community/widgets/community_post_item.dart';
+import '../../community/post_detail_screen.dart';
+import '../../../models/community_model.dart'; // Centralized model
+import '../../../data/community_data_manager.dart'; // Centralized data
 
 class PopularPostsPreview extends StatelessWidget {
   const PopularPostsPreview({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // [Home Screen Popular Posts Preview] - FULL WIDTH SHEET
+    // Top 5 Popular Posts from Manager
+    final List<Post> popularPosts = CommunityDataManager.getPopularPosts();
+
+    if (popularPosts.isEmpty) return const SizedBox.shrink(); // Hide if emptyh: double.infinity, // Key: Full Width
     return Container(
       width: double.infinity, // Key: Full Width
       margin: EdgeInsets.zero, // Key: No Margins
@@ -62,42 +68,8 @@ class PopularPostsPreview extends StatelessWidget {
             // Top 3 Popular Posts (Horizontal Card List)
             Builder(
               builder: (context) {
-                // Mock Data for Popular Section (Top 3)
-                final List<Map<String, dynamic>> popularPosts = [
-                   {
-                    'title': '한국에서 알바 구할 때 한국어 능력 얼마나 중요해?',
-                    'content': '토픽 4급인데 힘들까? 사장님들이 보통 뭐 물어보시는지 궁금해 ㅠㅠ 면접 꿀팁 좀 알려주라...',
-                    'author': '비빔밥러버',
-                    'flag': '🇻🇳',
-                    'uni': '경성대',
-                    'likes': 120,
-                    'comments': 52,
-                    'board': '자유게시판',
-                    'imageUrl': 'placeholder', // Grey Box Placeholder
-                  },
-                  {
-                    'title': 'D-2 비자 연장 후기 (하이코리아 방문 예약 필수)',
-                    'content': '오늘 출입국 관리 사무소 다녀왔는데 사람이 진짜 많더라고. 서류 미리 안 챙겼으면 큰일 날 뻔...',
-                    'author': '비자마스터',
-                    'flag': '🇯🇵',
-                    'uni': '부산대',
-                    'likes': 85,
-                    'comments': 22,
-                    'board': '정보게시판',
-                    'imageUrl': 'placeholder', // Grey Box Placeholder
-                  },
-                  {
-                    'title': '이번 학기 장학금 신청 기간 정리',
-                    'content': '다들 놓치지 말고 신청해! 성적 장학금이랑 근로 장학금 중복 수혜 가능한지도 확인해봐.',
-                    'author': '장학금사냥꾼',
-                    'flag': '🇺🇸',
-                    'uni': '해양대',
-                    'likes': 82,
-                    'comments': 15,
-                    'board': '정보게시판',
-                    'imageUrl': null, // Test without image
-                  },
-                ];
+                // Centralized Data retrieval
+                final List<Post> popularPosts = CommunityDataManager.getPopularPosts().take(3).toList(); // Show top 3 in preview
 
                 return SizedBox(
                   height: 135, // Reduced height for tighter layout
@@ -108,28 +80,36 @@ class PopularPostsPreview extends StatelessWidget {
                     separatorBuilder: (context, index) => const SizedBox(width: 12),
                     itemBuilder: (context, index) {
                       final post = popularPosts[index];
-                      return Container(
-                        width: 300, // Fixed width card
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(16),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.05),
-                              blurRadius: 10,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                          border: Border.all(color: const Color(0xFFF5F5F5)),
-                        ),
-                        // Clip behavior for clean corners
-                        clipBehavior: Clip.hardEdge,
-                        child: CommunityPostItem(
-                          post: post,
-                          rankingIndex: index + 1,
-                          showBoardName: true,
-                          contentMaxLines: 2, // Increased textual content space
-                          showMetadata: false, // Minimal design (Preview Only: Title/Content/Image)
+                      return GestureDetector(
+                        onTap: () {
+                           Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => PostDetailScreen(post: post)),
+                          );
+                        },
+                        child: Container(
+                          width: 300, // Fixed width card
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.05),
+                                blurRadius: 10,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                            border: Border.all(color: const Color(0xFFF5F5F5)),
+                          ),
+                          // Clip behavior for clean corners
+                          clipBehavior: Clip.hardEdge,
+                          child: CommunityPostItem(
+                            post: post,
+                            rankingIndex: index + 1,
+                            showBoardName: true,
+                            contentMaxLines: 2, // Increased textual content space
+                            showMetadata: false, // Minimal design (Preview Only: Title/Content/Image)
+                          ),
                         ),
                       );
                     },

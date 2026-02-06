@@ -3,9 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../providers/user_provider.dart';
+import '../../../models/community_model.dart';
 
 class CommunityPostItem extends ConsumerWidget {
-  final Map<String, dynamic> post;
+  final Post post;
   final int? rankingIndex; // Optional: 1, 2, 3...
   final bool showBoardName; // Optional: Show '자유게시판' etc.
   final int contentMaxLines; // Default 2, use 1 for compact cards
@@ -22,7 +23,7 @@ class CommunityPostItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    bool hasImage = post['imageUrl'] != null;
+    bool hasImage = post.imageUrl != null;
 
     // Privacy Logic
     final user = ref.watch(userProvider);
@@ -31,9 +32,9 @@ class CommunityPostItem extends ConsumerWidget {
     final bool isSchoolHidden = user?.isSchoolHidden ?? false;
 
     // Apply Masking
-    final String displayAuthor = isNicknameHidden ? '익명' : post['author'];
-    final String displayFlag = isNationalityHidden ? '🔒' : post['flag'] ?? '';
-    final String displayUni = isSchoolHidden ? '비공개' : post['uni'] ?? '';
+    final String displayAuthor = isNicknameHidden ? '익명' : post.authorName;
+    final String displayFlag = isNationalityHidden ? '🔒' : post.authorNationality;
+    final String displayUni = isSchoolHidden ? '비공개' : post.authorSchool;
 
     // Layout Mode: If compact (Home Card), use Max/SpaceBetween to pin footer.
     final bool isCompact = contentMaxLines == 1;
@@ -76,19 +77,19 @@ class CommunityPostItem extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Board Badge
-                        if (showBoardName && post['board'] != null) ...[
+                        if (showBoardName) ...[
                           Container(
                             margin: const EdgeInsets.only(bottom: 4),
                             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                             decoration: BoxDecoration(
-                              color: _getBoardColor(post['board']), // Dynamic Color
+                              color: post.boardType.color.withOpacity(0.1), // Unified Logic
                               borderRadius: BorderRadius.circular(4),
                             ),
                             child: Text(
-                              post['board'],
+                              post.boardType.label,
                               style: GoogleFonts.notoSansKr(
                                 fontSize: 10,
-                                color: _getBoardTextColor(post['board']), // Dynamic Text Color
+                                color: post.boardType.color, // Unified Logic
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -97,7 +98,7 @@ class CommunityPostItem extends ConsumerWidget {
 
                         // Title
                         Text(
-                          post['title'],
+                          post.title,
                           style: GoogleFonts.notoSansKr(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
@@ -108,12 +109,19 @@ class CommunityPostItem extends ConsumerWidget {
                         ),
                         const SizedBox(height: 4),
 
-                        // Content
+                        // Content (or Price for Market)
                         Text(
-                          post['content'],
+                          post.boardType == BoardType.market && post.price > 0 
+                              ? '${post.price}원' 
+                              : post.content,
                           style: GoogleFonts.notoSansKr(
-                            fontSize: 14, // Increased to 14sp
-                            color: Colors.grey[600],
+                            fontSize: 14, 
+                            color: post.boardType == BoardType.market 
+                                ? Colors.black 
+                                : Colors.grey[600],
+                            fontWeight: post.boardType == BoardType.market 
+                                ? FontWeight.bold 
+                                : FontWeight.normal,
                           ),
                           maxLines: contentMaxLines,
                           overflow: TextOverflow.ellipsis,
@@ -149,7 +157,7 @@ class CommunityPostItem extends ConsumerWidget {
                             ],
                             // TimeAgo
                             Text(
-                              '• 10분 전', // Mock Time
+                              '• ${post.timeAgo}', 
                               style: GoogleFonts.notoSansKr(
                                 fontSize: 11,
                                 color: Colors.grey[400],
@@ -176,7 +184,7 @@ class CommunityPostItem extends ConsumerWidget {
                       child: Center(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8),
-                          child: post['imageUrl'] == 'placeholder' 
+                          child: post.imageUrl == 'placeholder' 
                             ? Container( // Grey Box Placeholder
                                 width: 64,
                                 height: 64,
@@ -184,7 +192,7 @@ class CommunityPostItem extends ConsumerWidget {
                                 child: const Icon(Icons.image, color: Colors.grey, size: 24),
                               )
                             : Image.network(
-                                post['imageUrl'],
+                                post.imageUrl!,
                                 width: 64, // 64x64 Thumbnail
                                 height: 64,
                                 fit: BoxFit.cover,
@@ -210,14 +218,14 @@ class CommunityPostItem extends ConsumerWidget {
                         const Icon(CupertinoIcons.heart_fill, size: 14, color: Colors.redAccent),
                         const SizedBox(width: 2),
                         Text(
-                          '${post['likes']}',
+                          '${post.likeCount}',
                           style: GoogleFonts.notoSansKr(fontSize: 11, color: Colors.redAccent, fontWeight: FontWeight.w500),
                         ),
                         const SizedBox(width: 8), // Gap
                         const Icon(CupertinoIcons.chat_bubble_2_fill, size: 14, color: Colors.blueAccent),
                         const SizedBox(width: 2),
                         Text(
-                          '${post['comments']}',
+                          '${post.commentCount}',
                           style: GoogleFonts.notoSansKr(fontSize: 11, color: Colors.blueAccent, fontWeight: FontWeight.w500),
                         ),
                       ],
@@ -247,31 +255,5 @@ class CommunityPostItem extends ConsumerWidget {
         ),
       ),
     );
-  }
-
-  Color _getBoardColor(String boardName) {
-    switch (boardName) {
-      case '자유게시판':
-        return const Color(0xFFE3F0FF); // Pastel Blue
-      case '정보게시판':
-        return const Color(0xFFFFF8D6); // Cream Yellow
-      case '중고장터':
-        return const Color(0xFFE6F5EA); // Mint Green
-      default:
-        return const Color(0xFFF5F5F5); // Default Grey
-    }
-  }
-
-  Color _getBoardTextColor(String boardName) {
-     switch (boardName) {
-      case '자유게시판':
-        return const Color(0xFF0056B3); // Deep Blue
-      case '정보게시판':
-        return const Color(0xFFE65100); // Deep Orange
-      case '중고장터':
-        return const Color(0xFF1B5E20); // Deep Green
-      default:
-        return Colors.grey[700]!; // Default Grey Text
-    }
   }
 }

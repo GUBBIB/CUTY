@@ -2,63 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'widgets/community_post_item.dart'; // Import shared widget
 import 'info_board_detail_screen.dart';
+import '../../models/community_model.dart';
+import '../../data/community_data_manager.dart'; // Import Manager
+import 'post_write_screen.dart';
+import 'post_detail_screen.dart';
 
-class InfoBoardScreen extends StatelessWidget {
+class InfoBoardScreen extends StatefulWidget {
   const InfoBoardScreen({super.key});
 
   @override
+  State<InfoBoardScreen> createState() => _InfoBoardScreenState();
+}
+
+class _InfoBoardScreenState extends State<InfoBoardScreen> {
+  @override
   Widget build(BuildContext context) {
-    // Mock Data for Info Board
-    final List<Map<String, dynamic>> infoPosts = [
-      {
-        'title': "신촌 자취방 구할 때 '이 특약' 안 넣으면 보증금 날립니다 (필독)",
-        'content': "계약서 쓸 때 꼭 확인해야 할 3가지 체크리스트",
-        'author': "자취만렙",
-        'likes': 324,
-        'comments': 45,
-        'imageUrl': 'https://source.unsplash.com/random/800x600/?room',
-        'board': "꿀팁",
-        'flag': "🇰🇷",
-        'uni': "본부",
-        'cardCount': 5,
-      },
-      {
-        'title': "학교 앞 가성비 식당 TOP 5 (만 원의 행복)",
-        'content': "점심값 아껴서 여행가자! 가성비 맛집 지도 대공개",
-        'author': "먹깨비",
-        'likes': 128,
-        'comments': 12,
-        'imageUrl': 'https://source.unsplash.com/random/800x600/?food',
-        'board': "맛집",
-        'flag': "🇨🇳",
-        'uni': "경성대",
-        'cardCount': 7,
-      },
-      {
-        'title': "한국어능력시험(TOPIK) 6급 단기 완성 비법서",
-        'content': "3개월 만에 4급에서 6급으로 점프한 공부법 공유합니다.",
-        'author': "한글마스터",
-        'likes': 856,
-        'comments': 120,
-        'imageUrl': 'https://source.unsplash.com/random/800x600/?study',
-        'board': "비자",
-        'flag': "🇻🇳",
-        'uni': "부경대",
-        'cardCount': 4,
-      },
-      {
-        'title': "유학생 필독! 2026년 달라지는 장학금 제도",
-        'content': "놓치면 후회하는 신설 장학금 목록 정리",
-        'author': "장학요정",
-        'likes': 421,
-        'comments': 34,
-        'imageUrl': 'https://source.unsplash.com/random/800x600/?university',
-        'board': "생활",
-        'flag': "🇺🇸",
-        'uni': "동아대",
-        'cardCount': 6,
-      },
-    ];
+    // Centralized Data from Manager
+    final List<Post> infoPosts = CommunityDataManager.getPosts(BoardType.info);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -100,18 +60,40 @@ class InfoBoardScreen extends StatelessWidget {
               separatorBuilder: (context, index) => Divider(height: 1, thickness: 1, color: Colors.grey[100]),
               itemBuilder: (context, index) {
                  final post = infoPosts[index];
-                 // Map 'badge' to 'board' if needed, or ensure data has 'board' key
-                 // Since CommunityPostItem uses `post['board']`, we can just ensure the map has it.
-                 // We will update the mock data keys above instead.
-                 return CommunityPostItem(
-                   post: post,
-                   showBoardName: true,
-                   contentMaxLines: 2,
+                 return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context, 
+                        MaterialPageRoute(builder: (context) => PostDetailScreen(post: post)),
+                      );
+                    },
+                    child: CommunityPostItem(
+                      post: post,
+                      showBoardName: true,
+                      contentMaxLines: 2,
+                    ),
                  );
               },
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PostWriteScreen(boardType: BoardType.info),
+            ),
+          );
+
+          if (result == true) {
+            setState(() {});
+          }
+        },
+        backgroundColor: Colors.amber[600],
+        shape: const CircleBorder(),
+        child: const Icon(Icons.edit, color: Colors.white),
       ),
     );
   }
