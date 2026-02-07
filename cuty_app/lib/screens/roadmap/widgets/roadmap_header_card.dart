@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../l10n/gen/app_localizations.dart';
+
 class RoadmapHeaderCard extends StatelessWidget {
   final String currentVisa;
   final String targetVisa;
@@ -46,7 +48,7 @@ class RoadmapHeaderCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '나의 목표',
+                    AppLocalizations.of(context)!.lblMyGoal,
                     style: GoogleFonts.notoSansKr(
                       color: Colors.white.withOpacity(0.8),
                       fontSize: 14,
@@ -66,7 +68,7 @@ class RoadmapHeaderCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        '(연구/거주)',
+                        AppLocalizations.of(context)!.lblResidencyVisa,
                         style: GoogleFonts.notoSansKr(
                           color: Colors.white,
                           fontSize: 18,

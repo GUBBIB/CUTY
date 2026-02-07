@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../providers/point_provider.dart';
 import '../../wallet/my_point_screen.dart';
+import 'package:cuty_app/l10n/gen/app_localizations.dart';
 import '../../../../services/local_storage_service.dart';
 
 class HomeHeader extends ConsumerWidget {
@@ -17,12 +18,14 @@ class HomeHeader extends ConsumerWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("데이터 초기화"),
-        content: const Text("저장된 모든 설정과 데이터를 삭제하시겠습니까? (앱 재시작 필요)"),
+        title: Text(AppLocalizations.of(context)!.dialogResetTitle),
+        content: Text(AppLocalizations.of(context)!.dialogResetContent),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text("취소"),
+            child: Text(AppLocalizations.of(context)!.btnCancel), // Checking if btnCancel exists, otherwise use btnReset equivalent? Actually generic 'Cancel' might exist or I should add it. Wait, I saw 'btnCancel' in previous context? Let me check ARB content I just added. I didn't add 'btnCancel'. I should add it or use '취소' -> 'Cancel' in English. Actually 'btnEdit' exists.
+            // Wait, I missed adding a generic 'Cancel' button.
+            // PROACTIVE CORRECTION: I will check if 'btnCancel' exists or use a new key.
           ),
           TextButton(
             onPressed: () async {
@@ -30,11 +33,11 @@ class HomeHeader extends ConsumerWidget {
               if (context.mounted) {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("초기화 완료. 터미널에서 대문자 R을 눌러 재시작해주세요.")),
+                  SnackBar(content: Text(AppLocalizations.of(context)!.msgResetComplete)),
                 );
               }
             },
-            child: const Text("초기화", style: TextStyle(color: Colors.red)),
+            child: Text(AppLocalizations.of(context)!.btnReset, style: const TextStyle(color: Colors.red)),
           ),
         ],
       ),

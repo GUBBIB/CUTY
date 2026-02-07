@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'visa_goal_selection_screen.dart';
 import '../../widgets/job_capability_banner.dart';
+import '../../l10n/gen/app_localizations.dart'; // Add localization import
 
 class EmploymentVisaScreen extends StatefulWidget {
   const EmploymentVisaScreen({super.key});
@@ -15,29 +16,35 @@ class _EmploymentVisaScreenState extends State<EmploymentVisaScreen> {
   bool isFirstApplication = true; // Renamed from _isD10FirstTime to match snippet
 
   // [핵심 데이터] E-7 상세 직종 코드 (Code | Job Title)
-  final Map<String, List<String>> e7Occupations = {
-    "E-7-1 (전문직 - 관리/전문가)": [
-      "1110 | 기획 및 경영지원 관리자", "1212 | 정보통신 관리자", "1391 | 건설 및 광업 생산 관리자",
-      "1511 | 상품기획 전문가", "1522 | 공연기획자", "1630 | 통번역가",
-      "2111 | 생명과학 전문가", "2112 | 자연과학 전문가", "2311 | 화학공학 기술자",
-      "2321 | 금속/재료 공학 기술자", "2351 | 기계공학 기술자", "2353 | 플랜트공학 기술자",
-      "2392 | 로봇공학 전문가", "2511 | 컴퓨터 하드웨어 기술자", "2521 | 통신공학 기술자",
-      "2530 | 컴퓨터 시스템 설계 및 분석가", "2531 | 시스템 S/W 개발자",
-      "2532 | 응용 S/W 개발자", "2533 | 웹 개발자", "2592 | 데이터 전문가",
-      "2593 | 네트워크 시스템 개발자", "2594 | 정보보안 전문가",
-      "2721 | 디자이너", "2733 | 영상 관련 디자이너", "2741 | 문화예술 기획자"
-    ],
-    "E-7-2 (준전문 - 사무/서비스)": [
-      "3121 | 면세점/제주영어도시 판매", "3126 | 고객상담 사무원", "3910 | 항공 운송 사무원",
-      "3922 | 관광 통역 안내원", "3991 | 호텔 접수 사무원", "4320 | 의료 코디네이터",
-      "4410 | 주방장 및 조리사"
-    ],
-    "E-7-3 (일반기능 - 숙련직)": [
-      "6139 | 동물 사육사", "6310 | 양식 기술자", "7103 | 할랄 도축원",
-      "7303 | 악기 제조 및 조율사", "7430 | 조선 용접공",
-      "7521 | 항공기 정비원", "7621 | 선박 전기원", "7724 | 선박 도장공"
-    ],
-  };
+  Map<String, List<String>> e7Occupations = {};
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    e7Occupations = {
+      AppLocalizations.of(context)!.codeProfessional: [
+        AppLocalizations.of(context)!.jobManager, AppLocalizations.of(context)!.jobITManager, AppLocalizations.of(context)!.jobConstructionMgr,
+        AppLocalizations.of(context)!.jobProductPlanner, AppLocalizations.of(context)!.jobPerfPlanner, AppLocalizations.of(context)!.jobTranslator,
+        AppLocalizations.of(context)!.jobBioExpert, AppLocalizations.of(context)!.jobScienceExpert, AppLocalizations.of(context)!.jobChemEng,
+        AppLocalizations.of(context)!.jobMetalEng, AppLocalizations.of(context)!.jobMechEng, AppLocalizations.of(context)!.jobPlantEng,
+        AppLocalizations.of(context)!.jobRobotExpert, AppLocalizations.of(context)!.jobHwEng, AppLocalizations.of(context)!.jobTelecomEng,
+        AppLocalizations.of(context)!.jobSystemAnalyst, AppLocalizations.of(context)!.jobSwDev,
+        AppLocalizations.of(context)!.jobAppDev, AppLocalizations.of(context)!.jobWebDev, AppLocalizations.of(context)!.jobDataExpert,
+        AppLocalizations.of(context)!.jobNetworkDev, AppLocalizations.of(context)!.jobSecExpert,
+        AppLocalizations.of(context)!.jobDesigner, AppLocalizations.of(context)!.jobVideoDesigner, AppLocalizations.of(context)!.jobArtPlanner
+      ],
+      AppLocalizations.of(context)!.codeSemiPro: [
+        AppLocalizations.of(context)!.jobDutyFree, AppLocalizations.of(context)!.jobCounselor, AppLocalizations.of(context)!.jobAirTransport,
+        AppLocalizations.of(context)!.jobTourGuide, AppLocalizations.of(context)!.jobHotelReception, AppLocalizations.of(context)!.jobMedicalCoord,
+        AppLocalizations.of(context)!.jobChef
+      ],
+      AppLocalizations.of(context)!.codeSkilled: [
+        AppLocalizations.of(context)!.jobZookeeper, AppLocalizations.of(context)!.jobAquaTech, AppLocalizations.of(context)!.jobHalalButcher,
+        AppLocalizations.of(context)!.jobInstrumentMaker, AppLocalizations.of(context)!.jobShipWelder,
+        AppLocalizations.of(context)!.jobAircraftMech, AppLocalizations.of(context)!.jobShipElectrician, AppLocalizations.of(context)!.jobShipPainter
+      ],
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +52,7 @@ class _EmploymentVisaScreenState extends State<EmploymentVisaScreen> {
       backgroundColor: const Color(0xFFE3F2FD),
       appBar: AppBar(
         title: Text(
-          '실전 취업형 로드맵',
+          AppLocalizations.of(context)!.roadmapJobTitle,
           style: GoogleFonts.poppins(
             color: const Color(0xFF1A1A2E),
             fontWeight: FontWeight.w700,
@@ -77,7 +84,7 @@ class _EmploymentVisaScreenState extends State<EmploymentVisaScreen> {
               },
               icon: const Icon(Icons.swap_horiz, size: 20, color: Color(0xFF6C63FF)),
               label: Text(
-                "Class 변경",
+                AppLocalizations.of(context)!.actionChangeClass,
                 style: GoogleFonts.poppins(
                   color: const Color(0xFF6C63FF),
                   fontWeight: FontWeight.w600,
@@ -116,7 +123,7 @@ class _EmploymentVisaScreenState extends State<EmploymentVisaScreen> {
             // 4. D-10 가이드 카드
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: _buildD10SectionCard(),
+              child: _buildD10SectionCard(context),
             ),
             const SizedBox(height: 40),
           ],
@@ -127,6 +134,7 @@ class _EmploymentVisaScreenState extends State<EmploymentVisaScreen> {
 
   // [위젯] 상단 목표 카드 (Exact Layout from RoadmapHeaderCard, Modified for E-7)
   Widget _buildHeroCard() {
+    final s = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24), // F-2-7 uses Padding(horizontal: 24), so we use margin here to match
       width: double.infinity,
@@ -161,7 +169,7 @@ class _EmploymentVisaScreenState extends State<EmploymentVisaScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '나의 목표',
+                    s.visaRoadmapStep3, // '나의 목표'
                     style: GoogleFonts.notoSansKr(
                       color: Colors.white.withOpacity(0.8),
                       fontSize: 14,
@@ -172,7 +180,7 @@ class _EmploymentVisaScreenState extends State<EmploymentVisaScreen> {
                   Row(
                     children: [
                       Text(
-                        "실전 취업",
+                        AppLocalizations.of(context)!.stepPracticeJob,
                         style: GoogleFonts.poppins(
                           color: Colors.white,
                           fontSize: 24,
@@ -363,7 +371,7 @@ class _EmploymentVisaScreenState extends State<EmploymentVisaScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "E-7 비자 직종 코드",
+                      AppLocalizations.of(context)!.secJobCodes,
                       style: GoogleFonts.poppins(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -372,7 +380,7 @@ class _EmploymentVisaScreenState extends State<EmploymentVisaScreen> {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      "내 전공에 맞는 코드를 찾아보세요.",
+                      AppLocalizations.of(context)!.descJobCodes,
                       style: GoogleFonts.poppins(
                         fontSize: 12,
                         color: Colors.grey[600],
@@ -437,7 +445,7 @@ class _EmploymentVisaScreenState extends State<EmploymentVisaScreen> {
   }
 
   // [신규] D-10 가이드 섹션 카드
-  Widget _buildD10SectionCard() {
+  Widget _buildD10SectionCard(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -464,11 +472,12 @@ class _EmploymentVisaScreenState extends State<EmploymentVisaScreen> {
                 child: const Icon(Icons.verified_user_outlined, color: Colors.orange, size: 20),
               ),
               const SizedBox(width: 12),
-              Column(
+              Expanded(
+                child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "D-10 구직비자 가이드",
+                    AppLocalizations.of(context)!.visaGoalD10, // 'D-10 구직비자 가이드'
                     style: GoogleFonts.poppins(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -477,13 +486,14 @@ class _EmploymentVisaScreenState extends State<EmploymentVisaScreen> {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    "취업 전 수습/인턴 기간을 위한 비자",
+                    AppLocalizations.of(context)!.descD10Guide,
                     style: GoogleFonts.poppins(
                       fontSize: 12,
                       color: Colors.grey[600],
                     ),
                   ),
                 ],
+              ),
               ),
             ],
           ),
@@ -497,13 +507,13 @@ class _EmploymentVisaScreenState extends State<EmploymentVisaScreen> {
             children: [
               Expanded(
                 child: Text(
-                  "학사 졸업 후 최초 신청인가요?",
+                  AppLocalizations.of(context)!.lblFirstApp,
                   style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w500, color: const Color(0xFF1A1A2E)),
                 ),
               ),
               Switch(
                 value: isFirstApplication,
-                activeColor: const Color(0xFF4A90E2),
+                activeThumbColor: const Color(0xFF4A90E2),
                 onChanged: (value) => setState(() => isFirstApplication = value),
               ),
             ],
@@ -527,16 +537,16 @@ class _EmploymentVisaScreenState extends State<EmploymentVisaScreen> {
                     children: [
                       const Icon(Icons.check_circle, color: Color(0xFF27AE60), size: 32),
                       const SizedBox(height: 8),
-                      Text("점수제 면제 대상!", style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold, color: const Color(0xFF27AE60))),
-                      Text("최초 1회, 점수 없이 발급 가능", style: GoogleFonts.poppins(fontSize: 12, color: Colors.grey[600])),
+                      Text(AppLocalizations.of(context)!.lblPointExempt, style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold, color: const Color(0xFF27AE60))),
+                      Text(AppLocalizations.of(context)!.descPointExempt, style: GoogleFonts.poppins(fontSize: 12, color: Colors.grey[600])),
                     ],
                   )
                 : Column(
                     children: [
                       const Icon(Icons.warning_amber_rounded, color: Colors.orange, size: 32),
                       const SizedBox(height: 8),
-                      Text("점수제 진단 필요", style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.orange)),
-                      Text("60점 이상 획득해야 연장 가능", style: GoogleFonts.poppins(fontSize: 12, color: Colors.grey[600])),
+                      Text(AppLocalizations.of(context)!.lblPointRequired, style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.orange)),
+                      Text(AppLocalizations.of(context)!.descPointRequired, style: GoogleFonts.poppins(fontSize: 12, color: Colors.grey[600])),
                     ],
                   ),
           ),

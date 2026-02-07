@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../l10n/gen/app_localizations.dart'; // UPDATED
 import '../../models/community_model.dart';
 import '../../models/ad_model.dart';
 
@@ -38,9 +39,9 @@ class NativeAdItem extends StatelessWidget {
                   borderRadius: BorderRadius.circular(4),
                   border: Border.all(color: Colors.grey[300]!),
                 ),
-                child: const Text(
-                  'Sponsored',
-                  style: TextStyle(
+                child: Text(
+                  AppLocalizations.of(context)!.adSponsored,
+                  style: const TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.bold,
                     color: Colors.grey,
@@ -83,7 +84,7 @@ class NativeAdItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      '지금 바로 확인해보세요! ${ad.sponsorName}가 제공하는 특별한 혜택.', // Mock Description
+                      "${AppLocalizations.of(context)!.adDescriptionDefault} • ${ad.sponsorName}",
                       style: GoogleFonts.notoSansKr(
                         fontSize: 13,
                         color: Colors.grey[600],
@@ -123,7 +124,7 @@ class NativeAdItem extends StatelessWidget {
             ),
             alignment: Alignment.center,
             child: Text(
-              '지금 확인하기',
+              AppLocalizations.of(context)!.btnCheckNow,
               style: GoogleFonts.notoSansKr(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,

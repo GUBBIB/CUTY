@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../l10n/gen/app_localizations.dart'; // UPDATED
+import 'package:cuty_app/utils/localization_utils.dart'; // ADDED
 import '../../models/community_model.dart';
 import '../../data/community_data_manager.dart'; // Import Manager
 import 'post_write_screen.dart';
@@ -15,10 +17,18 @@ class UsedMarketScreen extends StatefulWidget {
 class _UsedMarketScreenState extends State<UsedMarketScreen> {
   // Filter state
   int _selectedFilterIndex = 0;
-  final List<String> _filters = ['전체', '판매', '나눔', '구해요'];
+
 
   @override
   Widget build(BuildContext context) {
+    // Localized Filters
+    final List<String> filters = [
+      AppLocalizations.of(context)!.filterAll,
+      AppLocalizations.of(context)!.filterSell,
+      AppLocalizations.of(context)!.filterShare,
+      AppLocalizations.of(context)!.filterRequest,
+    ];
+
     // Centralized Data from Manager
     final List<Post> posts = CommunityDataManager.getPosts(BoardType.market);
 
@@ -26,7 +36,7 @@ class _UsedMarketScreenState extends State<UsedMarketScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          '중고장터',
+          AppLocalizations.of(context)!.boardMarket,
           style: GoogleFonts.notoSansKr(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.white,
@@ -47,7 +57,7 @@ class _UsedMarketScreenState extends State<UsedMarketScreen> {
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                children: List.generate(_filters.length, (index) {
+                children: List.generate(filters.length, (index) {
                   final isSelected = _selectedFilterIndex == index;
                   return GestureDetector(
                     onTap: () {
@@ -63,7 +73,7 @@ class _UsedMarketScreenState extends State<UsedMarketScreen> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
-                        _filters[index],
+                        filters[index],
                         style: GoogleFonts.notoSansKr(
                           fontSize: 13,
                           color: isSelected ? Colors.white : Colors.grey[600],
@@ -91,7 +101,7 @@ class _UsedMarketScreenState extends State<UsedMarketScreen> {
                       MaterialPageRoute(builder: (context) => PostDetailScreen(post: posts[index])),
                     );
                   },
-                  child: _buildUnifiedListItem(posts[index]),
+                  child: _buildUnifiedListItem(context, posts[index]),
                 );
               },
             ),
@@ -118,7 +128,7 @@ class _UsedMarketScreenState extends State<UsedMarketScreen> {
     );
   }
 
-  Widget _buildUnifiedListItem(Post post) {
+  Widget _buildUnifiedListItem(BuildContext context, Post post) {
     bool hasImage = post.imageUrl != null;
     return Container(
       color: Colors.white,
@@ -131,7 +141,7 @@ class _UsedMarketScreenState extends State<UsedMarketScreen> {
               // 1. Thumbnail (Left Side) - Mandatory
               Stack(
                 children: [
-                  ClipRRect(
+                   ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: hasImage ? Image.network(
                       post.imageUrl!,
@@ -195,7 +205,7 @@ class _UsedMarketScreenState extends State<UsedMarketScreen> {
 
                     // Price (Functionally replaces Content)
                     Text(
-                      "${_formatPrice(post.price)}원",
+                      "${_formatPrice(context, post.price)}원",
                       style: GoogleFonts.notoSansKr(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -216,7 +226,7 @@ class _UsedMarketScreenState extends State<UsedMarketScreen> {
                           ),
                         ),
                         Text(
-                          " · ${post.timeAgo}",
+                          " · ${LocalizationUtils.getTimeAgo(context, post.createdAt)}",
                           style: GoogleFonts.notoSansKr(
                             fontSize: 12,
                             color: Colors.grey[500],
@@ -248,8 +258,8 @@ class _UsedMarketScreenState extends State<UsedMarketScreen> {
     );
   }
   
-  String _formatPrice(int price) {
-    if (price == 0) return "나눔";
+  String _formatPrice(BuildContext context, int price) {
+    if (price == 0) return AppLocalizations.of(context)!.priceFree;
     return price.toString().replaceAllMapped(
       RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), 
       (Match m) => '${m[1]},'

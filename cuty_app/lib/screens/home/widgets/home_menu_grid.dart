@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/gen/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../providers/home_view_provider.dart';
@@ -17,44 +18,51 @@ class HomeMenuGrid extends StatelessWidget {
     // Define menu items
     final List<Map<String, dynamic>> menuItems = [
       {
-        'label': '비자',
+        'id': 'visa',
+        'label': AppLocalizations.of(context)!.menuVisa,
         'icon': Icons.public_outlined,
         'bg': const Color(0xFFE1F5FE), // Light Blue
         'iconColor': const Color(0xFF0277BD), // Deep Blue
       },
       {
-        'label': '커뮤니티',
+        'id': 'community',
+        'label': AppLocalizations.of(context)!.menuCommunity,
         'icon': Icons.chat_bubble_outline_rounded,
         'bg': const Color(0xFFE1F5FE), // Same as Visa (Primary Blue Light)
         'iconColor': const Color(0xFF0277BD), // Same as Visa (Primary Blue Deep)
       },
       {
-        'label': '서류지갑',
+        'id': 'wallet',
+        'label': AppLocalizations.of(context)!.menuWallet,
         'icon': Icons.wallet_outlined,
         'bg': const Color(0xFFFFF9C4), // Light Yellow
         'iconColor': const Color(0xFFF57F17), // Deep Yellow/Orange
       },
       {
-        'label': '알바/취업',
+        'id': 'jobs',
+        'label': AppLocalizations.of(context)!.menuJobs,
         'icon': Icons.work_outline,
         'bg': const Color(0xFFE0F2F1), // Light Mint
         'iconColor': const Color(0xFF00695C), // Deep Teal
       },
       {
-        'label': '시간표',
+        'id': 'schedule',
+        'label': AppLocalizations.of(context)!.menuSchedule,
         'icon': Icons.calendar_today_outlined,
         'bg': const Color(0xFFE3F2FD), // Light Blue
         'iconColor': const Color(0xFF1565C0), // Deep Blue
       },
       {
-        'label': '학사정보',
+        'id': 'academics',
+        'label': AppLocalizations.of(context)!.menuAcademics,
         'icon': Icons.school_outlined,
         'bg': const Color(0xFFF3E5F5), // Light Purple
         'iconColor': const Color(0xFF6A1B9A), // Deep Purple
         'isPreparing': true,
       },
       {
-        'label': '맛집',
+        'id': 'food',
+        'label': AppLocalizations.of(context)!.menuFood,
         'icon': Icons.restaurant_menu,
         'bg': const Color(0xFFFFE0B2), // Light Orange
         'iconColor': const Color(0xFFEF6C00), // Deep Orange
@@ -69,6 +77,7 @@ class HomeMenuGrid extends StatelessWidget {
         children: [
           for (int i = 0; i < menuItems.length; i++) ...[
             _MenuCard(
+              id: menuItems[i]['id'] as String,
               icon: menuItems[i]['icon'] as IconData,
               label: menuItems[i]['label'] as String,
               backgroundColor: menuItems[i]['bg'] as Color,
@@ -85,6 +94,7 @@ class HomeMenuGrid extends StatelessWidget {
 
 
 class _MenuCard extends ConsumerWidget {
+  final String id; // Stable ID
   final IconData icon;
   final String label;
   final Color backgroundColor;
@@ -92,6 +102,7 @@ class _MenuCard extends ConsumerWidget {
   final bool isPreparing;
 
   const _MenuCard({
+    required this.id,
     required this.icon,
     required this.label,
     required this.backgroundColor,
@@ -123,47 +134,47 @@ class _MenuCard extends ConsumerWidget {
           onTap: isPreparing
               ? null
               : () {
-                  debugPrint('$label 메뉴 클릭됨');
-                  switch (label) {
-                    case '비자':
+                  debugPrint('$label ($id) 메뉴 클릭됨');
+                  switch (id) {
+                    case 'visa':
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const VisaScreenWrapper()),
                       );
                       break;
-                    case '서류지갑':
+                    case 'wallet':
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const SpecWalletScreen()),
                       );
                       break;
-                    case '알바/취업':
+                    case 'jobs':
                       ref.read(homeViewProvider.notifier).state = 'job';
                       break;
-                    case '학사정보':
+                    case 'academics':
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const AcademicMainScreen()),
                       );
                       break;
-                    case '시간표':
+                    case 'schedule':
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const ScheduleScreen()),
                       );
                       break;
-                    case '커뮤니티':
+                    case 'community':
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const CommunityMainScreen()),
                       );
                       break;
-                    case '맛집':
+                    case 'food':
                       // Matjib no screen request, keeping log
                       break;
                   }
@@ -210,7 +221,7 @@ class _MenuCard extends ConsumerWidget {
                     ),
                     alignment: Alignment.center,
                     child: Text(
-                      "준비중",
+                      AppLocalizations.of(context)!.lblPreparing,
                       style: GoogleFonts.notoSansKr(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,

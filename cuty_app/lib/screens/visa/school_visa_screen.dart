@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../l10n/gen/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'visa_goal_selection_screen.dart';
 
@@ -11,7 +12,7 @@ class SchoolVisaScreen extends StatelessWidget {
       backgroundColor: const Color(0xFFFAFAFA), // Clean Gray Background
       appBar: AppBar(
         title: Text(
-          '학교 생활형 로드맵',
+          AppLocalizations.of(context)!.roadmapSchoolTitle,
           style: GoogleFonts.poppins(
             color: const Color(0xFF424242), // Dark Charcoal
             fontWeight: FontWeight.w700,
@@ -41,7 +42,7 @@ class SchoolVisaScreen extends StatelessWidget {
               },
               icon: const Icon(Icons.swap_horiz, size: 20, color: Color(0xFF616161)),
               label: Text(
-                "Class 변경",
+                AppLocalizations.of(context)!.actionChangeClass,
                 style: GoogleFonts.poppins(
                   color: const Color(0xFF616161),
                   fontWeight: FontWeight.w600,
@@ -63,14 +64,14 @@ class SchoolVisaScreen extends StatelessWidget {
             const SizedBox(height: 10),
             
             // 1. 상단 목표 카드 (Hero)
-            _buildHeroCard(),
+            _buildHeroCard(context),
 
             const SizedBox(height: 24),
 
             // 2. 알바 & 비자 안전 가이드 (Safety)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: _buildSafetyCard(),
+              child: _buildSafetyCard(context),
             ),
 
             const SizedBox(height: 24),
@@ -78,7 +79,7 @@ class SchoolVisaScreen extends StatelessWidget {
             // 3. 한국어 중요성 카드 (New)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: _buildKoreanImportanceCard(),
+              child: _buildKoreanImportanceCard(context),
             ),
 
             const SizedBox(height: 24),
@@ -86,7 +87,7 @@ class SchoolVisaScreen extends StatelessWidget {
             // 4. 한국어 전략 카드 (Updated)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: _buildLanguageStrategyCard(),
+              child: _buildLanguageStrategyCard(context),
             ),
 
             const SizedBox(height: 24),
@@ -104,7 +105,7 @@ class SchoolVisaScreen extends StatelessWidget {
   }
 
   // 1. 상단 목표 카드
-  Widget _buildHeroCard() {
+  Widget _buildHeroCard(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24),
       width: double.infinity,
@@ -137,7 +138,7 @@ class SchoolVisaScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '나의 목표',
+                    AppLocalizations.of(context)!.visaRoadmapStep3, // '나의 목표'
                     style: GoogleFonts.notoSansKr(
                       color: Colors.black54,
                       fontSize: 14,
@@ -148,7 +149,7 @@ class SchoolVisaScreen extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "슬기로운 학교생활",
+                        AppLocalizations.of(context)!.stepSmartSchoolLife,
                         style: GoogleFonts.poppins(
                           color: const Color(0xFF424242),
                           fontSize: 22,
@@ -181,7 +182,7 @@ class SchoolVisaScreen extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            "아직 정해진 건 없어요. 무엇이든 될 수 있습니다!",
+            AppLocalizations.of(context)!.descSmartSchoolLife,
             style: GoogleFonts.notoSansKr(
               color: Colors.black87,
               fontSize: 14,
@@ -200,11 +201,11 @@ class SchoolVisaScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildStep(label: '입학', isCurrent: true),
+                _buildStep(label: AppLocalizations.of(context)!.stepAdmission, isCurrent: true),
                 Icon(Icons.arrow_forward_ios, color: Colors.grey[400], size: 14),
-                _buildStep(label: '학교생활', isCurrent: false),
+                _buildStep(label: AppLocalizations.of(context)!.stepCampusLife, isCurrent: false),
                  Icon(Icons.arrow_forward_ios, color: Colors.grey[400], size: 14),
-                _buildStep(label: '진로선택', isCurrent: false, isTarget: true),
+                _buildStep(label: AppLocalizations.of(context)!.stepCareerChoice, isCurrent: false, isTarget: true),
               ],
             ),
           ),
@@ -240,7 +241,7 @@ class SchoolVisaScreen extends StatelessWidget {
   }
 
   // 2. 알바 & 비자 안전 가이드 (Safety)
-  Widget _buildSafetyCard() {
+  Widget _buildSafetyCard(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -263,7 +264,7 @@ class SchoolVisaScreen extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  "비자 잃지 않으려면 (필수)",
+                  AppLocalizations.of(context)!.secVisaMandatory,
                   style: GoogleFonts.notoSansKr(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -274,12 +275,12 @@ class SchoolVisaScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          _buildCheckItem("시간제 취업 허가 없이 알바 절대 금지 (강제 출국 대상)", isWarning: true),
+          _buildCheckItem(AppLocalizations.of(context)!.warnNoPermit, isWarning: true),
           const SizedBox(height: 12),
-          _buildCheckItem("출석률 70% 미만 시 비자 연장 불가", isWarning: true),
+          _buildCheckItem(AppLocalizations.of(context)!.warnAttendance, isWarning: true),
           const SizedBox(height: 12),
           // Updated GPA item
-          _buildCheckItem("학점 2.0 이상 유지 (권장)", isRecommended: true),
+          _buildCheckItem(AppLocalizations.of(context)!.warnGpa, isRecommended: true),
         ],
       ),
     );
@@ -325,7 +326,7 @@ class SchoolVisaScreen extends StatelessWidget {
 
 
   // 3. 한국어 중요성 카드 (New)
-  Widget _buildKoreanImportanceCard() {
+  Widget _buildKoreanImportanceCard(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -348,7 +349,7 @@ class SchoolVisaScreen extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  "한국어 실력 = 나의 몸값",
+                  AppLocalizations.of(context)!.secKoreanValue,
                   style: GoogleFonts.notoSansKr(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -360,7 +361,7 @@ class SchoolVisaScreen extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            "한국어는 단순한 언어가 아닙니다. 한국에서의 '기회'와 '수입'을 결정하는 가장 강력한 무기입니다.",
+            AppLocalizations.of(context)!.descKoreanValue,
             style: GoogleFonts.notoSansKr(
               fontSize: 14,
               color: const Color(0xFF424242),
@@ -368,11 +369,11 @@ class SchoolVisaScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          _buildImportanceItem("💰 시급 상승", "힘든 육체노동 NO, 카페/서비스직 가능"),
+          _buildImportanceItem(AppLocalizations.of(context)!.tagWage, AppLocalizations.of(context)!.descWage),
           const SizedBox(height: 8),
-          _buildImportanceItem("🤝 인 맥", "한국인 선배/친구와 교류 (꿀정보 획득)"),
+          _buildImportanceItem(AppLocalizations.of(context)!.tagNetwork, AppLocalizations.of(context)!.descNetwork),
           const SizedBox(height: 8),
-          _buildImportanceItem("🏢 취 업", "E-7 전문직 면접은 한국어 실력이 1순위"),
+          _buildImportanceItem(AppLocalizations.of(context)!.tagEmployment, AppLocalizations.of(context)!.descEmployment),
         ],
       ),
     );
@@ -413,7 +414,7 @@ class SchoolVisaScreen extends StatelessWidget {
   }
 
   // 4. 한국어 전략 카드 (Updated)
-  Widget _buildLanguageStrategyCard() {
+  Widget _buildLanguageStrategyCard(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -436,7 +437,7 @@ class SchoolVisaScreen extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  "전략적 준비 (TOPIK vs KIIP)",
+                  AppLocalizations.of(context)!.secStrategicPrep,
                   style: GoogleFonts.notoSansKr(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -461,12 +462,12 @@ class SchoolVisaScreen extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                       decoration: BoxDecoration(color: const Color(0xFFE3F2FD), borderRadius: BorderRadius.circular(4)),
-                      child: Text("📝 시험 (Test)", style: GoogleFonts.notoSansKr(fontSize: 11, fontWeight: FontWeight.w600, color: const Color(0xFF1565C0))),
+                      child: Text(AppLocalizations.of(context)!.tagTest, style: GoogleFonts.notoSansKr(fontSize: 11, fontWeight: FontWeight.w600, color: const Color(0xFF1565C0))),
                     ),
                     const SizedBox(height: 12),
-                    _buildCompactInfo("목적", "장학금 / 입학\n졸업 요건"),
+                    _buildCompactInfo(AppLocalizations.of(context)!.lblPurpose, AppLocalizations.of(context)!.valScholarshipGrad),
                     const SizedBox(height: 8),
-                    _buildCompactInfo("유효기간", "2년 (갱신 필수)"),
+                    _buildCompactInfo(AppLocalizations.of(context)!.lblValidity, AppLocalizations.of(context)!.valValidityTwoYears),
                   ],
                 ),
               ),
@@ -480,12 +481,12 @@ class SchoolVisaScreen extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                       decoration: BoxDecoration(color: const Color(0xFFE8F5E9), borderRadius: BorderRadius.circular(4)),
-                      child: Text("🏫 교육과정", style: GoogleFonts.notoSansKr(fontSize: 11, fontWeight: FontWeight.w600, color: const Color(0xFF2E7D32))),
+                      child: Text(AppLocalizations.of(context)!.tagEducationCurriculum, style: GoogleFonts.notoSansKr(fontSize: 11, fontWeight: FontWeight.w600, color: const Color(0xFF2E7D32))),
                     ),
                     const SizedBox(height: 12),
-                    _buildCompactInfo("목적", "비자(F-2)\n영주권(F-5)"),
+                    _buildCompactInfo(AppLocalizations.of(context)!.lblPurpose, AppLocalizations.of(context)!.valVisaPermanent),
                     const SizedBox(height: 8),
-                    _buildCompactInfo("유효기간", "무제한 (평생)", highlight: true),
+                    _buildCompactInfo(AppLocalizations.of(context)!.lblValidity, AppLocalizations.of(context)!.valValidityForever, highlight: true),
                   ],
                 ),
               ),
@@ -503,10 +504,10 @@ class SchoolVisaScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                 _buildDifferenceRow("TOPIK은 점수만 보지만, KIIP는 교육 이수(출석)가 필수입니다."),
+                 _buildDifferenceRow(AppLocalizations.of(context)!.descTopikVsKiip),
                  const SizedBox(height: 8),
                  _buildDifferenceRow(
-                   "⚠️ 5단계 주의: 0~4단계는 종합평가 불합시 재수강으로 승급되지만, 마지막 5단계는 '종합평가' 합격을 해야 합니다.",
+                   AppLocalizations.of(context)!.warnKiipLevel5,
                    isWarning: true
                  ),
               ],
@@ -530,7 +531,7 @@ class SchoolVisaScreen extends StatelessWidget {
                     const Icon(Icons.lightbulb, color: Colors.orange, size: 20),
                     const SizedBox(width: 8),
                     Text(
-                      "졸업 요건 대체 가능?",
+                      AppLocalizations.of(context)!.titleTipGraduation,
                       style: GoogleFonts.notoSansKr(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
@@ -541,7 +542,7 @@ class SchoolVisaScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  "최근 많은 대학이 KIIP 이수증으로 졸업 논문/TOPIK을 대체해 줍니다.\n학교 행정실에 확인해 보세요. [졸업 + 비자 + 영주권]을 한 번에 해결할 수 있습니다!",
+                  AppLocalizations.of(context)!.descTipGraduation,
                   style: GoogleFonts.notoSansKr(
                     fontSize: 13,
                     color: const Color(0xFFBF360C),
@@ -619,7 +620,7 @@ class SchoolVisaScreen extends StatelessWidget {
               const Icon(Icons.alt_route_rounded, color: Color(0xFF424242), size: 24),
               const SizedBox(width: 8),
               Text(
-                "졸업 후, 어떤 길로 갈까요?",
+                AppLocalizations.of(context)!.titleFuturePath,
                 style: GoogleFonts.notoSansKr(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -636,8 +637,8 @@ class SchoolVisaScreen extends StatelessWidget {
               children: [
                 _buildExpansionTile(
                   color: const Color(0xFF2196F3), // Blue
-                  title: "취업형 (E-7)",
-                  subtitle: "전문직 취업 비자",
+                  title: AppLocalizations.of(context)!.roadmapJobTitle,
+                  subtitle: AppLocalizations.of(context)!.subtitleE7,
                   content: Text.rich(
                     TextSpan(
                       style: GoogleFonts.notoSansKr(
@@ -646,20 +647,15 @@ class SchoolVisaScreen extends StatelessWidget {
                         fontSize: 14,
                       ),
                       children: [
-                        const TextSpan(text: "법무부 장관이 지정한 87개 직종에서 근무할 수 있습니다.\n단순히 전공만 맞추는 것이 아니라, "),
-                        TextSpan(
-                          text: "나의 '전문성'과 회사가 유학생을 채용해야 하는 '필요성'을 입증",
-                          style: GoogleFonts.notoSansKr(fontWeight: FontWeight.bold),
-                        ),
-                        const TextSpan(text: "해야 합니다.\n(전공-직무 연관 시 유리)"),
+                        TextSpan(text: AppLocalizations.of(context)!.descE7),
                       ],
                     ),
                   ),
                 ),
                  _buildExpansionTile(
                   color: const Color(0xFF9C27B0), // Purple
-                  title: "연구/거주형 (F-2)",
-                  subtitle: "점수제 거주 비자 (석사대상)",
+                  title: AppLocalizations.of(context)!.lblResidencyVisa,
+                  subtitle: AppLocalizations.of(context)!.subtitleF2,
                   content: Text.rich(
                     TextSpan(
                       style: GoogleFonts.notoSansKr(
@@ -668,25 +664,15 @@ class SchoolVisaScreen extends StatelessWidget {
                         fontSize: 14,
                       ),
                       children: [
-                        const TextSpan(text: "나이, 학력, 소득을 점수로 환산하는 비자입니다.\n"),
-                        TextSpan(
-                          text: "유학전형의 경우 석사학위 이상을 대상으로 하며, 이공계가 점수 확보에 유리합니다.",
-                          style: GoogleFonts.notoSansKr(fontWeight: FontWeight.bold),
-                        ),
-                        const TextSpan(text: " 취업처 변경이 자유로운 "),
-                        TextSpan(
-                          text: "'준영주권'",
-                          style: GoogleFonts.notoSansKr(fontWeight: FontWeight.bold),
-                        ),
-                        const TextSpan(text: "입니다."),
+                       TextSpan(text: AppLocalizations.of(context)!.descF2),
                       ],
                     ),
                   ),
                 ),
                  _buildExpansionTile(
                   color: const Color(0xFFFF9800), // Orange
-                  title: "창업형 (D-8-4)",
-                  subtitle: "기술 창업 비자 (OASIS 필수)",
+                  title: AppLocalizations.of(context)!.roadmapStartupTitle,
+                  subtitle: AppLocalizations.of(context)!.subtitleStartup,
                   content: Text.rich(
                     TextSpan(
                       style: GoogleFonts.notoSansKr(
@@ -695,32 +681,17 @@ class SchoolVisaScreen extends StatelessWidget {
                         fontSize: 14,
                       ),
                       children: [
-                        const TextSpan(text: "특허나 독자적인 기술을 바탕으로 한국에서 벤처 기업을 설립하는 비자입니다. 단순히 자본금만 투자하는 것이 아니라 '기술력'을 입증해야 합니다.\n\n"),
-                        TextSpan(
-                          text: "일반적인 구직(D-10)이나 취업(E-7) 비자와는 준비 과정이 완전히 다릅니다.\n",
-                          style: GoogleFonts.notoSansKr(fontWeight: FontWeight.bold),
-                        ),
-                        const TextSpan(text: "단순 스펙보다는 "),
-                        TextSpan(
-                          text: "OASIS 프로그램 이수",
-                          style: GoogleFonts.notoSansKr(fontWeight: FontWeight.bold),
-                        ),
-                        const TextSpan(text: "와 "),
-                        TextSpan(
-                          text: "지식재산권(특허) 확보",
-                          style: GoogleFonts.notoSansKr(fontWeight: FontWeight.bold),
-                        ),
-                        const TextSpan(text: "가 비자 발급의 핵심 열쇠입니다."),
+                        TextSpan(text: AppLocalizations.of(context)!.descStartup),
                       ],
                     ),
                   ),
                 ),
                  _buildExpansionTile(
                   color: const Color(0xFF009688), // Mint/Teal
-                  title: "글로벌형 (해외진출)",
-                  subtitle: "Global Career",
+                  title: AppLocalizations.of(context)!.roadmapGlobalTitle,
+                  subtitle: AppLocalizations.of(context)!.subtitleGlobal,
                   content: Text(
-                    "한국에 남지 않고, 한국 학위와 언어 능력을 스펙으로 삼아 본국이나 제3국 기업의 핵심 인재로 진출하는 커리어 로드맵입니다.",
+                    AppLocalizations.of(context)!.descGlobal,
                     style: GoogleFonts.notoSansKr(color: Colors.black87, height: 1.5, fontSize: 14),
                   ),
                 ),

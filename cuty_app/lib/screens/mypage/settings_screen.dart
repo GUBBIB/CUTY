@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../l10n/gen/app_localizations.dart'; // UPDATED
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../providers/locale_provider.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: Colors.grey[50], // Light background
       appBar: AppBar(
         title: Text(
-          '설정',
+          AppLocalizations.of(context)!.menuSettings,
           style: GoogleFonts.notoSansKr(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -21,31 +24,32 @@ class SettingsScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 20),
         children: [
-          _buildSectionHeader('앱 설정'),
-          _buildSwitchTile('알림 설정', true, (val) {}),
-          _buildListTile('화면 설정', () {}),
+          _buildSectionHeader(AppLocalizations.of(context)!.sectionAppSettings),
+          _buildLanguageTile(context, ref), // NEW
+          _buildSwitchTile(AppLocalizations.of(context)!.settingNotification, true, (val) {}),
+          _buildListTile(AppLocalizations.of(context)!.settingDisplay, () {}),
           
           const SizedBox(height: 24),
-          _buildSectionHeader('정보'),
-          _buildInfoTile('앱 버전', 'v1.0.0'),
-          _buildListTile('이용약관', () {}),
-          _buildListTile('개인정보 처리방침', () {}),
+          _buildSectionHeader(AppLocalizations.of(context)!.sectionInfo),
+          _buildInfoTile(AppLocalizations.of(context)!.menuVersion, 'v1.0.0'),
+          _buildListTile(AppLocalizations.of(context)!.menuTerms, () {}),
+          _buildListTile(AppLocalizations.of(context)!.menuPrivacy, () {}),
           
           const SizedBox(height: 24),
-          _buildSectionHeader('계정'),
+          _buildSectionHeader(AppLocalizations.of(context)!.sectionAccount),
           _buildListTile(
-            '로그아웃', 
+            AppLocalizations.of(context)!.menuLogout, 
             () {
               // Mock Logout
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('로그아웃 되었습니다.')),
+                SnackBar(content: Text(AppLocalizations.of(context)!.msgLogout)),
               );
               Navigator.popUntil(context, (route) => route.isFirst);
             },
             color: Colors.red,
           ),
            _buildListTile(
-            '회원 탈퇴', 
+            AppLocalizations.of(context)!.settingDeleteAccount, 
             () {},
             color: Colors.grey,
             isSmall: true,
@@ -79,7 +83,7 @@ class SettingsScreen extends StatelessWidget {
         ),
         value: value,
         onChanged: onChanged,
-        activeColor: const Color(0xFF1A1A2E), // Navy
+        activeThumbColor: const Color(0xFF1A1A2E), // Navy
       ),
     );
   }
@@ -117,6 +121,76 @@ class SettingsScreen extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildLanguageTile(BuildContext context, WidgetRef ref) {
+    final currentLocale = ref.watch(localeProvider);
+    String languageName = '한국어';
+    if (currentLocale?.languageCode == 'en') {
+      languageName = 'English';
+    }
+
+    return Container(
+      color: Colors.white,
+      child: ListTile(
+        title: Text(
+          AppLocalizations.of(context)!.menuLanguage,
+          style: GoogleFonts.notoSansKr(fontSize: 16),
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              languageName,
+              style: GoogleFonts.notoSansKr(
+                fontSize: 14,
+                color: Colors.blue[700],
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(width: 4),
+            const Icon(Icons.chevron_right, color: Colors.grey),
+          ],
+        ),
+        onTap: () {
+          showModalBottomSheet(
+            context: context,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            ),
+            builder: (context) {
+              return SafeArea(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ListTile(
+                      title: const Text('한국어'),
+                      trailing: currentLocale?.languageCode == 'ko' || currentLocale == null
+                          ? const Icon(Icons.check, color: Colors.blue)
+                          : null,
+                      onTap: () {
+                        ref.read(localeProvider.notifier).setLocale(const Locale('ko', 'KR'));
+                        Navigator.pop(context);
+                      },
+                    ),
+                    ListTile(
+                      title: const Text('English'),
+                      trailing: currentLocale?.languageCode == 'en'
+                          ? const Icon(Icons.check, color: Colors.blue)
+                          : null,
+                      onTap: () {
+                        ref.read(localeProvider.notifier).setLocale(const Locale('en', 'US'));
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../l10n/gen/app_localizations.dart'; // UPDATED
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'widgets/community_post_item.dart' as widgets;
 import '../../widgets/ads/main_ad_banner.dart'; // NEW
@@ -25,7 +26,7 @@ class _QuestionBoardScreenState extends ConsumerState<QuestionBoardScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          '질문게시판',
+          AppLocalizations.of(context)!.boardQuestion,
           style: GoogleFonts.notoSansKr(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.white,
@@ -43,7 +44,7 @@ class _QuestionBoardScreenState extends ConsumerState<QuestionBoardScreen> {
           // Post List
           Expanded(
             child: posts.isEmpty 
-            ? Center(child: Text("등록된 질문이 없습니다.", style: GoogleFonts.notoSansKr(color: Colors.grey)))
+            ? Center(child: Text(AppLocalizations.of(context)!.msgNoQuestions, style: GoogleFonts.notoSansKr(color: Colors.grey)))
             : ListView.separated(
               itemCount: posts.length,
               separatorBuilder: (context, index) => Divider(height: 1, thickness: 1, color: Colors.grey[100]),

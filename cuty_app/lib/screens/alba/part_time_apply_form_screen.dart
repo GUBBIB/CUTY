@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cuty_app/providers/user_provider.dart';
+import '../../l10n/gen/app_localizations.dart';
 
 class PartTimeApplyFormScreen extends ConsumerWidget {
   const PartTimeApplyFormScreen({super.key});
@@ -16,7 +17,7 @@ class PartTimeApplyFormScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("시간제 취업 신청서", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+        title: Text(AppLocalizations.of(context)!.permitFormTitle, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
@@ -30,14 +31,14 @@ class PartTimeApplyFormScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "마지막 단계입니다!\n사업주 정보를 확인해주세요.",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, height: 1.4),
+            Text(
+              AppLocalizations.of(context)!.permitFormSubtitle,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, height: 1.4),
             ),
             const SizedBox(height: 32),
 
             // 1. 유저 정보 (자동 입력됨)
-            const Text("신청자 정보", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.grey)),
+            Text(AppLocalizations.of(context)!.lblApplicantInfo, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.grey)),
             const SizedBox(height: 8),
             Container(
               padding: const EdgeInsets.all(16),
@@ -48,11 +49,11 @@ class PartTimeApplyFormScreen extends ConsumerWidget {
               ),
               child: Column(
                 children: [
-                  _buildInfoRow("이름", user.name),
+                  _buildInfoRow(AppLocalizations.of(context)!.lblName, user.name),
                   const SizedBox(height: 8),
-                  _buildInfoRow("소속", user.university),
+                  _buildInfoRow(AppLocalizations.of(context)!.lblAffiliation, user.university),
                   const SizedBox(height: 8),
-                  _buildInfoRow("비자", user.visaType),
+                  _buildInfoRow(AppLocalizations.of(context)!.lblVisa, user.visaType),
                 ],
               ),
             ),
@@ -60,13 +61,13 @@ class PartTimeApplyFormScreen extends ConsumerWidget {
             const SizedBox(height: 32),
 
             // 2. 사업주/근로계약 정보 (Mock)
-            const Text("근로지 정보", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.grey)),
+            Text(AppLocalizations.of(context)!.lblWorkplaceInfo, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.grey)),
             const SizedBox(height: 12),
-            _buildTextField("상호명 (사업자 등록증 상)", "쿠티 편의점 역삼점"),
+            _buildTextField(AppLocalizations.of(context)!.labelTradeNameDetail, "쿠티 편의점 역삼점"),
             const SizedBox(height: 16),
-            _buildTextField("사업자 등록번호", "123-45-67890"),
+            _buildTextField(AppLocalizations.of(context)!.labelBizRegNo, "123-45-67890"),
             const SizedBox(height: 16),
-            _buildTextField("담당자 연락처", "010-1234-5678"),
+            _buildTextField(AppLocalizations.of(context)!.labelContact, "010-1234-5678"),
             
             const SizedBox(height: 48),
 
@@ -78,8 +79,8 @@ class PartTimeApplyFormScreen extends ConsumerWidget {
                    showDialog(
                      context: context,
                      builder: (context) => AlertDialog(
-                       title: const Text("신청 완료"),
-                       content: const Text("시간제 취업 허가 신청이 완료되었습니다.\n심사 결과는 약 3일 내에 통보됩니다."),
+                       title: Text(AppLocalizations.of(context)!.titleApplyComplete),
+                       content: Text(AppLocalizations.of(context)!.msgApplyComplete),
                        actions: [
                          TextButton(
                            onPressed: () {
@@ -88,7 +89,7 @@ class PartTimeApplyFormScreen extends ConsumerWidget {
                               Navigator.pop(context); // Close Check
                               Navigator.pop(context); // Close Consent (Back to Home)
                            },
-                           child: const Text("확인"),
+                           child: Text(AppLocalizations.of(context)!.actionConfirm),
                          )
                        ],
                      )
@@ -101,10 +102,10 @@ class PartTimeApplyFormScreen extends ConsumerWidget {
                   ),
                   elevation: 0,
                 ),
-                child: const Text(
-                  "최종 신청하기",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
-                ),
+                  child: Text(
+                    AppLocalizations.of(context)!.btnFinalApply,
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
               ),
             ),
           ],

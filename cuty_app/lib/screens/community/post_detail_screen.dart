@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../l10n/gen/app_localizations.dart'; // NEW
+import 'package:cuty_app/utils/localization_utils.dart'; // NEW
 import '../../models/community_model.dart';
 
 class PostDetailScreen extends StatelessWidget {
@@ -55,7 +57,7 @@ class PostDetailScreen extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            post.timeAgo, // Updated
+                            LocalizationUtils.getTimeAgo(context, post.createdAt), // Updated
                             style: GoogleFonts.notoSansKr(
                               fontSize: 12,
                               color: Colors.grey[500],
@@ -198,7 +200,7 @@ class PostDetailScreen extends StatelessWidget {
                                         ),
                                         const Spacer(),
                                         Text(
-                                          '방금 전',
+                                          LocalizationUtils.getTimeAgo(context, DateTime.now().subtract(const Duration(minutes: 5))),
                                           style: GoogleFonts.notoSansKr(
                                             fontSize: 11,
                                             color: Colors.grey[400],
@@ -250,7 +252,7 @@ class PostDetailScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        '댓글을 입력하세요...',
+                        AppLocalizations.of(context)!.hintComment,
                         style: GoogleFonts.notoSansKr(color: Colors.grey[500], fontSize: 14),
                       ),
                     ),

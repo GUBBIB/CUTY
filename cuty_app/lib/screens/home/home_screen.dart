@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../l10n/gen/app_localizations.dart';
 import 'home_view_model.dart';
 import '../../providers/home_view_provider.dart';
 import '../jobs/jobs_home_screen.dart';
@@ -112,8 +113,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                         ),
                                       ],
                                     ),
-                                    child: const Text(
-                                      "오늘도 힘내! 🍀",
+                                    child: Text(
+                                      AppLocalizations.of(context)!.homeCheerMessage,
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,

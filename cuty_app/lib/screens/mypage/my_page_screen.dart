@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../models/user.dart';
+import '../../l10n/gen/app_localizations.dart';
 import '../wallet/my_point_screen.dart';
 import '../spec/spec_wallet_screen.dart';
 
@@ -9,10 +10,10 @@ import '../../providers/point_provider.dart';
 import '../schedule/schedule_screen.dart';
 import '../../providers/schedule_provider.dart';
 import '../../models/schedule_model.dart';
-import 'profile_edit_screen.dart'; // NEW
-import 'my_community_activity_screen.dart'; // NEW
-import 'settings_screen.dart'; // NEW
-import '../shop/shop_screen.dart'; // NEW
+import 'profile_edit_screen.dart';
+import 'my_community_activity_screen.dart';
+import 'settings_screen.dart';
+import '../shop/shop_screen.dart';
 
 class MyPageScreen extends StatelessWidget {
   const MyPageScreen({super.key});
@@ -167,7 +168,7 @@ class _ProfileHeader extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF3F51B5).withValues(alpha: 0.3),
+                      color: const Color(0xFF3F51B5).withOpacity(0.3),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
@@ -215,7 +216,7 @@ class _VisaDashboard extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF3F51B5).withValues(alpha: 0.3),
+            color: const Color(0xFF3F51B5).withOpacity(0.3),
             blurRadius: 16,
             offset: const Offset(0, 8),
           ),
@@ -224,9 +225,9 @@ class _VisaDashboard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            '비자 & 취업 허가 대시보드',
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.dashboardTitle,
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -246,9 +247,9 @@ class _VisaDashboard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        '비자 상태',
-                        style: TextStyle(
+                      Text(
+                        AppLocalizations.of(context)!.dashboardVisaStatus,
+                        style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF1A1A2E),
@@ -272,7 +273,7 @@ class _VisaDashboard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
-                    isVisaEmpty ? '미연동' : 'SAFE',
+                    isVisaEmpty ? AppLocalizations.of(context)!.dashboardUnlinked : AppLocalizations.of(context)!.dashboardSafe,
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
@@ -297,9 +298,9 @@ class _VisaDashboard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        '아르바이트 허가',
-                        style: TextStyle(
+                      Text(
+                        AppLocalizations.of(context)!.dashboardWorkPermit,
+                        style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF1A1A2E),
@@ -307,7 +308,7 @@ class _VisaDashboard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        isVisaEmpty ? '- ~ -' : '${user.workPermitDate} | ${user.isWorkPermitApproved ? '승인 완료' : '미승인'}',
+                        isVisaEmpty ? '- ~ -' : '${user.workPermitDate} | ${user.isWorkPermitApproved ? AppLocalizations.of(context)!.statusApproved : AppLocalizations.of(context)!.statusPending}',
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.grey[600],
@@ -359,7 +360,7 @@ class _WeeklySchedule extends ConsumerWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: Colors.black.withOpacity(0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -371,9 +372,9 @@ class _WeeklySchedule extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                '주간 시간표',
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.scheduleTitle,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF1A1A2E),
@@ -386,11 +387,11 @@ class _WeeklySchedule extends ConsumerWidget {
                     MaterialPageRoute(builder: (context) => const ScheduleScreen()),
                   );
                 },
-                child: const Padding(
-                  padding: EdgeInsets.all(4.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
                   child: Text(
-                    '수정하기',
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.btnEdit,
+                    style: const TextStyle(
                       fontSize: 12,
                       color: Colors.grey,
                       fontWeight: FontWeight.w500,
@@ -422,7 +423,7 @@ class _WeeklySchedule extends ConsumerWidget {
               TableRow(
                 children: [
                   for (int i = 1; i <= 7; i++)
-                    _buildDayCell(scheduleNotifier.getClassesForDay(i)),
+                    _buildDayCell(context, scheduleNotifier.getClassesForDay(i)), // Pass context
                 ],
               ),
             ],
@@ -434,7 +435,7 @@ class _WeeklySchedule extends ConsumerWidget {
 
 
 
-  Widget _buildDayCell(List<Schedule> classes) { // Changed ClassItem to Schedule
+  Widget _buildDayCell(BuildContext context, List<Schedule> classes) { 
     if (classes.isEmpty) {
       return const SizedBox(height: 30, child: Center(child: Icon(Icons.circle, size: 6, color: Colors.grey)));
     }
@@ -448,10 +449,10 @@ class _WeeklySchedule extends ConsumerWidget {
         color: const Color(0xFFE3F2FD),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: const Text(
-        '수업',
+      child: Text(
+        AppLocalizations.of(context)!.labelClass, // Localized
         textAlign: TextAlign.center,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.bold,
           color: Color(0xFF1565C0),
@@ -472,7 +473,7 @@ class _MenuList extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: Colors.black.withOpacity(0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -480,18 +481,24 @@ class _MenuList extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _buildMenuItem(context, Icons.folder_outlined, '서류 지갑'),
+          _buildMenuItem(context, Icons.folder_outlined, AppLocalizations.of(context)!.menuSpecWallet, () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const SpecWalletScreen()));
+          }),
           const Divider(height: 1, indent: 20, endIndent: 20),
-          _buildMenuItem(context, Icons.chat_bubble_outline_rounded, '커뮤니티 활동'),
+          _buildMenuItem(context, Icons.chat_bubble_outline_rounded, AppLocalizations.of(context)!.menuCommunityActivity, () {
+               Navigator.push(context, MaterialPageRoute(builder: (context) => const MyCommunityActivityScreen()));
+          }),
            // Removed '개인 정보 관리' as it's moved to Profile Header
           const Divider(height: 1, indent: 20, endIndent: 20),
-          _buildMenuItem(context, Icons.settings_outlined, '설정'),
+          _buildMenuItem(context, Icons.settings_outlined, AppLocalizations.of(context)!.menuSettings, () {
+               Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsScreen()));
+          }),
         ],
       ),
     );
   }
 
-  Widget _buildMenuItem(BuildContext context, IconData icon, String title) {
+  Widget _buildMenuItem(BuildContext context, IconData icon, String title, VoidCallback onTap) {
     return ListTile(
       leading: Icon(icon, color: Colors.black87),
       title: Text(
@@ -503,24 +510,7 @@ class _MenuList extends StatelessWidget {
         ),
       ),
       trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 16, color: Colors.grey),
-      onTap: () {
-        if (title == '서류 지갑') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const SpecWalletScreen()),
-          );
-        } else if (title == '커뮤니티 활동') {
-           Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const MyCommunityActivityScreen()),
-          );
-        } else if (title == '설정') {
-           Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const SettingsScreen()),
-          );
-        }
-      },
+      onTap: onTap,
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
     );
   }

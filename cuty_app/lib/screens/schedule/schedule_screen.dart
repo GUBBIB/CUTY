@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/schedule_provider.dart';
 import '../../models/schedule_model.dart';
 import 'dart:math';
+import '../../l10n/gen/app_localizations.dart'; // Add localization import
 
 class ScheduleScreen extends ConsumerWidget {
   const ScheduleScreen({super.key});
@@ -39,12 +40,20 @@ class ScheduleScreen extends ConsumerWidget {
                   children: [
                     SizedBox(width: timeColWidth), // Time column width
                     ...List.generate(7, (index) {
-                      final day = ["월", "화", "수", "목", "금", "토", "일"][index];
+                      final days = [
+                        AppLocalizations.of(context)!.scheduleDayMon,
+                        AppLocalizations.of(context)!.scheduleDayTue,
+                        AppLocalizations.of(context)!.scheduleDayWed,
+                        AppLocalizations.of(context)!.scheduleDayThu,
+                        AppLocalizations.of(context)!.scheduleDayFri,
+                        AppLocalizations.of(context)!.scheduleDaySat,
+                        AppLocalizations.of(context)!.scheduleDaySun,
+                      ];
                       return SizedBox(
                         width: cellWidth,
                         child: Center(
                           child: Text(
-                              day, 
+                              days[index], 
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: index >= 5 ? Colors.red : Colors.black, // 주말 빨간색
@@ -169,30 +178,38 @@ class ScheduleScreen extends ConsumerWidget {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: const Text("수업 추가"),
+              title: Text(AppLocalizations.of(context)!.scheduleAddTitle), // "수업 추가"
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextField(
                       controller: titleController,
-                      decoration: const InputDecoration(labelText: "과목명"),
+                      decoration: InputDecoration(labelText: AppLocalizations.of(context)!.scheduleFieldTitle),
                     ),
                     const SizedBox(height: 8),
                     TextField(
                       controller: roomController,
-                      decoration: const InputDecoration(labelText: "강의실"),
+                      decoration: InputDecoration(labelText: AppLocalizations.of(context)!.scheduleFieldRoom),
                     ),
                     const SizedBox(height: 16),
                     Row(
                       children: [
-                        const Text("요일: "),
+                        Text("${AppLocalizations.of(context)!.scheduleFieldDay}: "),
                         const SizedBox(width: 8),
                         DropdownButton<int>(
                           value: selectedDay,
                           items: List.generate(7, (index) => DropdownMenuItem(
                             value: index + 1,
-                            child: Text(["월", "화", "수", "목", "금", "토", "일"][index]),
+                            child: Text([
+                              AppLocalizations.of(context)!.scheduleDayMon,
+                              AppLocalizations.of(context)!.scheduleDayTue,
+                              AppLocalizations.of(context)!.scheduleDayWed,
+                              AppLocalizations.of(context)!.scheduleDayThu,
+                              AppLocalizations.of(context)!.scheduleDayFri,
+                              AppLocalizations.of(context)!.scheduleDaySat,
+                              AppLocalizations.of(context)!.scheduleDaySun,
+                            ][index]),
                           )),
                           onChanged: (val) => setState(() => selectedDay = val!),
                         ),
@@ -200,13 +217,13 @@ class ScheduleScreen extends ConsumerWidget {
                     ),
                     Row(
                       children: [
-                        const Text("시간: "),
+                        Text("${AppLocalizations.of(context)!.scheduleFieldTime}: "),
                         const SizedBox(width: 8),
                          DropdownButton<int>(
                           value: selectedTime,
                           items: List.generate(12, (index) => DropdownMenuItem( // 9 to 20
                             value: index + 9,
-                            child: Text("${index + 9}시"),
+                            child: Text("${index + 9}:00"),
                           )),
                           onChanged: (val) => setState(() => selectedTime = val!),
                         ),
@@ -214,11 +231,11 @@ class ScheduleScreen extends ConsumerWidget {
                     ),
                     Row(
                        children: [
-                        const Text("시간(H): "),
+                        Text("${AppLocalizations.of(context)!.scheduleFieldDuration}: "),
                         const SizedBox(width: 8),
                          DropdownButton<int>(
                           value: selectedDuration,
-                          items: [1, 2, 3, 4].map((e) => DropdownMenuItem(value: e, child: Text("$e시간"))).toList(),
+                          items: [1, 2, 3, 4].map((e) => DropdownMenuItem(value: e, child: Text("$e Hour(s)"))).toList(),
                           onChanged: (val) => setState(() => selectedDuration = val!),
                         ),
                       ],
@@ -227,7 +244,7 @@ class ScheduleScreen extends ConsumerWidget {
                 ),
               ),
               actions: [
-                TextButton(onPressed: () => Navigator.pop(context), child: const Text("취소")),
+                TextButton(onPressed: () => Navigator.pop(context), child: Text(AppLocalizations.of(context)!.commonCancel)),
                 ElevatedButton(
                   onPressed: () {
                     if (titleController.text.isEmpty) return;
@@ -252,7 +269,7 @@ class ScheduleScreen extends ConsumerWidget {
                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("해당 시간에 이미 수업이 있습니다.")));
                     }
                   },
-                  child: const Text("등록"),
+                  child: Text(AppLocalizations.of(context)!.commonConfirm),
                 ),
               ],
             );

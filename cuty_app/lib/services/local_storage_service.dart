@@ -15,6 +15,11 @@ class LocalStorageService {
   // --- 1. 유저 & 설정 ---
   static const String _keyUserGoal = 'user_goal';
   static const String _keyWalletLinked = 'is_wallet_linked';
+  static const String _keyLocale = 'app_locale'; // NEW
+
+  Future<void> saveLocale(String languageCode) async => await _prefs?.setString(_keyLocale, languageCode);
+  String? getLocale() => _prefs?.getString(_keyLocale);
+
   
   Future<void> saveUserGoal(String goal) async => await _prefs?.setString(_keyUserGoal, goal);
   String? getUserGoal() => _prefs?.getString(_keyUserGoal);

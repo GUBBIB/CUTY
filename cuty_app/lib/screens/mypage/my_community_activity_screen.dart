@@ -5,6 +5,7 @@ import '../../data/community_data_manager.dart';
 import '../../providers/user_provider.dart';
 import '../community/widgets/community_post_item.dart';
 import '../community/post_detail_screen.dart';
+import '../../l10n/gen/app_localizations.dart'; // Add localization import
 
 class MyCommunityActivityScreen extends ConsumerStatefulWidget {
   const MyCommunityActivityScreen({super.key});
@@ -33,7 +34,8 @@ class _MyCommunityActivityScreenState extends ConsumerState<MyCommunityActivityS
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5), // Light Grey BG
       appBar: AppBar(
-        title: Text('커뮤니티 활동', style: GoogleFonts.notoSansKr(fontWeight: FontWeight.bold)),
+        title: Text(AppLocalizations.of(context)!.communityActivityTitle, // '커뮤니티 활동'
+            style: GoogleFonts.notoSansKr(fontWeight: FontWeight.bold)),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
@@ -43,9 +45,9 @@ class _MyCommunityActivityScreenState extends ConsumerState<MyCommunityActivityS
           labelColor: Colors.black,
           unselectedLabelColor: Colors.grey,
           indicatorColor: Colors.black,
-          tabs: const [
-            Tab(text: '내가 쓴 글'),
-            Tab(text: '활동 설정'),
+          tabs: [
+            Tab(text: AppLocalizations.of(context)!.communityActivityMyPosts), // '내가 쓴 글'
+            Tab(text: AppLocalizations.of(context)!.communityActivitySettings), // '활동 설정'
           ],
         ),
       ),
@@ -72,7 +74,7 @@ class _MyCommunityActivityScreenState extends ConsumerState<MyCommunityActivityS
             Icon(Icons.article_outlined, size: 60, color: Colors.grey[300]),
             const SizedBox(height: 16),
             Text(
-              '작성한 글이 없습니다.',
+              AppLocalizations.of(context)!.communityActivityEmptyPosts, // '작성한 글이 없습니다.'
               style: GoogleFonts.notoSansKr(
                 fontSize: 16,
                 color: Colors.grey[500],
@@ -122,7 +124,7 @@ class _MyCommunityActivityScreenState extends ConsumerState<MyCommunityActivityS
           child: Column(
             children: [
               Text(
-                '커뮤니티 활동 시 보여질 정보를 선택하세요.',
+                AppLocalizations.of(context)!.communityActivityInfoTitle, // '커뮤니티 활동 시 보여질 정보를 선택하세요.'
                 style: GoogleFonts.notoSansKr(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
@@ -132,7 +134,7 @@ class _MyCommunityActivityScreenState extends ConsumerState<MyCommunityActivityS
               ),
               const SizedBox(height: 8),
               Text(
-                '개인정보를 보호하고 싶다면 비공개로 설정할 수 있습니다.',
+                AppLocalizations.of(context)!.communityActivityInfoSubtitle, // '개인정보를 보호하고 싶다면 비공개로 설정할 수 있습니다.'
                 style: GoogleFonts.notoSansKr(
                   fontSize: 13,
                   color: Colors.grey[600],
@@ -147,32 +149,32 @@ class _MyCommunityActivityScreenState extends ConsumerState<MyCommunityActivityS
         // Settings
         _buildSwitchTile(
           context: context,
-          title: '닉네임 공개',
-          subtitle: '비공개 시 \'익명\'으로 표시됩니다.',
+          title: AppLocalizations.of(context)!.communityActivityNickname, // '닉네임 공개'
+          subtitle: AppLocalizations.of(context)!.communityActivityNicknameDesc, // '비공개 시 \'익명\'으로 표시됩니다.'
           value: !user.isNicknameHidden,
           onChanged: (val) => ref.read(userProvider.notifier).togglePrivacy('nickname'),
         ),
         const SizedBox(height: 12),
         _buildSwitchTile(
           context: context,
-          title: '국적 아이콘 표시',
-          subtitle: '게시글 옆에 국적 국기를 표시합니다.',
+          title: AppLocalizations.of(context)!.communityActivityFlag, // '국적 아이콘 표시'
+          subtitle: AppLocalizations.of(context)!.communityActivityFlagDesc, // '게시글 옆에 국적 국기를 표시합니다.'
           value: !user.isNationalityHidden,
           onChanged: (val) => ref.read(userProvider.notifier).togglePrivacy('nationality'),
         ),
         const SizedBox(height: 12),
         _buildSwitchTile(
           context: context,
-          title: '성별 공개',
-          subtitle: '프로필에 성별 정보를 표시합니다.',
+          title: AppLocalizations.of(context)!.communityActivityGender, // '성별 공개'
+          subtitle: AppLocalizations.of(context)!.communityActivityGenderDesc, // '프로필에 성별 정보를 표시합니다.'
           value: !user.isGenderHidden,
           onChanged: (val) => ref.read(userProvider.notifier).togglePrivacy('gender'),
         ),
         const SizedBox(height: 12),
         _buildSwitchTile(
           context: context,
-          title: '학교명 공개',
-          subtitle: '프로필에 학교 이름을 표시합니다.',
+          title: AppLocalizations.of(context)!.communityActivitySchool, // '학교명 공개'
+          subtitle: AppLocalizations.of(context)!.communityActivitySchoolDesc, // '프로필에 학교 이름을 표시합니다.'
           value: !user.isSchoolHidden,
           onChanged: (val) => ref.read(userProvider.notifier).togglePrivacy('school'),
         ),
@@ -217,7 +219,7 @@ class _MyCommunityActivityScreenState extends ConsumerState<MyCommunityActivityS
         ),
         value: value,
         onChanged: onChanged,
-        activeColor: Colors.blue[600], // Primary Blue
+        activeThumbColor: Colors.blue[600], // Primary Blue
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       ),

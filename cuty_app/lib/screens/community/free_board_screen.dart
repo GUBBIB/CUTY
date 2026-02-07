@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../l10n/gen/app_localizations.dart'; // UPDATED
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../providers/user_provider.dart';
 import 'widgets/community_post_item.dart' as widgets;
 import '../../models/community_model.dart';
 import '../../data/community_data_manager.dart'; // import Manager
@@ -19,11 +19,18 @@ class FreeBoardScreen extends ConsumerStatefulWidget {
 
 class _FreeBoardScreenState extends ConsumerState<FreeBoardScreen> {
   // Filter state
-  int _selectedFilterIndex = 0;
-  final List<String> _filters = ['전체', '잡담', '질문', '정보', '후기'];
-
+  final int _selectedFilterIndex = 0;
   @override
   Widget build(BuildContext context) {
+    // Localized Filters
+    final List<String> filters = [
+      AppLocalizations.of(context)!.filterAll,
+      AppLocalizations.of(context)!.filterChat,
+      AppLocalizations.of(context)!.filterQuestion,
+      AppLocalizations.of(context)!.filterInfo,
+      AppLocalizations.of(context)!.filterReview,
+    ];
+
     // Centralized Data
     final List<Post> posts = CommunityDataManager.getPosts(BoardType.free);
 
@@ -31,7 +38,7 @@ class _FreeBoardScreenState extends ConsumerState<FreeBoardScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          '자유게시판',
+          AppLocalizations.of(context)!.boardFree,
           style: GoogleFonts.notoSansKr(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.white,

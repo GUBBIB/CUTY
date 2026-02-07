@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../l10n/gen/app_localizations.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../providers/nav_provider.dart';
@@ -19,10 +20,10 @@ class HomeBottomNavBar extends ConsumerWidget {
       selectedLabelStyle: GoogleFonts.notoSansKr(fontWeight: FontWeight.w700),
       unselectedLabelStyle: GoogleFonts.notoSansKr(fontWeight: FontWeight.w700),
       showUnselectedLabels: true,
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Shop'),
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'My'),
+      items: [
+        BottomNavigationBarItem(icon: const Icon(Icons.store), label: AppLocalizations.of(context)!.tabShop),
+        BottomNavigationBarItem(icon: const Icon(Icons.home), label: AppLocalizations.of(context)!.tabHome),
+        BottomNavigationBarItem(icon: const Icon(Icons.person), label: AppLocalizations.of(context)!.tabMy),
       ],
       currentIndex: currentIndex,
       onTap: (index) {

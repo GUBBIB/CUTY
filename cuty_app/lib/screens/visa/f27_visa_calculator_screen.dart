@@ -97,7 +97,7 @@ class _F27VisaCalculatorScreenState extends ConsumerState<F27VisaCalculatorScree
                       ),
                       Switch(
                         value: store.isSpecWalletLinked,
-                        activeColor: Colors.white,
+                        activeThumbColor: Colors.white,
                         activeTrackColor: const Color(0xFF673AB7),
                         onChanged: (value) {
                           store.toggleSpecWallet(value);
@@ -318,20 +318,23 @@ class _F27VisaCalculatorScreenState extends ConsumerState<F27VisaCalculatorScree
                       
                       // Calculate specific scores for advice
                       int koreanScore = 0;
-                      if (store.koreanLevel?.contains('5단계') == true || store.koreanLevel?.contains('5~6급') == true) koreanScore = 20;
-                      else if (store.koreanLevel?.contains('4단계') == true || store.koreanLevel?.contains('4급') == true) koreanScore = 15;
+                      if (store.koreanLevel?.contains('5단계') == true || store.koreanLevel?.contains('5~6급') == true) {
+                        koreanScore = 20;
+                      } else if (store.koreanLevel?.contains('4단계') == true || store.koreanLevel?.contains('4급') == true) koreanScore = 15;
                       else if (store.koreanLevel?.contains('3단계') == true || store.koreanLevel?.contains('3급') == true) koreanScore = 10;
                       else if (store.koreanLevel?.contains('2단계') == true || store.koreanLevel?.contains('2급') == true) koreanScore = 5;
                       else if (store.koreanLevel?.contains('1단계') == true || store.koreanLevel?.contains('1급') == true) koreanScore = 3;
 
                       int volunteerScore = 0;
-                      if (store.volunteerBonus == '3년 이상') volunteerScore = 7;
-                      else if (store.volunteerBonus == '2년 이상') volunteerScore = 5;
+                      if (store.volunteerBonus == '3년 이상') {
+                        volunteerScore = 7;
+                      } else if (store.volunteerBonus == '2년 이상') volunteerScore = 5;
                       else if (store.volunteerBonus == '1년 이상') volunteerScore = 1;
 
                       int incomeScore = 0;
-                      if (store.incomeBracket == '1억 원 이상') incomeScore = 60;
-                      else if (store.incomeBracket == '9천만 ~ 1억 미만') incomeScore = 58;
+                      if (store.incomeBracket == '1억 원 이상') {
+                        incomeScore = 60;
+                      } else if (store.incomeBracket == '9천만 ~ 1억 미만') incomeScore = 58;
                       else if (store.incomeBracket == '8천만 ~ 9천만 미만') incomeScore = 56;
                       else if (store.incomeBracket == '7천만 ~ 8천만 미만') incomeScore = 53;
                       else if (store.incomeBracket == '6천만 ~ 7천만 미만') incomeScore = 50;

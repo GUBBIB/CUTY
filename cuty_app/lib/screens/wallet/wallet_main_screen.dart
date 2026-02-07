@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../l10n/gen/app_localizations.dart'; // NEW
 
 class WalletMainScreen extends StatelessWidget {
   const WalletMainScreen({super.key});
@@ -7,11 +8,11 @@ class WalletMainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('서류지갑'),
+        title: Text(AppLocalizations.of(context)!.walletTitle),
       ),
       backgroundColor: Colors.white,
-      body: const Center(
-        child: Text('데이터 연동 대기 중'),
+      body: Center(
+        child: Text(AppLocalizations.of(context)!.walletPending),
       ),
     );
   }

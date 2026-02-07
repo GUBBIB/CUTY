@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../l10n/gen/app_localizations.dart';
 import '../providers/diagnosis_provider.dart';
-import '../screens/diagnosis/consulting_screen.dart'; // Consulting (Entry)
-import '../screens/diagnosis/result_screen.dart'; // Result
+import '../screens/diagnosis/consulting_screen.dart';
+import '../screens/diagnosis/result_screen.dart';
 
 class JobCapabilityBanner extends ConsumerWidget {
   const JobCapabilityBanner({super.key});
@@ -12,23 +13,21 @@ class JobCapabilityBanner extends ConsumerWidget {
     final diagnosisState = ref.watch(diagnosisProvider);
     final isCompleted = diagnosisState.isAnalysisDone;
     
-    // Updated: Use model getter
     final score = diagnosisState.result?.totalScore ?? 0;
 
     return Container(
-      // Unified styling tailored for both tabs
       width: double.infinity,
-      height: 140, // Reduced to match Career Tab standard 
+      height: 140,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24), 
         gradient: const LinearGradient(
-          colors: [Color(0xFF5C6BC0), Color(0xFF283593)], // Career Tab Colors
+          colors: [Color(0xFF5C6BC0), Color(0xFF283593)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF283593).withValues(alpha: 0.3),
+            color: const Color(0xFF283593).withOpacity(0.3),
             blurRadius: 12,
             offset: const Offset(0, 6),
           ),
@@ -45,18 +44,18 @@ class JobCapabilityBanner extends ConsumerWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [ 
                   Text(
-                    "취업역량 점수: ${isCompleted ? score : '--'}점", 
+                    AppLocalizations.of(context)!.bannerJobScore(isCompleted ? score : '--'), 
                     style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)
                   ),
-                  const SizedBox(height: 2), // Slightly reduced gap
-                  const Text(
-                    "취업비자연계 진단", 
-                    style: TextStyle(fontSize: 13, color: Colors.white70)
+                  const SizedBox(height: 2),
+                  Text(
+                    AppLocalizations.of(context)!.bannerDiagnosisTitle, 
+                    style: const TextStyle(fontSize: 13, color: Colors.white70)
                   ),
-                  const SizedBox(height: 12), // Reduced spacing
+                  const SizedBox(height: 12),
                   GestureDetector(
                     onTap: () {
-                      debugPrint("Clicked: 스펙 진단하기 (Shared Widget)");
+                      debugPrint("Clicked: Banner Action");
                        if (isCompleted) {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => const ResultScreen()));
                        } else {
@@ -64,13 +63,13 @@ class JobCapabilityBanner extends ConsumerWidget {
                        }
                     },
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), // More compact padding
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
-                        isCompleted ? "결과 다시보기" : "스펙 진단하기",
+                        isCompleted ? AppLocalizations.of(context)!.bannerActionRetest : AppLocalizations.of(context)!.bannerActionTest,
                         style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor),
                       ),
                     ),

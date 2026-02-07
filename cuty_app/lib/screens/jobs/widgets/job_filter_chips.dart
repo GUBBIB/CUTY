@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'filter_bottom_sheet.dart';
 import '../providers/job_providers.dart';
 
+import '../../../l10n/gen/app_localizations.dart';
+
 class JobFilterChips extends ConsumerWidget {
   const JobFilterChips({super.key});
 
@@ -54,8 +56,8 @@ class JobFilterChips extends ConsumerWidget {
               const SizedBox(width: 8),
               Text(
                 activeFilters.isEmpty 
-                  ? '알바 필터링하기' 
-                  : '${activeFilters.length}개 필터 적용 중', // Show count if active
+                  ? AppLocalizations.of(context)!.jobFilterTitle 
+                  : AppLocalizations.of(context)!.jobFilterActive(activeFilters.length), // Show count if active
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,

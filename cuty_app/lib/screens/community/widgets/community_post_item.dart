@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../providers/user_provider.dart';
+import 'package:cuty_app/utils/localization_utils.dart'; // NEW
 import '../../../models/community_model.dart';
 
 class CommunityPostItem extends ConsumerWidget {
@@ -183,7 +184,7 @@ class CommunityPostItem extends ConsumerWidget {
                             ],
                             // TimeAgo
                             Text(
-                              '• ${post.timeAgo}', 
+                              '• ${LocalizationUtils.getTimeAgo(context, post.createdAt)}', 
                               style: GoogleFonts.notoSansKr(
                                 fontSize: 11,
                                 color: Colors.grey[400],

@@ -7,6 +7,7 @@ import 'dart:async'; // For Timer
 import '../../widgets/shop/shop_list_item.dart';
 import 'shop_detail_screen.dart';
 import 'storage_screen.dart';
+import '../../l10n/gen/app_localizations.dart';
 
 class ShopScreen extends ConsumerStatefulWidget {
   const ShopScreen({super.key});
@@ -16,14 +17,25 @@ class ShopScreen extends ConsumerStatefulWidget {
 }
 
 class _ShopScreenState extends ConsumerState<ShopScreen> {
-  String _selectedCategory = '전체';
+  String _selectedCategory = 'all'; // Changed default to ID 'all'
   
+  // Moved inside build to access context, or just keep IDs and map labels in build
   final categories = [
-    {'id': 'all', 'label': '전체', 'icon': Icons.grid_view_rounded},
-    {'id': 'cafe', 'label': '카페', 'icon': Icons.coffee_rounded},
-    {'id': 'store', 'label': '편의점', 'icon': Icons.store_mall_directory_rounded},
-    {'id': 'voucher', 'label': '상품권', 'icon': Icons.confirmation_number_rounded},
+    {'id': 'all', 'icon': Icons.grid_view_rounded},
+    {'id': 'cafe', 'icon': Icons.coffee_rounded},
+    {'id': 'store', 'icon': Icons.store_mall_directory_rounded},
+    {'id': 'voucher', 'icon': Icons.confirmation_number_rounded},
   ];
+
+  String _getCategoryLabel(BuildContext context, String id) {
+    switch (id) {
+      case 'all': return AppLocalizations.of(context)!.itemCategoryAll;
+      case 'cafe': return AppLocalizations.of(context)!.itemCategoryCafe;
+      case 'store': return AppLocalizations.of(context)!.itemCategoryStore;
+      case 'voucher': return AppLocalizations.of(context)!.itemCategoryVoucher;
+      default: return '';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +44,9 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
     final pointState = ref.watch(pointProvider);
 
     // Filter Products
-    final filteredProducts = _selectedCategory == '전체' 
+    final filteredProducts = _selectedCategory == 'all' 
         ? shopState.products 
-        : shopState.products.where((p) {
-            String catId = categories.firstWhere((c) => c['label'] == _selectedCategory)['id'] as String;
-            return p.category == catId;
-          }).toList();
+        : shopState.products.where((p) => p.category == _selectedCategory).toList();
 
 
     return Scaffold(
@@ -84,7 +93,7 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
           GestureDetector(
             onTap: () {
                ScaffoldMessenger.of(context).showSnackBar(
-                 const SnackBar(content: Text('포인트 충전소로 이동합니다 (준비중)'))
+                 SnackBar(content: Text(AppLocalizations.of(context)!.msgPointShopComingSoon))
                );
             },
             child: Container(
@@ -139,10 +148,12 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
                     separatorBuilder: (_, __) => const SizedBox(width: 8),
                     itemBuilder: (context, index) {
                       final cat = categories[index];
-                      final isSelected = _selectedCategory == cat['label'];
+                      final catId = cat['id'] as String;
+                      final label = _getCategoryLabel(context, catId);
+                      final isSelected = _selectedCategory == catId;
                       
                       return GestureDetector(
-                        onTap: () => setState(() => _selectedCategory = cat['label'] as String),
+                        onTap: () => setState(() => _selectedCategory = catId),
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 200),
                           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -169,7 +180,7 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
                               ),
                               const SizedBox(width: 6),
                               Text(
-                                cat['label'] as String,
+                                label,
                                 style: TextStyle(
                                   color: isSelected ? Colors.white : Colors.grey[500],
                                   fontWeight: FontWeight.bold,
@@ -230,39 +241,10 @@ class _ShopBannerState extends State<_ShopBanner> {
   int _currentPage = 0;
   late final Timer _timer;
 
-  // Using dynamic list for simplicity or clean model
-  // Using dynamic list for simplicity or clean model
-  final List<Map<String, dynamic>> _banners = [
-    {
-      'color': const Color(0xFFFCE4EC), // Pink.shade50
-      'title': '광고 보고\n포인트 받기',
-      'image': 'assets/images/capy_AD.png', // User requested
-      'tag': 'AD',
-      'titleColor': const Color(0xFFE91E63), // Pink
-      'tagColor': const Color(0xFFC2185B),
-    },
-    {
-      'color': const Color(0xFFE8EAF6), // Indigo.shade50
-      'title': '신규 입점\n할인 이벤트',
-      'image': 'assets/images/capy_business.png',
-      'tag': 'EVENT',
-      'titleColor': const Color(0xFF3F51B5), // Indigo
-      'tagColor': const Color(0xFF303F9F),
-    },
-    {
-      'color': const Color(0xFFE8F5E9), // Green.shade50
-      'title': '친구 초대하면\n+500P 증정!',
-      'image': 'assets/images/capy_friend.png', 
-      'tag': 'INVITE',
-      'titleColor': const Color(0xFF2E7D32), // Green
-      'tagColor': const Color(0xFF1B5E20),
-    },
-  ];
-
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 6), (timer) { // Adjusted to 6 seconds
+    _timer = Timer.periodic(const Duration(seconds: 6), (timer) { 
       if (_pageController.hasClients) {
          int nextPage = _pageController.page!.toInt() + 1;
          _pageController.animateToPage(
@@ -281,8 +263,40 @@ class _ShopBannerState extends State<_ShopBanner> {
     super.dispose();
   }
 
+  // Moved banners inside build to access context
+  List<Map<String, dynamic>> _getBanners(BuildContext context) {
+    return [
+      {
+        'color': const Color(0xFFFCE4EC), // Pink.shade50
+        'title': AppLocalizations.of(context)!.bannerAdPoint,
+        'image': 'assets/images/capy_AD.png', 
+        'tag': AppLocalizations.of(context)!.tagAd,
+        'titleColor': const Color(0xFFE91E63), // Pink
+        'tagColor': const Color(0xFFC2185B),
+      },
+      {
+        'color': const Color(0xFFE8EAF6), // Indigo.shade50
+        'title': AppLocalizations.of(context)!.bannerNewDiscount,
+        'image': 'assets/images/capy_business.png',
+        'tag': AppLocalizations.of(context)!.tagEvent,
+        'titleColor': const Color(0xFF3F51B5), // Indigo
+        'tagColor': const Color(0xFF303F9F),
+      },
+      {
+        'color': const Color(0xFFE8F5E9), // Green.shade50
+        'title': AppLocalizations.of(context)!.bannerInviteFriend,
+        'image': 'assets/images/capy_friend.png', 
+        'tag': AppLocalizations.of(context)!.tagInvite,
+        'titleColor': const Color(0xFF2E7D32), // Green
+        'tagColor': const Color(0xFF1B5E20),
+      },
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
+    final banners = _getBanners(context);
+
     return Container(
        height: 160,
        margin: const EdgeInsets.all(20),
@@ -292,10 +306,10 @@ class _ShopBannerState extends State<_ShopBanner> {
            PageView.builder(
              controller: _pageController,
              onPageChanged: (index) {
-               setState(() => _currentPage = index % _banners.length);
+               setState(() => _currentPage = index % banners.length);
              },
              itemBuilder: (context, index) {
-               final banner = _banners[index % _banners.length];
+               final banner = banners[index % banners.length];
                return Container(
                  margin: const EdgeInsets.symmetric(horizontal: 4), 
                  decoration: BoxDecoration(
@@ -314,11 +328,11 @@ class _ShopBannerState extends State<_ShopBanner> {
                            Container(
                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                              decoration: BoxDecoration(
-                               color: banner['tagColor'].withOpacity(0.1),
+                               color: (banner['tagColor'] as Color).withOpacity(0.1),
                                borderRadius: BorderRadius.circular(8),
                              ),
                              child: Text(
-                               banner['tag'],
+                               banner['tag'] as String,
                                style: TextStyle(
                                  fontSize: 10,
                                  fontWeight: FontWeight.bold,
@@ -328,7 +342,7 @@ class _ShopBannerState extends State<_ShopBanner> {
                            ),
                            const SizedBox(height: 12),
                            Text(
-                             banner['title'],
+                             banner['title'] as String,
                              style: TextStyle(
                                fontSize: 20,
                                fontWeight: FontWeight.bold,
@@ -346,7 +360,7 @@ class _ShopBannerState extends State<_ShopBanner> {
                        width: 100,
                        height: 100,
                        child: Image.asset(
-                         banner['image'],
+                         banner['image'] as String,
                          fit: BoxFit.contain,
                          errorBuilder: (context, error, stackTrace) {
                            return Icon(Icons.image_not_supported, size: 50, color: Colors.grey[400]);
@@ -366,7 +380,7 @@ class _ShopBannerState extends State<_ShopBanner> {
              right: 0,
              child: Row(
                mainAxisAlignment: MainAxisAlignment.center,
-               children: List.generate(_banners.length, (index) {
+               children: List.generate(banners.length, (index) {
                  final isActive = _currentPage == index;
                  return AnimatedContainer(
                    duration: const Duration(milliseconds: 300),

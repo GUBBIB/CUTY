@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import '../../l10n/gen/app_localizations.dart'; // NEW
 import '../../providers/point_provider.dart';
 
 class MyPointScreen extends ConsumerWidget {
@@ -13,7 +14,7 @@ class MyPointScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('포인트 내역', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(AppLocalizations.of(context)!.pointHistoryTitle, style: const TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
@@ -26,7 +27,7 @@ class MyPointScreen extends ConsumerWidget {
             padding: const EdgeInsets.fromLTRB(24, 10, 24, 30),
             child: Column(
               children: [
-                const Text('현재 보유 포인트', style: TextStyle(fontSize: 14, color: Colors.grey)),
+                Text(AppLocalizations.of(context)!.pointCurrentBalance, style: const TextStyle(fontSize: 14, color: Colors.grey)),
                 const SizedBox(height: 8),
                 Text(
                   '${NumberFormat('#,###').format(pointState.totalBalance)} P',
@@ -45,7 +46,7 @@ class MyPointScreen extends ConsumerWidget {
               children: [
                 _buildMissionCard(
                   context,
-                  title: "서류 등록하고",
+                  title: AppLocalizations.of(context)!.pointActionUploadDoc,
                   reward: "300P",
                   icon: Icons.description_outlined,
                   color: const Color(0xFFE3F2FD), // Light Blue
@@ -54,7 +55,7 @@ class MyPointScreen extends ConsumerWidget {
                 const SizedBox(width: 12),
                 _buildMissionCard(
                   context,
-                  title: "면접 후기 쓰고",
+                  title: AppLocalizations.of(context)!.pointActionWriteReview,
                   reward: "500P",
                   icon: Icons.rate_review_outlined,
                   color: const Color(0xFFF3E5F5), // Light Purple
@@ -69,7 +70,7 @@ class MyPointScreen extends ConsumerWidget {
           // 3. History List
           Expanded(
             child: pointState.history.isEmpty
-            ? const Center(child: Text("아직 적립된 포인트가 없어요!"))
+            ? Center(child: Text(AppLocalizations.of(context)!.msgPointEmpty))
             : ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               itemCount: pointState.history.length,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../l10n/gen/app_localizations.dart';
 
 class PartTimeApplyConsentScreen extends StatelessWidget {
   const PartTimeApplyConsentScreen({super.key});
@@ -6,9 +7,9 @@ class PartTimeApplyConsentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("약관 동의")),
-      body: const Center(
-        child: Text("약관 동의 화면입니다."),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.permitConsentTitle)),
+      body: Center(
+        child: Text(AppLocalizations.of(context)!.permitConsentPlaceholder),
       ),
     );
   }

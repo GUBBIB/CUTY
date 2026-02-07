@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../l10n/gen/app_localizations.dart';
 import 'free_board_screen.dart';
 import 'community_board_screen.dart';
 import 'popular_posts_screen.dart';
@@ -16,7 +17,7 @@ class CommunityMainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('커뮤니티', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(AppLocalizations.of(context)!.navCommunity, style: const TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
@@ -41,10 +42,10 @@ class CommunityMainScreen extends StatelessWidget {
         children: [
           // Pattern Card: Popular Posts
           _PatternMenuCard(
-            title: '🔥 인기게시글',
-            subtitle: '지금 가장 핫한 이야기 모음',
+            title: AppLocalizations.of(context)!.boardPopularTitle,
+            subtitle: AppLocalizations.of(context)!.boardPopularSubtitle,
             color: const Color(0xFFFFF3E0), // Orange[50]
-            patternColor: Colors.orange.withValues(alpha: 0.15),
+            patternColor: Colors.orange.withOpacity(0.15),
             patternIcons: const [
               Icons.local_fire_department,
               Icons.favorite,
@@ -65,10 +66,10 @@ class CommunityMainScreen extends StatelessWidget {
           const SizedBox(height: 16),
           // Pattern Card: Free Board
           _PatternMenuCard(
-            title: '🗣️ 자유게시판',
-            subtitle: '유학생들의 솔직한 수다 공간',
+            title: AppLocalizations.of(context)!.boardFreeTitle,
+            subtitle: AppLocalizations.of(context)!.boardFreeSubtitle,
             color: const Color(0xFFE3F2FD), // Blue[50]
-            patternColor: Colors.blue.withValues(alpha: 0.15),
+            patternColor: Colors.blue.withOpacity(0.15),
             patternIcons: const [
               Icons.chat_bubble,
               Icons.forum,
@@ -89,10 +90,10 @@ class CommunityMainScreen extends StatelessWidget {
           const SizedBox(height: 16),
           // Pattern Card: Question Board (NEW)
           _PatternMenuCard(
-            title: '❓ 질문게시판',
-            subtitle: '한국 생활, 무엇이든 물어보세요!',
+            title: AppLocalizations.of(context)!.boardQuestionTitle,
+            subtitle: AppLocalizations.of(context)!.boardQuestionSubtitle,
             color: const Color(0xFFF3E5F5), // Purple[50]
-            patternColor: Colors.purple.withValues(alpha: 0.15),
+            patternColor: Colors.purple.withOpacity(0.15),
             patternIcons: const [
               Icons.help_outline,
               Icons.question_answer,
@@ -114,10 +115,10 @@ class CommunityMainScreen extends StatelessWidget {
           const SizedBox(height: 16),
           // Simple Card: Info Board
           _PatternMenuCard(
-            title: '🎓 정보게시판',
-            subtitle: '학교 생활 꿀팁 & 강의 정보',
+            title: AppLocalizations.of(context)!.boardInfoTitle,
+            subtitle: AppLocalizations.of(context)!.boardInfoSubtitle,
             color: const Color(0xFFFFF9C4), // Yellow[100]
-            patternColor: const Color(0xFFFBC02D).withValues(alpha: 0.1),
+            patternColor: const Color(0xFFFBC02D).withOpacity(0.1),
             patternIcons: const [
               Icons.school,
               Icons.menu_book,
@@ -140,10 +141,10 @@ class CommunityMainScreen extends StatelessWidget {
           const SizedBox(height: 12),
           // Simple Card: Second-hand Market
           _PatternMenuCard(
-            title: '📦 중고장터',
-            subtitle: '전공책, 자취용품 사고 팔기',
+            title: AppLocalizations.of(context)!.boardMarketTitle,
+            subtitle: AppLocalizations.of(context)!.boardMarketSubtitle,
             color: const Color(0xFFE8F5E9), // Green[50]
-            patternColor: const Color(0xFF388E3C).withValues(alpha: 0.1),
+            patternColor: const Color(0xFF388E3C).withOpacity(0.1),
             patternIcons: const [
               Icons.shopping_bag,
               Icons.inventory_2,
@@ -165,8 +166,8 @@ class CommunityMainScreen extends StatelessWidget {
           const SizedBox(height: 24),
           // Create Board Button
           _SimpleMenuCard(
-            title: '게시판 개설 신청',
-            subtitle: '원하는 주제가 없나요? 직접 만들어보세요!',
+            title: AppLocalizations.of(context)!.boardCreateTitle,
+            subtitle: AppLocalizations.of(context)!.boardCreateSubtitle,
             icon: Icons.add_circle_outline_rounded,
             color: Colors.white,
             iconColor: Colors.grey[600]!,
@@ -191,21 +192,21 @@ class CommunityMainScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('게시판 개설 신청', style: TextStyle(fontWeight: FontWeight.bold)),
-        content: const Text('어떤 게시판을 만들고 싶으신가요?\n\n(추후 신청 폼이 구현될 예정입니다)'),
+        title: Text(AppLocalizations.of(context)!.boardCreateTitle, style: const TextStyle(fontWeight: FontWeight.bold)),
+        content: Text(AppLocalizations.of(context)!.msgCreateBoardDialog),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('취소', style: TextStyle(color: Colors.grey)),
+            child: const Text('취소', style: TextStyle(color: Colors.grey)), 
           ),
           TextButton(
             onPressed: () {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('신청이 접수되었습니다! (Mock)')),
+                SnackBar(content: Text(AppLocalizations.of(context)!.msgApplySuccess)),
               );
             },
-            child: const Text('신청하기', style: TextStyle(fontWeight: FontWeight.bold)),
+            child: Text(AppLocalizations.of(context)!.btnApply, style: const TextStyle(fontWeight: FontWeight.bold)),
           ),
         ],
       ),
@@ -234,12 +235,12 @@ class _PatternMenuCard extends StatelessWidget {
     required this.patternColor,
     required this.patternIcons,
     this.characterAsset,
-    this.customTrailing,
     required this.onTap,
+    this.customTrailing,
     this.imageHeight = 130,     // Default height
     this.imageRightOffset = 10, // Default right margin
     this.imageBottomOffset = -10,
-    this.cardHeight = 160.0,    // Default card height
+    this.cardHeight = 160,      // Default card height
   });
 
   @override
@@ -254,7 +255,7 @@ class _PatternMenuCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.05),
+              color: Colors.black.withOpacity(0.05),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -378,7 +379,7 @@ class _SimpleMenuCard extends StatelessWidget {
           border: border,
            boxShadow: border == null ? [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.03),
+              color: Colors.black.withOpacity(0.03),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -390,7 +391,7 @@ class _SimpleMenuCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16), // Increased from 12 (1.3x area -> approx 1.15x padding dimension)
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.6),
+                color: Colors.white.withOpacity(0.6),
                 shape: BoxShape.circle,
               ),
               child: Icon(icon, size: 30, color: iconColor), // Increased from 28

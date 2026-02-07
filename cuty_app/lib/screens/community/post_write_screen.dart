@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../l10n/gen/app_localizations.dart'; // UPDATED
 import '../../models/community_model.dart';
 import '../../data/community_data_manager.dart';
-import '../../providers/user_provider.dart';
 import '../../providers/point_provider.dart'; // Shop Points
 
 class PostWriteScreen extends ConsumerStatefulWidget {
@@ -43,7 +43,7 @@ class _PostWriteScreenState extends ConsumerState<PostWriteScreen> {
   void _submitPost() {
     if (_titleController.text.isEmpty || _contentController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('제목과 내용을 입력해주세요.')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.msgTitleContentRequired)),
       );
       return; 
     }
@@ -99,6 +99,18 @@ class _PostWriteScreenState extends ConsumerState<PostWriteScreen> {
     });
   }
 
+  String _getBoardName(BoardType type) {
+    // Helper to get localized board name
+    final ads = AppLocalizations.of(context)!;
+    switch (type) {
+      case BoardType.free: return ads.boardFree;
+      case BoardType.info: return ads.boardInfo;
+      case BoardType.question: return ads.boardQuestion;
+      case BoardType.market: return ads.boardMarket;
+      default: return "";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,7 +124,7 @@ class _PostWriteScreenState extends ConsumerState<PostWriteScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          '${widget.boardType.label} 글쓰기',
+          '${_getBoardName(widget.boardType)} ${AppLocalizations.of(context)!.labelWrite}',
           style: GoogleFonts.notoSansKr(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         actions: [
@@ -121,7 +133,7 @@ class _PostWriteScreenState extends ConsumerState<PostWriteScreen> {
             child: TextButton(
               onPressed: _submitPost,
               child: Text(
-                '완료',
+                AppLocalizations.of(context)!.btnComplete,
                 style: GoogleFonts.notoSansKr(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
@@ -138,7 +150,7 @@ class _PostWriteScreenState extends ConsumerState<PostWriteScreen> {
           TextField(
             controller: _titleController,
             decoration: InputDecoration(
-              hintText: '제목',
+              hintText: AppLocalizations.of(context)!.postTitleHint,
               hintStyle: GoogleFonts.notoSansKr(
                 color: Colors.grey[400],
                 fontSize: 20,
@@ -163,9 +175,9 @@ class _PostWriteScreenState extends ConsumerState<PostWriteScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Row(
                 children: [
-                  _buildModeToggleButton(label: '📝 일반 글', isSelected: !_isCardNewsMode, onTap: () => setState(() => _isCardNewsMode = false)),
+                  _buildModeToggleButton(label: AppLocalizations.of(context)!.modeNormal, isSelected: !_isCardNewsMode, onTap: () => setState(() => _isCardNewsMode = false)),
                   const SizedBox(width: 8),
-                  _buildModeToggleButton(label: '🖼️ 카드뉴스', isSelected: _isCardNewsMode, onTap: () => setState(() => _isCardNewsMode = true)),
+                  _buildModeToggleButton(label: AppLocalizations.of(context)!.modeCardNews, isSelected: _isCardNewsMode, onTap: () => setState(() => _isCardNewsMode = true)),
                 ],
               ),
             ),
@@ -194,7 +206,7 @@ class _PostWriteScreenState extends ConsumerState<PostWriteScreen> {
                             children: [
                               Icon(Icons.add_photo_alternate_outlined, color: Colors.grey[600], size: 28),
                               const SizedBox(height: 4),
-                              Text("카드뉴스 사진 추가", style: GoogleFonts.notoSansKr(fontSize: 14, color: Colors.grey[600], fontWeight: FontWeight.bold)),
+                              Text(AppLocalizations.of(context)!.labelAddCardNewsPhoto, style: GoogleFonts.notoSansKr(fontSize: 14, color: Colors.grey[600], fontWeight: FontWeight.bold)),
                             ],
                           ),
                         ),
@@ -259,12 +271,12 @@ class _PostWriteScreenState extends ConsumerState<PostWriteScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '포인트 걸기', 
+                        AppLocalizations.of(context)!.labelBetPoints, 
                         style: GoogleFonts.notoSansKr(fontSize: 14, fontWeight: FontWeight.bold),
                       ),
                       // Real User Points Linking (Shop Points)
                       Text(
-                        '보유 포인트: ${(ref.watch(pointProvider).totalBalance).toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}P', 
+                        '${AppLocalizations.of(context)!.labelMyPoints} ${(ref.watch(pointProvider).totalBalance).toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}P', 
                         style: GoogleFonts.notoSansKr(fontSize: 12, color: Colors.grey[600]),
                       ),
                     ],
@@ -276,10 +288,10 @@ class _PostWriteScreenState extends ConsumerState<PostWriteScreen> {
                       final isSelected = _selectedRewardPoints == points;
                       return ChoiceChip(
                         label: Text(
-                          points == 0 ? '없음' : '${points}P',
+                          points == 0 ? AppLocalizations.of(context)!.labelNone : '${points}P',
                           style: GoogleFonts.notoSansKr(
                             fontSize: 13,
-                             color: isSelected ? Colors.white : Colors.black87,
+                            color: isSelected ? Colors.white : Colors.black87,
                             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                           ),
                         ),
@@ -289,7 +301,7 @@ class _PostWriteScreenState extends ConsumerState<PostWriteScreen> {
                             final currentPoints = ref.read(pointProvider).totalBalance;
                             if (points > currentPoints) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('보유 포인트가 부족합니다.')),
+                                SnackBar(content: Text(AppLocalizations.of(context)!.msgNotEnoughPoints)),
                               );
                               return;
                             }
@@ -318,7 +330,7 @@ class _PostWriteScreenState extends ConsumerState<PostWriteScreen> {
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.attach_money, color: Colors.grey, size: 20),
-                hintText: '가격 (선택)',
+                hintText: AppLocalizations.of(context)!.hintPrice,
                 hintStyle: GoogleFonts.notoSansKr(color: Colors.grey[400], fontSize: 16),
                 border: InputBorder.none,
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -443,7 +455,7 @@ class _PostWriteScreenState extends ConsumerState<PostWriteScreen> {
                           ),
                           const SizedBox(width: 6),
                           Text(
-                            '익명',
+                            AppLocalizations.of(context)!.labelAnonymous,
                             style: GoogleFonts.notoSansKr(
                               color: _isAnonymous ? Colors.black : Colors.grey[500],
                               fontSize: 14,
@@ -489,16 +501,15 @@ class _PostWriteScreenState extends ConsumerState<PostWriteScreen> {
 
   String _getContentHint() {
     if (widget.boardType == BoardType.info && _isCardNewsMode) {
-      return '카드뉴스에 대한 설명을 적어주세요.';
+      return AppLocalizations.of(context)!.hintContentCardNews;
     }
     switch (widget.boardType) {
       case BoardType.market:
-
-        return '판매할 상품의 상세 정보를 입력하세요.\n(물품 상태, 거래 장소 등)';
+        return AppLocalizations.of(context)!.hintContentMarket;
       case BoardType.info:
-        return '함께 나누고 싶은 유용한 정보를 입력하세요.';
+        return AppLocalizations.of(context)!.hintContentInfo;
       default:
-        return '내용을 입력하세요.\n\n욕설, 비방 등 부적절한 내용은 제재될 수 있습니다.';
+        return AppLocalizations.of(context)!.hintContentDefault;
     }
   }
 }

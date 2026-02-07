@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../l10n/gen/app_localizations.dart';
 import '../../../../providers/schedule_provider.dart';
 import '../../../../models/schedule_item.dart';
 import 'schedule_card.dart';
@@ -18,14 +19,14 @@ class ScheduleList extends ConsumerWidget {
     // If title is empty, it means 'No Class' or 'End of Day'
     if (nextClass?.title.isEmpty ?? true) {
         return ScheduleCard(item: ScheduleItem(
-          title: "오늘 수업 끝! 🎉",
+          title: AppLocalizations.of(context)!.msgClassFinished,
           time: "--:--",
-          subtitle: "푹 쉬세요!",
+          subtitle: AppLocalizations.of(context)!.msgRest,
         ));
     }
 
     final displayItem = ScheduleItem(
-      title: nextClass?.title ?? '수업 없음',
+      title: nextClass?.title ?? AppLocalizations.of(context)!.msgNoClass,
       time: "${nextClass?.startTime ?? 9}:00", // Convert int hour to string time
       subtitle: nextClass?.classroom ?? '', // Room maps to subtitle
     );

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../providers/f27_visa_provider.dart';
+import '../../l10n/gen/app_localizations.dart';
+import 'package:cuty_app/providers/f27_visa_provider.dart';
 import '../visa/f27_visa_calculator_screen.dart';
 import 'widgets/roadmap_header_card.dart';
 import 'widgets/f27_concept_card.dart';
@@ -50,21 +51,16 @@ class _VisaRoadmapScreenState extends ConsumerState<VisaRoadmapScreen> {
             fontSize: 18,
           ),
         ),
-        // [복구된 코드] 오른쪽 상단 Class 변경 버튼
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
             child: TextButton.icon(
               onPressed: () {
-                // [UX Fix] pushReplacement를 사용하여 현재 로드맵 화면을 스택에서 제거함.
-                // 결과: [홈] -> [로드맵(삭제)] -> [클래스선택]
-                // 따라서 뒤로가기 누르면 [홈]이 나옴.
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => VisaGoalSelectionScreen(
                       onGoalSelected: (goal) {
-                        // 목표 선택 시 로직 (추후 구현)
                         print("새로운 목표 선택됨: $goal");
                       },
                     ),
@@ -73,7 +69,7 @@ class _VisaRoadmapScreenState extends ConsumerState<VisaRoadmapScreen> {
               },
               icon: const Icon(Icons.swap_horiz, size: 20, color: Color(0xFF6C63FF)),
               label: Text(
-                "Class 변경",
+                AppLocalizations.of(context)!.roadmapClassChange,
                 style: GoogleFonts.poppins(
                   color: const Color(0xFF6C63FF),
                   fontWeight: FontWeight.w600,
@@ -152,7 +148,7 @@ class _VisaRoadmapScreenState extends ConsumerState<VisaRoadmapScreen> {
               const Icon(Icons.support_agent, color: Color(0xFF6C63FF), size: 24),
               const SizedBox(width: 10),
               Text(
-                "F-2-7 비자 컨설턴트",
+                AppLocalizations.of(context)!.roadmapConsultant,
                 style: GoogleFonts.poppins(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -228,7 +224,7 @@ class _VisaRoadmapScreenState extends ConsumerState<VisaRoadmapScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              "F-2-7 비자 컨설턴트",
+              AppLocalizations.of(context)!.roadmapConsultant,
               style: GoogleFonts.poppins(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -237,7 +233,7 @@ class _VisaRoadmapScreenState extends ConsumerState<VisaRoadmapScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              "모의 점수를 계산하면\nAI가 맞춤형 합격 전략을 분석해드려요.",
+              AppLocalizations.of(context)!.roadmapConsultantDesc,
               textAlign: TextAlign.center,
               style: GoogleFonts.poppins(
                 fontSize: 14,
@@ -278,7 +274,7 @@ class _VisaRoadmapScreenState extends ConsumerState<VisaRoadmapScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('모의 점수 계산기', style: GoogleFonts.notoSansKr(fontSize: 16, color: const Color(0xFF1E2B4D), fontWeight: FontWeight.bold)),
+                  Text(AppLocalizations.of(context)!.roadmapCalculator, style: GoogleFonts.notoSansKr(fontSize: 16, color: const Color(0xFF1E2B4D), fontWeight: FontWeight.bold)),
                   const SizedBox(height: 12),
                   // Only show score if hasScore, otherwise show placeholder
                   if (hasData) ...[
@@ -306,7 +302,7 @@ class _VisaRoadmapScreenState extends ConsumerState<VisaRoadmapScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                           Text(
-                          hasData ? '다시 계산하기' : '모의 점수 계산해보기',
+                          hasData ? AppLocalizations.of(context)!.btnRecalculate : AppLocalizations.of(context)!.btnCalculate,
                           style: GoogleFonts.notoSansKr(fontSize: 13, fontWeight: FontWeight.w700, color: Colors.white),
                         ),
                         const SizedBox(width: 4),
@@ -330,4 +326,3 @@ class _VisaRoadmapScreenState extends ConsumerState<VisaRoadmapScreen> {
     );
   }
 }
-

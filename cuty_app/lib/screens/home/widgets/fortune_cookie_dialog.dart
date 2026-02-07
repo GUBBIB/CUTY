@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:cuty_app/l10n/gen/app_localizations.dart';
 import '../../../../providers/point_provider.dart';
 import '../../../../providers/fortune_provider.dart';
 
@@ -29,15 +30,15 @@ class _FortuneCookieDialogState extends ConsumerState<FortuneCookieDialog> {
             
             if (!_isRevealed) ...[
               // Step 1: Open Prompt
-              const Text(
-                "오늘의 포춘쿠키 🥠",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              Text(
+                AppLocalizations.of(context)!.titleFortuneCookie,
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
-              const Text(
-                "오늘의 운세를 확인하고\n포인트를 받아보세요!",
+              Text(
+                AppLocalizations.of(context)!.descFortuneCookie,
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.grey, height: 1.5),
+                style: const TextStyle(color: Colors.grey, height: 1.5),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
@@ -59,12 +60,13 @@ class _FortuneCookieDialogState extends ConsumerState<FortuneCookieDialog> {
                   padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
-                child: const Text("운세 확인하기", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                child: Text(AppLocalizations.of(context)!.btnCheckFortune, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
               ),
             ] else ...[
               // Step 2: Result Reveal
               Text(
-                "$_points""P 적립 완료! 💰",
+                "${AppLocalizations.of(context)!.msgPointsEarned} (+${_points ?? 0})",
+
                 style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF8B5CF6)),
               ),
               const SizedBox(height: 16),
@@ -92,7 +94,7 @@ class _FortuneCookieDialogState extends ConsumerState<FortuneCookieDialog> {
                   padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
-                child: const Text("확인", style: TextStyle(fontWeight: FontWeight.bold)),
+                child: Text(AppLocalizations.of(context)!.btnConfirm, style: const TextStyle(fontWeight: FontWeight.bold)),
               ),
             ],
           ],

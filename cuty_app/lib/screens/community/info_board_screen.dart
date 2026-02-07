@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../l10n/gen/app_localizations.dart'; // UPDATED
 import 'widgets/community_post_item.dart'; // Import shared widget
-import 'info_board_detail_screen.dart';
 import '../../models/community_model.dart';
 import '../../data/community_data_manager.dart'; // Import Manager
 import 'post_write_screen.dart';
@@ -25,7 +25,7 @@ class _InfoBoardScreenState extends State<InfoBoardScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('정보 공유', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(AppLocalizations.of(context)!.boardInfo, style: const TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
@@ -48,11 +48,11 @@ class _InfoBoardScreenState extends State<InfoBoardScreen> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                   _buildFilterChip("전체", isSelected: true),
-                   _buildFilterChip("비자"),
-                   _buildFilterChip("생활"),
-                   _buildFilterChip("맛집"),
-                   _buildFilterChip("꿀팁"),
+                   _buildFilterChip(AppLocalizations.of(context)!.filterAll, isSelected: true),
+                   _buildFilterChip(AppLocalizations.of(context)!.filterVisa),
+                   _buildFilterChip(AppLocalizations.of(context)!.filterLife),
+                   _buildFilterChip(AppLocalizations.of(context)!.filterFood),
+                   _buildFilterChip(AppLocalizations.of(context)!.filterTips),
                 ],
               ),
              ),

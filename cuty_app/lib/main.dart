@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'l10n/gen/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart' as p;
 import 'providers/f27_visa_provider.dart';
 import 'providers/visa_provider.dart';
+import 'providers/locale_provider.dart'; // NEW
 import 'services/local_storage_service.dart';
 
 
@@ -48,14 +51,27 @@ void main() async {
   );
 }
 
-class CutyApp extends StatelessWidget {
+class CutyApp extends ConsumerWidget {
   const CutyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider);
+
     return MaterialApp(
       title: 'CUTY',
       debugShowCheckedModeBanner: false,
+      locale: locale, // Dynamic Locale
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('ko', 'KR'), // Korean
+        Locale('en', 'US'), // English
+      ],
       theme: AppTheme.lightTheme,
       home: const MainScreen(),
       routes: {

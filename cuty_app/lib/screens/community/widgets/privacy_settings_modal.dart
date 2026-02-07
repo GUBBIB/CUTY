@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../l10n/gen/app_localizations.dart';
 import '../../../providers/user_provider.dart';
 
 class PrivacySettingsModal extends ConsumerWidget {
@@ -12,7 +13,7 @@ class PrivacySettingsModal extends ConsumerWidget {
     final notifier = ref.read(userProvider.notifier);
 
     if (user == null) {
-      return const SizedBox(height: 200, child: Center(child: Text("로그인이 필요합니다.")));
+      return SizedBox(height: 200, child: Center(child: Text(AppLocalizations.of(context)!.msgLoginRequired)));
     }
 
     return Container(
@@ -30,7 +31,7 @@ class PrivacySettingsModal extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '🔒 선택적 프로필 공개',
+                  AppLocalizations.of(context)!.titlePrivacySettings,
                   style: GoogleFonts.notoSansKr(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -45,7 +46,7 @@ class PrivacySettingsModal extends ConsumerWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              '커뮤니티 활동 시 보여질 정보를 선택하세요.',
+              AppLocalizations.of(context)!.descPrivacySettings,
               style: GoogleFonts.notoSansKr(
                 fontSize: 14,
                 color: Colors.black54,
@@ -57,8 +58,8 @@ class PrivacySettingsModal extends ConsumerWidget {
             // 1. Nickname
             _buildPrivacyOption(
               context: context,
-              label: "닉네임 공개",
-              description: "비공개 시 '익명'으로 표시됩니다.",
+              label: AppLocalizations.of(context)!.lblRevealNickname,
+              description: AppLocalizations.of(context)!.descRevealNickname,
               icon: Icons.person_outline,
               isPublic: !user.isNicknameHidden,
               onChanged: (value) => notifier.togglePrivacy('nickname'),
@@ -68,8 +69,8 @@ class PrivacySettingsModal extends ConsumerWidget {
             // 2. Nationality (Reordered)
             _buildPrivacyOption(
               context: context,
-              label: "국적 공개",
-              description: "국기(🇻🇳) 아이콘이 표시됩니다.",
+              label: AppLocalizations.of(context)!.lblRevealNationality,
+              description: AppLocalizations.of(context)!.descRevealNationality,
               icon: Icons.flag,
               isPublic: !user.isNationalityHidden,
               onChanged: (value) => notifier.togglePrivacy('nationality'),
@@ -79,8 +80,8 @@ class PrivacySettingsModal extends ConsumerWidget {
             // 3. Gender
             _buildPrivacyOption(
               context: context,
-              label: "성별 공개",
-              description: "성별 아이콘이 표시됩니다.",
+              label: AppLocalizations.of(context)!.lblRevealGender,
+              description: AppLocalizations.of(context)!.descRevealGender,
               icon: Icons.wc,
               isPublic: !user.isGenderHidden,
               onChanged: (value) => notifier.togglePrivacy('gender'),
@@ -90,8 +91,8 @@ class PrivacySettingsModal extends ConsumerWidget {
             // 4. School
             _buildPrivacyOption(
               context: context,
-              label: "학교명 공개",
-              description: "학교 이름이 표시됩니다.",
+              label: AppLocalizations.of(context)!.lblRevealSchool,
+              description: AppLocalizations.of(context)!.descRevealSchool,
               icon: Icons.school,
               isPublic: !user.isSchoolHidden,
               onChanged: (value) => notifier.togglePrivacy('school'),
@@ -110,7 +111,7 @@ class PrivacySettingsModal extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: const Text('완료', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                  child: Text(AppLocalizations.of(context)!.btnComplete, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                 ),
               ),
             ),
@@ -166,7 +167,7 @@ class PrivacySettingsModal extends ConsumerWidget {
           Switch(
             value: isPublic,
             onChanged: onChanged,
-            activeColor: const Color(0xFF1A1A2E), // Custom active color
+            activeThumbColor: const Color(0xFF1A1A2E), // Custom active color
           ),
         ],
       ),

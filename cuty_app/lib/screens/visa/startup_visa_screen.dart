@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../l10n/gen/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'visa_goal_selection_screen.dart';
 
@@ -11,14 +12,20 @@ class StartupVisaScreen extends StatefulWidget {
 
 class _StartupVisaScreenState extends State<StartupVisaScreen> {
   // OASIS 프로그램 데이터
-  final Map<String, String> oasisPrograms = {
-    "OASIS-1 (기초소양)": "지식재산권 소양 (15점)",
-    "OASIS-2 (심화소양)": "지식재산권 출원 (10~25점)",
-    "OASIS-4 (창업소양)": "창업 이민 교육 (25점)",
-    "OASIS-5 (코칭)": "전문가 멘토링 (15점)",
-    "OASIS-6 (박람회)": "발명/창업대전 입상 (25점)",
-    "OASIS-9 (사업화)": "법인 설립 완료 (25점)",
-  };
+  Map<String, String> oasisPrograms = {};
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    oasisPrograms = {
+      AppLocalizations.of(context)!.oasis1: AppLocalizations.of(context)!.oasis1Desc,
+      AppLocalizations.of(context)!.oasis2: AppLocalizations.of(context)!.oasis2Desc,
+      AppLocalizations.of(context)!.oasis4: AppLocalizations.of(context)!.oasis4Desc,
+      AppLocalizations.of(context)!.oasis5: AppLocalizations.of(context)!.oasis5Desc,
+      AppLocalizations.of(context)!.oasis6: AppLocalizations.of(context)!.oasis6Desc,
+      AppLocalizations.of(context)!.oasis9: AppLocalizations.of(context)!.oasis9Desc,
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +33,7 @@ class _StartupVisaScreenState extends State<StartupVisaScreen> {
       backgroundColor: const Color(0xFFFFF3E0), // User requested background
       appBar: AppBar(
         title: Text(
-          '실전 창업형 로드맵',
+          AppLocalizations.of(context)!.roadmapStartupTitle,
           style: GoogleFonts.poppins(
             color: const Color(0xFF1A1A2E),
             fontWeight: FontWeight.w700,
@@ -58,7 +65,7 @@ class _StartupVisaScreenState extends State<StartupVisaScreen> {
               },
               icon: const Icon(Icons.swap_horiz, size: 20, color: Color(0xFFE65100)),
               label: Text(
-                "Class 변경",
+                AppLocalizations.of(context)!.actionChangeClass,
                 style: GoogleFonts.poppins(
                   color: const Color(0xFFE65100),
                   fontWeight: FontWeight.w600,
@@ -162,7 +169,7 @@ class _StartupVisaScreenState extends State<StartupVisaScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '나의 목표',
+                    AppLocalizations.of(context)!.visaRoadmapStep3, // '나의 목표'
                     style: GoogleFonts.notoSansKr(
                       color: Colors.white.withOpacity(0.9),
                       fontSize: 14,
@@ -173,7 +180,7 @@ class _StartupVisaScreenState extends State<StartupVisaScreen> {
                   Row(
                     children: [
                       Text(
-                        "기술 창업",
+                        AppLocalizations.of(context)!.stepTechStartup,
                         style: GoogleFonts.poppins(
                           color: Colors.white,
                           fontSize: 24,
@@ -335,7 +342,7 @@ class _StartupVisaScreenState extends State<StartupVisaScreen> {
               ),
               const SizedBox(width: 12),
               Text(
-                "D-8-4 발급 최소 요건",
+                AppLocalizations.of(context)!.secD84Req,
                 style: GoogleFonts.poppins(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -348,11 +355,11 @@ class _StartupVisaScreenState extends State<StartupVisaScreen> {
           const Divider(height: 1, color: Color(0xFFEEEEEE)),
           const SizedBox(height: 20),
 
-          _buildCheckItem("학사 학위 이상 (국내/외)"),
+          _buildCheckItem(AppLocalizations.of(context)!.reqDegree),
           const SizedBox(height: 12),
-          _buildCheckItem("OASIS 점수 80점 이상 (필수)"),
+          _buildCheckItem(AppLocalizations.of(context)!.reqOasis),
           const SizedBox(height: 12),
-          _buildCheckItem("한국 법인 설립 완료"),
+          _buildCheckItem(AppLocalizations.of(context)!.reqCorp),
         ],
       ),
     );
@@ -398,7 +405,7 @@ class _StartupVisaScreenState extends State<StartupVisaScreen> {
               const Icon(Icons.help_outline, color: Color(0xFFE65100), size: 24),
               const SizedBox(width: 8),
               Text(
-                "OASIS가 무엇인가요?",
+                AppLocalizations.of(context)!.secWhatIsOasis,
                 style: GoogleFonts.notoSansKr(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -409,7 +416,7 @@ class _StartupVisaScreenState extends State<StartupVisaScreen> {
           ),
           const SizedBox(height: 12),
           Text(
-            "창업이민 종합지원시스템. D-8-4 비자를 받기 위해 80점을 적립하는 필수 교육입니다.",
+            AppLocalizations.of(context)!.descOasis,
             style: GoogleFonts.notoSansKr(
               fontSize: 14,
               color: Colors.grey[700],
@@ -444,7 +451,7 @@ class _StartupVisaScreenState extends State<StartupVisaScreen> {
               const Icon(Icons.map_outlined, color: Color(0xFFF57C00), size: 24),
               const SizedBox(width: 8),
               Text(
-                "전국 OASIS 교육 센터",
+                AppLocalizations.of(context)!.secOasisCenters,
                 style: GoogleFonts.notoSansKr(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -455,13 +462,13 @@ class _StartupVisaScreenState extends State<StartupVisaScreen> {
           ),
           const SizedBox(height: 20),
           
-          _buildCenterItem("1. 서울", "서울글로벌센터(종로), 서울창업허브"),
+          _buildCenterItem("1. ${AppLocalizations.of(context)!.centerSeoul}", AppLocalizations.of(context)!.centerSeoulDesc),
           const SizedBox(height: 12),
-          _buildCenterItem("2. 부산", "부산역 유라시아 플랫폼"),
+          _buildCenterItem("2. ${AppLocalizations.of(context)!.centerBusan}", AppLocalizations.of(context)!.centerBusanDesc),
           const SizedBox(height: 12),
-          _buildCenterItem("3. 인천", "인천 글로벌 스타트업 캠퍼스"),
+          _buildCenterItem("3. 인천", AppLocalizations.of(context)!.centerIncheonDesc),
           const SizedBox(height: 12),
-          _buildCenterItem("4. 대전", "KAIST 창업보육센터, 대전창업허브"),
+          _buildCenterItem("4. 대전", AppLocalizations.of(context)!.centerDaejeonDesc),
         ],
       ),
     );
@@ -523,7 +530,7 @@ class _StartupVisaScreenState extends State<StartupVisaScreen> {
               ),
               const SizedBox(width: 12),
               Text(
-                "OASIS 프로그램 가이드",
+                AppLocalizations.of(context)!.visaGoalOasis, // "OASIS 프로그램 가이드"
                 style: GoogleFonts.poppins(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -602,7 +609,7 @@ class _StartupVisaScreenState extends State<StartupVisaScreen> {
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  "창업준비 비자(D-10-2)가 뭔가요?",
+                  AppLocalizations.of(context)!.titleD102,
                   style: GoogleFonts.notoSansKr(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -614,7 +621,7 @@ class _StartupVisaScreenState extends State<StartupVisaScreen> {
           ),
           const SizedBox(height: 12),
           Text(
-            "D-10-1(구직)과 다릅니다. 창업 준비를 위해 최대 2년간 체류하며 OASIS 점수를 채우는 비자입니다.",
+            AppLocalizations.of(context)!.descD102,
             style: GoogleFonts.notoSansKr(
               fontSize: 14,
               color: Colors.grey[700],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'visa_goal_selection_screen.dart';
+import '../../l10n/gen/app_localizations.dart'; // Add localization import
 
 class GlobalVisaScreen extends StatelessWidget {
   const GlobalVisaScreen({super.key});
@@ -11,7 +12,7 @@ class GlobalVisaScreen extends StatelessWidget {
       backgroundColor: const Color(0xFFE0F7FA), // Global Teal Background
       appBar: AppBar(
         title: Text(
-          '글로벌형 로드맵',
+          AppLocalizations.of(context)!.roadmapGlobalTitle,
           style: GoogleFonts.poppins(
             color: const Color(0xFF1A1A2E),
             fontWeight: FontWeight.w700,
@@ -43,7 +44,7 @@ class GlobalVisaScreen extends StatelessWidget {
               },
               icon: const Icon(Icons.swap_horiz, size: 20, color: Color(0xFF0097A7)), // Teal Accent
               label: Text(
-                "Class 변경",
+                AppLocalizations.of(context)!.actionChangeClass,
                 style: GoogleFonts.poppins(
                   color: const Color(0xFF0097A7), // Teal Accent
                   fontWeight: FontWeight.w600,
@@ -65,14 +66,14 @@ class GlobalVisaScreen extends StatelessWidget {
             const SizedBox(height: 10),
             
             // 1. 상단 목표 카드 (Hero)
-            _buildHeroCard(),
+            _buildHeroCard(context),
 
             const SizedBox(height: 24),
 
             // 2. 학위 인증 가이드 (Apostille)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: _buildApostilleCard(),
+              child: _buildApostilleCard(context),
             ),
 
             const SizedBox(height: 24),
@@ -80,7 +81,7 @@ class GlobalVisaScreen extends StatelessWidget {
             // 3. 글로벌 취업 전략
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: _buildGlobalStrategyCard(),
+              child: _buildGlobalStrategyCard(context),
             ),
 
             const SizedBox(height: 24),
@@ -88,7 +89,7 @@ class GlobalVisaScreen extends StatelessWidget {
             // 4. 귀국 전 필수 체크리스트 (Clean Exit)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: _buildCleanExitCard(),
+              child: _buildCleanExitCard(context),
             ),
             const SizedBox(height: 40),
           ],
@@ -98,7 +99,7 @@ class GlobalVisaScreen extends StatelessWidget {
   }
 
   // 1. 상단 목표 카드
-  Widget _buildHeroCard() {
+  Widget _buildHeroCard(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24),
       width: double.infinity,
@@ -131,7 +132,7 @@ class GlobalVisaScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '나의 목표',
+                    AppLocalizations.of(context)!.visaRoadmapStep3, // '나의 목표'
                     style: GoogleFonts.notoSansKr(
                       color: Colors.white.withOpacity(0.9),
                       fontSize: 14,
@@ -142,7 +143,7 @@ class GlobalVisaScreen extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "글로벌 커리어",
+                        AppLocalizations.of(context)!.stepGlobalCareer,
                         style: GoogleFonts.poppins(
                           color: Colors.white,
                           fontSize: 24,
@@ -262,7 +263,7 @@ class GlobalVisaScreen extends StatelessWidget {
   }
 
   // 2. 학위 인증 가이드 (Apostille)
-  Widget _buildApostilleCard() {
+  Widget _buildApostilleCard(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -292,7 +293,7 @@ class GlobalVisaScreen extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  "졸업장 인증(Apostille) 필수!",
+                  AppLocalizations.of(context)!.secApostille,
                   style: GoogleFonts.notoSansKr(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -304,7 +305,7 @@ class GlobalVisaScreen extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            "본국에서 한국 학위를 인정받으려면 귀국 전 아포스티유(Apostille)나 영사 확인이 반드시 필요합니다.",
+            AppLocalizations.of(context)!.descApostille,
             style: GoogleFonts.notoSansKr(
               fontSize: 14,
               color: Colors.grey[700],
@@ -327,7 +328,7 @@ class GlobalVisaScreen extends StatelessWidget {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    "귀국 후에는 처리가 매우 복잡하니, 반드시 한국에서 완료하세요.",
+                    AppLocalizations.of(context)!.warnApostille,
                     style: GoogleFonts.notoSansKr(
                       fontSize: 13,
                       color: const Color(0xFF00838F),
@@ -345,8 +346,13 @@ class GlobalVisaScreen extends StatelessWidget {
   }
 
   // 3. 글로벌 취업 전략
-  Widget _buildGlobalStrategyCard() {
-    final keywords = ["#해외영업", "#통번역", "#현지관리자", "#주재원보조"];
+  Widget _buildGlobalStrategyCard(BuildContext context) {
+    final keywords = [
+      AppLocalizations.of(context)!.tagSales,
+      AppLocalizations.of(context)!.tagTrans,
+      AppLocalizations.of(context)!.tagManager,
+      AppLocalizations.of(context)!.tagAssistant
+    ];
 
     return Container(
       padding: const EdgeInsets.all(24),
@@ -369,7 +375,7 @@ class GlobalVisaScreen extends StatelessWidget {
               const Icon(Icons.business_center_outlined, color: Color(0xFF0097A7), size: 24),
               const SizedBox(width: 8),
               Text(
-                "한국 기업 해외 법인 공략",
+                AppLocalizations.of(context)!.secOverseasBranch,
                 style: GoogleFonts.notoSansKr(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -379,20 +385,12 @@ class GlobalVisaScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          RichText(
-            text: TextSpan(
-              style: GoogleFonts.notoSansKr(
-                fontSize: 14,
-                color: Colors.grey[700],
-                height: 1.5,
-              ),
-              children: [
-                const TextSpan(text: "여러분의 가장 큰 무기는 "),
-                TextSpan(text: "'한국어 능력'", style: GoogleFonts.notoSansKr(fontWeight: FontWeight.bold, color: const Color(0xFF0097A7))),
-                const TextSpan(text: "과 "),
-                TextSpan(text: "'현지 문화 이해도'", style: GoogleFonts.notoSansKr(fontWeight: FontWeight.bold, color: const Color(0xFF0097A7))),
-                const TextSpan(text: "입니다."),
-              ],
+          Text(
+            AppLocalizations.of(context)!.descOverseasBranch,
+            style: GoogleFonts.notoSansKr(
+              fontSize: 14,
+              color: Colors.grey[700],
+              height: 1.5,
             ),
           ),
           const SizedBox(height: 16),
@@ -428,7 +426,7 @@ class GlobalVisaScreen extends StatelessWidget {
   }
 
   // 4. 귀국 전 필수 체크리스트 (Clean Exit)
-  Widget _buildCleanExitCard() {
+  Widget _buildCleanExitCard(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -450,7 +448,7 @@ class GlobalVisaScreen extends StatelessWidget {
               const Icon(Icons.flight_takeoff_rounded, color: Color(0xFF0097A7), size: 24),
               const SizedBox(width: 8),
               Text(
-                "깔끔한 마무리 (Clean Exit)",
+                AppLocalizations.of(context)!.visaGoalCleanExit, // "깔끔한 마무리 (Clean Exit)"
                 style: GoogleFonts.notoSansKr(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -460,13 +458,13 @@ class GlobalVisaScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          _buildCheckItem("외국인등록증 반납 (출국 시 공항)"),
+          _buildCheckItem(AppLocalizations.of(context)!.checkArcReturn),
           const SizedBox(height: 12),
-          _buildCheckItem("4대 보험 및 세금 정산 (과태료 방지)"),
+          _buildCheckItem(AppLocalizations.of(context)!.checkTaxSettlement),
           const SizedBox(height: 12),
-          _buildCheckItem("휴대폰 및 인터넷 해지"),
+          _buildCheckItem(AppLocalizations.of(context)!.checkPhoneInternet),
           const SizedBox(height: 12),
-          _buildCheckItem("월세 보증금 반환 확인"),
+          _buildCheckItem(AppLocalizations.of(context)!.checkDepositReturn),
         ],
       ),
     );

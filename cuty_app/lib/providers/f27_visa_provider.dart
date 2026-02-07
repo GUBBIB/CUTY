@@ -345,28 +345,28 @@ class VisaScoreProvider extends ChangeNotifier {
 
   List<String> getSmartAdvice() {
     // 0. Pre-calculate local variables needed for logic
-    int _koreanScore = 0;
+    int koreanScore = 0;
     if (koreanLevel == 'TOPIK 5~6급 / KIIP 5단계') {
-      _koreanScore = 20;
+      koreanScore = 20;
     } else if (koreanLevel == 'TOPIK 4급 / KIIP 4단계') {
-      _koreanScore = 15;
+      koreanScore = 15;
     } else if (koreanLevel == 'TOPIK 3급 / KIIP 3단계') {
-      _koreanScore = 10;
+      koreanScore = 10;
     } else if (koreanLevel == 'TOPIK 2급 / KIIP 2단계') {
-      _koreanScore = 5;
+      koreanScore = 5;
     } else if (koreanLevel == 'TOPIK 1급 / KIIP 1단계') {
-      _koreanScore = 3;
+      koreanScore = 3;
     }
 
-    bool _socialIntegrationBonus = kiipCompleted; // +10 bonus
+    bool socialIntegrationBonus = kiipCompleted; // +10 bonus
 
-    int _volunteerScore = 0;
+    int volunteerScore = 0;
     if (volunteerBonus == '3년 이상') {
-      _volunteerScore = 7;
+      volunteerScore = 7;
     } else if (volunteerBonus == '2년 이상') {
-      _volunteerScore = 5;
+      volunteerScore = 5;
     } else if (volunteerBonus == '1년 이상') {
-      _volunteerScore = 1;
+      volunteerScore = 1;
     }
 
     // --- User Logic Start ---
@@ -394,8 +394,8 @@ class VisaScoreProvider extends ChangeNotifier {
     }
 
     // [3단계] 잠재력 계산
-    int potentialKorean = (30 - (_koreanScore + (_socialIntegrationBonus ? 10 : 0)));
-    int potentialVolunteer = (_volunteerScore == 0) ? 1 : 0;
+    int potentialKorean = (30 - (koreanScore + (socialIntegrationBonus ? 10 : 0)));
+    int potentialVolunteer = (volunteerScore == 0) ? 1 : 0;
 
     // [4단계] 시나리오별 솔루션
 
@@ -406,10 +406,10 @@ class VisaScoreProvider extends ChangeNotifier {
 
     // Case B: 한국어만으로 해결 가능
     else if (potentialKorean >= gap) {
-      if (!_socialIntegrationBonus) {
+      if (!socialIntegrationBonus) {
         advice.add("💡 **1순위 추천: KIIP 5단계 (+10점)**\n사회통합프로그램 이수증(10점)을 챙기세요. 가장 확실한 합격 전략입니다.");
       } else {
-        advice.add("📚 **한국어 점수 보강**\n현재 점수에서 **${gap}점**이 더 필요합니다. TOPIK 등급을 올려서 합격선을 넘겨보세요.");
+        advice.add("📚 **한국어 점수 보강**\n현재 점수에서 **$gap점**이 더 필요합니다. TOPIK 등급을 올려서 합격선을 넘겨보세요.");
       }
     }
 

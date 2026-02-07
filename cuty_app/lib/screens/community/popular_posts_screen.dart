@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../l10n/gen/app_localizations.dart'; // UPDATED
 import 'widgets/community_post_item.dart'; // Import shared widget
 import '../../widgets/ads/main_ad_banner.dart'; // NEW
 import '../../models/community_model.dart'; // Centralized model
@@ -17,7 +18,7 @@ class PopularPostsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('🔥 실시간 인기글', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(AppLocalizations.of(context)!.boardPopular, style: const TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
@@ -38,7 +39,7 @@ class PopularPostsScreen extends StatelessWidget {
                 const Icon(Icons.emoji_events_rounded, color: Color(0xFFFF6F00), size: 24),
                 const SizedBox(width: 12),
                 Text(
-                  '지금 학교에서 가장 핫한 이야기! 🏆',
+                  AppLocalizations.of(context)!.bannerPopularDesc,
                   style: GoogleFonts.notoSansKr(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,

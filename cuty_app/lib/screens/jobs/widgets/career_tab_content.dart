@@ -5,6 +5,7 @@ import '../../diagnosis/consulting_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../providers/diagnosis_provider.dart';
 import '../../../../models/diagnosis_model.dart';
+import '../../../l10n/gen/app_localizations.dart';
 
 class CareerTabContent extends ConsumerWidget { // Changed to ConsumerWidget
   const CareerTabContent({super.key});
@@ -39,12 +40,12 @@ class CareerTabContent extends ConsumerWidget { // Changed to ConsumerWidget
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end, // 텍스트 라인 맞춤
             children: [
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "내가 지원 할 수 있는 맞춤 기업", // 문구 수정 요청 반영
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    AppLocalizations.of(context)!.careerMatchedCompanies, // 문구 수정 요청 반영
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -55,12 +56,12 @@ class CareerTabContent extends ConsumerWidget { // Changed to ConsumerWidget
                   debugPrint(">>> [클릭] 맞춤 기업 리스트 더보기");
                   // TODO: 전체 공고 리스트 페이지로 이동
                 },
-                child: const Padding(
-                  padding: EdgeInsets.only(bottom: 4.0, left: 8.0), // 터치 영역 확보
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 4.0, left: 8.0), // 터치 영역 확보
                   child: Row(
                     children: [
-                      Text("더보기", style: TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.bold)),
-                      Icon(Icons.chevron_right, size: 16, color: Colors.grey),
+                      Text(AppLocalizations.of(context)!.btnMore, style: const TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.bold)),
+                      const Icon(Icons.chevron_right, size: 16, color: Colors.grey),
                     ],
                   ),
                 ),
@@ -93,8 +94,8 @@ class CareerTabContent extends ConsumerWidget { // Changed to ConsumerWidget
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 4))],
-        border: Border.all(color: Colors.grey.withValues(alpha: 0.2)),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 4))],
+        border: Border.all(color: Colors.grey.withOpacity(0.2)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -102,22 +103,22 @@ class CareerTabContent extends ConsumerWidget { // Changed to ConsumerWidget
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.indigo.withValues(alpha: 0.05),
+              color: Colors.indigo.withOpacity(0.05),
               shape: BoxShape.circle,
             ),
             child: const Icon(Icons.lock_rounded, size: 32, color: Colors.indigo),
           ),
           const SizedBox(height: 16),
-          const Text(
-            "비자 진단을 완료하면\n맞춤 리포트를 볼 수 있어요!",
+          Text(
+            AppLocalizations.of(context)!.msgLockedReport,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, height: 1.4),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, height: 1.4),
           ),
           const SizedBox(height: 8),
-          const Text(
-            "간단한 진단으로 합격률을 높여보세요",
+          Text(
+            AppLocalizations.of(context)!.msgLockedReportSub,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 13, color: Colors.grey),
+            style: const TextStyle(fontSize: 13, color: Colors.grey),
           ),
           const SizedBox(height: 24),
           GestureDetector(
@@ -133,11 +134,11 @@ class CareerTabContent extends ConsumerWidget { // Changed to ConsumerWidget
               decoration: BoxDecoration(
                 color: Colors.indigo,
                 borderRadius: BorderRadius.circular(30),
-                boxShadow: [BoxShadow(color: Colors.indigo.withValues(alpha: 0.3), blurRadius: 8, offset: const Offset(0, 4))],
+                boxShadow: [BoxShadow(color: Colors.indigo.withOpacity(0.3), blurRadius: 8, offset: const Offset(0, 4))],
               ),
-              child: const Text(
-                "지금 바로 진단하기",
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+              child: Text(
+                AppLocalizations.of(context)!.btnDiagnoseNow,
+                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
               ),
             ),
           ),
@@ -159,14 +160,14 @@ class CareerTabContent extends ConsumerWidget { // Changed to ConsumerWidget
          decoration: BoxDecoration(
            color: Colors.white,
            borderRadius: BorderRadius.circular(16),
-           border: Border.all(color: Colors.indigo.withValues(alpha: 0.2)),
+           border: Border.all(color: Colors.indigo.withOpacity(0.2)),
          ),
-         child: const Center(child: Text("추천 가능한 직무가 없습니다.")),
+         child: Center(child: Text(AppLocalizations.of(context)!.msgNoRecommendedJobs)),
       );
     }
 
     // Generate Insight Comment
-    final String comment = _generateInsightComment(result, answer);
+    final String comment = _generateInsightComment(context, result, answer);
 
     return Container(
       width: double.infinity,
@@ -174,8 +175,8 @@ class CareerTabContent extends ConsumerWidget { // Changed to ConsumerWidget
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [BoxShadow(color: Colors.indigo.withValues(alpha: 0.4), blurRadius: 20, offset: const Offset(0, 10))],
-        border: Border.all(color: Colors.indigo.withValues(alpha: 0.2)),
+        boxShadow: [BoxShadow(color: Colors.indigo.withOpacity(0.4), blurRadius: 20, offset: const Offset(0, 10))],
+        border: Border.all(color: Colors.indigo.withOpacity(0.2)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,7 +184,7 @@ class CareerTabContent extends ConsumerWidget { // Changed to ConsumerWidget
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text("✅ 내 비자 매칭 리포트", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+              Text(AppLocalizations.of(context)!.lblVisaReport, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
               GestureDetector(
                 onTap: () {
                   debugPrint(">>> [클릭] 내 비자 매칭 리포트 더보기");
@@ -191,7 +192,7 @@ class CareerTabContent extends ConsumerWidget { // Changed to ConsumerWidget
                 },
                 child: Row(
                   children: [
-                    Text("더보기", style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+                    Text(AppLocalizations.of(context)!.btnMore, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
                     Icon(Icons.chevron_right, size: 16, color: Colors.grey[600]),
                   ],
                 ),
@@ -202,16 +203,16 @@ class CareerTabContent extends ConsumerWidget { // Changed to ConsumerWidget
           
           // Row 1: Tier Score
           _buildRichInfoRow(
-            label: "등급/점수",
+            label: AppLocalizations.of(context)!.lblTier,
             content: Text.rich(
               TextSpan(
                 children: [
-                  const TextSpan(text: "축하해요! "),
+                  TextSpan(text: "${AppLocalizations.of(context)!.msgTierCongrat} "),
                   TextSpan(
                     text: "'${result.totalTier}'",
                     style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.indigo),
                   ),
-                  const TextSpan(text: " 등급 달성! 🏆"),
+                  TextSpan(text: " ${AppLocalizations.of(context)!.msgTierSuffix}"),
                 ],
                 style: const TextStyle(fontSize: 13, color: Colors.black87),
               ),
@@ -222,16 +223,16 @@ class CareerTabContent extends ConsumerWidget { // Changed to ConsumerWidget
 
           // Row 2: Recommended Job
           _buildRichInfoRow(
-            label: "추천 직무",
+            label: AppLocalizations.of(context)!.lblRecJob,
             content: Text.rich(
               TextSpan(
                 children: [
-                  const TextSpan(text: "가장 잘 맞는 옷은 "),
+                  TextSpan(text: "${AppLocalizations.of(context)!.msgRecJobPrefix} "),
                   TextSpan(
                     text: "[${primary.jobName}]",
                     style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blueAccent),
                   ),
-                  const TextSpan(text: " 입니다."),
+                  TextSpan(text: " ${AppLocalizations.of(context)!.msgRecJobSuffix}"),
                 ],
                 style: const TextStyle(fontSize: 13, color: Colors.black87),
               ),
@@ -244,9 +245,9 @@ class CareerTabContent extends ConsumerWidget { // Changed to ConsumerWidget
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.orange.withValues(alpha: 0.1),
+              color: Colors.orange.withOpacity(0.1),
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.orange.withValues(alpha: 0.3)),
+              border: Border.all(color: Colors.orange.withOpacity(0.3)),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -272,30 +273,30 @@ class CareerTabContent extends ConsumerWidget { // Changed to ConsumerWidget
     );
   }
 
-  String _generateInsightComment(DiagnosisResult result, SurveyAnswer answer) {
+  String _generateInsightComment(BuildContext context, DiagnosisResult result, SurveyAnswer answer) {
     final primary = result.primary!;
     
     // 1. IF Visa Status is GREEN
     if (primary.visaStatus == VisaStatus.GREEN) {
-      return "완벽해요! 👏 지금 바로 이력서를 등록해보세요.";
+      return AppLocalizations.of(context)!.insightPerfect;
     }
 
     // 2. IF Low Korean Level
     if (answer.koreanLevel.contains('기초')) {
-      return "💡 TOPIK 점수만 보완하면 'Diamond' 등급 가능해요!";
+      return AppLocalizations.of(context)!.insightTopik;
     }
 
     // 3. IF Low Experience (Assuming expScore is mapped to '경력' key)
     final expScore = primary.myScores['경력'] ?? 0;
     if (expScore == 0 || answer.experiences.isEmpty) {
-      return "💡 인턴십 경험 1개만 더하면 합격률이 20% 올라가요!";
+      return AppLocalizations.of(context)!.insightInternship;
     }
 
     // 4. ELSE (General)
     // Calculate simple percentile logic for display
     final score = result.totalScore;
     int percentile = (100 - score).clamp(1, 99);
-    return "현재 상위 $percentile% 인재입니다! 상세 전략을 확인하세요.";
+    return AppLocalizations.of(context)!.insightPercentile(percentile);
   }
 
   Widget _buildRichInfoRow({required String label, required Widget content, required Color iconColor}) {
@@ -386,8 +387,8 @@ class CareerTabContent extends ConsumerWidget { // Changed to ConsumerWidget
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
-          boxShadow: [BoxShadow(color: Colors.indigo.withValues(alpha: 0.35), blurRadius: 12, offset: const Offset(0, 6))],
-          border: Border.all(color: Colors.indigo.withValues(alpha: 0.15)),
+          boxShadow: [BoxShadow(color: Colors.indigo.withOpacity(0.35), blurRadius: 12, offset: const Offset(0, 6))],
+          border: Border.all(color: Colors.indigo.withOpacity(0.15)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -446,7 +447,7 @@ class CareerTabContent extends ConsumerWidget { // Changed to ConsumerWidget
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
-      decoration: BoxDecoration(color: bgColor, borderRadius: BorderRadius.circular(4), border: Border.all(color: textColor.withValues(alpha: 0.2))),
+      decoration: BoxDecoration(color: bgColor, borderRadius: BorderRadius.circular(4), border: Border.all(color: textColor.withOpacity(0.2))),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

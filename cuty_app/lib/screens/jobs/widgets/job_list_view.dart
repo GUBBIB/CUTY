@@ -6,6 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/job_providers.dart';
 import '../job_detail_screen.dart';
 
+import '../../../l10n/gen/app_localizations.dart';
+
 class JobListView extends StatelessWidget {
   final List<JobPost> jobs;
 
@@ -18,8 +20,8 @@ class JobListView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            '맞춤 알바 찾기',
+          Text(
+            AppLocalizations.of(context)!.jobListTitle,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -134,9 +136,10 @@ class _JobCard extends StatelessWidget {
                       builder: (context) {
                         // Prototype logic: Big number = Annual Salary
                         final isAnnual = (job.hourlyWage ?? 0) > 1000000;
+
                         final wageString = isAnnual 
-                            ? '연봉 ${currencyFormat.format(((job.hourlyWage ?? 0) / 10000).round())}만원'
-                            : '시급 ${currencyFormat.format(job.hourlyWage ?? 0)}원';
+                            ? '${AppLocalizations.of(context)!.jobSalaryAnnual} ${currencyFormat.format(((job.hourlyWage ?? 0) / 10000).round())}만원'
+                            : '${AppLocalizations.of(context)!.jobSalaryHourly} ${currencyFormat.format(job.hourlyWage ?? 0)}원';
                         
                         return Text(
                           '$wageString↑',

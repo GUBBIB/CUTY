@@ -9,6 +9,7 @@ import 'widgets/job_list_view.dart';
 
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../l10n/gen/app_localizations.dart';
 import 'providers/job_providers.dart';
 
 class JobHomeScreen extends ConsumerWidget {
@@ -49,14 +50,14 @@ class JobHomeScreen extends ConsumerWidget {
                       jobsAsyncValue.when(
                         data: (jobs) {
                           if (jobs.isEmpty) {
-                            return const Padding(
+                            return Padding(
                               padding: EdgeInsets.only(top: 50, bottom: 50),
                               child: Column(
                                 children: [
                                   Icon(Icons.work_off, size: 48, color: Colors.grey),
                                   SizedBox(height: 16),
                                   Text(
-                                    "등록된 공고가 없어요",
+                                    AppLocalizations.of(context)!.msgNoJobs,
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey,

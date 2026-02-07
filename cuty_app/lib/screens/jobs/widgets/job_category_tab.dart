@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/job_providers.dart';
 
+import '../../../l10n/gen/app_localizations.dart';
+
 class JobCategoryTab extends ConsumerStatefulWidget {
   const JobCategoryTab({super.key});
 
@@ -25,8 +27,8 @@ class _JobCategoryTabState extends ConsumerState<JobCategoryTab> {
       ),
       child: Row(
         children: [
-          _buildTab('알바', '(Part-Time)', 0, selectedIndex, ref),
-          _buildTab('취업', '(Career)', 1, selectedIndex, ref),
+          _buildTab(AppLocalizations.of(context)!.jobTabPartTime, AppLocalizations.of(context)!.jobTabPartTimeSub, 0, selectedIndex, ref),
+          _buildTab(AppLocalizations.of(context)!.jobTabCareer, AppLocalizations.of(context)!.jobTabCareerSub, 1, selectedIndex, ref),
         ],
       ),
     );

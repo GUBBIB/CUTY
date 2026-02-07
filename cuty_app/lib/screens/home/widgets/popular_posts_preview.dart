@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../l10n/gen/app_localizations.dart';
 import '../../community/community_main_screen.dart';
-import '../../community/community_feed_screen.dart';
-import '../../community/board_list_screen.dart';
-import '../../community/popular_posts_screen.dart';
 import '../../community/widgets/community_post_item.dart';
 import '../../community/post_detail_screen.dart';
 import '../../../models/community_model.dart'; // Centralized model
@@ -37,7 +35,7 @@ class PopularPostsPreview extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '커뮤니티',
+                    AppLocalizations.of(context)!.lblCommunityPreview,
                     style: GoogleFonts.notoSansKr(
                       fontSize: 15, // Reduced from 16
                       fontWeight: FontWeight.bold,
@@ -52,7 +50,7 @@ class PopularPostsPreview extends StatelessWidget {
                       );
                     },
                     child: Text(
-                      '더보기', 
+                      AppLocalizations.of(context)!.btnMore, 
                       style: GoogleFonts.notoSansKr(
                         fontSize: 11, // Reduced from 12
                         color: Colors.grey,

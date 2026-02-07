@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import '../../l10n/gen/app_localizations.dart';
 import '../../providers/visa_provider.dart';
 
 import '../roadmap/visa_roadmap_screen.dart';
@@ -32,7 +33,7 @@ class VisaGoalSelectionScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '어떤 미래를\n꿈꾸시나요?',
+              AppLocalizations.of(context)!.goalSelectionTitle,
               style: GoogleFonts.notoSansKr(
                 fontSize: 28,
                 fontWeight: FontWeight.w700,
@@ -42,7 +43,7 @@ class VisaGoalSelectionScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              '나중에 언제든 변경할 수 있으니 편하게 선택하세요! 🔄',
+              AppLocalizations.of(context)!.goalSelectionSubtitle,
               style: GoogleFonts.notoSansKr(
                 fontSize: 14,
                 color: Colors.grey[600],
@@ -52,9 +53,9 @@ class VisaGoalSelectionScreen extends StatelessWidget {
             // Top Horizontal Card (School Life)
             _buildHorizontalClassCard(
               context,
-              title: '학교 생활형 (기본형)',
-              subtitle: '일단 학교 생활과 비자 유지에 집중할래요',
-              description: '일단은 즐거운 캠퍼스 라이프가 우선이죠! 출석률 관리와 학점, 그리고 비자 연장에 필요한 기본기부터 탄탄하게 다져봐요.',
+              title: AppLocalizations.of(context)!.goalSchoolTitle,
+              subtitle: AppLocalizations.of(context)!.goalSchoolSubtitle,
+              description: AppLocalizations.of(context)!.goalSchoolDesc,
               imagePath: 'assets/images/class_basic.png',
               goalKey: 'school',
               color: Colors.grey[100]!,
@@ -73,9 +74,9 @@ class VisaGoalSelectionScreen extends StatelessWidget {
               children: [
                 _buildVerticalClassCard(
                   context,
-                  title: '연구/거주형',
-                  subtitle: '대학원 진학 예정 &\nF-2-7(거주) 목표',
-                  description: '단순 취업비자(E-7)에 만족하지 마세요.\n석사 학위를 활용해 더 자유로운 F-2-7(거주 비자)로 바로 업그레이드할 수 있습니다. 80점 달성을 위한 족집게 전략을 알려드릴게요.',
+                  title: AppLocalizations.of(context)!.goalResearchTitle,
+                  subtitle: AppLocalizations.of(context)!.goalResearchSubtitle,
+                  description: AppLocalizations.of(context)!.goalResearchDesc,
                   imagePath: 'assets/images/class_academic.jpg',
                   goalKey: 'research',
                   color: Colors.purple[50]!,
@@ -83,9 +84,9 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                 ),
                 _buildVerticalClassCard(
                   context,
-                  title: '실전 취업형 (E-7)',
-                  subtitle: '학부 졸업 후\n한국 기업 바로 취업',
-                  description: 'D-10 구직비자 자격 진단부터 E-7 직종 코드 확인, 취업 역량 분석까지 한번에! 졸업 후 한국 기업 취업을 위한 A to Z를 이 로드맵에 다 담았어요.',
+                  title: AppLocalizations.of(context)!.goalJobTitle,
+                  subtitle: AppLocalizations.of(context)!.goalJobSubtitle,
+                  description: AppLocalizations.of(context)!.goalJobDesc,
                   imagePath: 'assets/images/class_job.jpg',
                   goalKey: 'employment',
                   color: Colors.blue[50]!,
@@ -93,9 +94,9 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                 ),
                 _buildVerticalClassCard(
                   context,
-                  title: '창업형 (D-8-4)',
-                  subtitle: '나만의 아이디어로\n기술 창업 도전',
-                  description: 'D-8-4 기술창업을 위한 필수 요건(OASIS 80점)부터 전국 교육 센터 정보, 그리고 창업 준비 비자(D-10-2) 활용 가이드까지! 막막한 기술 창업의 길을 이 로드맵이 열어드릴게요.',
+                  title: AppLocalizations.of(context)!.goalStartupTitle,
+                  subtitle: AppLocalizations.of(context)!.goalStartupSubtitle,
+                  description: AppLocalizations.of(context)!.goalStartupDesc,
                   imagePath: 'assets/images/class_startup.jpg',
                   goalKey: 'startup',
                   color: Colors.orange[50]!,
@@ -103,9 +104,9 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                 ),
                 _buildVerticalClassCard(
                   context,
-                  title: '글로벌형',
-                  subtitle: '한국 학위 취득 후\n본국/해외 진출',
-                  description: '한국에서의 학업을 마치고 더 넓은 세상으로! 원활한 귀국 준비나 제3국 진출을 위한 서류 작업을 도와드릴게요.',
+                  title: AppLocalizations.of(context)!.goalGlobalTitle,
+                  subtitle: AppLocalizations.of(context)!.goalGlobalSubtitle,
+                  description: AppLocalizations.of(context)!.goalGlobalDesc,
                   imagePath: 'assets/images/class_global.png',
                   goalKey: 'global',
                   color: Colors.teal[50]!,
@@ -197,9 +198,9 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                       decoration: BoxDecoration(
-                        color: Colors.blue.withValues(alpha: 0.05),
+                        color: Colors.blue.withOpacity(0.05),
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.blue.withValues(alpha: 0.1)),
+                        border: Border.all(color: Colors.blue.withOpacity(0.1)),
                       ),
                       child: Row(
                         children: [
@@ -207,7 +208,7 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                           const SizedBox(width: 10),
                           Expanded(
                             child: Text(
-                              '목표는 나중에 [마이페이지]에서\n언제든 바꿀 수 있어요!',
+                              AppLocalizations.of(context)!.msgGoalChangeInfo,
                               style: GoogleFonts.notoSansKr(
                                 fontSize: 13,
                                 color: Colors.blue[800],
@@ -240,7 +241,7 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          '다른 거 볼래요',
+                          AppLocalizations.of(context)!.btnLookAround,
                           style: GoogleFonts.notoSansKr(
                             fontSize: 16,
                             color: Colors.grey[600],
@@ -312,7 +313,7 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          '이걸로 결정!',
+                          AppLocalizations.of(context)!.btnConfirmGoal,
                           style: GoogleFonts.notoSansKr(
                             fontSize: 16,
                             color: Colors.white,

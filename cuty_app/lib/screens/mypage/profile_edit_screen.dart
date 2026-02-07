@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../l10n/gen/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileEditScreen extends StatelessWidget {
@@ -10,7 +11,7 @@ class ProfileEditScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          '프로필 수정',
+          AppLocalizations.of(context)!.profileEditTitle,
           style: GoogleFonts.notoSansKr(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -26,11 +27,11 @@ class ProfileEditScreen extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('프로필이 저장되었습니다.')),
+                SnackBar(content: Text(AppLocalizations.of(context)!.msgProfileSaved)),
               );
             },
             child: Text(
-              '저장',
+              AppLocalizations.of(context)!.actionSave,
               style: GoogleFonts.notoSansKr(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -86,8 +87,8 @@ class ProfileEditScreen extends StatelessWidget {
             // Nickname Input
             TextField(
               decoration: InputDecoration(
-                labelText: '닉네임',
-                hintText: 'User Name',
+                labelText: AppLocalizations.of(context)!.labelNickname,
+                hintText: AppLocalizations.of(context)!.hintName,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -100,8 +101,8 @@ class ProfileEditScreen extends StatelessWidget {
             TextField(
               enabled: false,
               decoration: InputDecoration(
-                labelText: '학교',
-                hintText: 'University Name',
+                labelText: AppLocalizations.of(context)!.labelSchool,
+                hintText: AppLocalizations.of(context)!.hintSchool,
                 filled: true,
                 fillColor: Colors.grey[100],
                 border: OutlineInputBorder(

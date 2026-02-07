@@ -1,29 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../l10n/gen/app_localizations.dart';
 
 class ThesisScheduleScreen extends StatefulWidget {
-  const ThesisScheduleScreen({Key? key}) : super(key: key);
+  const ThesisScheduleScreen({super.key});
 
   @override
   State<ThesisScheduleScreen> createState() => _ThesisScheduleScreenState();
 }
 
 class _ThesisScheduleScreenState extends State<ThesisScheduleScreen> {
-  // 데모용 데이터
-  final List<Map<String, dynamic>> _steps = [
-    {'title': '연구 계획서(Proposal) 발표', 'date': '2025.10.15', 'isCompleted': true},
-    {'title': '학위 청구 논문 심사 신청', 'date': '2026.04.01', 'isCompleted': true},
-    {'title': '예비 심사 (Preliminary)', 'date': '2026.05.20', 'isCompleted': false, 'isNext': true},
-    {'title': '본 심사 (Main Defense)', 'date': '2026.06.15', 'isCompleted': false},
-    {'title': '최종 논문 인쇄본 제출', 'date': '2026.07.10', 'isCompleted': false},
+  // 데모용 데이터 - Localization을 위해 build 내에서 생성하거나 getter로 변경
+  List<Map<String, dynamic>> getSteps(BuildContext context) => [
+    {'title': AppLocalizations.of(context)!.stepProposal, 'date': '2025.10.15', 'isCompleted': true},
+    {'title': AppLocalizations.of(context)!.stepApplication, 'date': '2026.04.01', 'isCompleted': true},
+    {'title': AppLocalizations.of(context)!.stepPreliminary, 'date': '2026.05.20', 'isCompleted': false, 'isNext': true},
+    {'title': AppLocalizations.of(context)!.stepDefense, 'date': '2026.06.15', 'isCompleted': false},
+    {'title': AppLocalizations.of(context)!.stepSubmission, 'date': '2026.07.10', 'isCompleted': false},
   ];
 
   @override
   Widget build(BuildContext context) {
+    final steps = getSteps(context);
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
-        title: Text('논문 심사 일정', style: GoogleFonts.notoSansKr(fontWeight: FontWeight.bold, color: Colors.black)),
+        title: Text(AppLocalizations.of(context)!.scheduleTitle, style: GoogleFonts.notoSansKr(fontWeight: FontWeight.bold, color: Colors.black)),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
@@ -61,7 +64,7 @@ class _ThesisScheduleScreenState extends State<ThesisScheduleScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '예비 심사까지',
+                      AppLocalizations.of(context)!.lblDaysLeft,
                       style: GoogleFonts.notoSansKr(color: Colors.white.withOpacity(0.9), fontSize: 16),
                     ),
                     Container(
@@ -79,7 +82,7 @@ class _ThesisScheduleScreenState extends State<ThesisScheduleScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '서류 준비는 다 되셨나요?',
+                  AppLocalizations.of(context)!.msgDocReady,
                   style: GoogleFonts.notoSansKr(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 16),
@@ -95,7 +98,7 @@ class _ThesisScheduleScreenState extends State<ThesisScheduleScreen> {
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          '심사 통과 시 학력 점수 +20점 확정!',
+                          AppLocalizations.of(context)!.msgScoreGain,
                           style: GoogleFonts.notoSansKr(
                             color: const Color(0xFF673AB7),
                             fontWeight: FontWeight.bold,
@@ -120,9 +123,9 @@ class _ThesisScheduleScreenState extends State<ThesisScheduleScreen> {
               ),
               child: ListView.builder(
                 padding: const EdgeInsets.all(24),
-                itemCount: _steps.length,
+                itemCount: steps.length,
                 itemBuilder: (context, index) {
-                  final step = _steps[index];
+                  final step = steps[index];
                   final bool isCompleted = step['isCompleted'];
                   final bool isNext = step['isNext'] ?? false;
 
@@ -145,12 +148,12 @@ class _ThesisScheduleScreenState extends State<ThesisScheduleScreen> {
                                   width: 2,
                                 ),
                                 shape: BoxShape.circle,
-                              ),
-                              child: isCompleted 
-                                  ? const Icon(Icons.check, size: 12, color: Colors.white)
-                                  : (isNext ? Center(child: Container(width: 8, height: 8, decoration: const BoxDecoration(color: Color(0xFF673AB7), shape: BoxShape.circle))) : null),
+                                ),
+                                child: isCompleted 
+                                    ? const Icon(Icons.check, size: 12, color: Colors.white)
+                                    : (isNext ? Center(child: Container(width: 8, height: 8, decoration: const BoxDecoration(color: Color(0xFF673AB7), shape: BoxShape.circle))) : null),
                             ),
-                            if (index != _steps.length - 1)
+                            if (index != steps.length - 1)
                               Expanded(
                                 child: Container(
                                   width: 2,

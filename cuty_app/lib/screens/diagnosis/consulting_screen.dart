@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/diagnosis_provider.dart';
 import '../../models/diagnosis_model.dart';
 import 'result_screen.dart';
+import '../../l10n/gen/app_localizations.dart'; // Relative import to fix resolution
 
 class ConsultingScreen extends ConsumerStatefulWidget {
   const ConsultingScreen({super.key});
@@ -19,8 +20,34 @@ class _ConsultingScreenState extends ConsumerState<ConsultingScreen> with Single
   bool _isOtherJob = false;
   final _otherJobController = TextEditingController();
 
-  final List<String> _jobCategories = ["서비스", "관광", "무역", "IT/기술", "마케팅", "교육", "의료/코디네이터", "기타"];
-  final List<String> _locations = ["서울", "경기/인천", "부산", "대구", "대전", "광주", "상관없음"];
+  List<String> _getJobCategories(BuildContext context) {
+    if (!mounted) return [];
+    final s = AppLocalizations.of(context)!;
+    return [
+      s.jobCategoryService,
+      s.jobCategoryTourism,
+      s.jobCategoryTrade,
+      s.jobCategoryIT,
+      s.jobCategoryMarketing,
+      s.jobCategoryEducation,
+      s.jobCategoryMedical,
+      s.jobCategoryOther
+    ];
+  }
+
+  List<String> _getLocations(BuildContext context) {
+     if (!mounted) return [];
+     final s = AppLocalizations.of(context)!;
+     return [
+       s.locationSeoul,
+       s.locationGyeonggi,
+       s.locationBusan,
+       s.locationDaegu,
+       s.locationDaejeon,
+       s.locationGwangju,
+       s.locationAny
+     ];
+  }
   
   // Accordion State for "Deep Depth Experience"
   final Map<String, bool> _isExpanded = {
@@ -75,7 +102,13 @@ class _ConsultingScreenState extends ConsumerState<ConsultingScreen> with Single
             children: [
                RotationTransition(turns: _loadingController, child: Icon(useDocuments ? Icons.wallet : Icons.analytics, size: 60, color: Colors.indigo)),
                const SizedBox(height: 24),
-               Text(useDocuments ? "서류지갑을\n열어보고 있어요..." : "설문 내용을 바탕으로\n분석 중입니다...", textAlign: TextAlign.center, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+               Text(
+                 useDocuments 
+                   ? AppLocalizations.of(context)!.consultingCheckingWallet 
+                   : AppLocalizations.of(context)!.consultingAnalyzing,
+                 textAlign: TextAlign.center, 
+                 style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)
+               ),
             ],
           ),
         ),
@@ -99,7 +132,7 @@ class _ConsultingScreenState extends ConsumerState<ConsultingScreen> with Single
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("쿠티바라 취업 컨설팅"),
+        title: Text(AppLocalizations.of(context)!.consultingTitle), // "쿠티바라 취업 컨설팅"
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white,
@@ -153,7 +186,7 @@ class _ConsultingScreenState extends ConsumerState<ConsultingScreen> with Single
                 disabledBackgroundColor: Colors.grey[300],
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               ),
-              child: const Text("선택 완료", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+              child: Text(AppLocalizations.of(context)!.commonSelectComplete, style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
             ),
           )
         ],
@@ -173,12 +206,13 @@ class _ConsultingScreenState extends ConsumerState<ConsultingScreen> with Single
   }
 
   String _getQuestionText(int step) {
+    if (!mounted) return ""; // Guard against context usage if not mounted
     switch (step) {
-      case 0: return "반갑습니다! 취업 컨설턴트 쿠티바라입니다.\n관심 있는 분야를 모두 선택해주세요.";
-      case 1: return "어느 지역에서 근무하기를\n희망하시나요?";
-      case 2: return "현재 한국어 실력은\n어느 정도라고 생각하시나요?";
-      case 3: return "관련 경력이 있다면 알려주세요.\n(없다면 '선택 완료'를 눌러주세요)";
-      case 4: return "마지막으로, 정확한 분석을 위해\n서류지갑을 확인해도 될까요?";
+      case 0: return AppLocalizations.of(context)!.consultingQuestionStep1;
+      case 1: return AppLocalizations.of(context)!.consultingQuestionStep2;
+      case 2: return AppLocalizations.of(context)!.consultingQuestionStep3;
+      case 3: return AppLocalizations.of(context)!.consultingQuestionStep4;
+      case 4: return AppLocalizations.of(context)!.consultingQuestionStep5;
       default: return "";
     }
   }
@@ -194,7 +228,7 @@ class _ConsultingScreenState extends ConsumerState<ConsultingScreen> with Single
             Wrap(
               spacing: 10, runSpacing: 10,
               alignment: WrapAlignment.center,
-              children: _jobCategories.map((job) {
+              children: _getJobCategories(context).map((job) {
                 final isSelected = state.answer.targetJobs.contains(job);
                 return FilterChip(
                   label: Text(job),
@@ -236,7 +270,7 @@ class _ConsultingScreenState extends ConsumerState<ConsultingScreen> with Single
         return Wrap(
           spacing: 10, runSpacing: 10,
           alignment: WrapAlignment.center,
-          children: _locations.map((loc) {
+          children: _getLocations(context).map((loc) {
             final isSelected = state.answer.preferredLocations.contains(loc);
             return FilterChip(
               label: Text(loc),
@@ -253,7 +287,13 @@ class _ConsultingScreenState extends ConsumerState<ConsultingScreen> with Single
         );
 
       case 2: // Korean
-        final lvls = ["기초 (인사말)", "일상회화 (식당/마트)", "비즈니스 (토론 가능)", "원어민 수준"];
+        final s = AppLocalizations.of(context)!;
+        final lvls = [
+          s.koreanLevelBasic,
+          s.koreanLevelDaily,
+          s.koreanLevelBusiness,
+          s.koreanLevelNative
+        ];
         return Column(children: lvls.map((l) => Padding(
           padding: const EdgeInsets.only(bottom: 8),
           child: _buildSelectableTile(l, state.answer.koreanLevel == l, () => notifier.updateAnswer(state.answer.copyWith(koreanLevel: l))),
