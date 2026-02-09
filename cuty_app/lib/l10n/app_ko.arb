@@ -214,8 +214,8 @@
 
   "jobTabPartTime": "아르바이트",
   "jobTabPartTimeSub": "(Part-Time)",
-  "jobTabCareer": "정규직",
-  "jobTabCareerSub": "신입/경력",
+  "jobTabCareer": "취업",
+  "jobTabCareerSub": "(jobs)",
 
   "bannerJobScore": "취업역량 점수: {score}",
   "@bannerJobScore": {
@@ -443,7 +443,7 @@
   "tagManager": "#현지관리자",
   "tagAssistant": "#주재원보조",
 
-  "stepTechStartup": "기술 창업 (D-8-4)",
+  "stepTechStartup": "기술 창업",
   "secD84Req": "D-8-4 발급 최소 요건",
   "reqDegree": "학사 학위 이상 (국내/외)",
   "reqOasis": "OASIS 점수 80점 이상 (필수)",

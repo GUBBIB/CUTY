@@ -39,16 +39,49 @@ void main() async {
   }
 
   runApp(
-    ProviderScope(
-      child: p.MultiProvider(
-        providers: [
-          p.ChangeNotifierProvider(create: (_) => VisaScoreProvider()),
-          p.ChangeNotifierProvider(create: (_) => VisaProvider()),
-        ],
-        child: const CutyApp(),
+    RestartWidget( // Wrapped with RestartWidget
+      child: ProviderScope(
+        child: p.MultiProvider(
+          providers: [
+            p.ChangeNotifierProvider(create: (_) => VisaScoreProvider()),
+            p.ChangeNotifierProvider(create: (_) => VisaProvider()),
+          ],
+          child: const CutyApp(),
+        ),
       ),
     ),
   );
+}
+
+// [Added] Restart functionality widget
+class RestartWidget extends StatefulWidget {
+  const RestartWidget({super.key, required this.child});
+  final Widget child;
+
+  static void restartApp(BuildContext context) {
+    context.findAncestorStateOfType<_RestartWidgetState>()?.restartApp();
+  }
+
+  @override
+  State<RestartWidget> createState() => _RestartWidgetState();
+}
+
+class _RestartWidgetState extends State<RestartWidget> {
+  Key key = UniqueKey();
+
+  void restartApp() {
+    setState(() {
+      key = UniqueKey(); // Refresh app by changing key
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return KeyedSubtree(
+      key: key,
+      child: widget.child,
+    );
+  }
 }
 
 class CutyApp extends ConsumerWidget {

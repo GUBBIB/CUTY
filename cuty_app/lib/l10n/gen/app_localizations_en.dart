@@ -598,7 +598,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get jobTabCareer => 'Full-time';
 
   @override
-  String get jobTabCareerSub => 'New/Experienced';
+  String get jobTabCareerSub => '(Jobs)';
 
   @override
   String bannerJobScore(Object score) {
@@ -1172,7 +1172,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tagAssistant => '#Expat Assistant';
 
   @override
-  String get stepTechStartup => 'Tech Startup (D-8-4)';
+  String get stepTechStartup => 'Tech Startup';
 
   @override
   String get secD84Req => 'D-8-4 Minimum Requirements';

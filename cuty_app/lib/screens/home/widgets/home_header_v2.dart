@@ -5,6 +5,9 @@ import '../../../../providers/point_provider.dart';
 import '../../wallet/my_point_screen.dart';
 import 'package:cuty_app/l10n/gen/app_localizations.dart';
 import '../../../../services/local_storage_service.dart';
+import 'package:cuty_app/main.dart'; // [Added] For RestartWidget
+import '../../../../providers/fortune_provider.dart'; // [Added] For fortune reset
+import '../../../../providers/user_provider.dart'; // [Added] For user reset
 
 class HomeHeader extends ConsumerWidget {
   const HomeHeader({super.key});
@@ -56,7 +59,18 @@ class HomeHeader extends ConsumerWidget {
         // [1. 왼쪽 그룹] 로고 + 초기화 버튼 (묶어서 배치)
         // [1. 왼쪽] 로고 자체가 버튼이 됨 (숨겨진 기능)
         GestureDetector(
-          onTap: () => _showResetDialog(context),
+          onTap: () async {
+            // 1. 저장된 데이터 삭제 (포춘쿠키 등)
+            await ref.read(fortuneProvider.notifier).reset();
+            
+            // 2. (선택) 유저 데이터 초기화 - 재시작하면 어차피 날아가지만 확실하게 함
+            ref.invalidate(userProvider);
+
+            // 3. 앱 강제 재시작 (Hot Restart 효과)
+            if (context.mounted) {
+               RestartWidget.restartApp(context);
+            }
+          },
           child: Text(
             'CUTY',
             style: GoogleFonts.poppins(

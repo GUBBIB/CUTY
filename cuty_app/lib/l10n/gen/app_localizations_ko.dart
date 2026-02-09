@@ -594,10 +594,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get jobTabPartTimeSub => '(Part-Time)';
 
   @override
-  String get jobTabCareer => '정규직';
+  String get jobTabCareer => '취업';
 
   @override
-  String get jobTabCareerSub => '신입/경력';
+  String get jobTabCareerSub => '(jobs)';
 
   @override
   String bannerJobScore(Object score) {
@@ -1167,7 +1167,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get tagAssistant => '#주재원보조';
 
   @override
-  String get stepTechStartup => '기술 창업 (D-8-4)';
+  String get stepTechStartup => '기술 창업';
 
   @override
   String get secD84Req => 'D-8-4 발급 최소 요건';

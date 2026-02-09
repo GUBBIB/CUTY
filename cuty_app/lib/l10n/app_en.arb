@@ -218,7 +218,7 @@
   "jobTabPartTime": "Part-time",
   "jobTabPartTimeSub": "(Part-Time)",
   "jobTabCareer": "Full-time",
-  "jobTabCareerSub": "New/Experienced",
+  "jobTabCareerSub": "(Jobs)",
 
   "bannerJobScore": "Job Competency Score: {score}",
   "@bannerJobScore": {
@@ -444,7 +444,7 @@
   "tagManager": "#Local Manager",
   "tagAssistant": "#Expat Assistant",
 
-  "stepTechStartup": "Tech Startup (D-8-4)",
+  "stepTechStartup": "Tech Startup",
   "secD84Req": "D-8-4 Minimum Requirements",
   "reqDegree": "Bachelor's degree or higher (Domestic/Overseas)",
   "reqOasis": "OASIS Score 80+ (Mandatory)",

@@ -1259,13 +1259,13 @@ abstract class AppLocalizations {
   /// No description provided for @jobTabCareer.
   ///
   /// In ko, this message translates to:
-  /// **'정규직'**
+  /// **'취업'**
   String get jobTabCareer;
 
   /// No description provided for @jobTabCareerSub.
   ///
   /// In ko, this message translates to:
-  /// **'신입/경력'**
+  /// **'(jobs)'**
   String get jobTabCareerSub;
 
   /// No description provided for @bannerJobScore.
@@ -2375,7 +2375,7 @@ abstract class AppLocalizations {
   /// No description provided for @stepTechStartup.
   ///
   /// In ko, this message translates to:
-  /// **'기술 창업 (D-8-4)'**
+  /// **'기술 창업'**
   String get stepTechStartup;
 
   /// No description provided for @secD84Req.

@@ -44,7 +44,7 @@ class _VisaRoadmapScreenState extends ConsumerState<VisaRoadmapScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'My Visa Roadmap',
+          AppLocalizations.of(context)!.lblResidencyVisa,
           style: GoogleFonts.poppins(
             color: const Color(0xFF1A1A2E),
             fontWeight: FontWeight.w700,
@@ -69,7 +69,7 @@ class _VisaRoadmapScreenState extends ConsumerState<VisaRoadmapScreen> {
               },
               icon: const Icon(Icons.swap_horiz, size: 20, color: Color(0xFF6C63FF)),
               label: Text(
-                AppLocalizations.of(context)!.roadmapClassChange,
+                AppLocalizations.of(context)!.actionChangeClass,
                 style: GoogleFonts.poppins(
                   color: const Color(0xFF6C63FF),
                   fontWeight: FontWeight.w600,
