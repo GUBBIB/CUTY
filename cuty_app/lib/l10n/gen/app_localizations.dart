@@ -143,109 +143,109 @@ abstract class AppLocalizations {
   /// No description provided for @goalSchoolTitle.
   ///
   /// In ko, this message translates to:
-  /// **'진학'**
+  /// **'학교 생활형 (기본형)'**
   String get goalSchoolTitle;
 
   /// No description provided for @goalSchoolSubtitle.
   ///
   /// In ko, this message translates to:
-  /// **'대학원 진학'**
+  /// **'일단은 학교 생활에 집중할래요'**
   String get goalSchoolSubtitle;
 
   /// No description provided for @goalSchoolDesc.
   ///
   /// In ko, this message translates to:
-  /// **'D-2 비자 연장 및 변경'**
+  /// **'일단은 즐거운 캠퍼스 라이프가 우선이죠! 출석률 관리와 학점, 비자 연장에 필요한 기본기부터 탄탄하게 다져봐요.'**
   String get goalSchoolDesc;
 
   /// No description provided for @goalResearchTitle.
   ///
   /// In ko, this message translates to:
-  /// **'연구'**
+  /// **'연구/거주형'**
   String get goalResearchTitle;
 
   /// No description provided for @goalResearchSubtitle.
   ///
   /// In ko, this message translates to:
-  /// **'연구원 취업'**
+  /// **'대학원 진학 예정 & F-2-7(거주) 목표'**
   String get goalResearchSubtitle;
 
   /// No description provided for @goalResearchDesc.
   ///
   /// In ko, this message translates to:
-  /// **'E-1, E-3 비자'**
+  /// **'단순 취업비자(E-7)에 만족하지 마세요. 석사 학위를 활용해 더 자유로운 F-2-7(거주 비자)로 바로 업그레이드 할 수 있습니다. 80점 달성을 위한 족집게 전략을 알려드릴게요.'**
   String get goalResearchDesc;
 
   /// No description provided for @goalJobTitle.
   ///
   /// In ko, this message translates to:
-  /// **'취업'**
+  /// **'실전 취업형 (E-7)'**
   String get goalJobTitle;
 
   /// No description provided for @goalJobSubtitle.
   ///
   /// In ko, this message translates to:
-  /// **'한국 기업 취업'**
+  /// **'학사 졸업 후 한국에 취업할래요 (E-7 비자)'**
   String get goalJobSubtitle;
 
   /// No description provided for @goalJobDesc.
   ///
   /// In ko, this message translates to:
-  /// **'E-7, F-2 비자'**
+  /// **'D-10 구직비자 자격 진단부터 E-7 직종 코드 확인, 취업 역량 분석까지 한번에! 졸업 후 한국 기업 취업을 위한 A to Z를 이 로드맵에 다 담았어요.'**
   String get goalJobDesc;
 
   /// No description provided for @goalStartupTitle.
   ///
   /// In ko, this message translates to:
-  /// **'창업'**
+  /// **'창업형 (D-8-4)'**
   String get goalStartupTitle;
 
   /// No description provided for @goalStartupSubtitle.
   ///
   /// In ko, this message translates to:
-  /// **'국내 법인 설립'**
+  /// **'나만의 아이디어로 기술창업 도전'**
   String get goalStartupSubtitle;
 
   /// No description provided for @goalStartupDesc.
   ///
   /// In ko, this message translates to:
-  /// **'D-8, D-9 비자'**
+  /// **'D-10-1(구직)과 다릅니다. 창업 준비를 위해 최대 2년간 체류하며 OASIS 점수를 채우는 비자입니다.'**
   String get goalStartupDesc;
 
   /// No description provided for @goalGlobalTitle.
   ///
   /// In ko, this message translates to:
-  /// **'해외'**
+  /// **'글로벌형'**
   String get goalGlobalTitle;
 
   /// No description provided for @goalGlobalSubtitle.
   ///
   /// In ko, this message translates to:
-  /// **'본국 귀국/해외 취업'**
+  /// **'한국 학위 취득 후 본국/해외 진출'**
   String get goalGlobalSubtitle;
 
   /// No description provided for @goalGlobalDesc.
   ///
   /// In ko, this message translates to:
-  /// **'비자 만료 후 출국'**
+  /// **'한국에서의 학업을 마치고 더 넓은 세상으로! 원활한 귀국 준비나 제3국 진출을 위한 서류 작업을 도와드릴게요.'**
   String get goalGlobalDesc;
 
   /// No description provided for @msgGoalChangeInfo.
   ///
   /// In ko, this message translates to:
-  /// **'목표는 나중에 변경할 수 있습니다.'**
+  /// **'class는 자유롭게 변경 가능해요!'**
   String get msgGoalChangeInfo;
 
   /// No description provided for @btnLookAround.
   ///
   /// In ko, this message translates to:
-  /// **'둘러보기'**
+  /// **'다른 거 볼래요'**
   String get btnLookAround;
 
   /// No description provided for @btnConfirmGoal.
   ///
   /// In ko, this message translates to:
-  /// **'목표 설정 완료'**
+  /// **'이걸로 결정!'**
   String get btnConfirmGoal;
 
   /// No description provided for @roadmapClassChange.
@@ -257,13 +257,13 @@ abstract class AppLocalizations {
   /// No description provided for @roadmapConsultant.
   ///
   /// In ko, this message translates to:
-  /// **'비자 전문 컨설턴트'**
+  /// **'F-2-7 비자 컨설턴트'**
   String get roadmapConsultant;
 
   /// No description provided for @roadmapConsultantDesc.
   ///
   /// In ko, this message translates to:
-  /// **'1:1 상담으로 확실하게'**
+  /// **'모의 점수를 계산하면 AI가 맞춤형 합격 전략을 분석해드려요.'**
   String get roadmapConsultantDesc;
 
   /// No description provided for @roadmapCalculator.
@@ -287,103 +287,103 @@ abstract class AppLocalizations {
   /// No description provided for @conceptTitle.
   ///
   /// In ko, this message translates to:
-  /// **'F-2-7 비자란?'**
+  /// **'F-2-7 비자 개념 잡기'**
   String get conceptTitle;
 
   /// No description provided for @conceptFormula1.
   ///
   /// In ko, this message translates to:
-  /// **'연령'**
+  /// **'E-7 직종'**
   String get conceptFormula1;
 
   /// No description provided for @conceptFormula2.
   ///
   /// In ko, this message translates to:
-  /// **'학력'**
+  /// **'80점'**
   String get conceptFormula2;
 
   /// No description provided for @conceptFormula3.
   ///
   /// In ko, this message translates to:
-  /// **'소득'**
+  /// **'F-2-7'**
   String get conceptFormula3;
 
   /// No description provided for @conceptDesc.
   ///
   /// In ko, this message translates to:
-  /// **'점수제 우수 인재 거주 비자입니다.'**
+  /// **'직종은 같습니다. (E-7-1 전문직) 하지만 석사 이상 학위에 점수(80점)를 채우면 비자가 업그레이드됩니다.'**
   String get conceptDesc;
 
   /// No description provided for @conceptWhy.
   ///
   /// In ko, this message translates to:
-  /// **'왜 필요한가요?'**
+  /// **'왜 업그레이드 해야 할까요?'**
   String get conceptWhy;
 
   /// No description provided for @conceptVisaE7.
   ///
   /// In ko, this message translates to:
-  /// **'E-7 (취업)'**
+  /// **'일반 취업(E-7)'**
   String get conceptVisaE7;
 
   /// No description provided for @conceptVisaF27.
   ///
   /// In ko, this message translates to:
-  /// **'F-2-7 (거주)'**
+  /// **'거주 비자(F-2-7)'**
   String get conceptVisaF27;
 
   /// No description provided for @conceptRow1Title.
   ///
   /// In ko, this message translates to:
-  /// **'기간'**
+  /// **'이직의 자유'**
   String get conceptRow1Title;
 
   /// No description provided for @conceptRow1Bad.
   ///
   /// In ko, this message translates to:
-  /// **'1년마다 갱신'**
+  /// **'회사 허가 필수'**
   String get conceptRow1Bad;
 
   /// No description provided for @conceptRow1Good.
   ///
   /// In ko, this message translates to:
-  /// **'최대 3~5년'**
+  /// **'자유로운 이직'**
   String get conceptRow1Good;
 
   /// No description provided for @conceptRow2Title.
   ///
   /// In ko, this message translates to:
-  /// **'이직'**
+  /// **'체류 기간'**
   String get conceptRow2Title;
 
   /// No description provided for @conceptRow2Bad.
   ///
   /// In ko, this message translates to:
-  /// **'신고 필수/복잡'**
+  /// **'1~2년 (단기)'**
   String get conceptRow2Bad;
 
   /// No description provided for @conceptRow2Good.
   ///
   /// In ko, this message translates to:
-  /// **'자유로운 이직'**
+  /// **'최대 5년 (장기)'**
   String get conceptRow2Good;
 
   /// No description provided for @conceptRow3Title.
   ///
   /// In ko, this message translates to:
-  /// **'배우자'**
+  /// **'가족 혜택'**
   String get conceptRow3Title;
 
   /// No description provided for @conceptRow3Bad.
   ///
   /// In ko, this message translates to:
-  /// **'취업 불가'**
+  /// **'배우자 취업 불가'**
   String get conceptRow3Bad;
 
   /// No description provided for @conceptRow3Good.
   ///
   /// In ko, this message translates to:
-  /// **'취업 가능'**
+  /// **'배우자 취업 가능'**
   String get conceptRow3Good;
 
   /// No description provided for @lblMyGoal.
@@ -395,7 +395,7 @@ abstract class AppLocalizations {
   /// No description provided for @lblResidencyVisa.
   ///
   /// In ko, this message translates to:
-  /// **'거주 비자(F-2)'**
+  /// **'연구/거주형 (F-2)'**
   String get lblResidencyVisa;
 
   /// No description provided for @itemCategoryCafe.
@@ -425,7 +425,7 @@ abstract class AppLocalizations {
   /// No description provided for @bannerAdPoint.
   ///
   /// In ko, this message translates to:
-  /// **'포인트 적립 광고'**
+  /// **'광고보고 포인트 받기!'**
   String get bannerAdPoint;
 
   /// No description provided for @tagAd.
@@ -449,7 +449,7 @@ abstract class AppLocalizations {
   /// No description provided for @bannerInviteFriend.
   ///
   /// In ko, this message translates to:
-  /// **'친구 초대 이벤트'**
+  /// **'친구 초대하고 포인트 받기'**
   String get bannerInviteFriend;
 
   /// No description provided for @tagInvite.
@@ -641,25 +641,25 @@ abstract class AppLocalizations {
   /// No description provided for @docPassport.
   ///
   /// In ko, this message translates to:
-  /// **'여권'**
+  /// **'여권 사본'**
   String get docPassport;
 
   /// No description provided for @docResidenceProof.
   ///
   /// In ko, this message translates to:
-  /// **'거주입증서류'**
+  /// **'거주지 증빙'**
   String get docResidenceProof;
 
   /// No description provided for @docResidenceCert.
   ///
   /// In ko, this message translates to:
-  /// **'체류자격확인서'**
+  /// **'거주지증명서'**
   String get docResidenceCert;
 
   /// No description provided for @docLease.
   ///
   /// In ko, this message translates to:
-  /// **'임대차계약서'**
+  /// **'임대차증명서'**
   String get docLease;
 
   /// No description provided for @docDorm.
@@ -755,13 +755,13 @@ abstract class AppLocalizations {
   /// No description provided for @specSectionIdentity.
   ///
   /// In ko, this message translates to:
-  /// **'신원/체류'**
+  /// **'필수 신분/체류'**
   String get specSectionIdentity;
 
   /// No description provided for @specSectionIdentityDesc.
   ///
   /// In ko, this message translates to:
-  /// **'비자 필수 서류'**
+  /// **'안전한 체류를 위한 필수 서류'**
   String get specSectionIdentityDesc;
 
   /// No description provided for @specSectionAcademic.
@@ -881,7 +881,7 @@ abstract class AppLocalizations {
   /// No description provided for @msgFortuneAlreadyOpened.
   ///
   /// In ko, this message translates to:
-  /// **'이미 포춘쿠키를 열었습니다.'**
+  /// **'오늘은 이미 포춘쿠키를 열었어요!'**
   String get msgFortuneAlreadyOpened;
 
   /// No description provided for @msgDevFortuneReset.
@@ -941,7 +941,7 @@ abstract class AppLocalizations {
   /// No description provided for @boardPopularSubtitle.
   ///
   /// In ko, this message translates to:
-  /// **'핫한 글 모음'**
+  /// **'지금 가장 핫한 이야기 모음'**
   String get boardPopularSubtitle;
 
   /// No description provided for @boardFreeTitle.
@@ -953,7 +953,7 @@ abstract class AppLocalizations {
   /// No description provided for @boardFreeSubtitle.
   ///
   /// In ko, this message translates to:
-  /// **'자유로운 이야기'**
+  /// **'유학생들의 솔직한 수다 공간'**
   String get boardFreeSubtitle;
 
   /// No description provided for @boardQuestionTitle.
@@ -977,7 +977,7 @@ abstract class AppLocalizations {
   /// No description provided for @boardInfoSubtitle.
   ///
   /// In ko, this message translates to:
-  /// **'꿀팁 공유'**
+  /// **'학교 생할 꿀팁 & 강의 정보'**
   String get boardInfoSubtitle;
 
   /// No description provided for @boardMarketTitle.
@@ -989,7 +989,7 @@ abstract class AppLocalizations {
   /// No description provided for @boardMarketSubtitle.
   ///
   /// In ko, this message translates to:
-  /// **'아나바다'**
+  /// **'전공책, 자취용품 사고 팔기'**
   String get boardMarketSubtitle;
 
   /// No description provided for @boardCreateTitle.
@@ -1001,7 +1001,7 @@ abstract class AppLocalizations {
   /// No description provided for @boardCreateSubtitle.
   ///
   /// In ko, this message translates to:
-  /// **'원하는 주제가 없다면?'**
+  /// **'원하는 주제가 없나요? 직접 만들어 보세요!'**
   String get boardCreateSubtitle;
 
   /// No description provided for @msgCreateBoardDialog.
@@ -1025,13 +1025,13 @@ abstract class AppLocalizations {
   /// No description provided for @msgClassFinished.
   ///
   /// In ko, this message translates to:
-  /// **'수업 종료'**
+  /// **'강의 일정 없음'**
   String get msgClassFinished;
 
   /// No description provided for @msgRest.
   ///
   /// In ko, this message translates to:
-  /// **'휴식'**
+  /// **'오늘은 더 이상 수업이 없어요!'**
   String get msgRest;
 
   /// No description provided for @msgNoClass.
@@ -1043,7 +1043,7 @@ abstract class AppLocalizations {
   /// No description provided for @menuJobs.
   ///
   /// In ko, this message translates to:
-  /// **'채용'**
+  /// **'알바/취업'**
   String get menuJobs;
 
   /// No description provided for @menuSchedule.
@@ -1127,7 +1127,7 @@ abstract class AppLocalizations {
   /// No description provided for @jobFilterTitle.
   ///
   /// In ko, this message translates to:
-  /// **'필터'**
+  /// **'공고 필터링하기'**
   String get jobFilterTitle;
 
   /// No description provided for @jobFilterActive.
@@ -1241,7 +1241,7 @@ abstract class AppLocalizations {
   /// No description provided for @jobTabPartTimeSub.
   ///
   /// In ko, this message translates to:
-  /// **'시간제'**
+  /// **'(Part-Time)'**
   String get jobTabPartTimeSub;
 
   /// No description provided for @jobTabCareer.
@@ -1259,13 +1259,13 @@ abstract class AppLocalizations {
   /// No description provided for @bannerJobScore.
   ///
   /// In ko, this message translates to:
-  /// **'나의 취업 역량 점수: {score}점'**
+  /// **'취업역량 점수: {score}'**
   String bannerJobScore(Object score);
 
   /// No description provided for @bannerDiagnosisTitle.
   ///
   /// In ko, this message translates to:
-  /// **'내 점수 확인하고 딱 맞는 일자리 추천받기'**
+  /// **'내 취업 점수는 몇점일까요?'**
   String get bannerDiagnosisTitle;
 
   /// No description provided for @bannerActionTest.
@@ -1469,7 +1469,7 @@ abstract class AppLocalizations {
   /// No description provided for @walletTitle.
   ///
   /// In ko, this message translates to:
-  /// **'지갑'**
+  /// **'서류 지갑'**
   String get walletTitle;
 
   /// No description provided for @boardFree.
@@ -1523,7 +1523,7 @@ abstract class AppLocalizations {
   /// No description provided for @visaRoadmapStep3.
   ///
   /// In ko, this message translates to:
-  /// **'3단계: 준비'**
+  /// **'나의 목표'**
   String get visaRoadmapStep3;
 
   /// No description provided for @visaGoalOasis.
@@ -1721,19 +1721,19 @@ abstract class AppLocalizations {
   /// No description provided for @conceptRow4Title.
   ///
   /// In ko, this message translates to:
-  /// **'가족'**
+  /// **'영주권'**
   String get conceptRow4Title;
 
   /// No description provided for @conceptRow4Bad.
   ///
   /// In ko, this message translates to:
-  /// **'초청 제한'**
+  /// **'5년 거주 필요'**
   String get conceptRow4Bad;
 
   /// No description provided for @conceptRow4Good.
   ///
   /// In ko, this message translates to:
-  /// **'동반 거주'**
+  /// **'3년 후 신청 가능'**
   String get conceptRow4Good;
 
   /// No description provided for @itemCategoryAll.
@@ -2129,19 +2129,19 @@ abstract class AppLocalizations {
   /// No description provided for @roadmapJobTitle.
   ///
   /// In ko, this message translates to:
-  /// **'실전 취업형 로드맵'**
+  /// **'취업형 (E-7)'**
   String get roadmapJobTitle;
 
   /// No description provided for @roadmapGlobalTitle.
   ///
   /// In ko, this message translates to:
-  /// **'글로벌형 로드맵'**
+  /// **'글로벌형 (해외진출)'**
   String get roadmapGlobalTitle;
 
   /// No description provided for @roadmapStartupTitle.
   ///
   /// In ko, this message translates to:
-  /// **'실전 창업형 로드맵'**
+  /// **'창업형 (D-8-4)'**
   String get roadmapStartupTitle;
 
   /// No description provided for @actionChangeClass.
@@ -2297,7 +2297,7 @@ abstract class AppLocalizations {
   /// No description provided for @secApostille.
   ///
   /// In ko, this message translates to:
-  /// **'Apostille Certification'**
+  /// **'졸업장 인증(Apostille) 필수!'**
   String get secApostille;
 
   /// No description provided for @descApostille.
@@ -2327,25 +2327,25 @@ abstract class AppLocalizations {
   /// No description provided for @tagSales.
   ///
   /// In ko, this message translates to:
-  /// **'해외영업'**
+  /// **'#해외영업'**
   String get tagSales;
 
   /// No description provided for @tagTrans.
   ///
   /// In ko, this message translates to:
-  /// **'통번역'**
+  /// **'#통번역'**
   String get tagTrans;
 
   /// No description provided for @tagManager.
   ///
   /// In ko, this message translates to:
-  /// **'현지관리자'**
+  /// **'#현지관리자'**
   String get tagManager;
 
   /// No description provided for @tagAssistant.
   ///
   /// In ko, this message translates to:
-  /// **'주재원보조'**
+  /// **'#주재원보조'**
   String get tagAssistant;
 
   /// No description provided for @stepTechStartup.
@@ -2951,7 +2951,7 @@ abstract class AppLocalizations {
   /// No description provided for @centerIncheonDesc.
   ///
   /// In ko, this message translates to:
-  /// **'송도 G-Tower'**
+  /// **'인천 글로벌 스타트업 캠퍼스'**
   String get centerIncheonDesc;
 
   /// No description provided for @centerDaejeon.
@@ -2963,13 +2963,13 @@ abstract class AppLocalizations {
   /// No description provided for @centerDaejeonDesc.
   ///
   /// In ko, this message translates to:
-  /// **'유성구 대학로'**
+  /// **'KAIST 창업보육센터, 대전창업허브'**
   String get centerDaejeonDesc;
 
   /// No description provided for @titleD102.
   ///
   /// In ko, this message translates to:
-  /// **'D-10-2 (창업준비) vs D-8-4'**
+  /// **'창업준비 비자(D-10-2)가 뭔가요?'**
   String get titleD102;
 
   /// No description provided for @descD102.
@@ -3013,6 +3013,12 @@ abstract class AppLocalizations {
   /// In ko, this message translates to:
   /// **'비자지갑 안전하게 연동하기'**
   String get btnLinkSafe;
+
+  /// No description provided for @btnLinking.
+  ///
+  /// In ko, this message translates to:
+  /// **'연동 중...'**
+  String get btnLinking;
 
   /// No description provided for @msgSecurityFooter.
   ///
@@ -3503,7 +3509,7 @@ abstract class AppLocalizations {
   /// No description provided for @permitCongratsTitle.
   ///
   /// In ko, this message translates to:
-  /// **'축하합니다!\n이제 바로 일할 수 있어요! 🥳'**
+  /// **'축하합니다!\n이제 바로 일할 수 있어요! 🎉'**
   String get permitCongratsTitle;
 
   /// No description provided for @permitCongratsDesc.
@@ -3541,12 +3547,6 @@ abstract class AppLocalizations {
   /// In ko, this message translates to:
   /// **'내 비자 상태 확인하기 (완료)'**
   String get btnCheckMyVisa;
-
-  /// No description provided for @btnLinking.
-  ///
-  /// In ko, this message translates to:
-  /// **'연동 중...'**
-  String get btnLinking;
 
   /// No description provided for @permitFormTitle.
   ///

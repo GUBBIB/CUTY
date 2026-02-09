@@ -30,67 +30,72 @@ class AppLocalizationsKo extends AppLocalizations {
   String get goalSelectionSubtitle => '비자 목표를 선택해주세요.';
 
   @override
-  String get goalSchoolTitle => '진학';
+  String get goalSchoolTitle => '학교 생활형 (기본형)';
 
   @override
-  String get goalSchoolSubtitle => '대학원 진학';
+  String get goalSchoolSubtitle => '일단은 학교 생활에 집중할래요';
 
   @override
-  String get goalSchoolDesc => 'D-2 비자 연장 및 변경';
+  String get goalSchoolDesc =>
+      '일단은 즐거운 캠퍼스 라이프가 우선이죠! 출석률 관리와 학점, 비자 연장에 필요한 기본기부터 탄탄하게 다져봐요.';
 
   @override
-  String get goalResearchTitle => '연구';
+  String get goalResearchTitle => '연구/거주형';
 
   @override
-  String get goalResearchSubtitle => '연구원 취업';
+  String get goalResearchSubtitle => '대학원 진학 예정 & F-2-7(거주) 목표';
 
   @override
-  String get goalResearchDesc => 'E-1, E-3 비자';
+  String get goalResearchDesc =>
+      '단순 취업비자(E-7)에 만족하지 마세요. 석사 학위를 활용해 더 자유로운 F-2-7(거주 비자)로 바로 업그레이드 할 수 있습니다. 80점 달성을 위한 족집게 전략을 알려드릴게요.';
 
   @override
-  String get goalJobTitle => '취업';
+  String get goalJobTitle => '실전 취업형 (E-7)';
 
   @override
-  String get goalJobSubtitle => '한국 기업 취업';
+  String get goalJobSubtitle => '학사 졸업 후 한국에 취업할래요 (E-7 비자)';
 
   @override
-  String get goalJobDesc => 'E-7, F-2 비자';
+  String get goalJobDesc =>
+      'D-10 구직비자 자격 진단부터 E-7 직종 코드 확인, 취업 역량 분석까지 한번에! 졸업 후 한국 기업 취업을 위한 A to Z를 이 로드맵에 다 담았어요.';
 
   @override
-  String get goalStartupTitle => '창업';
+  String get goalStartupTitle => '창업형 (D-8-4)';
 
   @override
-  String get goalStartupSubtitle => '국내 법인 설립';
+  String get goalStartupSubtitle => '나만의 아이디어로 기술창업 도전';
 
   @override
-  String get goalStartupDesc => 'D-8, D-9 비자';
+  String get goalStartupDesc =>
+      'D-10-1(구직)과 다릅니다. 창업 준비를 위해 최대 2년간 체류하며 OASIS 점수를 채우는 비자입니다.';
 
   @override
-  String get goalGlobalTitle => '해외';
+  String get goalGlobalTitle => '글로벌형';
 
   @override
-  String get goalGlobalSubtitle => '본국 귀국/해외 취업';
+  String get goalGlobalSubtitle => '한국 학위 취득 후 본국/해외 진출';
 
   @override
-  String get goalGlobalDesc => '비자 만료 후 출국';
+  String get goalGlobalDesc =>
+      '한국에서의 학업을 마치고 더 넓은 세상으로! 원활한 귀국 준비나 제3국 진출을 위한 서류 작업을 도와드릴게요.';
 
   @override
-  String get msgGoalChangeInfo => '목표는 나중에 변경할 수 있습니다.';
+  String get msgGoalChangeInfo => 'class는 자유롭게 변경 가능해요!';
 
   @override
-  String get btnLookAround => '둘러보기';
+  String get btnLookAround => '다른 거 볼래요';
 
   @override
-  String get btnConfirmGoal => '목표 설정 완료';
+  String get btnConfirmGoal => '이걸로 결정!';
 
   @override
   String get roadmapClassChange => '수강신청 변경 기간';
 
   @override
-  String get roadmapConsultant => '비자 전문 컨설턴트';
+  String get roadmapConsultant => 'F-2-7 비자 컨설턴트';
 
   @override
-  String get roadmapConsultantDesc => '1:1 상담으로 확실하게';
+  String get roadmapConsultantDesc => '모의 점수를 계산하면 AI가 맞춤형 합격 전략을 분석해드려요.';
 
   @override
   String get roadmapCalculator => '점수 계산기';
@@ -102,61 +107,62 @@ class AppLocalizationsKo extends AppLocalizations {
   String get btnCalculate => '계산하기';
 
   @override
-  String get conceptTitle => 'F-2-7 비자란?';
+  String get conceptTitle => 'F-2-7 비자 개념 잡기';
 
   @override
-  String get conceptFormula1 => '연령';
+  String get conceptFormula1 => 'E-7 직종';
 
   @override
-  String get conceptFormula2 => '학력';
+  String get conceptFormula2 => '80점';
 
   @override
-  String get conceptFormula3 => '소득';
+  String get conceptFormula3 => 'F-2-7';
 
   @override
-  String get conceptDesc => '점수제 우수 인재 거주 비자입니다.';
+  String get conceptDesc =>
+      '직종은 같습니다. (E-7-1 전문직) 하지만 석사 이상 학위에 점수(80점)를 채우면 비자가 업그레이드됩니다.';
 
   @override
-  String get conceptWhy => '왜 필요한가요?';
+  String get conceptWhy => '왜 업그레이드 해야 할까요?';
 
   @override
-  String get conceptVisaE7 => 'E-7 (취업)';
+  String get conceptVisaE7 => '일반 취업(E-7)';
 
   @override
-  String get conceptVisaF27 => 'F-2-7 (거주)';
+  String get conceptVisaF27 => '거주 비자(F-2-7)';
 
   @override
-  String get conceptRow1Title => '기간';
+  String get conceptRow1Title => '이직의 자유';
 
   @override
-  String get conceptRow1Bad => '1년마다 갱신';
+  String get conceptRow1Bad => '회사 허가 필수';
 
   @override
-  String get conceptRow1Good => '최대 3~5년';
+  String get conceptRow1Good => '자유로운 이직';
 
   @override
-  String get conceptRow2Title => '이직';
+  String get conceptRow2Title => '체류 기간';
 
   @override
-  String get conceptRow2Bad => '신고 필수/복잡';
+  String get conceptRow2Bad => '1~2년 (단기)';
 
   @override
-  String get conceptRow2Good => '자유로운 이직';
+  String get conceptRow2Good => '최대 5년 (장기)';
 
   @override
-  String get conceptRow3Title => '배우자';
+  String get conceptRow3Title => '가족 혜택';
 
   @override
-  String get conceptRow3Bad => '취업 불가';
+  String get conceptRow3Bad => '배우자 취업 불가';
 
   @override
-  String get conceptRow3Good => '취업 가능';
+  String get conceptRow3Good => '배우자 취업 가능';
 
   @override
   String get lblMyGoal => '나의 목표';
 
   @override
-  String get lblResidencyVisa => '거주 비자(F-2)';
+  String get lblResidencyVisa => '연구/거주형 (F-2)';
 
   @override
   String get itemCategoryCafe => '카페/간식';
@@ -171,7 +177,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get msgPointShopComingSoon => '포인트 상점 준비 중입니다.';
 
   @override
-  String get bannerAdPoint => '포인트 적립 광고';
+  String get bannerAdPoint => '광고보고 포인트 받기!';
 
   @override
   String get tagAd => '광고';
@@ -183,7 +189,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get tagEvent => '이벤트';
 
   @override
-  String get bannerInviteFriend => '친구 초대 이벤트';
+  String get bannerInviteFriend => '친구 초대하고 포인트 받기';
 
   @override
   String get tagInvite => '초대';
@@ -279,16 +285,16 @@ class AppLocalizationsKo extends AppLocalizations {
   String get docStudentId => '학생증';
 
   @override
-  String get docPassport => '여권';
+  String get docPassport => '여권 사본';
 
   @override
-  String get docResidenceProof => '거주입증서류';
+  String get docResidenceProof => '거주지 증빙';
 
   @override
-  String get docResidenceCert => '체류자격확인서';
+  String get docResidenceCert => '거주지증명서';
 
   @override
-  String get docLease => '임대차계약서';
+  String get docLease => '임대차증명서';
 
   @override
   String get docDorm => '기숙사입사확인서';
@@ -336,10 +342,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get specWalletTitle => '내 서류 지갑';
 
   @override
-  String get specSectionIdentity => '신원/체류';
+  String get specSectionIdentity => '필수 신분/체류';
 
   @override
-  String get specSectionIdentityDesc => '비자 필수 서류';
+  String get specSectionIdentityDesc => '안전한 체류를 위한 필수 서류';
 
   @override
   String get specSectionAcademic => '학력/성적';
@@ -399,7 +405,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get homeCheerMessage => '오늘도 힘내세요!';
 
   @override
-  String get msgFortuneAlreadyOpened => '이미 포춘쿠키를 열었습니다.';
+  String get msgFortuneAlreadyOpened => '오늘은 이미 포춘쿠키를 열었어요!';
 
   @override
   String get msgDevFortuneReset => '개발용: 포춘쿠키 초기화됨';
@@ -429,13 +435,13 @@ class AppLocalizationsKo extends AppLocalizations {
   String get boardPopularTitle => '인기게시판';
 
   @override
-  String get boardPopularSubtitle => '핫한 글 모음';
+  String get boardPopularSubtitle => '지금 가장 핫한 이야기 모음';
 
   @override
   String get boardFreeTitle => '자유게시판';
 
   @override
-  String get boardFreeSubtitle => '자유로운 이야기';
+  String get boardFreeSubtitle => '유학생들의 솔직한 수다 공간';
 
   @override
   String get boardQuestionTitle => '질문게시판';
@@ -447,19 +453,19 @@ class AppLocalizationsKo extends AppLocalizations {
   String get boardInfoTitle => '정보게시판';
 
   @override
-  String get boardInfoSubtitle => '꿀팁 공유';
+  String get boardInfoSubtitle => '학교 생할 꿀팁 & 강의 정보';
 
   @override
   String get boardMarketTitle => '중고장터';
 
   @override
-  String get boardMarketSubtitle => '아나바다';
+  String get boardMarketSubtitle => '전공책, 자취용품 사고 팔기';
 
   @override
   String get boardCreateTitle => '게시판 생성';
 
   @override
-  String get boardCreateSubtitle => '원하는 주제가 없다면?';
+  String get boardCreateSubtitle => '원하는 주제가 없나요? 직접 만들어 보세요!';
 
   @override
   String get msgCreateBoardDialog => '새로운 게시판을 요청하시겠습니까?';
@@ -471,16 +477,16 @@ class AppLocalizationsKo extends AppLocalizations {
   String get msgApplySuccess => '신청되었습니다.';
 
   @override
-  String get msgClassFinished => '수업 종료';
+  String get msgClassFinished => '강의 일정 없음';
 
   @override
-  String get msgRest => '휴식';
+  String get msgRest => '오늘은 더 이상 수업이 없어요!';
 
   @override
   String get msgNoClass => '수업 없음';
 
   @override
-  String get menuJobs => '채용';
+  String get menuJobs => '알바/취업';
 
   @override
   String get menuSchedule => '시간표';
@@ -522,7 +528,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get jobSalaryHourly => '시급';
 
   @override
-  String get jobFilterTitle => '필터';
+  String get jobFilterTitle => '공고 필터링하기';
 
   @override
   String jobFilterActive(Object count) {
@@ -583,7 +589,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get jobTabPartTime => '아르바이트';
 
   @override
-  String get jobTabPartTimeSub => '시간제';
+  String get jobTabPartTimeSub => '(Part-Time)';
 
   @override
   String get jobTabCareer => '정규직';
@@ -593,11 +599,11 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String bannerJobScore(Object score) {
-    return '나의 취업 역량 점수: $score점';
+    return '취업역량 점수: $score';
   }
 
   @override
-  String get bannerDiagnosisTitle => '내 점수 확인하고 딱 맞는 일자리 추천받기';
+  String get bannerDiagnosisTitle => '내 취업 점수는 몇점일까요?';
 
   @override
   String get bannerActionTest => '진단하기';
@@ -699,7 +705,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get commonConfirm => '확인';
 
   @override
-  String get walletTitle => '지갑';
+  String get walletTitle => '서류 지갑';
 
   @override
   String get boardFree => '자유게시판';
@@ -732,7 +738,7 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get visaRoadmapStep3 => '3단계: 준비';
+  String get visaRoadmapStep3 => '나의 목표';
 
   @override
   String get visaGoalOasis => 'OASIS 프로그램';
@@ -831,13 +837,13 @@ class AppLocalizationsKo extends AppLocalizations {
   String get koreanLevelNative => '원어민 수준';
 
   @override
-  String get conceptRow4Title => '가족';
+  String get conceptRow4Title => '영주권';
 
   @override
-  String get conceptRow4Bad => '초청 제한';
+  String get conceptRow4Bad => '5년 거주 필요';
 
   @override
-  String get conceptRow4Good => '동반 거주';
+  String get conceptRow4Good => '3년 후 신청 가능';
 
   @override
   String get itemCategoryAll => '전체';
@@ -1035,13 +1041,13 @@ class AppLocalizationsKo extends AppLocalizations {
   String get roadmapSchoolTitle => '학교 생활형 로드맵';
 
   @override
-  String get roadmapJobTitle => '실전 취업형 로드맵';
+  String get roadmapJobTitle => '취업형 (E-7)';
 
   @override
-  String get roadmapGlobalTitle => '글로벌형 로드맵';
+  String get roadmapGlobalTitle => '글로벌형 (해외진출)';
 
   @override
-  String get roadmapStartupTitle => '실전 창업형 로드맵';
+  String get roadmapStartupTitle => '창업형 (D-8-4)';
 
   @override
   String get actionChangeClass => 'Class 변경';
@@ -1120,7 +1126,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get stepGlobalCareer => '글로벌 커리어';
 
   @override
-  String get secApostille => 'Apostille Certification';
+  String get secApostille => '졸업장 인증(Apostille) 필수!';
 
   @override
   String get descApostille =>
@@ -1137,16 +1143,16 @@ class AppLocalizationsKo extends AppLocalizations {
       '여러분의 가장 큰 무기는 \'한국어 능력\'과 \'현지 문화 이해도\'입니다.';
 
   @override
-  String get tagSales => '해외영업';
+  String get tagSales => '#해외영업';
 
   @override
-  String get tagTrans => '통번역';
+  String get tagTrans => '#통번역';
 
   @override
-  String get tagManager => '현지관리자';
+  String get tagManager => '#현지관리자';
 
   @override
-  String get tagAssistant => '주재원보조';
+  String get tagAssistant => '#주재원보조';
 
   @override
   String get stepTechStartup => '기술 창업 (D-8-4)';
@@ -1455,16 +1461,16 @@ class AppLocalizationsKo extends AppLocalizations {
   String get centerIncheon => '인천 글로벌 센터';
 
   @override
-  String get centerIncheonDesc => '송도 G-Tower';
+  String get centerIncheonDesc => '인천 글로벌 스타트업 캠퍼스';
 
   @override
   String get centerDaejeon => '대전 KAIST 센터';
 
   @override
-  String get centerDaejeonDesc => '유성구 대학로';
+  String get centerDaejeonDesc => 'KAIST 창업보육센터, 대전창업허브';
 
   @override
-  String get titleD102 => 'D-10-2 (창업준비) vs D-8-4';
+  String get titleD102 => '창업준비 비자(D-10-2)가 뭔가요?';
 
   @override
   String get descD102 =>
@@ -1487,6 +1493,9 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get btnLinkSafe => '비자지갑 안전하게 연동하기';
+
+  @override
+  String get btnLinking => '연동 중...';
 
   @override
   String get msgSecurityFooter => 'CUTY는 고객님의 개인정보를 안전하게 보호합니다.';
@@ -1734,7 +1743,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get badgeFinalApproved => '최종 허가 완료';
 
   @override
-  String get permitCongratsTitle => '축하합니다!\n이제 바로 일할 수 있어요! 🥳';
+  String get permitCongratsTitle => '축하합니다!\n이제 바로 일할 수 있어요! 🎉';
 
   @override
   String get permitCongratsDesc => '성공적인 아르바이트 생활을\nCUTY가 응원합니다.';
@@ -1753,9 +1762,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get btnCheckMyVisa => '내 비자 상태 확인하기 (완료)';
-
-  @override
-  String get btnLinking => '연동 중...';
 
   @override
   String get permitFormTitle => '시간제 취업 신청서';

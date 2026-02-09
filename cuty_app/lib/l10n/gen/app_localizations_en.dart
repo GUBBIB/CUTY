@@ -1500,6 +1500,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get btnLinkSafe => 'Link Visa Wallet Safely';
 
   @override
+  String get btnLinking => '연동 중...';
+
+  @override
   String get msgSecurityFooter =>
       'CUTY protects your personal information safely.';
 
@@ -1779,9 +1782,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get btnCheckMyVisa => 'Check My Visa Status (Done)';
-
-  @override
-  String get btnLinking => '연동 중...';
 
   @override
   String get permitFormTitle => 'Part-time Job Application';
