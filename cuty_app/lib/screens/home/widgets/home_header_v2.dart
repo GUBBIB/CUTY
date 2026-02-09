@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../providers/point_provider.dart';
@@ -59,17 +60,50 @@ class HomeHeader extends ConsumerWidget {
         // [1. 왼쪽 그룹] 로고 + 초기화 버튼 (묶어서 배치)
         // [1. 왼쪽] 로고 자체가 버튼이 됨 (숨겨진 기능)
         GestureDetector(
-          onTap: () async {
-            // 1. 저장된 데이터 삭제 (포춘쿠키 등)
-            await ref.read(fortuneProvider.notifier).reset();
-            
-            // 2. (선택) 유저 데이터 초기화 - 재시작하면 어차피 날아가지만 확실하게 함
-            ref.invalidate(userProvider);
+          onTap: () {
+            // 1. 경고 팝업 띄우기 (실수로 누르는 것 방지)
+            showDialog(
+              context: context,
+              builder: (BuildContext ctx) {
+                return AlertDialog(
+                  title: const Text('⚠️ 개발자 모드'),
+                  content: const Text('모든 데이터(쿠키, 유저 정보 등)를 삭제하고\n앱을 **완전 초기화(Reboot)** 하시겠습니까?'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(),
+                      child: const Text('취소', style: TextStyle(color: Colors.grey)),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        Navigator.of(ctx).pop(); // 팝업 닫기
 
-            // 3. 앱 강제 재시작 (Hot Restart 효과)
-            if (context.mounted) {
-               RestartWidget.restartApp(context);
-            }
+                        // 2. 모든 데이터 삭제 (SharedPreferences 전체 클리어)
+                        final prefs = await SharedPreferences.getInstance();
+                        await prefs.clear(); // 싹 다 지움
+
+                        // 3. 상태 초기화 (Riverpod)
+                        // (필요 시 특정 프로바이더 invalidate, 재시작하면 어차피 날아가지만 안전장치)
+                        
+                        if (context.mounted) {
+                          // 4. 피드백 메시지
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('🚀 모든 데이터 삭제 완료! 앱을 재시작합니다...'),
+                              duration: Duration(seconds: 1),
+                            ),
+                          );
+                          
+                          // 5. 0.5초 뒤 강제 재시작 (R 기능 실행)
+                          await Future.delayed(const Duration(milliseconds: 500));
+                          RestartWidget.restartApp(context); 
+                        }
+                      },
+                      child: const Text('초기화 실행', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+                    ),
+                  ],
+                );
+              },
+            );
           },
           child: Text(
             'CUTY',

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../l10n/gen/app_localizations.dart';
 import 'home_view_model.dart';
 import '../../providers/home_view_provider.dart';
+import '../../providers/character_provider.dart'; // NEW
 import '../jobs/jobs_home_screen.dart';
 import 'widgets/home_header_v2.dart';
 import 'widgets/home_menu_grid.dart';
@@ -57,7 +58,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         bottom: false, 
         child: RefreshIndicator(
           onRefresh: () async {
-            ref.read(homeViewModelProvider.notifier).refresh();
+            await ref.read(homeViewModelProvider.notifier).refresh();
+            ref.read(characterProvider.notifier).pickRandomCharacter();
           },
           child: CustomScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
@@ -78,7 +80,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
                     // [Character Hero Section]
                     SizedBox(
-                      height: 300, 
+                      height: 340, 
                       child: Stack(
                         alignment: Alignment.topCenter,
                         clipBehavior: Clip.none,
@@ -88,48 +90,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             bottom: 0,
                             left: 0,
                             right: 0,
-                            child: IgnorePointer(
-                              child: CharacterSection(),
-                            ),
-                          ),
-                          // Speech Bubble (Above Character)
-                          Positioned(
-                            top: 30, 
-                            left: 0,
-                            right: 0,
-                            child: Center(
-                              child: Column(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(20),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withValues(alpha: 0.1),
-                                          blurRadius: 4,
-                                          offset: const Offset(0, 2),
-                                        ),
-                                      ],
-                                    ),
-                                    child: Text(
-                                      AppLocalizations.of(context)!.homeCheerMessage,
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black87,
-                                      ),
-                                    ),
-                                  ),
-                                  // Optional Triangle Tail
-                                  CustomPaint(
-                                    painter: _TrianglePainter(Colors.white),
-                                    size: const Size(12, 8),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            child: CharacterSection(),
                           ),
                           // Fortune Cookie (Character's Right Hand -> Screen Left)
                           const Positioned(
@@ -177,26 +138,4 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 }
 
-class _TrianglePainter extends CustomPainter {
-  final Color color;
 
-  _TrianglePainter(this.color);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..style = PaintingStyle.fill;
-
-    final path = Path();
-    path.moveTo(0, 0);
-    path.lineTo(size.width / 2, size.height);
-    path.lineTo(size.width, 0);
-    path.close();
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}

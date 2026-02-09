@@ -12,7 +12,7 @@ import '../../providers/schedule_provider.dart';
 import '../../models/schedule_model.dart';
 import 'profile_edit_screen.dart';
 import 'my_community_activity_screen.dart';
-import 'settings_screen.dart';
+import '../my/settings_screen.dart';
 import '../shop/shop_screen.dart';
 
 class MyPageScreen extends StatelessWidget {

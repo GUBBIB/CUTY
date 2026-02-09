@@ -69,9 +69,9 @@ class HomeViewModel extends StateNotifier<HomeState> {
     }
   }
 
-  void refresh() {
+  Future<void> refresh() async {
     _updateCharacterImage();
-    _loadData();
+    await _loadData();
   }
 
   void _updateCharacterImage() {

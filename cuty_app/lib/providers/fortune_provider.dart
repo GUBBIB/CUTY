@@ -2,9 +2,23 @@ import 'dart:math';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final fortuneProvider = StateNotifierProvider<FortuneNotifier, bool>((ref) {
+final fortuneProvider = StateNotifierProvider<FortuneNotifier, FortuneState>((ref) {
   return FortuneNotifier();
 });
+
+class FortuneState {
+  final bool hasOpened; // 오늘 열었는지 여부
+  final bool isHidden;  // 숨김 처리 여부 (애니메이션 후 사라짐)
+
+  const FortuneState({this.hasOpened = false, this.isHidden = false});
+
+  FortuneState copyWith({bool? hasOpened, bool? isHidden}) {
+    return FortuneState(
+      hasOpened: hasOpened ?? this.hasOpened,
+      isHidden: isHidden ?? this.isHidden,
+    );
+  }
+}
 
 class FortuneResult {
   final String message;
@@ -13,9 +27,9 @@ class FortuneResult {
   FortuneResult(this.message, this.points);
 }
 
-class FortuneNotifier extends StateNotifier<bool> {
-  FortuneNotifier() : super(true) { // Default to true (locked) until loaded
-    checkAvailability();
+class FortuneNotifier extends StateNotifier<FortuneState> {
+  FortuneNotifier() : super(const FortuneState()) {
+    checkDailyStatus();
   }
 
   static const String _lastOpenedKey = 'last_fortune_date';
@@ -35,15 +49,17 @@ class FortuneNotifier extends StateNotifier<bool> {
     "걱정하지 마세요, 모든 것이 잘 될 거예요. 🌈",
   ];
 
-  Future<void> checkAvailability() async {
+  Future<void> checkDailyStatus() async {
     final prefs = await SharedPreferences.getInstance();
     final lastDate = prefs.getString(_lastOpenedKey);
     final today = _getTodayString();
 
-    if (lastDate != today) {
-      state = false; // Not opened yet today
+    if (lastDate == today) {
+      // 오늘 이미 열었다면 -> 숨김 처리
+      state = state.copyWith(hasOpened: true, isHidden: true);
     } else {
-      state = true; // Already opened
+      // 아직 안 열었다면 -> 보임
+      state = state.copyWith(hasOpened: false, isHidden: false);
     }
   }
 
@@ -52,7 +68,9 @@ class FortuneNotifier extends StateNotifier<bool> {
     final today = _getTodayString();
 
     await prefs.setString(_lastOpenedKey, today);
-    state = true; // Mark as opened
+    
+    // 열자마자 숨김 처리 (애니메이션 등은 UI에서 처리하겠지만 데이터적으로는 숨김)
+    state = state.copyWith(hasOpened: true, isHidden: true);
 
     final random = Random();
     final message = _fortunes[random.nextInt(_fortunes.length)];
@@ -69,10 +87,8 @@ class FortuneNotifier extends StateNotifier<bool> {
   // Method to reset for testing
   Future<void> reset() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_lastOpenedKey);
-    state = false;
+    await prefs.remove(_lastOpenedKey); // await 필수! 키 삭제 대기
+    // 리셋 시 다시 보이게 설정
+    state = state.copyWith(hasOpened: false, isHidden: false);
   }
-
-  // Getter for UI readability
-  bool get hasOpenedToday => state;
 }

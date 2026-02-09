@@ -1,51 +1,73 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
-import 'fortune_cookie_dialog.dart';
-import 'package:cuty_app/l10n/gen/app_localizations.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../providers/fortune_provider.dart';
+import 'fortune_cookie_dialog.dart';
 
-class FortuneCookieWidget extends ConsumerWidget {
+class FortuneCookieWidget extends ConsumerStatefulWidget {
   const FortuneCookieWidget({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return GestureDetector(
-      onTap: () {
-        final hasOpened = ref.read(fortuneProvider);
+  ConsumerState<FortuneCookieWidget> createState() => _FortuneCookieWidgetState();
+}
 
-        if (hasOpened) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(AppLocalizations.of(context)!.msgFortuneAlreadyOpened),
-              duration: const Duration(seconds: 2),
-            ),
-          );
-        } else {
-          // Open Intro Dialog (Logic handled inside dialog)
+class _FortuneCookieWidgetState extends ConsumerState<FortuneCookieWidget>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 1200),
+      vsync: this,
+    )..repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final fortuneState = ref.watch(fortuneProvider);
+
+    return Visibility(
+      visible: !fortuneState.isHidden,
+      maintainSize: true, 
+      maintainAnimation: true,
+      maintainState: true,
+      child: GestureDetector(
+        onTap: () {
+          if (fortuneState.isHidden) return;
+          
           showDialog(
             context: context,
-            barrierDismissible: false, // Force flow
+            barrierDismissible: false,
             builder: (context) => const FortuneCookieDialog(),
           );
-        }
-      },
-      onLongPress: () {
-         // Developer Reset Feature
-         ref.read(fortuneProvider.notifier).reset();
-         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(AppLocalizations.of(context)!.msgDevFortuneReset)),
-         );
-      },
-      child: Container(
-        width: 60,
-        height: 60,
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-        ),
-        child: Image.asset(
-          'assets/images/item_fortune_cookie.png',
-          fit: BoxFit.contain,
+        },
+        child: AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            return Transform.rotate(
+              angle: sin(_controller.value * 2 * pi) * 0.05, // -0.05 ~ 0.05 rad (약 3도)
+              child: child,
+            );
+          },
+          child: Container(
+            width: 60,
+            height: 60,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+            ),
+            child: Image.asset(
+              'assets/images/item_fortune_cookie.png',
+              fit: BoxFit.contain,
+            ),
+          ),
         ),
       ),
     );
