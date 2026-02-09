@@ -22,7 +22,7 @@ class JobListView extends StatelessWidget {
         children: [
           Text(
             AppLocalizations.of(context)!.jobListTitle,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
               color: Color(0xFF1A1A2E),
@@ -143,7 +143,7 @@ class _JobCard extends StatelessWidget {
                         
                         return Text(
                           '$wageString↑',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
                             color: AppTheme.darkGreen,

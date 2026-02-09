@@ -24,7 +24,7 @@ class ScheduleScreen extends ConsumerWidget {
       body: LayoutBuilder(
         builder: (context, constraints) {
           final width = constraints.maxWidth;
-          final timeColWidth = 40.0;
+          const timeColWidth = 40.0;
           final cellWidth = (width - timeColWidth) / 7; // 7일 기준
 
           return Column(
@@ -38,7 +38,7 @@ class ScheduleScreen extends ConsumerWidget {
                 ),
                 child: Row(
                   children: [
-                    SizedBox(width: timeColWidth), // Time column width
+                    const SizedBox(width: timeColWidth), // Time column width
                     ...List.generate(7, (index) {
                       final days = [
                         AppLocalizations.of(context)!.scheduleDayMon,

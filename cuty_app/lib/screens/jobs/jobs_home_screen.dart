@@ -51,14 +51,14 @@ class JobHomeScreen extends ConsumerWidget {
                         data: (jobs) {
                           if (jobs.isEmpty) {
                             return Padding(
-                              padding: EdgeInsets.only(top: 50, bottom: 50),
+                              padding: const EdgeInsets.only(top: 50, bottom: 50),
                               child: Column(
                                 children: [
-                                  Icon(Icons.work_off, size: 48, color: Colors.grey),
-                                  SizedBox(height: 16),
+                                  const Icon(Icons.work_off, size: 48, color: Colors.grey),
+                                  const SizedBox(height: 16),
                                   Text(
                                     AppLocalizations.of(context)!.msgNoJobs,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey,
                                       fontWeight: FontWeight.w500,

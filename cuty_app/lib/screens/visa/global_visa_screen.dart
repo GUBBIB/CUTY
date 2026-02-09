@@ -374,12 +374,15 @@ class GlobalVisaScreen extends StatelessWidget {
             children: [
               const Icon(Icons.business_center_outlined, color: Color(0xFF0097A7), size: 24),
               const SizedBox(width: 8),
-              Text(
-                AppLocalizations.of(context)!.secOverseasBranch,
-                style: GoogleFonts.notoSansKr(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: const Color(0xFF1A1A2E),
+              Expanded(
+                child: Text(
+                  AppLocalizations.of(context)!.secOverseasBranch,
+                  style: GoogleFonts.notoSansKr(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: const Color(0xFF1A1A2E),
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],

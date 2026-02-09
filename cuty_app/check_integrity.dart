@@ -26,7 +26,7 @@ void main() {
         }
         
         // 2. Check for common Double Encoding patterns (e.g., Ã« which is 'ë' in Latin-1)
-        // '가' (AC00) -> EAB080 -> ÃªÂ°â‚¬ or similar.
+        // '가' (AC00) -> EAB080 -> ÃªÂ°â?��?or similar.
         // Simple heuristic: specific sequences that are rare in code but common in mojibake.
         if (content.contains('Ã«') || content.contains('Ã©') || content.contains('Ã±')) {
            // This is weak, but might catch some. Not flagging as definitive error, just warning.
@@ -44,15 +44,19 @@ void main() {
   print('Checked $checkedCount files.');
   
   if (corruptedFiles.isEmpty && mojibakeFiles.isEmpty) {
-    print('✅ No integrity issues found. All files are valid UTF-8.');
+    print('??No integrity issues found. All files are valid UTF-8.');
   } else {
     if (corruptedFiles.isNotEmpty) {
-      print('❌ Corrupted Files (Not UTF-8):');
-      corruptedFiles.forEach((path) => print('  - $path'));
+      print('??Corrupted Files (Not UTF-8):');
+      for (var path in corruptedFiles) {
+        print('  - $path');
+      }
     }
     if (mojibakeFiles.isNotEmpty) {
-      print('⚠️ Files with Replacement Characters (previous corruption):');
-      mojibakeFiles.forEach((path) => print('  - $path'));
+      print('?�️ Files with Replacement Characters (previous corruption):');
+      for (var path in mojibakeFiles) {
+        print('  - $path');
+      }
     }
   }
 }

@@ -297,8 +297,8 @@ class _FeedItem extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(color: const Color(0xFFF3E5F5), borderRadius: BorderRadius.circular(20)),
-      child: Row(
-        children: const [
+      child: const Row(
+        children: [
           Icon(Icons.g_translate_rounded, size: 14, color: Color(0xFF7B1FA2)),
           SizedBox(width: 4),
           Text('번역 보기', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF7B1FA2))),

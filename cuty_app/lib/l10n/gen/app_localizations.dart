@@ -566,6 +566,30 @@ abstract class AppLocalizations {
   /// **'화면 설정'**
   String get settingDisplay;
 
+  /// No description provided for @displayThemeTitle.
+  ///
+  /// In ko, this message translates to:
+  /// **'화면 테마'**
+  String get displayThemeTitle;
+
+  /// No description provided for @displayThemeSystem.
+  ///
+  /// In ko, this message translates to:
+  /// **'시스템 설정'**
+  String get displayThemeSystem;
+
+  /// No description provided for @displayThemeLight.
+  ///
+  /// In ko, this message translates to:
+  /// **'라이트 모드'**
+  String get displayThemeLight;
+
+  /// No description provided for @displayThemeDark.
+  ///
+  /// In ko, this message translates to:
+  /// **'다크 모드'**
+  String get displayThemeDark;
+
   /// No description provided for @sectionInfo.
   ///
   /// In ko, this message translates to:
@@ -1130,12 +1154,6 @@ abstract class AppLocalizations {
   /// **'공고 필터링하기'**
   String get jobFilterTitle;
 
-  /// No description provided for @jobFilterActive.
-  ///
-  /// In ko, this message translates to:
-  /// **'{count}개 선택'**
-  String jobFilterActive(Object count);
-
   /// No description provided for @careerMatchedCompanies.
   ///
   /// In ko, this message translates to:
@@ -1225,12 +1243,6 @@ abstract class AppLocalizations {
   /// In ko, this message translates to:
   /// **'인턴 경험'**
   String get insightInternship;
-
-  /// No description provided for @insightPercentile.
-  ///
-  /// In ko, this message translates to:
-  /// **'상위 {percent}%'**
-  String insightPercentile(Object percent);
 
   /// No description provided for @jobTabPartTime.
   ///
@@ -2095,6 +2107,18 @@ abstract class AppLocalizations {
   /// In ko, this message translates to:
   /// **'설정 완료'**
   String get btnComplete;
+
+  /// No description provided for @insightPercentile.
+  ///
+  /// In ko, this message translates to:
+  /// **'상위 {percent}%'**
+  String insightPercentile(Object percent);
+
+  /// No description provided for @jobFilterActive.
+  ///
+  /// In ko, this message translates to:
+  /// **'{count}개 선택'**
+  String jobFilterActive(Object count);
 
   /// No description provided for @profileEditTitle.
   ///

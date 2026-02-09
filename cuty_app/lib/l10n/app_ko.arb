@@ -86,6 +86,10 @@
   "sectionAppSettings": "앱 설정",
   "settingNotification": "알림 설정",
   "settingDisplay": "화면 설정",
+  "displayThemeTitle": "화면 테마",
+  "displayThemeSystem": "시스템 설정",
+  "displayThemeLight": "라이트 모드",
+  "displayThemeDark": "다크 모드",
   "sectionInfo": "정보",
   "menuVersion": "버전 정보",
   "menuTerms": "이용약관",
@@ -189,7 +193,7 @@
   "jobSalaryAnnual": "연봉",
   "jobSalaryHourly": "시급",
   "jobFilterTitle": "공고 필터링하기",
-  "jobFilterActive": "적용됨",
+
   
   "careerMatchedCompanies": "매칭된 기업",
   "msgLockedReport": "상세 리포트 잠김",
@@ -206,7 +210,7 @@
   "insightPerfect": "완벽해요",
   "insightTopik": "TOPIK",
   "insightInternship": "인턴 경험",
-  "insightPercentile": "상위 %",
+
 
   "jobTabPartTime": "아르바이트",
   "jobTabPartTimeSub": "(Part-Time)",

@@ -51,9 +51,9 @@ class ShopDetailScreen extends ConsumerWidget {
                  borderRadius: BorderRadius.circular(12),
                  border: Border.all(color: Colors.grey[200]!),
                ),
-               child: Column(
+               child: const Column(
                  crossAxisAlignment: CrossAxisAlignment.start,
-                 children: const [
+                 children: [
                    Text("상품 유의사항", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                    SizedBox(height: 8),
                    Text("• 해당 상품이 매장에 없을 경우, 동일 가격 이상의 다른 상품으로 교환이 가능합니다. (차액 결제 필요)", style: TextStyle(fontSize: 12, color: Colors.grey, height: 1.4)),

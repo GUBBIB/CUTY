@@ -30,67 +30,73 @@ class AppLocalizationsEn extends AppLocalizations {
   String get goalSelectionSubtitle => 'Choose your visa goal.';
 
   @override
-  String get goalSchoolTitle => 'Education';
+  String get goalSchoolTitle => 'Education (Basic)';
 
   @override
-  String get goalSchoolSubtitle => 'Graduate School';
+  String get goalSchoolSubtitle => 'Focus on School Life';
 
   @override
-  String get goalSchoolDesc => 'Extend/Change D-2 Visa';
+  String get goalSchoolDesc =>
+      'Enjoy your campus life first! Let\'s build a solid foundation with attendance management, GPA, and visa extension essentials.';
 
   @override
-  String get goalResearchTitle => 'Research';
+  String get goalResearchTitle => 'Research/Residency';
 
   @override
-  String get goalResearchSubtitle => 'Researcher Job';
+  String get goalResearchSubtitle => 'Grad School & F-2-7 Visa';
 
   @override
-  String get goalResearchDesc => 'E-1, E-3 Visa';
+  String get goalResearchDesc =>
+      'Don\'t settle for a simple work visa (E-7). Upgrade directly to the freer F-2-7 (Residency Visa) with your Master\'s degree. We\'ll show you the strategy to reach 80 points.';
 
   @override
-  String get goalJobTitle => 'Employment';
+  String get goalJobTitle => 'Employment (E-7)';
 
   @override
-  String get goalJobSubtitle => 'Work in Korea';
+  String get goalJobSubtitle => 'Work in Korea after Graduation';
 
   @override
-  String get goalJobDesc => 'E-7, F-2 Visa';
+  String get goalJobDesc =>
+      'From D-10 Job Seeker Visa diagnosis to E-7 job codes and competency analysis! Everything from A to Z for employment in Korea is in this roadmap.';
 
   @override
-  String get goalStartupTitle => 'Startup';
+  String get goalStartupTitle => 'Startup (D-8-4)';
 
   @override
-  String get goalStartupSubtitle => 'Establish Corp';
+  String get goalStartupSubtitle => 'Tech Startup Challenge';
 
   @override
-  String get goalStartupDesc => 'D-8, D-9 Visa';
+  String get goalStartupDesc =>
+      'Different from D-10-1 (Job Seeking). Use this visa to stay for up to 2 years while preparing for a startup and accumulating OASIS points.';
 
   @override
   String get goalGlobalTitle => 'Global';
 
   @override
-  String get goalGlobalSubtitle => 'Return/Overseas';
+  String get goalGlobalSubtitle => 'Return Home/Overseas Job';
 
   @override
-  String get goalGlobalDesc => 'Departure after Visa';
+  String get goalGlobalDesc =>
+      'To the wider world after studying in Korea! We help you prepare documents for a smooth return home or entry into a third country.';
 
   @override
-  String get msgGoalChangeInfo => 'You can change your goal later.';
+  String get msgGoalChangeInfo => 'You can change your class freely!';
 
   @override
-  String get btnLookAround => 'Look Around';
+  String get btnLookAround => 'I\'ll look around';
 
   @override
-  String get btnConfirmGoal => 'Goal Set';
+  String get btnConfirmGoal => 'I\'ll choose this!';
 
   @override
   String get roadmapClassChange => 'Class Change Period';
 
   @override
-  String get roadmapConsultant => 'Visa Consultant';
+  String get roadmapConsultant => 'F-2-7 Visa Consultant';
 
   @override
-  String get roadmapConsultantDesc => '1:1 Consultation';
+  String get roadmapConsultantDesc =>
+      'AI analyzes your custom pass strategy based on mock scores.';
 
   @override
   String get roadmapCalculator => 'Score Calculator';
@@ -102,61 +108,62 @@ class AppLocalizationsEn extends AppLocalizations {
   String get btnCalculate => 'Calculate';
 
   @override
-  String get conceptTitle => 'What is F-2-7?';
+  String get conceptTitle => 'Understanding F-2-7 Visa';
 
   @override
-  String get conceptFormula1 => 'Age';
+  String get conceptFormula1 => 'E-7 Job';
 
   @override
-  String get conceptFormula2 => 'Education';
+  String get conceptFormula2 => '80 Points';
 
   @override
-  String get conceptFormula3 => 'Income';
+  String get conceptFormula3 => 'F-2-7';
 
   @override
-  String get conceptDesc => 'Points-based Resident Visa';
+  String get conceptDesc =>
+      'Job type is the same (E-7-1 Professional). But with a Master\'s degree + 80 points, your visa gets upgraded.';
 
   @override
-  String get conceptWhy => 'Why needed?';
+  String get conceptWhy => 'Why upgrade?';
 
   @override
-  String get conceptVisaE7 => 'E-7 (Work)';
+  String get conceptVisaE7 => 'General Work (E-7)';
 
   @override
-  String get conceptVisaF27 => 'F-2-7 (Residency)';
+  String get conceptVisaF27 => 'Residency Visa (F-2-7)';
 
   @override
-  String get conceptRow1Title => 'Period';
+  String get conceptRow1Title => 'Job Freedom';
 
   @override
-  String get conceptRow1Bad => '1 year renewal';
+  String get conceptRow1Bad => 'Employer Consent Required';
 
   @override
-  String get conceptRow1Good => 'Max 3-5 years';
+  String get conceptRow1Good => 'Free Job Change';
 
   @override
-  String get conceptRow2Title => 'Job Change';
+  String get conceptRow2Title => 'Stay Period';
 
   @override
-  String get conceptRow2Bad => 'Report required';
+  String get conceptRow2Bad => '1-2 Years (Short)';
 
   @override
-  String get conceptRow2Good => 'Free change';
+  String get conceptRow2Good => 'Max 5 Years (Long)';
 
   @override
-  String get conceptRow3Title => 'Spouse';
+  String get conceptRow3Title => 'Family Benefits';
 
   @override
-  String get conceptRow3Bad => 'Cannot work';
+  String get conceptRow3Bad => 'Spouse Cannot Work';
 
   @override
-  String get conceptRow3Good => 'Can work';
+  String get conceptRow3Good => 'Spouse Can Work';
 
   @override
   String get lblMyGoal => 'My Goal';
 
   @override
-  String get lblResidencyVisa => 'Residency Visa (F-2)';
+  String get lblResidencyVisa => 'Research/Residency (F-2)';
 
   @override
   String get itemCategoryCafe => 'Cafe/Snack';
@@ -171,19 +178,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get msgPointShopComingSoon => 'Point Shop Coming Soon';
 
   @override
-  String get bannerAdPoint => 'Earn Points';
+  String get bannerAdPoint => 'Get Points by Viewing Ads!';
 
   @override
   String get tagAd => 'Ad';
 
   @override
-  String get bannerNewDiscount => 'New Discounts';
+  String get bannerNewDiscount => 'New Affiliate Discounts';
 
   @override
   String get tagEvent => 'Event';
 
   @override
-  String get bannerInviteFriend => 'Invite Friends';
+  String get bannerInviteFriend => 'Invite Friends & Get Points';
 
   @override
   String get tagInvite => 'Invite';
@@ -201,7 +208,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardTitle => 'Visa Dashboard';
 
   @override
-  String get dashboardVisaStatus => 'Current Visa';
+  String get dashboardVisaStatus => 'Current Visa Status';
 
   @override
   String get dashboardUnlinked => 'Unlinked';
@@ -216,7 +223,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get statusApproved => 'Approved';
 
   @override
-  String get statusPending => 'Pending';
+  String get statusPending => 'Reviewing';
 
   @override
   String get scheduleTitle => 'Weekly Schedule';
@@ -240,16 +247,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingNotification => 'Notifications';
 
   @override
-  String get settingDisplay => 'Display';
+  String get settingDisplay => 'Display Settings';
+
+  @override
+  String get displayThemeTitle => 'Display Theme';
+
+  @override
+  String get displayThemeSystem => 'System Default';
+
+  @override
+  String get displayThemeLight => 'Light Mode';
+
+  @override
+  String get displayThemeDark => 'Dark Mode';
 
   @override
   String get sectionInfo => 'Info';
 
   @override
-  String get menuVersion => 'Version';
+  String get menuVersion => 'Version Info';
 
   @override
-  String get menuTerms => 'Terms';
+  String get menuTerms => 'Terms of Service';
 
   @override
   String get menuPrivacy => 'Privacy Policy';
@@ -279,46 +298,46 @@ class AppLocalizationsEn extends AppLocalizations {
   String get docStudentId => 'Student ID';
 
   @override
-  String get docPassport => 'Passport';
+  String get docPassport => 'Passport Copy';
 
   @override
   String get docResidenceProof => 'Residence Proof';
 
   @override
-  String get docResidenceCert => 'Stay Confirmation';
+  String get docResidenceCert => 'Residence Certificate';
 
   @override
-  String get docLease => 'Lease Contract';
+  String get docLease => 'Lease Agreement';
 
   @override
   String get docDorm => 'Dorm Confirmation';
 
   @override
-  String get docResidenceConfirm => 'Accommodation Conf.';
+  String get docResidenceConfirm => 'Accommodation Prov. Conf.';
 
   @override
-  String get docEnrollment => 'Enrollment Cert.';
+  String get docEnrollment => 'Enrollment Certificate';
 
   @override
   String get docTranscript => 'Transcript';
 
   @override
-  String get docCompletion => 'Completion Cert.';
+  String get docCompletion => 'Completion Certificate';
 
   @override
-  String get docTopik => 'TOPIK Score';
+  String get docTopik => 'TOPIK Score Report';
 
   @override
-  String get docKiip => 'KIIP';
+  String get docKiip => 'KIIP (Social Integration)';
 
   @override
-  String get docForeignLang => 'Foreign Language';
+  String get docForeignLang => 'Foreign Language Score';
 
   @override
-  String get docVolunteer => 'Volunteer Cert.';
+  String get docVolunteer => 'Volunteer Certificate';
 
   @override
-  String get docCareer => 'Work Experience';
+  String get docCareer => 'Proof of Employment';
 
   @override
   String get docAward => 'Awards';
@@ -336,22 +355,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get specWalletTitle => 'My Spec Wallet';
 
   @override
-  String get specSectionIdentity => 'Identity/Stay';
+  String get specSectionIdentity => 'Identity/Stay (Required)';
 
   @override
-  String get specSectionIdentityDesc => 'Visa Required';
+  String get specSectionIdentityDesc => 'Essential Docs for Safe Stay';
 
   @override
-  String get specSectionAcademic => 'Academic';
+  String get specSectionAcademic => 'Academic/Grades';
 
   @override
-  String get specSectionAcademicDesc => 'School Docs';
+  String get specSectionAcademicDesc => 'School Related Docs';
 
   @override
   String get specSectionCareer => 'Spec/Career';
 
   @override
-  String get specSectionCareerDesc => 'Work Proof';
+  String get specSectionCareerDesc => 'Employment Proof Docs';
 
   @override
   String get lblRegistered => 'Registered';
@@ -369,16 +388,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get btnUploadPdf => 'Upload PDF';
 
   @override
-  String get msgDocReward => 'Points on register';
+  String get msgDocReward => 'Points on Registration';
 
   @override
-  String get btnUploadCamera => 'Camera';
+  String get btnUploadCamera => 'Take Photo';
 
   @override
-  String get btnDeleteDoc => 'Delete';
+  String get btnDeleteDoc => 'Delete Document';
 
   @override
-  String get msgDeleteNotReady => 'Delete coming soon';
+  String get msgDeleteNotReady => 'Delete feature coming soon';
 
   @override
   String get pointHistoryTitle => 'Point History';
@@ -399,7 +418,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeCheerMessage => 'Cheer up today!';
 
   @override
-  String get msgFortuneAlreadyOpened => 'Fortune cookie opened.';
+  String get msgFortuneAlreadyOpened => 'You already opened today\'s cookie!';
 
   @override
   String get msgDevFortuneReset => 'Dev: Fortune reset';
@@ -408,7 +427,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get titleFortuneCookie => 'Today\'s Fortune';
 
   @override
-  String get descFortuneCookie => 'Check your fortune!';
+  String get descFortuneCookie => 'Check your fortune for the day!';
 
   @override
   String get btnCheckFortune => 'Check Fortune';
@@ -429,13 +448,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get boardPopularTitle => 'Popular';
 
   @override
-  String get boardPopularSubtitle => 'Hot Posts';
+  String get boardPopularSubtitle => 'Trending Posts Collection';
 
   @override
   String get boardFreeTitle => 'Free Board';
 
   @override
-  String get boardFreeSubtitle => 'Free Talk';
+  String get boardFreeSubtitle => 'International Students\' Chat';
 
   @override
   String get boardQuestionTitle => 'Q&A';
@@ -444,43 +463,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String get boardQuestionSubtitle => 'Ask Anything';
 
   @override
-  String get boardInfoTitle => 'Info';
+  String get boardInfoTitle => 'Info Board';
 
   @override
-  String get boardInfoSubtitle => 'Tips & Info';
+  String get boardInfoSubtitle => 'School Tips & Lecture Info';
 
   @override
   String get boardMarketTitle => 'Market';
 
   @override
-  String get boardMarketSubtitle => 'Buy & Sell';
+  String get boardMarketSubtitle => 'Buy & Sell Books/Goods';
 
   @override
   String get boardCreateTitle => 'Create Board';
 
   @override
-  String get boardCreateSubtitle => 'Request new board';
+  String get boardCreateSubtitle => 'Missing a topic? Create one!';
 
   @override
-  String get msgCreateBoardDialog => 'Request a new board?';
+  String get msgCreateBoardDialog => 'Would you like to request a new board?';
 
   @override
   String get btnApply => 'Apply';
 
   @override
-  String get msgApplySuccess => 'Applied.';
+  String get msgApplySuccess => 'Application sent.';
 
   @override
-  String get msgClassFinished => 'Finished';
+  String get msgClassFinished => 'No Class Schedule';
 
   @override
-  String get msgRest => 'Rest';
+  String get msgRest => 'No more classes today!';
 
   @override
   String get msgNoClass => 'No Class';
 
   @override
-  String get menuJobs => 'Jobs';
+  String get menuJobs => 'Part-time/Job';
 
   @override
   String get menuSchedule => 'Schedule';
@@ -498,7 +517,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dialogResetTitle => 'Reset';
 
   @override
-  String get dialogResetContent => 'Really reset?';
+  String get dialogResetContent => 'Are you sure you want to reset?';
 
   @override
   String get btnCancel => 'Cancel';
@@ -510,7 +529,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get msgResetComplete => 'Reset complete.';
 
   @override
-  String get msgNoJobs => 'No job posts.';
+  String get msgNoJobs => 'No job posts registered.';
 
   @override
   String get jobListTitle => 'Job Posts';
@@ -522,18 +541,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get jobSalaryHourly => 'Hourly';
 
   @override
-  String get jobFilterTitle => 'Filter';
-
-  @override
-  String jobFilterActive(Object count) {
-    return '$count selected';
-  }
+  String get jobFilterTitle => 'Filter Job Posts';
 
   @override
   String get careerMatchedCompanies => 'Matched Companies';
 
   @override
-  String get msgLockedReport => 'Report Locked';
+  String get msgLockedReport => 'Detailed Report Locked';
 
   @override
   String get msgLockedReportSub => 'Use points to unlock';
@@ -551,7 +565,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lblTier => 'Tier';
 
   @override
-  String get msgTierCongrat => 'Congrats!';
+  String get msgTierCongrat => 'Congratulations!';
 
   @override
   String get msgTierSuffix => 'Tier';
@@ -560,10 +574,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lblRecJob => 'Recommended';
 
   @override
-  String get msgRecJobPrefix => 'Perfect for you';
+  String get msgRecJobPrefix => 'Jobs Perfect for';
 
   @override
-  String get msgRecJobSuffix => 'Jobs';
+  String get msgRecJobSuffix => 'You';
 
   @override
   String get insightPerfect => 'Perfect';
@@ -575,15 +589,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get insightInternship => 'Internship';
 
   @override
-  String insightPercentile(Object percent) {
-    return 'Top $percent%';
-  }
-
-  @override
   String get jobTabPartTime => 'Part-time';
 
   @override
-  String get jobTabPartTimeSub => 'Hourly';
+  String get jobTabPartTimeSub => '(Part-Time)';
 
   @override
   String get jobTabCareer => 'Full-time';
@@ -593,14 +602,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String bannerJobScore(Object score) {
-    return 'Job Capability Score: $score';
+    return 'Job Competency Score: $score';
   }
 
   @override
-  String get bannerDiagnosisTitle => 'Check score & get job recommendations';
+  String get bannerDiagnosisTitle => 'What is my job score?';
 
   @override
-  String get bannerActionTest => 'Test Now';
+  String get bannerActionTest => 'Diagnose';
 
   @override
   String get bannerActionRetest => 'Retest';
@@ -699,7 +708,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonConfirm => 'Confirm';
 
   @override
-  String get walletTitle => 'Wallet';
+  String get walletTitle => 'Spec Wallet';
 
   @override
   String get boardFree => 'Free Board';
@@ -732,7 +741,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get visaRoadmapStep3 => 'Step 3: Preparation';
+  String get visaRoadmapStep3 => 'My Goal';
 
   @override
   String get visaGoalOasis => 'OASIS Program';
@@ -831,13 +840,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get koreanLevelNative => 'Native';
 
   @override
-  String get conceptRow4Title => 'Family';
+  String get conceptRow4Title => 'Residency';
 
   @override
-  String get conceptRow4Bad => 'Restricted';
+  String get conceptRow4Bad => '5 Years Residency Needed';
 
   @override
-  String get conceptRow4Good => 'Accompanied';
+  String get conceptRow4Good => 'Apply after 3 Years';
 
   @override
   String get itemCategoryAll => 'All';
@@ -849,7 +858,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get communityActivityMyPosts => 'My Posts';
 
   @override
-  String get communityActivitySettings => 'Settings';
+  String get communityActivitySettings => 'Activity Settings';
 
   @override
   String get communityActivityEmptyPosts => 'No posts yet.';
@@ -858,28 +867,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get communityActivityInfoTitle => 'Activity Info';
 
   @override
-  String get communityActivityInfoSubtitle => 'Summary';
+  String get communityActivityInfoSubtitle => 'My Activity Summary';
 
   @override
   String get communityActivityNickname => 'Nickname';
 
   @override
-  String get communityActivityNicknameDesc => 'Public Nickname';
+  String get communityActivityNicknameDesc => 'Community Nickname';
 
   @override
-  String get communityActivityFlag => 'Flag';
+  String get communityActivityFlag => 'Flag Display';
 
   @override
-  String get communityActivityFlagDesc => 'Show Nationality';
+  String get communityActivityFlagDesc => 'Show Nationality Icon';
 
   @override
-  String get communityActivityGender => 'Gender';
+  String get communityActivityGender => 'Gender Display';
 
   @override
-  String get communityActivityGenderDesc => 'show Gender';
+  String get communityActivityGenderDesc => 'Show Gender Icon';
 
   @override
-  String get communityActivitySchool => 'School';
+  String get communityActivitySchool => 'School Display';
 
   @override
   String get communityActivitySchoolDesc => 'Show School Name';
@@ -945,25 +954,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get msgNotEnoughPoints => 'Not enough points.';
 
   @override
-  String get hintPrice => 'Price';
+  String get hintPrice => 'Price (KRW)';
 
   @override
-  String get hintContentCardNews => 'Enter description...';
+  String get hintContentCardNews => 'Enter card news description...';
 
   @override
-  String get hintContentMarket => 'Condition, place...';
+  String get hintContentMarket => 'Describe item condition, location...';
 
   @override
-  String get hintContentInfo => 'Share tips...';
+  String get hintContentInfo => 'Share useful tips...';
 
   @override
   String get hintContentDefault => 'Enter content...';
 
   @override
-  String get msgNoQuestions => 'No questions.';
+  String get msgNoQuestions => 'No questions registered.';
 
   @override
-  String get bannerPopularDesc => 'Trending Posts';
+  String get bannerPopularDesc => 'Real-time Trending Posts';
 
   @override
   String get menuVisa => 'Visa';
@@ -990,34 +999,44 @@ class AppLocalizationsEn extends AppLocalizations {
   String get titlePrivacySettings => 'Privacy Settings';
 
   @override
-  String get descPrivacySettings => 'Manage visibility.';
+  String get descPrivacySettings => 'Set visibility range.';
 
   @override
-  String get lblRevealNickname => 'Public Nickname';
+  String get lblRevealNickname => 'Reveal Nickname';
 
   @override
   String get descRevealNickname => 'Reveal nickname to others.';
 
   @override
-  String get lblRevealNationality => 'Show Nationality';
+  String get lblRevealNationality => 'Reveal Nationality';
 
   @override
   String get descRevealNationality => 'Display flag on profile.';
 
   @override
-  String get lblRevealGender => 'Show Gender';
+  String get lblRevealGender => 'Reveal Gender';
 
   @override
   String get descRevealGender => 'Display gender on profile.';
 
   @override
-  String get lblRevealSchool => 'Show School';
+  String get lblRevealSchool => 'Reveal School';
 
   @override
-  String get descRevealSchool => 'Display school name.';
+  String get descRevealSchool => 'Display school name on profile.';
 
   @override
   String get btnComplete => 'Done';
+
+  @override
+  String insightPercentile(Object percent) {
+    return 'Top $percent%';
+  }
+
+  @override
+  String jobFilterActive(Object count) {
+    return '$count selected';
+  }
 
   @override
   String get profileEditTitle => 'Edit Profile';
@@ -1035,13 +1054,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get roadmapSchoolTitle => 'School Life Roadmap';
 
   @override
-  String get roadmapJobTitle => 'Employment Roadmap';
+  String get roadmapJobTitle => 'Employment (E-7)';
 
   @override
-  String get roadmapGlobalTitle => 'Global Roadmap';
+  String get roadmapGlobalTitle => 'Global (Overseas)';
 
   @override
-  String get roadmapStartupTitle => 'Startup Roadmap';
+  String get roadmapStartupTitle => 'Startup (D-8-4)';
 
   @override
   String get actionChangeClass => 'Change Class';
@@ -1063,7 +1082,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stepCareerChoice => 'Career Choice';
 
   @override
-  String get secVisaMandatory => 'Must-knows to keep your Visa';
+  String get secVisaMandatory => 'Keep your Visa (Essential)';
 
   @override
   String get warnNoPermit =>
@@ -1123,15 +1142,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stepGlobalCareer => 'Global Career';
 
   @override
-  String get secApostille => 'Apostille Certification';
+  String get secApostille => 'Apostille Certification Required!';
 
   @override
   String get descApostille =>
-      'To verify your Korean degree in your home country, you must get an Apostille or Consular Confirmation before leaving.';
+      'To verify your Korean degree in your home country, you must get an Apostille or Consular Confirmation before returning.';
 
   @override
   String get warnApostille =>
-      'Processing is very difficult after returning, so complete it in Korea.';
+      'Processing is complex after returning, so complete it in Korea.';
 
   @override
   String get secOverseasBranch => 'Targeting Korean Overseas Branches';
@@ -1141,16 +1160,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your biggest weapons are \'Korean Proficiency\' and \'Local Cultural Understanding\'.';
 
   @override
-  String get tagSales => 'Overseas Sales';
+  String get tagSales => '#Overseas Sales';
 
   @override
-  String get tagTrans => 'Translation';
+  String get tagTrans => '#Translation';
 
   @override
-  String get tagManager => 'Local Manager';
+  String get tagManager => '#Local Manager';
 
   @override
-  String get tagAssistant => 'Expat Assistant';
+  String get tagAssistant => '#Expat Assistant';
 
   @override
   String get stepTechStartup => 'Tech Startup (D-8-4)';
@@ -1159,7 +1178,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get secD84Req => 'D-8-4 Minimum Requirements';
 
   @override
-  String get reqDegree => 'Bachelor\'s degree or higher';
+  String get reqDegree => 'Bachelor\'s degree or higher (Domestic/Overseas)';
 
   @override
   String get reqOasis => 'OASIS Score 80+ (Mandatory)';
@@ -1463,16 +1482,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get centerIncheon => 'Incheon Global Center';
 
   @override
-  String get centerIncheonDesc => 'Songdo G-Tower';
+  String get centerIncheonDesc => 'Incheon Global Startup Campus';
 
   @override
   String get centerDaejeon => 'Daejeon KAIST Center';
 
   @override
-  String get centerDaejeonDesc => 'Yuseong-gu';
+  String get centerDaejeonDesc => 'KAIST Startup Center, Daejeon Hub';
 
   @override
-  String get titleD102 => 'D-10-2 (Prep) vs D-8-4';
+  String get titleD102 => 'What is D-10-2 (Startup Prep)?';
 
   @override
   String get descD102 =>
@@ -1500,7 +1519,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get btnLinkSafe => 'Link Visa Wallet Safely';
 
   @override
-  String get btnLinking => '연동 중...';
+  String get btnLinking => 'Linking...';
 
   @override
   String get msgSecurityFooter =>

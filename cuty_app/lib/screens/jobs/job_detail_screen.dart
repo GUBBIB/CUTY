@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../l10n/gen/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../models/job_post.dart';
 import 'providers/job_providers.dart';
@@ -187,14 +186,14 @@ class JobDetailScreen extends ConsumerWidget {
                         ),
                         child: Column(
                           children: [
-                             Row(
+                             const Row(
                                mainAxisAlignment: MainAxisAlignment.center,
                                children: [
-                                 const Text('🚀', style: TextStyle(fontSize: 18)),
-                                 const SizedBox(width: 8),
+                                 Text('🚀', style: TextStyle(fontSize: 18)),
+                                 SizedBox(width: 8),
                                  Text(
                                    '시간제 취업 허가, CUTY가 도와드려요!',
-                                   style: const TextStyle(
+                                   style: TextStyle(
                                      fontSize: 15,
                                      fontWeight: FontWeight.bold,
                                      color: Color(0xFF1A1A2E), // Navy

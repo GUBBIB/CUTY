@@ -19,6 +19,7 @@ final realHomeRepositoryProvider = Provider<HomeRepository>((ref) {
 });
 
 class RealHomeRepository implements HomeRepository {
+  // ignore: unused_field
   final Dio _dio;
 
   RealHomeRepository(this._dio);

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../models/user.dart';
@@ -18,7 +19,7 @@ class ApiService {
   Future<bool> login(String email, String password) async {
     // Prevent parsing error if baseUrl is empty
     if (baseUrl.isEmpty) {
-      print("[API] Base URL is empty. Login simulation.");
+      debugPrint("[API] Base URL is empty. Login simulation.");
       return false; 
     }
 
@@ -38,10 +39,10 @@ class ApiService {
           return true;
         }
       } else {
-        print('Login Failed: ${response.statusCode} - ${response.body}');
+        debugPrint('Login Failed: ${response.statusCode} - ${response.body}');
       }
     } catch (e) {
-      print('Login Error: $e');
+      debugPrint('Login Error: $e');
     }
     return false;
   }
@@ -67,10 +68,10 @@ class ApiService {
         final data = jsonDecode(response.body); // Directly expects User JSON
         return User.fromJson(data);
       } else {
-        print('Fetch Info Failed: ${response.statusCode}');
+        debugPrint('Fetch Info Failed: ${response.statusCode}');
       }
     } catch (e) {
-      print('Fetch Info Error: $e');
+      debugPrint('Fetch Info Error: $e');
     }
     return null;
   }

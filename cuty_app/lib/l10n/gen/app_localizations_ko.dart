@@ -249,6 +249,18 @@ class AppLocalizationsKo extends AppLocalizations {
   String get settingDisplay => '화면 설정';
 
   @override
+  String get displayThemeTitle => '화면 테마';
+
+  @override
+  String get displayThemeSystem => '시스템 설정';
+
+  @override
+  String get displayThemeLight => '라이트 모드';
+
+  @override
+  String get displayThemeDark => '다크 모드';
+
+  @override
   String get sectionInfo => '정보';
 
   @override
@@ -531,11 +543,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get jobFilterTitle => '공고 필터링하기';
 
   @override
-  String jobFilterActive(Object count) {
-    return '$count개 선택';
-  }
-
-  @override
   String get careerMatchedCompanies => '매칭된 기업';
 
   @override
@@ -579,11 +586,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get insightInternship => '인턴 경험';
-
-  @override
-  String insightPercentile(Object percent) {
-    return '상위 $percent%';
-  }
 
   @override
   String get jobTabPartTime => '아르바이트';
@@ -1024,6 +1026,16 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get btnComplete => '설정 완료';
+
+  @override
+  String insightPercentile(Object percent) {
+    return '상위 $percent%';
+  }
+
+  @override
+  String jobFilterActive(Object count) {
+    return '$count개 선택';
+  }
 
   @override
   String get profileEditTitle => '프로필 수정';

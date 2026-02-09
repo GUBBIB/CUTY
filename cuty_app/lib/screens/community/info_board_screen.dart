@@ -98,7 +98,7 @@ class _InfoBoardScreenState extends State<InfoBoardScreen> {
           final result = await Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => PostWriteScreen(boardType: BoardType.info),
+              builder: (context) => const PostWriteScreen(boardType: BoardType.info),
             ),
           );
 

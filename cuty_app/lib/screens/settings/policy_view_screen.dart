@@ -4,16 +4,16 @@ class PolicyViewScreen extends StatelessWidget {
   final String title;
   final String content;
 
-  const PolicyViewScreen({Key? key, required this.title, required this.content}) : super(key: key);
+  const PolicyViewScreen({super.key, required this.title, required this.content});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title, style: TextStyle(color: Colors.black)),
+        title: Text(title, style: const TextStyle(color: Colors.black)),
         backgroundColor: Colors.white,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

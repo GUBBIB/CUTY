@@ -619,12 +619,15 @@ class SchoolVisaScreen extends StatelessWidget {
             children: [
               const Icon(Icons.alt_route_rounded, color: Color(0xFF424242), size: 24),
               const SizedBox(width: 8),
-              Text(
-                AppLocalizations.of(context)!.titleFuturePath,
-                style: GoogleFonts.notoSansKr(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: const Color(0xFF1A1A2E),
+              Expanded(
+                child: Text(
+                  AppLocalizations.of(context)!.titleFuturePath,
+                  style: GoogleFonts.notoSansKr(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: const Color(0xFF1A1A2E),
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
@@ -732,6 +735,8 @@ class SchoolVisaScreen extends StatelessWidget {
           fontSize: 13,
           color: Colors.grey[600],
         ),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       ),
       childrenPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
       tilePadding: EdgeInsets.zero,

@@ -324,10 +324,10 @@ class _ConsultingScreenState extends ConsumerState<ConsultingScreen> with Single
       case 4: // Consent
         return Column(
           children: [
-            ListTile(
-               leading: const Icon(Icons.verified_user, size: 32, color: Colors.amber),
-               title: const Text("서류 검증 안내"),
-               subtitle: const Text("보유하신 학위/어학성적을 통해 가산점을 받을 수 있습니다."),
+            const ListTile(
+               leading: Icon(Icons.verified_user, size: 32, color: Colors.amber),
+               title: Text("서류 검증 안내"),
+               subtitle: Text("보유하신 학위/어학성적을 통해 가산점을 받을 수 있습니다."),
                contentPadding: EdgeInsets.zero,
             ),
             const SizedBox(height: 20),

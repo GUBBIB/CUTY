@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../l10n/gen/app_localizations.dart';
 
 class DisplaySettingsScreen extends StatefulWidget {
-  const DisplaySettingsScreen({Key? key}) : super(key: key);
+  const DisplaySettingsScreen({super.key});
 
   @override
   _DisplaySettingsScreenState createState() => _DisplaySettingsScreenState();

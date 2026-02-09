@@ -84,11 +84,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         clipBehavior: Clip.none,
                         children: [
                           // Character (Centered)
-                          Positioned(
+                          const Positioned(
                             bottom: 0,
                             left: 0,
                             right: 0,
-                            child: const IgnorePointer(
+                            child: IgnorePointer(
                               child: CharacterSection(),
                             ),
                           ),
@@ -115,7 +115,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     ),
                                     child: Text(
                                       AppLocalizations.of(context)!.homeCheerMessage,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black87,
@@ -132,10 +132,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             ),
                           ),
                           // Fortune Cookie (Character's Right Hand -> Screen Left)
-                          Positioned(
+                          const Positioned(
                             bottom: 110, 
                             right: 80,   
-                            child: const FortuneCookieWidget(),
+                            child: FortuneCookieWidget(),
                           ),
                         ],
                       ),

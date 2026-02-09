@@ -265,7 +265,7 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        VisaRoadmapScreen(userGoal: 'residency')), // Keeping internal param 'residency' as requested? Or align? User said 'research'. But RoadmapScreen might expect residency. I'll stick to 'residency' for the screen argument if logic needs it, BUT ensuring Provider gets 'research'.
+                                        const VisaRoadmapScreen(userGoal: 'residency')), // Keeping internal param 'residency' as requested? Or align? User said 'research'. But RoadmapScreen might expect residency. I'll stick to 'residency' for the screen argument if logic needs it, BUT ensuring Provider gets 'research'.
                               );
                               break;
                             case 'employment':
@@ -274,7 +274,7 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        EmploymentVisaScreen()),
+                                        const EmploymentVisaScreen()),
                               );
                               break;
                             case 'startup':
@@ -287,7 +287,7 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        GlobalVisaScreen()),
+                                        const GlobalVisaScreen()),
                               );
                               break;
                             case 'school':
@@ -296,7 +296,7 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        SchoolVisaScreen()),
+                                        const SchoolVisaScreen()),
                               );
                               break;
                             default:
@@ -385,12 +385,15 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                       children: [
                         Icon(icon, size: 16, color: Colors.black54),
                         const SizedBox(width: 4),
-                        Text(
-                          title,
-                          style: GoogleFonts.notoSansKr(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w700,
-                            color: const Color(0xFF1E2B4D),
+                        Flexible(
+                          child: Text(
+                            title,
+                            style: GoogleFonts.notoSansKr(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                              color: const Color(0xFF1E2B4D),
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ],

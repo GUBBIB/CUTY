@@ -181,12 +181,14 @@ class CommunityMainScreen extends StatelessWidget {
     );
   }
 
+  /*
   void _navigateToBoard(BuildContext context, String title) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => CommunityBoardScreen(title: title)),
     );
   }
+  */
 
   void _showCreateBoardDialog(BuildContext context) {
     showDialog(
@@ -235,12 +237,12 @@ class _PatternMenuCard extends StatelessWidget {
     required this.patternColor,
     required this.patternIcons,
     this.characterAsset,
-    required this.onTap,
     this.customTrailing,
+    required this.onTap,
     this.imageHeight = 130,     // Default height
     this.imageRightOffset = 10, // Default right margin
-    this.imageBottomOffset = -10,
-    this.cardHeight = 160,      // Default card height
+    this.imageBottomOffset = -10,      // Default card height
+    this.cardHeight = 160,
   });
 
   @override
