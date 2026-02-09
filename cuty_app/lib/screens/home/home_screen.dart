@@ -13,6 +13,8 @@ import 'widgets/popular_posts_preview.dart';
 import '../schedule/schedule_screen.dart';
 import 'widgets/fortune_cookie_widget.dart';
 
+import '../../../providers/message_provider.dart'; // [Added]
+
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
@@ -60,6 +62,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           onRefresh: () async {
             await ref.read(homeViewModelProvider.notifier).refresh();
             ref.read(characterProvider.notifier).pickRandomCharacter();
+            ref.read(messageProvider.notifier).pickRandomIndex();
           },
           child: CustomScrollView(
             physics: const AlwaysScrollableScrollPhysics(),

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SpeechBubbleWidget extends StatelessWidget {
-  final String message;
+  final String? message;
   final VoidCallback? onTap;
 
   const SpeechBubbleWidget({
     super.key, 
-    required this.message,
+    this.message,
     this.onTap,
   });
 
@@ -33,7 +33,7 @@ class SpeechBubbleWidget extends StatelessWidget {
           ],
         ),
         child: Text(
-          message,
+          message ?? "오늘도 파이팅!",
           style: GoogleFonts.notoSansKr(
             fontSize: 15,
             fontWeight: FontWeight.bold,

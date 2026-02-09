@@ -548,23 +548,119 @@ abstract class AppLocalizations {
   /// **'커뮤니티 활동'**
   String get menuCommunityActivity;
 
-  /// No description provided for @sectionAppSettings.
+  /// No description provided for @settingsTitle.
+  ///
+  /// In ko, this message translates to:
+  /// **'설정'**
+  String get settingsTitle;
+
+  /// No description provided for @appSettingsSection.
   ///
   /// In ko, this message translates to:
   /// **'앱 설정'**
-  String get sectionAppSettings;
+  String get appSettingsSection;
 
-  /// No description provided for @settingNotification.
+  /// No description provided for @languageSetting.
+  ///
+  /// In ko, this message translates to:
+  /// **'언어 설정'**
+  String get languageSetting;
+
+  /// No description provided for @notificationSetting.
   ///
   /// In ko, this message translates to:
   /// **'알림 설정'**
-  String get settingNotification;
+  String get notificationSetting;
 
-  /// No description provided for @settingDisplay.
+  /// No description provided for @screenSetting.
   ///
   /// In ko, this message translates to:
   /// **'화면 설정'**
-  String get settingDisplay;
+  String get screenSetting;
+
+  /// No description provided for @infoSection.
+  ///
+  /// In ko, this message translates to:
+  /// **'정보'**
+  String get infoSection;
+
+  /// No description provided for @versionInfo.
+  ///
+  /// In ko, this message translates to:
+  /// **'버전 정보'**
+  String get versionInfo;
+
+  /// No description provided for @termsOfService.
+  ///
+  /// In ko, this message translates to:
+  /// **'이용약관'**
+  String get termsOfService;
+
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In ko, this message translates to:
+  /// **'개인정보 처리방침'**
+  String get privacyPolicy;
+
+  /// No description provided for @accountSection.
+  ///
+  /// In ko, this message translates to:
+  /// **'계정'**
+  String get accountSection;
+
+  /// No description provided for @logout.
+  ///
+  /// In ko, this message translates to:
+  /// **'로그아웃'**
+  String get logout;
+
+  /// No description provided for @deleteAccount.
+  ///
+  /// In ko, this message translates to:
+  /// **'회원 탈퇴'**
+  String get deleteAccount;
+
+  /// No description provided for @logoutDialogTitle.
+  ///
+  /// In ko, this message translates to:
+  /// **'로그아웃'**
+  String get logoutDialogTitle;
+
+  /// No description provided for @logoutDialogContent.
+  ///
+  /// In ko, this message translates to:
+  /// **'로그아웃 하시겠습니까?'**
+  String get logoutDialogContent;
+
+  /// No description provided for @deleteAccountDialogTitle.
+  ///
+  /// In ko, this message translates to:
+  /// **'회원 탈퇴'**
+  String get deleteAccountDialogTitle;
+
+  /// No description provided for @deleteAccountDialogContent.
+  ///
+  /// In ko, this message translates to:
+  /// **'정말로 탈퇴하시겠습니까?\n모든 데이터가 삭제됩니다.'**
+  String get deleteAccountDialogContent;
+
+  /// No description provided for @cancel.
+  ///
+  /// In ko, this message translates to:
+  /// **'취소'**
+  String get cancel;
+
+  /// No description provided for @confirm.
+  ///
+  /// In ko, this message translates to:
+  /// **'확인'**
+  String get confirm;
+
+  /// No description provided for @delete.
+  ///
+  /// In ko, this message translates to:
+  /// **'탈퇴'**
+  String get delete;
 
   /// No description provided for @displayThemeTitle.
   ///
@@ -589,12 +685,6 @@ abstract class AppLocalizations {
   /// In ko, this message translates to:
   /// **'다크 모드'**
   String get displayThemeDark;
-
-  /// No description provided for @sectionInfo.
-  ///
-  /// In ko, this message translates to:
-  /// **'정보'**
-  String get sectionInfo;
 
   /// No description provided for @menuVersion.
   ///
@@ -899,8 +989,44 @@ abstract class AppLocalizations {
   /// No description provided for @homeCheerMessage.
   ///
   /// In ko, this message translates to:
-  /// **'오늘도 힘내세요!'**
+  /// **'오늘도 화이팅!'**
   String get homeCheerMessage;
+
+  /// No description provided for @homeMsg01.
+  ///
+  /// In ko, this message translates to:
+  /// **'오늘도 파이팅! 🔥'**
+  String get homeMsg01;
+
+  /// No description provided for @homeMsg02.
+  ///
+  /// In ko, this message translates to:
+  /// **'비자 준비는 잘 돼가? 🛂'**
+  String get homeMsg02;
+
+  /// No description provided for @homeMsg03.
+  ///
+  /// In ko, this message translates to:
+  /// **'맛있는 거 챙겨 먹어! 밥심! 🍚'**
+  String get homeMsg03;
+
+  /// No description provided for @homeMsg04.
+  ///
+  /// In ko, this message translates to:
+  /// **'잠깐 산책이라도 어때? 🌿'**
+  String get homeMsg04;
+
+  /// No description provided for @homeMsg05.
+  ///
+  /// In ko, this message translates to:
+  /// **'넌 할 수 있어! 걱정 마! ✨'**
+  String get homeMsg05;
+
+  /// No description provided for @homeMsg06.
+  ///
+  /// In ko, this message translates to:
+  /// **'좋은 일이 생길 거야! 🍀'**
+  String get homeMsg06;
 
   /// No description provided for @msgFortuneAlreadyOpened.
   ///

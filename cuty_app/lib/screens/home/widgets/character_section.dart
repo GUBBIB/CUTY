@@ -5,6 +5,8 @@ import '../../../../providers/fortune_provider.dart'; // [Added]
 import 'speech_bubble_widget.dart';
 import 'package:cuty_app/l10n/gen/app_localizations.dart';
 
+import '../../../../providers/message_provider.dart'; // [Added]
+
 class CharacterSection extends ConsumerWidget {
   const CharacterSection({super.key});
 
@@ -12,6 +14,19 @@ class CharacterSection extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final fortuneState = ref.watch(fortuneProvider);
     final randomCharacter = ref.watch(characterProvider);
+    
+    // [New] Speech Bubble Logic
+    final msgIndex = ref.watch(messageProvider);
+    final l10n = AppLocalizations.of(context)!;
+    final msgs = [
+      l10n.homeMsg01, 
+      l10n.homeMsg02, 
+      l10n.homeMsg03, 
+      l10n.homeMsg04, 
+      l10n.homeMsg05, 
+      l10n.homeMsg06
+    ];
+    final displayMsg = msgs[msgIndex % msgs.length];
 
     // [Logic] Cookie exists ? Hello/Happy(50:50) : Random
     String displayImage;
@@ -52,7 +67,7 @@ class CharacterSection extends ConsumerWidget {
            Positioned(
             top: -60, 
             child: SpeechBubbleWidget(
-              message: AppLocalizations.of(context)!.homeCheerMessage,
+              message: displayMsg, // [Updated]
             ),
           ),
         ],

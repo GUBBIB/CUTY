@@ -241,13 +241,62 @@ class AppLocalizationsEn extends AppLocalizations {
   String get menuCommunityActivity => 'Community Activity';
 
   @override
-  String get sectionAppSettings => 'App Settings';
+  String get settingsTitle => 'Settings';
 
   @override
-  String get settingNotification => 'Notifications';
+  String get appSettingsSection => 'App Settings';
 
   @override
-  String get settingDisplay => 'Display Settings';
+  String get languageSetting => 'Language';
+
+  @override
+  String get notificationSetting => 'Notifications';
+
+  @override
+  String get screenSetting => 'Screen';
+
+  @override
+  String get infoSection => 'Info';
+
+  @override
+  String get versionInfo => 'Version Info';
+
+  @override
+  String get termsOfService => 'Terms of Service';
+
+  @override
+  String get privacyPolicy => 'Privacy Policy';
+
+  @override
+  String get accountSection => 'Account';
+
+  @override
+  String get logout => 'Log Out';
+
+  @override
+  String get deleteAccount => 'Delete Account';
+
+  @override
+  String get logoutDialogTitle => 'Log Out';
+
+  @override
+  String get logoutDialogContent => 'Do you want to log out?';
+
+  @override
+  String get deleteAccountDialogTitle => 'Delete Account';
+
+  @override
+  String get deleteAccountDialogContent =>
+      'Are you sure you want to delete your account?\nAll data will be lost.';
+
+  @override
+  String get cancel => '취소';
+
+  @override
+  String get confirm => '확인';
+
+  @override
+  String get delete => 'Delete';
 
   @override
   String get displayThemeTitle => 'Display Theme';
@@ -260,9 +309,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get displayThemeDark => 'Dark Mode';
-
-  @override
-  String get sectionInfo => 'Info';
 
   @override
   String get menuVersion => 'Version Info';
@@ -416,6 +462,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeCheerMessage => 'Cheer up today!';
+
+  @override
+  String get homeMsg01 => 'Keep it up today! 🔥';
+
+  @override
+  String get homeMsg02 => 'How is visa prep going? 🛂';
+
+  @override
+  String get homeMsg03 => 'Don\'t forget to eat well! 🍚';
+
+  @override
+  String get homeMsg04 => 'How about a short walk? 🌿';
+
+  @override
+  String get homeMsg05 => 'You can do it! No worries! ✨';
+
+  @override
+  String get homeMsg06 => 'Good things will happen! 🍀';
 
   @override
   String get msgFortuneAlreadyOpened => 'You already opened today\'s cookie!';

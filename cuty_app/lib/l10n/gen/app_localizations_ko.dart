@@ -240,13 +240,61 @@ class AppLocalizationsKo extends AppLocalizations {
   String get menuCommunityActivity => '커뮤니티 활동';
 
   @override
-  String get sectionAppSettings => '앱 설정';
+  String get settingsTitle => '설정';
 
   @override
-  String get settingNotification => '알림 설정';
+  String get appSettingsSection => '앱 설정';
 
   @override
-  String get settingDisplay => '화면 설정';
+  String get languageSetting => '언어 설정';
+
+  @override
+  String get notificationSetting => '알림 설정';
+
+  @override
+  String get screenSetting => '화면 설정';
+
+  @override
+  String get infoSection => '정보';
+
+  @override
+  String get versionInfo => '버전 정보';
+
+  @override
+  String get termsOfService => '이용약관';
+
+  @override
+  String get privacyPolicy => '개인정보 처리방침';
+
+  @override
+  String get accountSection => '계정';
+
+  @override
+  String get logout => '로그아웃';
+
+  @override
+  String get deleteAccount => '회원 탈퇴';
+
+  @override
+  String get logoutDialogTitle => '로그아웃';
+
+  @override
+  String get logoutDialogContent => '로그아웃 하시겠습니까?';
+
+  @override
+  String get deleteAccountDialogTitle => '회원 탈퇴';
+
+  @override
+  String get deleteAccountDialogContent => '정말로 탈퇴하시겠습니까?\n모든 데이터가 삭제됩니다.';
+
+  @override
+  String get cancel => '취소';
+
+  @override
+  String get confirm => '확인';
+
+  @override
+  String get delete => '탈퇴';
 
   @override
   String get displayThemeTitle => '화면 테마';
@@ -259,9 +307,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get displayThemeDark => '다크 모드';
-
-  @override
-  String get sectionInfo => '정보';
 
   @override
   String get menuVersion => '버전 정보';
@@ -414,7 +459,25 @@ class AppLocalizationsKo extends AppLocalizations {
   String get msgPointEmpty => '포인트 내역이 없습니다.';
 
   @override
-  String get homeCheerMessage => '오늘도 힘내세요!';
+  String get homeCheerMessage => '오늘도 화이팅!';
+
+  @override
+  String get homeMsg01 => '오늘도 파이팅! 🔥';
+
+  @override
+  String get homeMsg02 => '비자 준비는 잘 돼가? 🛂';
+
+  @override
+  String get homeMsg03 => '맛있는 거 챙겨 먹어! 밥심! 🍚';
+
+  @override
+  String get homeMsg04 => '잠깐 산책이라도 어때? 🌿';
+
+  @override
+  String get homeMsg05 => '넌 할 수 있어! 걱정 마! ✨';
+
+  @override
+  String get homeMsg06 => '좋은 일이 생길 거야! 🍀';
 
   @override
   String get msgFortuneAlreadyOpened => '오늘은 이미 포춘쿠키를 열었어요!';
