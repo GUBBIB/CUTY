@@ -11,7 +11,7 @@ import 'widgets/schedule_list.dart';
 import 'widgets/character_section.dart';
 import 'widgets/popular_posts_preview.dart';
 import '../schedule/schedule_screen.dart';
-import 'widgets/fortune_cookie_widget.dart';
+
 
 import '../../../providers/message_provider.dart'; // [Added]
 
@@ -94,12 +94,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             left: 0,
                             right: 0,
                             child: CharacterSection(),
-                          ),
-                          // Fortune Cookie (Character's Right Hand -> Screen Left)
-                          const Positioned(
-                            bottom: 110, 
-                            right: 80,   
-                            child: FortuneCookieWidget(),
                           ),
                         ],
                       ),
