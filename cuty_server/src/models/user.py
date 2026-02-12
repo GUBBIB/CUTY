@@ -23,6 +23,7 @@ class User(db.Model, TimestampMixin):
     post_views = db.relationship('PostView', backref='user', lazy=True)
     point_logs = db.relationship('PointLog', backref='user', lazy=True)
     attendances = db.relationship('Attendance', backref='user', lazy=True)
+    timetables = db.relationship('Timetable', backref='user', lazy=True)
     
     @property
     def display_nickname(self):

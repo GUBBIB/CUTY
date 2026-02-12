@@ -18,7 +18,6 @@ paths:
           description: OK
 
 definitions:
-  # [핵심 수정] ./models/... 대신 docs/v1/models/... 로 전체 경로 명시
 
   TimestampFields:
     $ref: 'docs/v1/models/common_model.yml#/definitions/TimestampFields'
@@ -67,3 +66,9 @@ definitions:
 
   User:
     $ref: 'docs/v1/models/user_model.yml#/User'
+
+  Timetable:
+    $ref: 'docs/v1/models/timetable_model.yml#/Timetable'
+  
+  Lecture:
+    $ref: 'docs/v1/models/timetable_model.yml#/Lecture'

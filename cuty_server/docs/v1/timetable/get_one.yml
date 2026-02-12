@@ -1,0 +1,38 @@
+tags:
+  - Timetable
+summary: 특정 시간표 상세 조회
+description: |
+  시간표 ID를 통해 특정 시간표의 상세 정보와 포함된 강의 목록을 조회합니다.
+parameters:
+  - name: timetable_id
+    in: path
+    type: integer
+    required: true
+    description: 시간표 ID
+  - name: lang
+    in: query
+    type: string
+    enum: [ko, en]
+    default: ko
+    description: 응답 언어 설정
+responses:
+  200:
+    description: 조회 성공
+    schema:
+      $ref: 'docs/v1/models/timetable_model.yml#/Timetable'
+  403:
+    description: 권한 없음 (본인의 시간표가 아님)
+    schema:
+      type: object
+      properties:
+        error:
+          type: string
+  404:
+    description: 존재하지 않는 시간표
+    schema:
+      type: object
+      properties:
+        error:
+          type: string
+  500:
+    description: 서버 에러

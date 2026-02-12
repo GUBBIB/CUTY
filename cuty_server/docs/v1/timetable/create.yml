@@ -1,0 +1,43 @@
+tags:
+  - Timetable
+summary: 시간표 수동 생성
+description: 새로운 시간표를 생성합니다. (강의는 포함되지 않은 빈 시간표가 생성됩니다.)
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      required:
+        - year
+        - semester
+      properties:
+        year:
+          type: integer
+          example: 2026
+          description: 학년도
+        semester:
+          type: integer
+          example: 1
+          description: 학기 (1, 2, 3, 4)
+        name:
+          type: string
+          example: "플랜 B"
+          description: 시간표 이름 (선택 사항)
+responses:
+  201:
+    description: 생성 성공
+    schema:
+      $ref: 'docs/v1/models/timetable_model.yml#/Timetable'
+  400:
+    description: 잘못된 요청 (필수 값 누락 등)
+    schema:
+      type: object
+      properties:
+        code:
+          type: string
+          example: "BAD_REQUEST"
+        message:
+          type: string
+  500:
+    description: 서버 에러
