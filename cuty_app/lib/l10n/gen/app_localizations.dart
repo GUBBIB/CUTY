@@ -1418,6 +1418,12 @@ abstract class AppLocalizations {
   /// **'다시 진단하기'**
   String get bannerActionRetest;
 
+  /// No description provided for @bannerActionCheckResult.
+  ///
+  /// In ko, this message translates to:
+  /// **'결과 확인하기'**
+  String get bannerActionCheckResult;
+
   /// No description provided for @labelWrite.
   ///
   /// In ko, this message translates to:
@@ -3781,6 +3787,72 @@ abstract class AppLocalizations {
   /// In ko, this message translates to:
   /// **'시간제 취업 허가 신청이 완료되었습니다.\n심사 결과는 약 3일 내에 통보됩니다.'**
   String get msgApplyComplete;
+
+  /// No description provided for @banner_vip_label.
+  ///
+  /// In ko, this message translates to:
+  /// **'VIP PRIVATE SERVICE'**
+  String get banner_vip_label;
+
+  /// No description provided for @banner_consulting_title.
+  ///
+  /// In ko, this message translates to:
+  /// **'1:1 비자 컨설팅'**
+  String get banner_consulting_title;
+
+  /// No description provided for @banner_consulting_desc.
+  ///
+  /// In ko, this message translates to:
+  /// **'합격을 진단 & 로드맵 설계'**
+  String get banner_consulting_desc;
+
+  /// No description provided for @banner_btn_details.
+  ///
+  /// In ko, this message translates to:
+  /// **'자세히 보기'**
+  String get banner_btn_details;
+
+  /// No description provided for @banner_ribbon_text.
+  ///
+  /// In ko, this message translates to:
+  /// **'VIP PREMIUM'**
+  String get banner_ribbon_text;
+
+  /// No description provided for @diagnosis_step_industry.
+  ///
+  /// In ko, this message translates to:
+  /// **'희망하는 산업 분야는 무엇인가요?'**
+  String get diagnosis_step_industry;
+
+  /// No description provided for @diagnosis_step_region.
+  ///
+  /// In ko, this message translates to:
+  /// **'선호하는 근무 지역은 어디인가요?'**
+  String get diagnosis_step_region;
+
+  /// No description provided for @diagnosis_step_korean.
+  ///
+  /// In ko, this message translates to:
+  /// **'한국어 능력은 어느 정도인가요?'**
+  String get diagnosis_step_korean;
+
+  /// No description provided for @diagnosis_step_experience.
+  ///
+  /// In ko, this message translates to:
+  /// **'관련 업무 경력이 있나요?'**
+  String get diagnosis_step_experience;
+
+  /// No description provided for @diagnosis_step_verification.
+  ///
+  /// In ko, this message translates to:
+  /// **'서류 연동을 통해 정확도를 높일까요?'**
+  String get diagnosis_step_verification;
+
+  /// No description provided for @diagnosis_btn_retry.
+  ///
+  /// In ko, this message translates to:
+  /// **'처음부터 다시 진단하기'**
+  String get diagnosis_btn_retry;
 }
 
 class _AppLocalizationsDelegate

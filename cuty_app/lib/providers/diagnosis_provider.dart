@@ -79,6 +79,13 @@ class DiagnosisNotifier extends StateNotifier<DiagnosisState> {
       isAnalyzing: false,
     );
     _saveDiagnosis();
+    _saveDiagnosis();
+  }
+
+  // 3. Reset Diagnosis
+  void reset() {
+    state = DiagnosisState(answer: SurveyAnswer());
+    _saveDiagnosis();
   }
 
   // Core Business Logic

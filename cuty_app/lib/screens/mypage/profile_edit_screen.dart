@@ -19,7 +19,7 @@ class ProfileEditScreen extends StatelessWidget {
         elevation: 0,
         foregroundColor: Colors.black,
         leading: IconButton(
-          icon: const Icon(Icons.close),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
         actions: [

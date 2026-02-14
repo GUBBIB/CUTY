@@ -65,7 +65,7 @@ class _Step0Selection extends StatelessWidget {
                 Text(AppLocalizations.of(context)!.permitLandingSubtitle, style: GoogleFonts.notoSansKr(fontSize: 12, fontWeight: FontWeight.w700, height: 1.5, color: const Color(0xFF1E293B))),
             ]),
           ),
-          Expanded(child: Transform.translate(offset: const Offset(0, -24), child: Container(padding: const EdgeInsets.fromLTRB(20, 32, 20, 20), decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(28), topRight: Radius.circular(28))), child: Column(children: [
+          Expanded(child: Transform.translate(offset: const Offset(0, -24), child: Container(padding: EdgeInsets.fromLTRB(20, 32, 20, 20 + MediaQuery.of(context).padding.bottom), decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(28), topRight: Radius.circular(28))), child: Column(children: [
              _SelectionCard(title: '쿠티에서 알바 찾기', subtitle: '아직 알바를 구하지 못했다면\n쿠티에서 구해봐요!', badgeText: 'CUTY', icon: Icons.shopping_bag_outlined, bgColor: const Color(0xFFBFDBFE), textColor: const Color(0xFF1E3A8A), onTap: () => Navigator.pop(context)),
              const SizedBox(height: 12),
              _SelectionCard(title: '내가 직접 찾은 알바', subtitle: '표준근로계약서 등 서류를\n직접 올려주세요.', badgeText: 'Upload', icon: Icons.upload_file, bgColor: const Color(0xFF1E3A8A), textColor: Colors.white, isDark: true, onTap: () => notifier.setStep(1)),
@@ -136,7 +136,7 @@ class _Step1VisaLinkState extends State<_Step1VisaLink> {
             decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Colors.blue.shade50, Colors.white]))
           ),
           Padding(
-            padding: const EdgeInsets.all(24), 
+            padding: EdgeInsets.fromLTRB(24, 24, 24, 24 + MediaQuery.of(context).padding.bottom), 
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start, 
               children: [
@@ -292,7 +292,7 @@ class _Step3Camera extends StatelessWidget {
             ),
           )
         ),
-        Positioned(bottom: 30, left: 0, right: 0, child: Center(child: GestureDetector(onTap: () { showDialog(context: context, barrierDismissible: false, builder: (_) => const Center(child: CircularProgressIndicator(color: Colors.cyanAccent))); Future.delayed(const Duration(seconds: 1), () { Navigator.pop(context); notifier.advanceCameraStep(); }); }, child: Container(width: 80, height: 80, decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 4)), child: Container(margin: const EdgeInsets.all(4), decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle))))))
+        Positioned(bottom: 30 + MediaQuery.of(context).padding.bottom, left: 0, right: 0, child: Center(child: GestureDetector(onTap: () { showDialog(context: context, barrierDismissible: false, builder: (_) => const Center(child: CircularProgressIndicator(color: Colors.cyanAccent))); Future.delayed(const Duration(seconds: 1), () { Navigator.pop(context); notifier.advanceCameraStep(); }); }, child: Container(width: 80, height: 80, decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 4)), child: Container(margin: const EdgeInsets.all(4), decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle))))))
     ]));
   }
 }
@@ -672,11 +672,11 @@ class _Step10FinalPermit extends ConsumerWidget {
          Text("• ${AppLocalizations.of(context)!.tipWorkStart3}", style: const TextStyle(fontSize: 12, color: Colors.grey)),
        ])),
        const SizedBox(height: 40),
-       SizedBox(width: double.infinity, height: 60, child: ElevatedButton(onPressed: () { 
+       SizedBox(width: double.infinity, height: 60 + MediaQuery.of(context).padding.bottom, child: Align(alignment: Alignment.topCenter, child: SizedBox(width: double.infinity, height: 60, child: ElevatedButton(onPressed: () { 
           // Reset application state and then pop
           ref.read(albaPermitProvider.notifier).resetApplication();
           Navigator.pop(context);
-       }, style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1A2B49), padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))), child: Text(AppLocalizations.of(context)!.btnCheckMyVisa, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold))))
+       }, style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1A2B49), padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))), child: Text(AppLocalizations.of(context)!.btnCheckMyVisa, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold))))))
     ]))));
   }
 }

@@ -45,7 +45,7 @@ class _FortuneCookieWidgetState extends ConsumerState<FortuneCookieWidget>
           
           showDialog(
             context: context,
-            barrierDismissible: false,
+            barrierDismissible: true,
             builder: (context) => const FortuneCookieDialog(),
           );
         },

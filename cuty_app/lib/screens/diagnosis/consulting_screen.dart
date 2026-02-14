@@ -208,11 +208,11 @@ class _ConsultingScreenState extends ConsumerState<ConsultingScreen> with Single
   String _getQuestionText(int step) {
     if (!mounted) return ""; // Guard against context usage if not mounted
     switch (step) {
-      case 0: return AppLocalizations.of(context)!.consultingQuestionStep1;
-      case 1: return AppLocalizations.of(context)!.consultingQuestionStep2;
-      case 2: return AppLocalizations.of(context)!.consultingQuestionStep3;
-      case 3: return AppLocalizations.of(context)!.consultingQuestionStep4;
-      case 4: return AppLocalizations.of(context)!.consultingQuestionStep5;
+      case 0: return AppLocalizations.of(context)!.diagnosis_step_industry;
+      case 1: return AppLocalizations.of(context)!.diagnosis_step_region;
+      case 2: return AppLocalizations.of(context)!.diagnosis_step_korean;
+      case 3: return AppLocalizations.of(context)!.diagnosis_step_experience;
+      case 4: return AppLocalizations.of(context)!.diagnosis_step_verification;
       default: return "";
     }
   }

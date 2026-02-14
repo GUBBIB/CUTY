@@ -4,6 +4,8 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import '../../providers/diagnosis_provider.dart';
 import '../../models/diagnosis_model.dart';
+import 'consulting_screen.dart';
+import '../../l10n/gen/app_localizations.dart';
 
 class ResultScreen extends ConsumerWidget {
   const ResultScreen({super.key});
@@ -71,7 +73,7 @@ class ResultScreen extends ConsumerWidget {
           children: [
             // View A: Total Score
             // View A: Total Score
-            _buildTotalResultView(context, result),
+            _buildTotalResultView(context, ref, result),
             // View B: Job Details
             ...jobResultList.map((jobData) => _buildJobDetailView(context, jobData, result.solutionDocs)),
           ],
@@ -80,7 +82,7 @@ class ResultScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildTotalResultView(BuildContext context, DiagnosisResult result) {
+  Widget _buildTotalResultView(BuildContext context, WidgetRef ref, DiagnosisResult result) {
     // 1. Prepare Donut Chart Data
     final double score = result.totalScore.toDouble();
     final double remaining = 100 - score;
@@ -294,8 +296,10 @@ class ResultScreen extends ConsumerWidget {
           const SizedBox(height: 40),
 
           // -----------------------------------------------------------------
-          // 5. Action Buttons
+          // 5. Action Buttons (Visual Hierarchy)
           // -----------------------------------------------------------------
+          
+          // 1. Primary: View Jobs (Indigo Filled)
           SizedBox(
             width: double.infinity,
             height: 56,
@@ -304,19 +308,55 @@ class ResultScreen extends ConsumerWidget {
               icon: const Icon(Icons.work, color: Colors.white),
               label: const Text("맞춤 공고 보러가기", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.indigo,
+                backgroundColor: const Color(0xFF4B5AC7), // Royal Indigo
+                elevation: 4,
+                shadowColor: const Color(0xFF4B5AC7).withOpacity(0.4),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               ),
             ),
           ),
           const SizedBox(height: 12),
+          
+          // 2. Secondary: Share (White with Indigo Border)
+          SizedBox(
+            width: double.infinity,
+            height: 56,
+            child: ElevatedButton.icon(
+              onPressed: () => debugPrint(">>> [클릭] 결과 공유하기"),
+              icon: const Icon(Icons.share, color: Color(0xFF4B5AC7)),
+              label: const Text("결과 공유하기", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF4B5AC7))),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                elevation: 0,
+                side: const BorderSide(color: Color(0xFF4B5AC7), width: 1.5),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+
+          // 3. Tertiary: Retry (Grey Text/Outlined)
           SizedBox(
             width: double.infinity,
             height: 56,
             child: TextButton.icon(
-              onPressed: () => debugPrint(">>> [클릭] 결과 공유하기"),
-              icon: const Icon(Icons.share, color: Colors.grey),
-              label: const Text("결과 공유하기", style: TextStyle(fontSize: 16, color: Colors.grey)),
+              onPressed: () {
+                // Reset State
+                ref.read(diagnosisProvider.notifier).reset();
+                // Navigate back to ConsultingScreen
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const ConsultingScreen()),
+                  (route) => route.isFirst,
+                );
+              },
+              icon: const Icon(Icons.refresh, size: 18, color: Color(0xFF4B5AC7)),
+              label: Text(
+                AppLocalizations.of(context)!.diagnosis_btn_retry,
+                style: const TextStyle(color: Color(0xFF4B5AC7), fontSize: 14, fontWeight: FontWeight.w500),
+              ),
+              style: TextButton.styleFrom(
+                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              )
             ),
           ),
           const SizedBox(height: 20),

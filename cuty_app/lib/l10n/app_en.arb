@@ -237,6 +237,7 @@
   "bannerDiagnosisTitle": "What is my job score?",
   "bannerActionTest": "Diagnose",
   "bannerActionRetest": "Retest",
+  "bannerActionCheckResult": "Check Result",
   "labelWrite": "Write",
   "walletPending": "Status: Pending",
   "filterInfo": "Info",
@@ -694,5 +695,16 @@
   "tipWorkStart1": "Limit work to 25 hours/week during semester.",
   "tipWorkStart2": "Weekly holiday pay available if working 15hr+/week.",
   "tipWorkStart3": "Keep your labor contract safe!",
-  "btnCheckMyVisa": "Check My Visa Status (Done)"
+  "btnCheckMyVisa": "Check My Visa Status (Done)",
+  "banner_vip_label": "VIP PRIVATE SERVICE",
+  "banner_consulting_title": "1:1 Visa Consulting",
+  "banner_consulting_desc": "Probability Check & Roadmap",
+  "banner_btn_details": "View Details",
+  "banner_ribbon_text": "VIP PREMIUM",
+  "diagnosis_step_industry": "What industry are you interested in?",
+  "diagnosis_step_region": "Where do you prefer to work?",
+  "diagnosis_step_korean": "What is your Korean proficiency?",
+  "diagnosis_step_experience": "Do you have relevant work experience?",
+  "diagnosis_step_verification": "Shall we link documents for better accuracy?",
+  "diagnosis_btn_retry": "Restart Diagnosis"
 }

@@ -17,7 +17,7 @@ class _DisplaySettingsScreenState extends State<DisplaySettingsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context)!.settingDisplay, 
+          AppLocalizations.of(context)!.screenSetting, 
           style: const TextStyle(color: Colors.black)
         ),
         backgroundColor: Colors.white,

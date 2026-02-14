@@ -677,6 +677,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get bannerActionRetest => '다시 진단하기';
 
   @override
+  String get bannerActionCheckResult => '결과 확인하기';
+
+  @override
   String get labelWrite => '글쓰기';
 
   @override
@@ -1880,4 +1883,37 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String get msgApplyComplete =>
       '시간제 취업 허가 신청이 완료되었습니다.\n심사 결과는 약 3일 내에 통보됩니다.';
+
+  @override
+  String get banner_vip_label => 'VIP PRIVATE SERVICE';
+
+  @override
+  String get banner_consulting_title => '1:1 비자 컨설팅';
+
+  @override
+  String get banner_consulting_desc => '합격을 진단 & 로드맵 설계';
+
+  @override
+  String get banner_btn_details => '자세히 보기';
+
+  @override
+  String get banner_ribbon_text => 'VIP PREMIUM';
+
+  @override
+  String get diagnosis_step_industry => '희망하는 산업 분야는 무엇인가요?';
+
+  @override
+  String get diagnosis_step_region => '선호하는 근무 지역은 어디인가요?';
+
+  @override
+  String get diagnosis_step_korean => '한국어 능력은 어느 정도인가요?';
+
+  @override
+  String get diagnosis_step_experience => '관련 업무 경력이 있나요?';
+
+  @override
+  String get diagnosis_step_verification => '서류 연동을 통해 정확도를 높일까요?';
+
+  @override
+  String get diagnosis_btn_retry => '처음부터 다시 진단하기';
 }

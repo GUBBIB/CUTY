@@ -69,7 +69,7 @@ class JobCapabilityBanner extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
-                        isCompleted ? AppLocalizations.of(context)!.bannerActionRetest : AppLocalizations.of(context)!.bannerActionTest,
+                        isCompleted ? AppLocalizations.of(context)!.bannerActionCheckResult : AppLocalizations.of(context)!.bannerActionTest,
                         style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor),
                       ),
                     ),

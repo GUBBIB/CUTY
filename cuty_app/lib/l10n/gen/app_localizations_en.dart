@@ -679,6 +679,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bannerActionRetest => 'Retest';
 
   @override
+  String get bannerActionCheckResult => 'Check Result';
+
+  @override
   String get labelWrite => 'Write';
 
   @override
@@ -1908,4 +1911,39 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get msgApplyComplete =>
       'Part-time work permit application completed.\nResults will be notified within ~3 days.';
+
+  @override
+  String get banner_vip_label => 'VIP PRIVATE SERVICE';
+
+  @override
+  String get banner_consulting_title => '1:1 Visa Consulting';
+
+  @override
+  String get banner_consulting_desc => 'Probability Check & Roadmap';
+
+  @override
+  String get banner_btn_details => 'View Details';
+
+  @override
+  String get banner_ribbon_text => 'VIP PREMIUM';
+
+  @override
+  String get diagnosis_step_industry => 'What industry are you interested in?';
+
+  @override
+  String get diagnosis_step_region => 'Where do you prefer to work?';
+
+  @override
+  String get diagnosis_step_korean => 'What is your Korean proficiency?';
+
+  @override
+  String get diagnosis_step_experience =>
+      'Do you have relevant work experience?';
+
+  @override
+  String get diagnosis_step_verification =>
+      'Shall we link documents for better accuracy?';
+
+  @override
+  String get diagnosis_btn_retry => 'Restart Diagnosis';
 }

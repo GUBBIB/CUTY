@@ -6,6 +6,7 @@ import '../../providers/fortune_provider.dart';
 import '../../main.dart'; // RestartWidget
 import 'sub_screens/terms_detail_screen.dart';
 import '../../l10n/gen/app_localizations.dart'; // [Added]
+import '../settings/display_settings_screen.dart'; // [Added] Display Settings Import
 
 import '../../providers/locale_provider.dart'; // [Added]
 
@@ -91,6 +92,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         title: Text(l10n.settingsTitle, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)), // [Updated]
         backgroundColor: Colors.white,
         elevation: 0,
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: ListView(
@@ -124,7 +130,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ListTile(
             title: Text(l10n.screenSetting), // [Updated]
             trailing: const Icon(Icons.arrow_forward_ios, size: 14, color: Colors.grey),
-            onTap: () {}, 
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const DisplaySettingsScreen()),
+              );
+            }, 
           ),
 
           const Divider(height: 30, thickness: 8, color: Color(0xFFF5F5F5)), 

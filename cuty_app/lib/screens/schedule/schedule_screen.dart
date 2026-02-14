@@ -16,6 +16,10 @@ class ScheduleScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('강의 시간표'),
         centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddClassDialog(context, ref),

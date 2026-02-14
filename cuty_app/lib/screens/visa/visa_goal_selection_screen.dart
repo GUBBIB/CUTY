@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../../providers/visa_provider.dart';
+import 'widgets/visa_consulting_banner.dart'; // [NEW]
 
 import '../roadmap/visa_roadmap_screen.dart';
 import 'employment_visa_screen.dart';
@@ -28,7 +29,7 @@ class VisaGoalSelectionScreen extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(20, 10, 20, 40),
+        padding: EdgeInsets.fromLTRB(20, 10, 20, 40 + MediaQuery.of(context).padding.bottom + 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -49,6 +50,9 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                 color: Colors.grey[600],
               ),
             ),
+            const SizedBox(height: 20),
+            // Premium Consulting Banner
+            const VisaConsultingBanner(),
             const SizedBox(height: 30),
             // Top Horizontal Card (School Life)
             _buildHorizontalClassCard(
@@ -113,8 +117,9 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                   icon: Icons.public_outlined,
                 ),
               ],
+
             ),
-            const SizedBox(height: 20),
+
           ],
         ),
       ),
