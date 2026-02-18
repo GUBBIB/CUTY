@@ -329,6 +329,51 @@ class SpecWalletScreen extends ConsumerWidget {
                   )
                 ],
                 const SizedBox(height: 12),
+
+                // 4. 학교 담당자에게 제출하기 (New Feature)
+                // Submitted to School Admin
+                 _buildActionTile(
+                  context, 
+                  icon: Icons.school_outlined, 
+                  label: AppLocalizations.of(context)!.doc_action_submit_school,
+                  iconColor: const Color(0xFF4B5AC7), // Indigo Brand Color
+                  textColor: const Color(0xFF4B5AC7),
+                  backgroundColor: const Color(0xFFE8EAF6), // Light Indigo Background
+                  onTap: () {
+                     // Show Confirmation Dialog
+                     showDialog(
+                       context: context,
+                       builder: (BuildContext context) {
+                         return AlertDialog(
+                           title: Text(AppLocalizations.of(context)!.doc_submit_confirm_title),
+                           content: Text(AppLocalizations.of(context)!.doc_submit_confirm_msg(def.name)),
+                           actions: [
+                             TextButton(
+                               onPressed: () => Navigator.pop(context), // Cancel
+                               child: Text(AppLocalizations.of(context)!.commonCancel),
+                             ),
+                             TextButton(
+                               onPressed: () {
+                                 // TODO: Call API to submit document to school admin system
+                                 Navigator.pop(context); // Close Dialog
+                                 Navigator.pop(context); // Close BottomSheet
+                                 
+                                 ScaffoldMessenger.of(context).showSnackBar(
+                                   SnackBar(
+                                     content: Text(AppLocalizations.of(context)!.doc_submit_success),
+                                     backgroundColor: const Color(0xFF4B5AC7),
+                                   ),
+                                 );
+                               }, 
+                               child: Text(AppLocalizations.of(context)!.commonConfirm),
+                             ),
+                           ],
+                         );
+                       },
+                     );
+                  },
+                ),
+                const SizedBox(height: 12),
               ],
             ),
           ),
@@ -337,7 +382,14 @@ class SpecWalletScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildActionTile(BuildContext context, {required IconData icon, required String label, required VoidCallback onTap}) {
+  Widget _buildActionTile(BuildContext context, {
+    required IconData icon, 
+    required String label, 
+    required VoidCallback onTap,
+    Color? iconColor,
+    Color? textColor,
+    Color? backgroundColor,
+    }) {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
@@ -345,17 +397,17 @@ class SpecWalletScreen extends ConsumerWidget {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
         decoration: BoxDecoration(
-          color: Colors.grey[50],
+          color: backgroundColor ?? Colors.grey[50],
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.grey[200]!),
+          border: Border.all(color: backgroundColor != null ? Colors.transparent : Colors.grey[200]!),
         ),
         child: Row(
           children: [
-            Icon(icon, color: Colors.grey[800]),
+            Icon(icon, color: iconColor ?? Colors.grey[800]),
             const SizedBox(width: 16),
-            Text(label, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+            Text(label, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: textColor ?? Colors.black)),
             const Spacer(),
-            Icon(Icons.chevron_right, color: Colors.grey[400]),
+            Icon(Icons.chevron_right, color: iconColor != null ? iconColor.withOpacity(0.5) : Colors.grey[400]),
           ],
         ),
       ),

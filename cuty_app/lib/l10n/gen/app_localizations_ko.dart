@@ -1916,4 +1916,211 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get diagnosis_btn_retry => '처음부터 다시 진단하기';
+
+  @override
+  String get doc_action_submit_school => '학교 담당자에게 제출하기';
+
+  @override
+  String get doc_submit_confirm_title => '서류 제출';
+
+  @override
+  String doc_submit_confirm_msg(Object docName) {
+    return '$docName 서류를 학교 담당자에게 전송하시겠습니까?';
+  }
+
+  @override
+  String get doc_submit_success => '성공적으로 제출되었습니다.';
+
+  @override
+  String get premiumTag => 'KVTI SYSTEM';
+
+  @override
+  String get premiumServiceTag => 'PREMIUM SERVICE';
+
+  @override
+  String get premiumTitle => 'KVTI 커리어 매니지먼트';
+
+  @override
+  String get premiumSubtitle => '진단부터 취업, 정주까지\nAI가 설계하는 나만의 비자 로드맵';
+
+  @override
+  String get premiumPrice => '₩50,000';
+
+  @override
+  String get premiumUnit => '원';
+
+  @override
+  String get premiumBtnDetail => '자세히 알아보기';
+
+  @override
+  String get webHeroBadge => 'KOREA VISA TYPE INDICATOR';
+
+  @override
+  String get webHeroTitle => 'KVTI';
+
+  @override
+  String get webHeroSub =>
+      '취업 전략, 사람마다 \'길\'은 다릅니다.\n120개 데이터로 분석하는 가장 확실한 비자 로드맵.';
+
+  @override
+  String get webStat1 => '120+';
+
+  @override
+  String get webStat1Label => '진단 문항';
+
+  @override
+  String get webStat2 => 'Pace Maker';
+
+  @override
+  String get webStat2Label => 'AI 밀착 관리';
+
+  @override
+  String get webStat3 => 'Connection';
+
+  @override
+  String get webStat3Label => '기업 연결';
+
+  @override
+  String get webProcessTitle => '6단계 정밀 분석';
+
+  @override
+  String get webProcessSub => '직무, 산업, 전공 적합성 등 6가지 관점으로\n당신의 취업 경쟁력을 수치화합니다.';
+
+  @override
+  String get webStep1 => '01. 직무 성향 (Job Preference)';
+
+  @override
+  String get webStep1Desc => '나의 업무 성향과 일치하는 한국 기업 직무 매칭';
+
+  @override
+  String get webStep2 => '02. 실무 역량 (Competence)';
+
+  @override
+  String get webStep2Desc => '기업 요구 12대 핵심 역량 보유 현황 분석';
+
+  @override
+  String get webStep3 => '03. 비자 적합성 (Visa-Fit)';
+
+  @override
+  String get webStep3Desc => '내 전공으로 E-7-1 전문인력 비자 발급 가능 여부 판독';
+
+  @override
+  String get webStep4 => '04. 산업 선호도 (Industry Pref)';
+
+  @override
+  String get webStep4Desc => '전공 연관성이 높고 비자 발급이 유리한 산업군 추천';
+
+  @override
+  String get webStep5 => '05. 조직 적응력 (Culture Fit)';
+
+  @override
+  String get webStep5Desc => '한국형 조직 문화 적응도 및 스트레스 내성 진단';
+
+  @override
+  String get webStep6 => '06. 정주 의지 (Settlement Will)';
+
+  @override
+  String get webStep6Desc => '단기 취업 vs 영주권 목표에 따른 장기 플랜 설계';
+
+  @override
+  String get webStrategyTitle => 'AI 전략 리포트 생성';
+
+  @override
+  String get webStrategySub =>
+      '진단 결과를 바탕으로 비자 발급 확률을 계산하고\n가장 유리한 취업/비자 전략을 도출합니다.';
+
+  @override
+  String get webStrategyProcessing1 => '직무 적합도 계산 중...';
+
+  @override
+  String get webStrategyProcessing2 => 'E-7-1 비자 요건 대조 중...';
+
+  @override
+  String get webStrategyProcessing3 => '최적 로드맵 생성 완료';
+
+  @override
+  String get webRoadmapTitle => '학년별 마일스톤 매니지먼트';
+
+  @override
+  String get webRoadmapSub => '막막한 대학 생활, AI가 \'지금 해야 할 일\'을 놓치지 않게 챙겨줍니다.';
+
+  @override
+  String get webRoadmapStep1 => '1-2학년: 기초 역량 & 적응';
+
+  @override
+  String get webRoadmapStep1Desc =>
+      '한국어(TOPIK) 목표 달성 • 전공 기초 학점 관리 • 교내 활동 추천\n\"초기 적응이 비자 점수의 기초가 됩니다.\"';
+
+  @override
+  String get webRoadmapStep2 => '3학년: 실무 스펙 빌드업';
+
+  @override
+  String get webRoadmapStep2Desc =>
+      '희망 직무 자격증 취득 • 방학 인턴십 공고 매칭 • 포트폴리오 준비\n\"직무 역량을 구체화하여 경쟁력을 높이세요.\"';
+
+  @override
+  String get webRoadmapStep3 => '4학년: 실전 취업 & 비자';
+
+  @override
+  String get webRoadmapStep3Desc =>
+      'E-7-1 모의 심사 • 자기소개서 첨삭 • 실전 면접 가이드\n\"비자 발급 리스크를 0%로 만듭니다.\"';
+
+  @override
+  String get webMatchTitle => '검증된 인재를 위한 기업 연결';
+
+  @override
+  String get webMatchSub =>
+      '로드맵을 완주하여 역량이 입증된 분들에게는\nCUTY가 보증하는 우수 기업과의 네트워킹을 제공합니다.';
+
+  @override
+  String get webMatchCard => 'Verified Talent Partner';
+
+  @override
+  String get webFaqTitle => '자주 묻는 질문';
+
+  @override
+  String get webFaq1Q => 'KVTI 진단은 얼마나 걸리나요?';
+
+  @override
+  String get webFaq1A => '약 15분 소요되며, 120개 문항에 응답하면 즉시 나의 유형과 로드맵이 생성됩니다.';
+
+  @override
+  String get webFaq2Q => '기업 연결은 어떻게 진행되나요?';
+
+  @override
+  String get webFaq2A =>
+      '앱 내 로드맵 달성도가 일정 수준 이상인 \'검증된 인재\'에게 제휴 기업의 채용 제안을 전달합니다.';
+
+  @override
+  String get webCtaPrice => '대학생활 4년의 러닝메이트';
+
+  @override
+  String get webCtaButton => '내 KVTI 유형 확인하기';
+
+  @override
+  String get purchaseTitle => 'KVTI 프리미엄 결제';
+
+  @override
+  String get purchaseProductName => 'KVTI 커리어 매니지먼트 (1년)';
+
+  @override
+  String get purchasePriceLabel => '결제 금액';
+
+  @override
+  String get purchasePrice => '50,000원';
+
+  @override
+  String get purchaseCouponLabel => '쿠폰 코드 입력';
+
+  @override
+  String get purchaseCouponHint => '프로모션 코드를 입력하세요';
+
+  @override
+  String get purchaseCouponApply => '적용';
+
+  @override
+  String get purchaseTotalLabel => '최종 결제 금액';
+
+  @override
+  String get purchaseButton => '50,000원 결제하기';
 }

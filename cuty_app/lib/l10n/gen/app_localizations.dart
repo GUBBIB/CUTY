@@ -3853,6 +3853,402 @@ abstract class AppLocalizations {
   /// In ko, this message translates to:
   /// **'처음부터 다시 진단하기'**
   String get diagnosis_btn_retry;
+
+  /// No description provided for @doc_action_submit_school.
+  ///
+  /// In ko, this message translates to:
+  /// **'학교 담당자에게 제출하기'**
+  String get doc_action_submit_school;
+
+  /// No description provided for @doc_submit_confirm_title.
+  ///
+  /// In ko, this message translates to:
+  /// **'서류 제출'**
+  String get doc_submit_confirm_title;
+
+  /// No description provided for @doc_submit_confirm_msg.
+  ///
+  /// In ko, this message translates to:
+  /// **'{docName} 서류를 학교 담당자에게 전송하시겠습니까?'**
+  String doc_submit_confirm_msg(Object docName);
+
+  /// No description provided for @doc_submit_success.
+  ///
+  /// In ko, this message translates to:
+  /// **'성공적으로 제출되었습니다.'**
+  String get doc_submit_success;
+
+  /// No description provided for @premiumTag.
+  ///
+  /// In ko, this message translates to:
+  /// **'KVTI SYSTEM'**
+  String get premiumTag;
+
+  /// No description provided for @premiumServiceTag.
+  ///
+  /// In ko, this message translates to:
+  /// **'PREMIUM SERVICE'**
+  String get premiumServiceTag;
+
+  /// No description provided for @premiumTitle.
+  ///
+  /// In ko, this message translates to:
+  /// **'KVTI 커리어 매니지먼트'**
+  String get premiumTitle;
+
+  /// No description provided for @premiumSubtitle.
+  ///
+  /// In ko, this message translates to:
+  /// **'진단부터 취업, 정주까지\nAI가 설계하는 나만의 비자 로드맵'**
+  String get premiumSubtitle;
+
+  /// No description provided for @premiumPrice.
+  ///
+  /// In ko, this message translates to:
+  /// **'₩50,000'**
+  String get premiumPrice;
+
+  /// No description provided for @premiumUnit.
+  ///
+  /// In ko, this message translates to:
+  /// **'원'**
+  String get premiumUnit;
+
+  /// No description provided for @premiumBtnDetail.
+  ///
+  /// In ko, this message translates to:
+  /// **'자세히 알아보기'**
+  String get premiumBtnDetail;
+
+  /// No description provided for @webHeroBadge.
+  ///
+  /// In ko, this message translates to:
+  /// **'KOREA VISA TYPE INDICATOR'**
+  String get webHeroBadge;
+
+  /// No description provided for @webHeroTitle.
+  ///
+  /// In ko, this message translates to:
+  /// **'KVTI'**
+  String get webHeroTitle;
+
+  /// No description provided for @webHeroSub.
+  ///
+  /// In ko, this message translates to:
+  /// **'취업 전략, 사람마다 \'길\'은 다릅니다.\n120개 데이터로 분석하는 가장 확실한 비자 로드맵.'**
+  String get webHeroSub;
+
+  /// No description provided for @webStat1.
+  ///
+  /// In ko, this message translates to:
+  /// **'120+'**
+  String get webStat1;
+
+  /// No description provided for @webStat1Label.
+  ///
+  /// In ko, this message translates to:
+  /// **'진단 문항'**
+  String get webStat1Label;
+
+  /// No description provided for @webStat2.
+  ///
+  /// In ko, this message translates to:
+  /// **'Pace Maker'**
+  String get webStat2;
+
+  /// No description provided for @webStat2Label.
+  ///
+  /// In ko, this message translates to:
+  /// **'AI 밀착 관리'**
+  String get webStat2Label;
+
+  /// No description provided for @webStat3.
+  ///
+  /// In ko, this message translates to:
+  /// **'Connection'**
+  String get webStat3;
+
+  /// No description provided for @webStat3Label.
+  ///
+  /// In ko, this message translates to:
+  /// **'기업 연결'**
+  String get webStat3Label;
+
+  /// No description provided for @webProcessTitle.
+  ///
+  /// In ko, this message translates to:
+  /// **'6단계 정밀 분석'**
+  String get webProcessTitle;
+
+  /// No description provided for @webProcessSub.
+  ///
+  /// In ko, this message translates to:
+  /// **'직무, 산업, 전공 적합성 등 6가지 관점으로\n당신의 취업 경쟁력을 수치화합니다.'**
+  String get webProcessSub;
+
+  /// No description provided for @webStep1.
+  ///
+  /// In ko, this message translates to:
+  /// **'01. 직무 성향 (Job Preference)'**
+  String get webStep1;
+
+  /// No description provided for @webStep1Desc.
+  ///
+  /// In ko, this message translates to:
+  /// **'나의 업무 성향과 일치하는 한국 기업 직무 매칭'**
+  String get webStep1Desc;
+
+  /// No description provided for @webStep2.
+  ///
+  /// In ko, this message translates to:
+  /// **'02. 실무 역량 (Competence)'**
+  String get webStep2;
+
+  /// No description provided for @webStep2Desc.
+  ///
+  /// In ko, this message translates to:
+  /// **'기업 요구 12대 핵심 역량 보유 현황 분석'**
+  String get webStep2Desc;
+
+  /// No description provided for @webStep3.
+  ///
+  /// In ko, this message translates to:
+  /// **'03. 비자 적합성 (Visa-Fit)'**
+  String get webStep3;
+
+  /// No description provided for @webStep3Desc.
+  ///
+  /// In ko, this message translates to:
+  /// **'내 전공으로 E-7-1 전문인력 비자 발급 가능 여부 판독'**
+  String get webStep3Desc;
+
+  /// No description provided for @webStep4.
+  ///
+  /// In ko, this message translates to:
+  /// **'04. 산업 선호도 (Industry Pref)'**
+  String get webStep4;
+
+  /// No description provided for @webStep4Desc.
+  ///
+  /// In ko, this message translates to:
+  /// **'전공 연관성이 높고 비자 발급이 유리한 산업군 추천'**
+  String get webStep4Desc;
+
+  /// No description provided for @webStep5.
+  ///
+  /// In ko, this message translates to:
+  /// **'05. 조직 적응력 (Culture Fit)'**
+  String get webStep5;
+
+  /// No description provided for @webStep5Desc.
+  ///
+  /// In ko, this message translates to:
+  /// **'한국형 조직 문화 적응도 및 스트레스 내성 진단'**
+  String get webStep5Desc;
+
+  /// No description provided for @webStep6.
+  ///
+  /// In ko, this message translates to:
+  /// **'06. 정주 의지 (Settlement Will)'**
+  String get webStep6;
+
+  /// No description provided for @webStep6Desc.
+  ///
+  /// In ko, this message translates to:
+  /// **'단기 취업 vs 영주권 목표에 따른 장기 플랜 설계'**
+  String get webStep6Desc;
+
+  /// No description provided for @webStrategyTitle.
+  ///
+  /// In ko, this message translates to:
+  /// **'AI 전략 리포트 생성'**
+  String get webStrategyTitle;
+
+  /// No description provided for @webStrategySub.
+  ///
+  /// In ko, this message translates to:
+  /// **'진단 결과를 바탕으로 비자 발급 확률을 계산하고\n가장 유리한 취업/비자 전략을 도출합니다.'**
+  String get webStrategySub;
+
+  /// No description provided for @webStrategyProcessing1.
+  ///
+  /// In ko, this message translates to:
+  /// **'직무 적합도 계산 중...'**
+  String get webStrategyProcessing1;
+
+  /// No description provided for @webStrategyProcessing2.
+  ///
+  /// In ko, this message translates to:
+  /// **'E-7-1 비자 요건 대조 중...'**
+  String get webStrategyProcessing2;
+
+  /// No description provided for @webStrategyProcessing3.
+  ///
+  /// In ko, this message translates to:
+  /// **'최적 로드맵 생성 완료'**
+  String get webStrategyProcessing3;
+
+  /// No description provided for @webRoadmapTitle.
+  ///
+  /// In ko, this message translates to:
+  /// **'학년별 마일스톤 매니지먼트'**
+  String get webRoadmapTitle;
+
+  /// No description provided for @webRoadmapSub.
+  ///
+  /// In ko, this message translates to:
+  /// **'막막한 대학 생활, AI가 \'지금 해야 할 일\'을 놓치지 않게 챙겨줍니다.'**
+  String get webRoadmapSub;
+
+  /// No description provided for @webRoadmapStep1.
+  ///
+  /// In ko, this message translates to:
+  /// **'1-2학년: 기초 역량 & 적응'**
+  String get webRoadmapStep1;
+
+  /// No description provided for @webRoadmapStep1Desc.
+  ///
+  /// In ko, this message translates to:
+  /// **'한국어(TOPIK) 목표 달성 • 전공 기초 학점 관리 • 교내 활동 추천\n\"초기 적응이 비자 점수의 기초가 됩니다.\"'**
+  String get webRoadmapStep1Desc;
+
+  /// No description provided for @webRoadmapStep2.
+  ///
+  /// In ko, this message translates to:
+  /// **'3학년: 실무 스펙 빌드업'**
+  String get webRoadmapStep2;
+
+  /// No description provided for @webRoadmapStep2Desc.
+  ///
+  /// In ko, this message translates to:
+  /// **'희망 직무 자격증 취득 • 방학 인턴십 공고 매칭 • 포트폴리오 준비\n\"직무 역량을 구체화하여 경쟁력을 높이세요.\"'**
+  String get webRoadmapStep2Desc;
+
+  /// No description provided for @webRoadmapStep3.
+  ///
+  /// In ko, this message translates to:
+  /// **'4학년: 실전 취업 & 비자'**
+  String get webRoadmapStep3;
+
+  /// No description provided for @webRoadmapStep3Desc.
+  ///
+  /// In ko, this message translates to:
+  /// **'E-7-1 모의 심사 • 자기소개서 첨삭 • 실전 면접 가이드\n\"비자 발급 리스크를 0%로 만듭니다.\"'**
+  String get webRoadmapStep3Desc;
+
+  /// No description provided for @webMatchTitle.
+  ///
+  /// In ko, this message translates to:
+  /// **'검증된 인재를 위한 기업 연결'**
+  String get webMatchTitle;
+
+  /// No description provided for @webMatchSub.
+  ///
+  /// In ko, this message translates to:
+  /// **'로드맵을 완주하여 역량이 입증된 분들에게는\nCUTY가 보증하는 우수 기업과의 네트워킹을 제공합니다.'**
+  String get webMatchSub;
+
+  /// No description provided for @webMatchCard.
+  ///
+  /// In ko, this message translates to:
+  /// **'Verified Talent Partner'**
+  String get webMatchCard;
+
+  /// No description provided for @webFaqTitle.
+  ///
+  /// In ko, this message translates to:
+  /// **'자주 묻는 질문'**
+  String get webFaqTitle;
+
+  /// No description provided for @webFaq1Q.
+  ///
+  /// In ko, this message translates to:
+  /// **'KVTI 진단은 얼마나 걸리나요?'**
+  String get webFaq1Q;
+
+  /// No description provided for @webFaq1A.
+  ///
+  /// In ko, this message translates to:
+  /// **'약 15분 소요되며, 120개 문항에 응답하면 즉시 나의 유형과 로드맵이 생성됩니다.'**
+  String get webFaq1A;
+
+  /// No description provided for @webFaq2Q.
+  ///
+  /// In ko, this message translates to:
+  /// **'기업 연결은 어떻게 진행되나요?'**
+  String get webFaq2Q;
+
+  /// No description provided for @webFaq2A.
+  ///
+  /// In ko, this message translates to:
+  /// **'앱 내 로드맵 달성도가 일정 수준 이상인 \'검증된 인재\'에게 제휴 기업의 채용 제안을 전달합니다.'**
+  String get webFaq2A;
+
+  /// No description provided for @webCtaPrice.
+  ///
+  /// In ko, this message translates to:
+  /// **'대학생활 4년의 러닝메이트'**
+  String get webCtaPrice;
+
+  /// No description provided for @webCtaButton.
+  ///
+  /// In ko, this message translates to:
+  /// **'내 KVTI 유형 확인하기'**
+  String get webCtaButton;
+
+  /// No description provided for @purchaseTitle.
+  ///
+  /// In ko, this message translates to:
+  /// **'KVTI 프리미엄 결제'**
+  String get purchaseTitle;
+
+  /// No description provided for @purchaseProductName.
+  ///
+  /// In ko, this message translates to:
+  /// **'KVTI 커리어 매니지먼트 (1년)'**
+  String get purchaseProductName;
+
+  /// No description provided for @purchasePriceLabel.
+  ///
+  /// In ko, this message translates to:
+  /// **'결제 금액'**
+  String get purchasePriceLabel;
+
+  /// No description provided for @purchasePrice.
+  ///
+  /// In ko, this message translates to:
+  /// **'50,000원'**
+  String get purchasePrice;
+
+  /// No description provided for @purchaseCouponLabel.
+  ///
+  /// In ko, this message translates to:
+  /// **'쿠폰 코드 입력'**
+  String get purchaseCouponLabel;
+
+  /// No description provided for @purchaseCouponHint.
+  ///
+  /// In ko, this message translates to:
+  /// **'프로모션 코드를 입력하세요'**
+  String get purchaseCouponHint;
+
+  /// No description provided for @purchaseCouponApply.
+  ///
+  /// In ko, this message translates to:
+  /// **'적용'**
+  String get purchaseCouponApply;
+
+  /// No description provided for @purchaseTotalLabel.
+  ///
+  /// In ko, this message translates to:
+  /// **'최종 결제 금액'**
+  String get purchaseTotalLabel;
+
+  /// No description provided for @purchaseButton.
+  ///
+  /// In ko, this message translates to:
+  /// **'50,000원 결제하기'**
+  String get purchaseButton;
 }
 
 class _AppLocalizationsDelegate

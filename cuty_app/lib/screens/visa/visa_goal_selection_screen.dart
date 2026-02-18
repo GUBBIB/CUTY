@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../../providers/visa_provider.dart';
-import 'widgets/visa_consulting_banner.dart'; // [NEW]
+import 'widgets/premium_product_card.dart';
 
 import '../roadmap/visa_roadmap_screen.dart';
 import 'employment_visa_screen.dart';
@@ -51,9 +51,12 @@ class VisaGoalSelectionScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            // Premium Consulting Banner
-            const VisaConsultingBanner(),
-            const SizedBox(height: 30),
+            
+            // [NEW] Premium Product Card (Fixed)
+            const PremiumProductCard(),
+            
+            const SizedBox(height: 30), // Sufficient spacing
+            
             // Top Horizontal Card (School Life)
             _buildHorizontalClassCard(
               context,
@@ -117,9 +120,7 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                   icon: Icons.public_outlined,
                 ),
               ],
-
             ),
-
           ],
         ),
       ),
@@ -270,7 +271,7 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const VisaRoadmapScreen(userGoal: 'residency')), // Keeping internal param 'residency' as requested? Or align? User said 'research'. But RoadmapScreen might expect residency. I'll stick to 'residency' for the screen argument if logic needs it, BUT ensuring Provider gets 'research'.
+                                        const VisaRoadmapScreen(userGoal: 'residency')),
                               );
                               break;
                             case 'employment':
@@ -284,7 +285,13 @@ class VisaGoalSelectionScreen extends StatelessWidget {
                               break;
                             case 'startup':
                               context.read<VisaProvider>().selectVisaType('startup'); 
-                              Navigator.pushReplacementNamed(context, '/visa/startup');
+                              // Use specific screen for consistency
+                               Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const VisaRoadmapScreen(userGoal: 'startup')),
+                              );
                               break;
                             case 'global':
                               context.read<VisaProvider>().selectVisaType('global'); 

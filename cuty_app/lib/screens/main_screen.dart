@@ -22,6 +22,13 @@ class _MainScreenState extends ConsumerState<MainScreen> {
 
     return WillPopScope(
       onWillPop: () async {
+        // 1. If current tab is NOT Home (Index 1) -> Go to Home
+        if (currentIndex != 1) {
+          ref.read(bottomNavIndexProvider.notifier).state = 1; // 1 = Home
+          return false; // Prevent app exit
+        }
+
+        // 2. If current tab IS Home (Index 1) -> Confirm Exit
         final now = DateTime.now();
         if (currentBackPressTime == null || 
             now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
@@ -40,9 +47,9 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         body: IndexedStack(
           index: currentIndex,
           children: const [
-            ShopScreen(),       // Shop Tab
-            HomeScreen(),       // Home Tab
-            MyPageScreen(),     // My Page
+            ShopScreen(),       // Shop Tab (0)
+            HomeScreen(),       // Home Tab (1)
+            MyPageScreen(),     // My Page (2)
           ],
         ),
         bottomNavigationBar: const HomeBottomNavBar(),

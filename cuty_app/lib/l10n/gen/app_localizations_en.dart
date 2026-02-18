@@ -1946,4 +1946,221 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get diagnosis_btn_retry => 'Restart Diagnosis';
+
+  @override
+  String get doc_action_submit_school => 'Submit to School Admin';
+
+  @override
+  String get doc_submit_confirm_title => 'Submit Document';
+
+  @override
+  String doc_submit_confirm_msg(Object docName) {
+    return 'Do you want to send $docName to the school admin?';
+  }
+
+  @override
+  String get doc_submit_success => 'Submitted successfully.';
+
+  @override
+  String get premiumTag => 'KVTI SYSTEM';
+
+  @override
+  String get premiumServiceTag => 'PREMIUM SERVICE';
+
+  @override
+  String get premiumTitle => 'KVTI Career Management';
+
+  @override
+  String get premiumSubtitle =>
+      'From diagnosis to employment,\nYour own visa roadmap designed by AI';
+
+  @override
+  String get premiumPrice => '₩50,000';
+
+  @override
+  String get premiumUnit => 'KRW';
+
+  @override
+  String get premiumBtnDetail => 'Learn More';
+
+  @override
+  String get webHeroBadge => 'KOREA VISA TYPE INDICATOR';
+
+  @override
+  String get webHeroTitle => 'KVTI';
+
+  @override
+  String get webHeroSub =>
+      'Job Strategy, Everyone has a different \'Path\'.\nThe most certain visa roadmap analyzed with 120 data points.';
+
+  @override
+  String get webStat1 => '120+';
+
+  @override
+  String get webStat1Label => 'Questions';
+
+  @override
+  String get webStat2 => 'Pace Maker';
+
+  @override
+  String get webStat2Label => 'AI Deep Care';
+
+  @override
+  String get webStat3 => 'Connection';
+
+  @override
+  String get webStat3Label => 'Corp Network';
+
+  @override
+  String get webProcessTitle => '6-Step Precision Analysis';
+
+  @override
+  String get webProcessSub =>
+      'Digitizing your competitiveness from 6 perspectives\nincluding job, industry, and major suitability.';
+
+  @override
+  String get webStep1 => '01. Job Preference';
+
+  @override
+  String get webStep1Desc =>
+      'Matching Korean company jobs that match my work style';
+
+  @override
+  String get webStep2 => '02. Competence';
+
+  @override
+  String get webStep2Desc =>
+      'Analysis of possession of 12 key competencies required by companies';
+
+  @override
+  String get webStep3 => '03. Visa-Fit';
+
+  @override
+  String get webStep3Desc =>
+      'Determining if E-7-1 professional visa issuance is possible with my major';
+
+  @override
+  String get webStep4 => '04. Industry Preference';
+
+  @override
+  String get webStep4Desc =>
+      'Recommending industries with high major relevance and favorable visa issuance';
+
+  @override
+  String get webStep5 => '05. Culture Fit';
+
+  @override
+  String get webStep5Desc =>
+      'Diagnosis of adaptability to Korean organizational culture and stress tolerance';
+
+  @override
+  String get webStep6 => '06. Settlement Will';
+
+  @override
+  String get webStep6Desc =>
+      'Designing long-term plans according to short-term employment vs. permanent residency goals';
+
+  @override
+  String get webStrategyTitle => 'AI Strategy Report Generation';
+
+  @override
+  String get webStrategySub =>
+      'Calculating visa probability and deriving optimal strategy\nbased on diagnosis results.';
+
+  @override
+  String get webStrategyProcessing1 => 'Calculating Job Fit...';
+
+  @override
+  String get webStrategyProcessing2 => 'Comparing E-7-1 Requirements...';
+
+  @override
+  String get webStrategyProcessing3 => 'Optimal Roadmap Generated';
+
+  @override
+  String get webRoadmapTitle => 'Milestone Management by Grade';
+
+  @override
+  String get webRoadmapSub =>
+      'For vague college life, AI ensures you don\'t miss \'what to do now\'.';
+
+  @override
+  String get webRoadmapStep1 => 'Freshman/Sophomore: Basics & Adaptation';
+
+  @override
+  String get webRoadmapStep1Desc =>
+      'Achieving TOPIK goals • Managing major grades • Recommending activities\n\"Early adaptation is the foundation of visa points.\"';
+
+  @override
+  String get webRoadmapStep2 => 'Junior: Practical Spec Build-up';
+
+  @override
+  String get webRoadmapStep2Desc =>
+      'Job certifications • Internship matching • Portfolio prep\n\"Increase competitiveness by specifying job competencies.\"';
+
+  @override
+  String get webRoadmapStep3 => 'Senior: Practical Employment & Visa';
+
+  @override
+  String get webRoadmapStep3Desc =>
+      'E-7-1 mock screening • Resume correction • Interview guide\n\"Making visa issuance risk 0%.\"';
+
+  @override
+  String get webMatchTitle => 'Corporate Connection for Verified Talent';
+
+  @override
+  String get webMatchSub =>
+      'For those who have proven their capabilities by completing the roadmap,\nwe provide networking with excellent companies guaranteed by CUTY.';
+
+  @override
+  String get webMatchCard => 'Verified Talent Partner';
+
+  @override
+  String get webFaqTitle => 'FAQ';
+
+  @override
+  String get webFaq1Q => 'How long does KVTI diagnosis take?';
+
+  @override
+  String get webFaq1A =>
+      'It takes about 15 minutes, and responding to 120 questions immediately generates my type and roadmap.';
+
+  @override
+  String get webFaq2Q => 'How does corporate connection work?';
+
+  @override
+  String get webFaq2A =>
+      'We deliver recruitment proposals from partner companies to \'Verified Talents\' who have achieved a certain level of roadmap completion within the app.';
+
+  @override
+  String get webCtaPrice => 'Running Mate for 4 Years';
+
+  @override
+  String get webCtaButton => 'Check My KVTI Type';
+
+  @override
+  String get purchaseTitle => 'KVTI Premium Payment';
+
+  @override
+  String get purchaseProductName => 'KVTI Career Management (1 Year)';
+
+  @override
+  String get purchasePriceLabel => 'Price';
+
+  @override
+  String get purchasePrice => '50,000 KRW';
+
+  @override
+  String get purchaseCouponLabel => 'Enter Coupon Code';
+
+  @override
+  String get purchaseCouponHint => 'Enter promotion code';
+
+  @override
+  String get purchaseCouponApply => 'Apply';
+
+  @override
+  String get purchaseTotalLabel => 'Total Amount';
+
+  @override
+  String get purchaseButton => 'Pay 50,000 KRW';
 }
