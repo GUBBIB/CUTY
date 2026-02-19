@@ -1,0 +1,25 @@
+tags:
+  - Timetable
+summary: 메인 시간표 조회
+description: |
+  로그인한 사용자의 현재 학년도/학기에 해당하는 '대표(Primary)' 시간표를 조회합니다.
+  만약 해당 학기 시간표가 없다면 자동으로 생성하여 반환합니다 (Lazy Creation).
+parameters:
+  - name: lang
+    in: query
+    type: string
+    enum: [ko, en]
+    default: ko
+    description: 응답 언어 설정 (한국어/영어)
+responses:
+  200:
+    description: 조회 성공
+    schema:
+      $ref: 'docs/v1/models/timetable_model.yml#/Timetable'
+  500:
+    description: 서버 에러
+    schema:
+      type: object
+      properties:
+        error:
+          type: string

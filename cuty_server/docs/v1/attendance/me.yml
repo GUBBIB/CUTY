@@ -1,0 +1,46 @@
+tags:
+  - Attendance
+summary: 내 출석 기록 조회 (월별)
+description: 특정 연도와 월의 출석 기록을 조회합니다. 파라미터가 없으면 오늘 날짜 기준입니다.
+parameters:
+  - name: Authorization
+    in: header
+    type: string
+    required: true
+    description: Bearer {Access Token}
+  - name: year
+    in: query
+    type: integer
+    required: false
+    description: 조회할 연도 (기본값 현재 연도)
+    example: 2024
+  - name: month
+    in: query
+    type: integer
+    required: false
+    description: 조회할 월 (기본값 현재 월)
+    example: 5
+responses:
+  200:
+    description: 조회 성공
+    schema:
+      type: object
+      properties:
+        year:
+          type: integer
+          example: 2024
+        month:
+          type: integer
+          example: 5
+        count:
+          type: integer
+          description: 해당 월 출석 횟수
+          example: 15
+        dates:
+          type: array
+          description: 출석한 날짜 리스트
+          items:
+            type: string
+            example: "2024-05-01"
+  500:
+    description: 서버 에러

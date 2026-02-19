@@ -1,0 +1,37 @@
+tags:
+  - Attendance
+summary: 출석 체크 및 포인트 적립
+description: 하루에 한 번 출석 체크를 수행하고 랜덤 포인트를 적립합니다.
+parameters:
+  - name: Authorization
+    in: header
+    type: string
+    required: true
+    description: Bearer {Access Token}
+responses:
+  201:
+    description: 출석 체크 성공
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "출석 체크 완료"
+        gained_point:
+          type: integer
+          description: 적립된 포인트
+          example: 50
+        total_points:
+          type: integer
+          description: 유저의 총 포인트
+          example: 1500
+  400:
+    description: 이미 출석 체크함
+    schema:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "이미 오늘 출석 체크를 하셨습니다."
+  500:
+    description: 서버 에러

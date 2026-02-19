@@ -3,11 +3,14 @@ from src.services.user_service import UserService
 from src.utils.auth import token_required, admin_or_school_required
 from src.utils.formatters import get_current_user_data
 from src.utils.exceptions import ValidationError, PermissionDeniedError, DuplicateRequestError, InternalServiceError, ServiceError
+from flasgger import swag_from
+from src.utils.swagger_helper import get_swagger_config
 
 user_bp = Blueprint('user', __name__)
 
 @user_bp.route('/me', methods=['GET'])
 @token_required
+@swag_from(get_swagger_config('docs/v1/user/me.yml'))
 def get_current_user(current_user):
     try:
         return jsonify(get_current_user_data(current_user)), 200
@@ -16,6 +19,7 @@ def get_current_user(current_user):
 
 @user_bp.route('/me', methods=['DELETE'])
 @token_required
+@swag_from(get_swagger_config('docs/v1/user/delete.yml'))
 def delete_account(current_user):
     try:
         UserService.delete_account(current_user.id)
@@ -28,6 +32,7 @@ def delete_account(current_user):
 
 @user_bp.route('/me/password', methods=['PUT'])
 @token_required
+@swag_from(get_swagger_config('docs/v1/user/password.yml'))
 def change_password(current_user):
     data = request.get_json()
     
@@ -53,6 +58,7 @@ def change_password(current_user):
 
 @user_bp.route('/me/posts', methods=['GET'])
 @token_required
+@swag_from(get_swagger_config('docs/v1/user/my_posts.yml'))
 def get_my_posts(current_user):
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
@@ -67,6 +73,7 @@ def get_my_posts(current_user):
 
 @user_bp.route('/me/comments', methods=['GET'])
 @token_required
+@swag_from(get_swagger_config('docs/v1/user/my_comments.yml'))
 def get_my_comments(current_user):
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
@@ -83,6 +90,7 @@ def get_my_comments(current_user):
 @user_bp.route('/select', methods=['GET'])
 @token_required
 @admin_or_school_required
+@swag_from(get_swagger_config('docs/v1/user/select.yml'))
 def get_select_user(current_user):
     user_email = request.args.get('user_email', type=str)
     if user_email is None:

@@ -3,6 +3,7 @@ from src.models import Attendance, PointLog, User, db
 from datetime import date
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import extract
+import random
 
 class AttendanceService:
 
@@ -11,7 +12,6 @@ class AttendanceService:
         """
         출석 체크 시 랜덤 포인트 적립
         """
-        import random
         min_points = current_app.config.get('ATTENDANCE_MIN_POINTS', 10)
         max_points = current_app.config.get('ATTENDANCE_MAX_POINTS', 100)
         return random.randint(min_points, max_points)

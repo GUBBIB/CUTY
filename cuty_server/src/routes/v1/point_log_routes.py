@@ -1,11 +1,14 @@
 from flask import Blueprint, request, jsonify
 from src.services.point_log_service import PointLogService
 from src.utils.auth import token_required
+from flasgger import swag_from
+from src.utils.swagger_helper import get_swagger_config
 
 point_log_bp = Blueprint('point_log', __name__)
 
 @point_log_bp.route('/', methods=['GET'])
 @token_required
+@swag_from(get_swagger_config('docs/v1/point_log/list.yml'))
 def get_point_logs(current_user):
     """
     내 포인트 내역 조회 (무한 스크롤)

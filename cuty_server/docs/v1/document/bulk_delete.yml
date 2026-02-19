@@ -1,0 +1,40 @@
+tags:
+  - "Document"
+summary: "서류 다중 삭제"
+description: "여러 서류를 한 번에 삭제합니다."
+parameters:
+  - name: "Authorization"
+    in: "header"
+    type: "string"
+    required: true
+    description: "Bearer {Access Token}"
+  - name: "body"
+    in: "body"
+    required: true
+    schema:
+      type: "object"
+      required:
+        - "document_ids"
+      properties:
+        document_ids:
+          type: "array"
+          items:
+            type: "integer"
+          example: [1, 2, 3]
+responses:
+  200:
+    description: "삭제 성공"
+    schema:
+      type: "object"
+      properties:
+        success:
+          type: "boolean"
+        message:
+          type: "string"
+        data:
+          type: "object"
+          properties:
+            deleted_count:
+              type: "integer"
+            not_found_count:
+              type: "integer"

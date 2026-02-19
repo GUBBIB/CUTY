@@ -1,0 +1,23 @@
+Country:
+  allOf:
+    - $ref: './common_model.yml#/definitions/TimestampFields'
+    - type: object
+      description: 국가 정보 (ISO 3166-1 alpha-2 기준)
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          description: 국가명 (한글)
+          example: 대한민국
+        eng_name:
+          type: string
+          description: 국가명 (영문)
+          example: Republic of Korea
+        code:
+          type: string
+          description: ISO 3166-1 alpha-2 국가 코드
+          example: KR
+          minLength: 2
+          maxLength: 2

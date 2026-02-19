@@ -1,0 +1,46 @@
+tags:
+  - "Comment"
+summary: "댓글 작성"
+description: "게시글에 댓글 또는 대댓글을 작성합니다. (parent_id가 있으면 대댓글)"
+parameters:
+  - name: "Authorization"
+    in: "header"
+    type: "string"
+    required: true
+    description: "Bearer {Access Token}"
+  - name: "post_id"
+    in: "path"
+    type: "integer"
+    required: true
+    description: "게시글 ID"
+  - name: "body"
+    in: "body"
+    required: true
+    schema:
+      type: "object"
+      required:
+        - "content"
+      properties:
+        content:
+          type: "string"
+          example: "좋은 정보 감사합니다."
+        parent_id:
+          type: "integer"
+          description: "대댓글일 경우 부모 댓글 ID (없으면 생략)"
+          example: null
+responses:
+  201:
+    description: "작성 성공"
+    schema:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        content:
+          type: "string"
+        nickname:
+          type: "string"
+  400:
+    description: "필수 항목 누락 또는 유효하지 않은 요청 (타 학교 게시글 등)"
+  500:
+    description: "서버 에러"

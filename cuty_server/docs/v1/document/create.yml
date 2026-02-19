@@ -1,0 +1,35 @@
+tags:
+  - Document
+summary: 서류 생성
+description: 새로운 서류 정보를 생성합니다.
+parameters:
+  - name: Authorization
+    in: header
+    type: string
+    required: true
+    description: Bearer {Access Token}
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      required:
+        - document_type
+        - image_store_id
+      properties:
+        name:
+          type: string
+          example: "여권 사본"
+        document_type:
+          type: string
+          example: "PASSPORT"
+        image_store_id:
+          type: integer
+          example: 123
+responses:
+  201:
+    description: 생성 성공
+  400:
+    description: 잘못된 요청 (필수 값 누락 등)
+  410:
+    description: 삭제된 이미지 참조

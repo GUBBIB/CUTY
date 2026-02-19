@@ -1,0 +1,58 @@
+Post:
+  allOf:
+    - $ref: './common_model.yml#/definitions/TimestampFields'
+    - type: object
+      description: 게시글 정보
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          description: 게시글 제목
+          example: 기숙사 생활 질문 있어요
+        content:
+          type: string
+          description: 게시글 내용
+          example: 기숙사 생활 팁 좀 알려주세요
+        category:
+          type: string
+          description: 게시글 카테고리
+          example: FREE
+        user_id:
+          type: integer
+          description: 작성자 사용자 ID
+          example: 42
+        school_id:
+          type: integer
+          description: 학교 ID
+          example: 3
+        college_id:
+          type: integer
+          description: 단과대 ID
+          example: 5
+        department_id:
+          type: integer
+          description: 학과 ID
+          example: 12
+        nickname:
+          type: string
+          description: 게시글 작성 시 사용된 랜덤 닉네임
+          example: 익명_고양이
+        likes_count:
+          type: integer
+          description: 좋아요 수
+          example: 10
+        dislikes_count:
+          type: integer
+          description: 싫어요 수
+          example: 2
+        views_count:
+          type: integer
+          description: 조회수
+          example: 123
+        popularity_score:
+          type: number
+          format: float
+          description: 시간 감쇠 알고리즘이 적용된 인기 점수
+          example: 4.72

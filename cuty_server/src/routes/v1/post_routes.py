@@ -3,16 +3,17 @@ from src.services.post_service import PostService
 from src.utils.auth import token_required
 import jwt
 from src.services.user_service import UserService
+from flasgger import swag_from
+from src.utils.swagger_helper import get_swagger_config
 
 post_bp = Blueprint('post', __name__)
 
 @post_bp.route('', methods=['GET'])
+@swag_from(get_swagger_config('docs/v1/post/list.yml'))
 def get_posts():
-    # 페이지네이션 파라미터
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
     
-    # 필터링 파라미터
     filters = {
         'category': request.args.get('category'),
         'search': request.args.get('search', ''),
@@ -21,7 +22,6 @@ def get_posts():
         'department_id': request.args.get('department_id', type=int)
     }
     
-    # 현재 사용자의 학교 정보와 ID 가져오기
     current_user_school_id = UserService.get_user_school_id(request.headers)
     current_user_id = UserService.get_user_id(request.headers)
     
@@ -32,11 +32,9 @@ def get_posts():
         return jsonify({'error': str(e)}), 500
 
 @post_bp.route('/<int:post_id>', methods=['GET'])
+@swag_from(get_swagger_config('docs/v1/post/detail.yml'))
 def get_post(post_id):
-    # 현재 사용자 정보 가져오기
     user_id = UserService.get_user_id(request.headers)
-    
-    # IP 주소 가져오기
     ip_address = request.remote_addr
     
     try:
@@ -49,10 +47,10 @@ def get_post(post_id):
 
 @post_bp.route('', methods=['POST'])
 @token_required
+@swag_from(get_swagger_config('docs/v1/post/create.yml'))
 def create_post(current_user):
     data = request.get_json()
     
-    # 필수 필드 확인
     required_fields = ['title', 'content', 'category']
     for field in required_fields:
         if field not in data:
@@ -73,6 +71,7 @@ def create_post(current_user):
 
 @post_bp.route('/<int:post_id>', methods=['PUT'])
 @token_required
+@swag_from(get_swagger_config('docs/v1/post/update.yml'))
 def update_post(current_user, post_id):
     data = request.get_json()
     
@@ -86,6 +85,7 @@ def update_post(current_user, post_id):
 
 @post_bp.route('/<int:post_id>', methods=['DELETE'])
 @token_required
+@swag_from(get_swagger_config('docs/v1/post/delete.yml'))
 def delete_post(current_user, post_id):
     try:
         PostService.delete_post(post_id, current_user)
@@ -96,6 +96,7 @@ def delete_post(current_user, post_id):
         return jsonify({'error': str(e)}), 500
 
 @post_bp.route('/popular', methods=['GET'])
+@swag_from(get_swagger_config('docs/v1/post/popular.yml'))
 def get_popular_posts():
     try:
         category = request.args.get('category')

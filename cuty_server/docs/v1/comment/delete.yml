@@ -1,0 +1,25 @@
+tags:
+  - "Comment"
+summary: "댓글 삭제"
+description: "자신이 작성한 댓글을 삭제합니다. (Soft Delete)"
+parameters:
+  - name: "Authorization"
+    in: "header"
+    type: "string"
+    required: true
+    description: "Bearer {Access Token}"
+  - name: "post_id"
+    in: "path"
+    type: "integer"
+    required: true
+  - name: "comment_id"
+    in: "path"
+    type: "integer"
+    required: true
+responses:
+  204:
+    description: "삭제 성공 (No Content)"
+  403:
+    description: "권한 없음"
+  404:
+    description: "댓글 없음"

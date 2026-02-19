@@ -1,0 +1,45 @@
+User:
+  allOf:
+    - $ref: './common_model.yml#/definitions/TimestampFields'
+    - type: object
+      description: 사용자 정보
+      properties:
+        id:
+          type: integer
+          example: 42
+        email:
+          type: string
+          description: 사용자 이메일
+          example: test@example.com
+        name:
+          type: string
+          description: 사용자 실명
+          example: 홍길동
+        country_id:
+          type: integer
+          description: 국가 ID
+          example: 1
+        school_id:
+          type: integer
+          description: 학교 ID
+          example: 3
+        college_id:
+          type: integer
+          description: 단과대 ID
+          example: 5
+        department_id:
+          type: integer
+          description: 학과 ID
+          example: 12
+        register_type:
+          type: string
+          description: 사용자 유형
+          enum:
+            - USER
+            - ADMIN
+            - SCHOOL
+          example: USER
+        is_visa:
+          type: boolean
+          description: 비자 보유 여부
+          example: true

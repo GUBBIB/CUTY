@@ -1,11 +1,13 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from src.services.comment_service import CommentService
 from src.utils.auth import token_required
-from flask import current_app
+from flasgger import swag_from
+from src.utils.swagger_helper import get_swagger_config
 
 comment_bp = Blueprint('comment', __name__)
 
 @comment_bp.route('/<int:post_id>/comments', methods=['GET'])
+@swag_from(get_swagger_config('docs/v1/comment/list.yml'))
 def get_post_comments(post_id):
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
@@ -20,6 +22,7 @@ def get_post_comments(post_id):
 
 @comment_bp.route('/<int:post_id>/comments', methods=['POST'])
 @token_required
+@swag_from(get_swagger_config('docs/v1/comment/create.yml'))
 def create_comment(current_user, post_id):
     data = request.get_json()
     
@@ -41,6 +44,7 @@ def create_comment(current_user, post_id):
 
 @comment_bp.route('/<int:post_id>/comments/<int:comment_id>', methods=['PUT'])
 @token_required
+@swag_from(get_swagger_config('docs/v1/comment/update.yml'))
 def update_comment(current_user, post_id, comment_id):
     data = request.get_json()
     
@@ -62,6 +66,7 @@ def update_comment(current_user, post_id, comment_id):
 
 @comment_bp.route('/<int:post_id>/comments/<int:comment_id>', methods=['DELETE'])
 @token_required
+@swag_from(get_swagger_config('docs/v1/comment/delete.yml'))
 def delete_comment(current_user, post_id, comment_id):
     try:
         CommentService.delete_comment(current_user, post_id, comment_id)
@@ -72,6 +77,7 @@ def delete_comment(current_user, post_id, comment_id):
         return jsonify({'error': str(e)}), 500
 
 @comment_bp.route('/<int:post_id>/comments/<int:comment_id>/replies', methods=['GET'])
+@swag_from(get_swagger_config('docs/v1/comment/replies.yml'))
 def get_comment_replies(post_id, comment_id):
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
@@ -88,6 +94,7 @@ def get_comment_replies(post_id, comment_id):
         return jsonify({'error': str(e)}), 500
 
 @comment_bp.route('/<int:post_id>/comments/<int:comment_id>', methods=['GET'])
+@swag_from(get_swagger_config('docs/v1/comment/detail.yml'))
 def get_comment(post_id, comment_id):
     try:
         result = CommentService.get_comment(post_id, comment_id)

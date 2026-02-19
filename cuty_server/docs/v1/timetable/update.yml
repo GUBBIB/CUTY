@@ -1,0 +1,35 @@
+tags:
+  - Timetable
+summary: 시간표 정보 수정
+description: |
+  시간표의 이름이나 대표 시간표 여부(is_primary)를 수정합니다.
+  is_primary를 true로 설정하면, 해당 학기의 기존 대표 시간표는 자동으로 해제됩니다.
+parameters:
+  - name: timetable_id
+    in: path
+    type: integer
+    required: true
+    description: 수정할 시간표 ID
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "수정된 시간표 이름"
+          description: 변경할 이름
+        is_primary:
+          type: boolean
+          example: true
+          description: 대표 시간표 설정 여부
+responses:
+  204:
+    description: 수정 성공 (No Content)
+  403:
+    description: 권한 없음
+  404:
+    description: 존재하지 않는 시간표
+  500:
+    description: 서버 에러

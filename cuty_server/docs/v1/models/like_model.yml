@@ -1,0 +1,24 @@
+PostLike:
+  allOf:
+    - $ref: './common_model.yml#/definitions/TimestampFields'
+    - type: object
+      description: 게시글 좋아요 / 싫어요 정보
+      properties:
+        id:
+          type: integer
+          example: 1
+        user_id:
+          type: integer
+          description: 좋아요/싫어요를 누른 사용자 ID
+          example: 42
+        post_id:
+          type: integer
+          description: 대상 게시글 ID
+          example: 1001
+        type:
+          type: string
+          description: 좋아요 또는 싫어요
+          enum:
+            - like
+            - dislike
+          example: like

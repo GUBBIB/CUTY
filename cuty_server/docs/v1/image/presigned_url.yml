@@ -1,0 +1,62 @@
+tags:
+  - "Image"
+summary: "이미지 업로드용 Presigned URL 생성"
+description: >
+  AWS S3에 이미지를 직접 업로드하기 위한 Presigned URL을 발급받습니다.
+  이 API 호출 후, 반환된 presigned_url과 fields를 사용하여 프론트엔드에서 S3로 직접 POST 요청을 보내야 합니다.
+  업로드가 완료되면 image_id를 사용하여 다른 API(서류 생성 등)에 연결할 수 있습니다.
+parameters:
+  - name: "Authorization"
+    in: "header"
+    type: "string"
+    required: true
+    description: "Bearer {Access Token}"
+  - name: "body"
+    in: "body"
+    required: true
+    schema:
+      type: "object"
+      required:
+        - "content_type"
+        - "filename"
+      properties:
+        content_type:
+          type: "string"
+          example: "image/jpeg"
+          description: "파일의 MIME 타입 (image/jpeg, image/png 등)"
+        filename:
+          type: "string"
+          example: "my_photo.jpg"
+          description: "원본 파일명 (확장자 포함)"
+        file_size:
+          type: "integer"
+          example: 1048576
+          description: "파일 크기 (bytes)"
+responses:
+  200:
+    description: "생성 성공"
+    schema:
+      type: "object"
+      properties:
+        image_id:
+          type: "integer"
+          description: "DB에 저장된 이미지 ID (다른 API에서 사용)"
+          example: 15
+        presigned_url:
+          type: "string"
+          description: "S3 업로드 엔드포인트 URL"
+        fields:
+          type: "object"
+          description: "S3 업로드 시 Form Data로 포함해야 할 필드들 (key, signature 등)"
+        full_url:
+          type: "string"
+          description: "업로드 완료 후 접근 가능한 이미지 URL (CloudFront)"
+  400:
+    description: "잘못된 요청 (지원하지 않는 파일 형식, 필수 값 누락)"
+    schema:
+      type: "object"
+      properties:
+        detail:
+          type: "string"
+  500:
+    description: "서버 에러"

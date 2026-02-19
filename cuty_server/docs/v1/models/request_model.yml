@@ -1,0 +1,33 @@
+Requests:
+  allOf:
+    - $ref: './common_model.yml#/definitions/TimestampFields'
+    - type: object
+      description: 사용자 요청 정보
+      properties:
+        id:
+          type: integer
+          example: 1
+        user_id:
+          type: integer
+          description: 요청을 생성한 사용자 ID
+          example: 42
+        req_type:
+          type: string
+          description: 요청 타입
+          enum:
+            - PART_TIME
+          example: PART_TIME
+        status:
+          type: string
+          description: 요청 처리 상태
+          enum:
+            - PENDING
+            - REJECTED
+            - APPROVED
+            - CANCELED
+          example: PENDING
+        idempotency_key:
+          type: string
+          nullable: true
+          description: 중복 요청 방지를 위한 키
+          example: req-20250101-uuid

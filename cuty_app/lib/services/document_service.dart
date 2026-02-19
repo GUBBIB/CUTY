@@ -124,6 +124,7 @@ class DocumentService {
 
         if (response.statusCode == 201) {
           final Map<String, dynamic> responseData = json.decode(response.body);
+          print('✅ 서류 반환 완료');
           return Document.fromJson(responseData['data']);
         } else if (response.statusCode == 410) {
           final error = json.decode(response.body);
@@ -132,8 +133,9 @@ class DocumentService {
           final error = json.decode(response.body);
           throw Exception(error['error'] ?? '서류 생성에 실패했습니다');
         }
-      } catch (e) {
-        print('서류 생성 오류: ${e.toString()}');
+      } catch (e, stacktrace) {
+        print('⛔서류 생성 오류: ${e.toString()}');
+        print('스택트레이스: $stacktrace');
         throw Exception('서버 연결에 실패했습니다: ${e.toString()}');
       }
     });

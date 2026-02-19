@@ -1,0 +1,88 @@
+# 강의 시간 (LectureTime)
+LectureTime:
+  type: object
+  description: 강의 시간 정보 (요일 및 교시)
+  properties:
+    id:
+      type: integer
+      example: 101
+    day:
+      type: string
+      description: 요일 (예: 월, 화 / Mon, Tue)
+      example: "화"
+    start:
+      type: integer
+      description: 시작 교시
+      example: 3
+    end:
+      type: integer
+      description: 종료 교시
+      example: 4
+
+# 강의 (Lecture)
+Lecture:
+  allOf:
+    - $ref: 'docs/v1/models/common_model.yml#/definitions/TimestampFields'
+    - type: object
+      description: 강의 정보
+      properties:
+        id:
+          type: integer
+          example: 10
+        name:
+          type: string
+          description: 강의명
+          example: "네트워크 보안"
+        professor:
+          type: string
+          description: 교수명
+          example: "최재원"
+        room:
+          type: string
+          description: 강의실
+          example: "8관 322호"
+        memo:
+          type: string
+          description: 메모
+          example: "캡스톤디자인 연계"
+        color:
+          type: string
+          description: 색상 코드
+          example: "#ffffff"
+        times:
+          type: array
+          description: 강의 시간 목록
+          items:
+            $ref: '#/LectureTime'
+
+# 시간표 (Timetable)
+Timetable:
+  allOf:
+    - $ref: 'docs/v1/models/common_model.yml#/definitions/TimestampFields'
+    - type: object
+      description: 시간표 정보
+      properties:
+        id:
+          type: integer
+          example: 1
+        year:
+          type: integer
+          description: 학년도
+          example: 2026
+        semester:
+          type: integer
+          description: 학기 (1, 2, 3, 4)
+          example: 1
+        name:
+          type: string
+          description: 시간표 이름 (자동 생성 또는 사용자 지정)
+          example: "2026년 1학기 시간표"
+        is_primary:
+          type: boolean
+          description: 대표 시간표 여부
+          example: true
+        lectures:
+          type: array
+          description: 시간표에 포함된 강의 목록
+          items:
+            $ref: '#/Lecture'

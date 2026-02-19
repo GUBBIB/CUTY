@@ -1,0 +1,35 @@
+tags:
+  - Timetable
+summary: 내 시간표 목록 조회
+description: |
+  로그인한 사용자가 생성한 모든 시간표 목록을 조회합니다.
+  특정 학년도나 학기로 필터링할 수 있습니다.
+parameters:
+  - name: year
+    in: query
+    type: integer
+    description: 조회할 학년도 (예: 2026)
+  - name: semester
+    in: query
+    type: integer
+    description: 조회할 학기 (1, 2, 3, 4)
+  - name: lang
+    in: query
+    type: string
+    enum: [ko, en]
+    default: ko
+    description: 응답 언어 설정
+responses:
+  200:
+    description: 조회 성공
+    schema:
+      type: array
+      items:
+        $ref: 'docs/v1/models/timetable_model.yml#/Timetable'
+  500:
+    description: 서버 에러
+    schema:
+      type: object
+      properties:
+        error:
+          type: string

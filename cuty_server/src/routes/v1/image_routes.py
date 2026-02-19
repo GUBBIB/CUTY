@@ -3,7 +3,8 @@ from flask import Blueprint, request, jsonify
 
 from src.services.image_service import ImageService
 from src.utils.auth import token_required
-
+from flasgger import swag_from
+from src.utils.swagger_helper import get_swagger_config
 
 from src.config.env import ALLOWED_EXTENSIONS
 
@@ -14,7 +15,7 @@ def allowed_file(filename):
 
 @images_bp.route("/presigned-url", methods=['POST'])
 @token_required
-
+@swag_from(get_swagger_config('docs/v1/image/presigned_url.yml'))
 def get_presigned_url(current_user):
     """
     이미지 업로드를 위한 presigned URL을 생성합니다.
@@ -46,5 +47,3 @@ def get_presigned_url(current_user):
     except Exception as e:
         print(f"Error in get_presigned_url route: {str(e)}")
         return jsonify({"detail": "Failed to process upload request"}), 500
-
-

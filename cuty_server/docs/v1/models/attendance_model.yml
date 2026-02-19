@@ -1,0 +1,16 @@
+Attendance:
+  allOf:
+    - $ref: './common_model.yml#/definitions/TimestampFields'
+    - type: object
+      description: 사용자 출석 정보
+      properties:
+        id:
+          type: integer
+          example: 1
+        user_id:
+          type: integer
+          example: 42
+        check_date:
+          type: string
+          format: date
+          example: "2026-02-01"

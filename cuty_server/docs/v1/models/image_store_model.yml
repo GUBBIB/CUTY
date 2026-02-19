@@ -1,0 +1,43 @@
+ImageStore:
+  allOf:
+    - $ref: './common_model.yml#/definitions/TimestampFields'
+    - type: object
+      description: S3에 업로드된 이미지 메타데이터
+      properties:
+        id:
+          type: integer
+          example: 1
+        relative_path:
+          type: string
+          description: S3 객체 key (상대 경로)
+          example: images/user/abc123.png
+        base_url:
+          type: string
+          description: CloudFront base URL
+          example: https://dxxxxx.cloudfront.net
+        full_url:
+          type: string
+          description: base_url + relative_path
+          example: https://dxxxxx.cloudfront.net/images/user/abc123.png
+        content_type:
+          type: string
+          description: MIME 타입
+          example: image/png
+        bucket_name:
+          type: string
+          description: S3 버킷 이름
+          example: cuty-image-bucket
+        original_filename:
+          type: string
+          description: 사용자가 업로드한 원본 파일명
+          example: profile.png
+        region:
+          type: string
+          nullable: true
+          description: AWS 리전
+          example: ap-northeast-2
+        description:
+          type: string
+          nullable: true
+          description: 이미지 설명
+          example: 사용자 프로필 이미지
