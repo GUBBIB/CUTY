@@ -2123,4 +2123,94 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get purchaseButton => '50,000원 결제하기';
+
+  @override
+  String get loginTitle => 'CUTY에 오신 것을 환영해요!';
+
+  @override
+  String get loginIdHint => '이메일 또는 아이디';
+
+  @override
+  String get loginPwHint => '비밀번호';
+
+  @override
+  String get btnLogin => '로그인';
+
+  @override
+  String get btnSignUp => '회원가입';
+
+  @override
+  String get btnFindPw => '비밀번호 찾기';
+
+  @override
+  String get loginSocialLabel => '간편 로그인';
+
+  @override
+  String get tutorialWelcome => '안녕! 난 쿠티바라야.\n만나서 반가워! 🎉';
+
+  @override
+  String get tutorialNationality => '너의 국적을 알려줄래?\n딱 맞는 비자 정보를 찾아줄게!';
+
+  @override
+  String get tutorialRegion => '오, 그렇구나!\n지금 거주하는 지역은 어디야?';
+
+  @override
+  String get tutorialSchool => '마지막으로,\n어느 대학교에 다니고 있어?';
+
+  @override
+  String get btnNext => '다음';
+
+  @override
+  String get btnStartCuty => '완벽해! 이제 CUTY를 시작해볼까?';
+
+  @override
+  String get signupTitle => '회원가입';
+
+  @override
+  String get signupStepTerms => '약관 동의';
+
+  @override
+  String get signupStepInfo => '정보 입력';
+
+  @override
+  String get signupStepComplete => '가입 완료';
+
+  @override
+  String get signupAgreeAll => '전체 동의하기';
+
+  @override
+  String get signupAgreeTerms => '(필수) 이용약관 동의';
+
+  @override
+  String get signupAgreePrivacy => '(필수) 개인정보 처리방침 동의';
+
+  @override
+  String get signupEmailHint => '이메일 주소';
+
+  @override
+  String get signupPwHint => '비밀번호 (8자 이상)';
+
+  @override
+  String get signupPwConfirmHint => '비밀번호 확인';
+
+  @override
+  String get msgPwMismatch => '비밀번호가 일치하지 않습니다.';
+
+  @override
+  String get msgSignupSuccessTitle => '환영합니다!';
+
+  @override
+  String get msgSignupSuccessDesc => '회원가입이 완료되었습니다.\n로그인 후 CUTY를 시작해보세요.';
+
+  @override
+  String get signupTermsDesc => 'CUTY 서비스 이용을 위한 필수 약관입니다.';
+
+  @override
+  String get signupPrivacyDesc => '개인정보 수집 및 이용 목적을 확인합니다.';
+
+  @override
+  String get btnViewDetails => '보기';
+
+  @override
+  String get btnGoToLogin => '로그인하러 가기';
 }

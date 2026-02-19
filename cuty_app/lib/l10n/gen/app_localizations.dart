@@ -4249,6 +4249,186 @@ abstract class AppLocalizations {
   /// In ko, this message translates to:
   /// **'50,000원 결제하기'**
   String get purchaseButton;
+
+  /// No description provided for @loginTitle.
+  ///
+  /// In ko, this message translates to:
+  /// **'CUTY에 오신 것을 환영해요!'**
+  String get loginTitle;
+
+  /// No description provided for @loginIdHint.
+  ///
+  /// In ko, this message translates to:
+  /// **'이메일 또는 아이디'**
+  String get loginIdHint;
+
+  /// No description provided for @loginPwHint.
+  ///
+  /// In ko, this message translates to:
+  /// **'비밀번호'**
+  String get loginPwHint;
+
+  /// No description provided for @btnLogin.
+  ///
+  /// In ko, this message translates to:
+  /// **'로그인'**
+  String get btnLogin;
+
+  /// No description provided for @btnSignUp.
+  ///
+  /// In ko, this message translates to:
+  /// **'회원가입'**
+  String get btnSignUp;
+
+  /// No description provided for @btnFindPw.
+  ///
+  /// In ko, this message translates to:
+  /// **'비밀번호 찾기'**
+  String get btnFindPw;
+
+  /// No description provided for @loginSocialLabel.
+  ///
+  /// In ko, this message translates to:
+  /// **'간편 로그인'**
+  String get loginSocialLabel;
+
+  /// No description provided for @tutorialWelcome.
+  ///
+  /// In ko, this message translates to:
+  /// **'안녕! 난 쿠티바라야.\n만나서 반가워! 🎉'**
+  String get tutorialWelcome;
+
+  /// No description provided for @tutorialNationality.
+  ///
+  /// In ko, this message translates to:
+  /// **'너의 국적을 알려줄래?\n딱 맞는 비자 정보를 찾아줄게!'**
+  String get tutorialNationality;
+
+  /// No description provided for @tutorialRegion.
+  ///
+  /// In ko, this message translates to:
+  /// **'오, 그렇구나!\n지금 거주하는 지역은 어디야?'**
+  String get tutorialRegion;
+
+  /// No description provided for @tutorialSchool.
+  ///
+  /// In ko, this message translates to:
+  /// **'마지막으로,\n어느 대학교에 다니고 있어?'**
+  String get tutorialSchool;
+
+  /// No description provided for @btnNext.
+  ///
+  /// In ko, this message translates to:
+  /// **'다음'**
+  String get btnNext;
+
+  /// No description provided for @btnStartCuty.
+  ///
+  /// In ko, this message translates to:
+  /// **'완벽해! 이제 CUTY를 시작해볼까?'**
+  String get btnStartCuty;
+
+  /// No description provided for @signupTitle.
+  ///
+  /// In ko, this message translates to:
+  /// **'회원가입'**
+  String get signupTitle;
+
+  /// No description provided for @signupStepTerms.
+  ///
+  /// In ko, this message translates to:
+  /// **'약관 동의'**
+  String get signupStepTerms;
+
+  /// No description provided for @signupStepInfo.
+  ///
+  /// In ko, this message translates to:
+  /// **'정보 입력'**
+  String get signupStepInfo;
+
+  /// No description provided for @signupStepComplete.
+  ///
+  /// In ko, this message translates to:
+  /// **'가입 완료'**
+  String get signupStepComplete;
+
+  /// No description provided for @signupAgreeAll.
+  ///
+  /// In ko, this message translates to:
+  /// **'전체 동의하기'**
+  String get signupAgreeAll;
+
+  /// No description provided for @signupAgreeTerms.
+  ///
+  /// In ko, this message translates to:
+  /// **'(필수) 이용약관 동의'**
+  String get signupAgreeTerms;
+
+  /// No description provided for @signupAgreePrivacy.
+  ///
+  /// In ko, this message translates to:
+  /// **'(필수) 개인정보 처리방침 동의'**
+  String get signupAgreePrivacy;
+
+  /// No description provided for @signupEmailHint.
+  ///
+  /// In ko, this message translates to:
+  /// **'이메일 주소'**
+  String get signupEmailHint;
+
+  /// No description provided for @signupPwHint.
+  ///
+  /// In ko, this message translates to:
+  /// **'비밀번호 (8자 이상)'**
+  String get signupPwHint;
+
+  /// No description provided for @signupPwConfirmHint.
+  ///
+  /// In ko, this message translates to:
+  /// **'비밀번호 확인'**
+  String get signupPwConfirmHint;
+
+  /// No description provided for @msgPwMismatch.
+  ///
+  /// In ko, this message translates to:
+  /// **'비밀번호가 일치하지 않습니다.'**
+  String get msgPwMismatch;
+
+  /// No description provided for @msgSignupSuccessTitle.
+  ///
+  /// In ko, this message translates to:
+  /// **'환영합니다!'**
+  String get msgSignupSuccessTitle;
+
+  /// No description provided for @msgSignupSuccessDesc.
+  ///
+  /// In ko, this message translates to:
+  /// **'회원가입이 완료되었습니다.\n로그인 후 CUTY를 시작해보세요.'**
+  String get msgSignupSuccessDesc;
+
+  /// No description provided for @signupTermsDesc.
+  ///
+  /// In ko, this message translates to:
+  /// **'CUTY 서비스 이용을 위한 필수 약관입니다.'**
+  String get signupTermsDesc;
+
+  /// No description provided for @signupPrivacyDesc.
+  ///
+  /// In ko, this message translates to:
+  /// **'개인정보 수집 및 이용 목적을 확인합니다.'**
+  String get signupPrivacyDesc;
+
+  /// No description provided for @btnViewDetails.
+  ///
+  /// In ko, this message translates to:
+  /// **'보기'**
+  String get btnViewDetails;
+
+  /// No description provided for @btnGoToLogin.
+  ///
+  /// In ko, this message translates to:
+  /// **'로그인하러 가기'**
+  String get btnGoToLogin;
 }
 
 class _AppLocalizationsDelegate

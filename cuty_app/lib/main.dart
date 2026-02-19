@@ -5,27 +5,25 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart' as p;
 import 'providers/f27_visa_provider.dart';
 import 'providers/visa_provider.dart';
-import 'providers/locale_provider.dart'; // NEW
+import 'providers/locale_provider.dart';
 import 'services/local_storage_service.dart';
-
 
 import 'dart:io';
 import 'package:window_manager/window_manager.dart';
 import 'config/theme.dart';
-import 'screens/main_screen.dart';
+import 'screens/auth/login_screen.dart'; // 로그인 스크린 임포트 추가
 import 'screens/visa/startup_visa_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // 로컬 저장소 서비스 초기화 (반드시 runApp 전에 실행)
   await LocalStorageService().init();
 
   if (Platform.isWindows || Platform.isMacOS) {
     await windowManager.ensureInitialized();
     WindowOptions windowOptions = const WindowOptions(
-      size: Size(393, 852), // iPhone 15 Pro dimensions
-      minimumSize: Size(393, 852), // Prevent resizing smaller
+      size: Size(393, 852),
+      minimumSize: Size(393, 852),
       center: true,
       backgroundColor: Colors.transparent,
       skipTaskbar: false,
@@ -39,7 +37,7 @@ void main() async {
   }
 
   runApp(
-    RestartWidget( // Wrapped with RestartWidget
+    RestartWidget(
       child: ProviderScope(
         child: p.MultiProvider(
           providers: [
@@ -53,7 +51,6 @@ void main() async {
   );
 }
 
-// [Added] Restart functionality widget
 class RestartWidget extends StatefulWidget {
   const RestartWidget({super.key, required this.child});
   final Widget child;
@@ -71,7 +68,7 @@ class _RestartWidgetState extends State<RestartWidget> {
 
   void restartApp() {
     setState(() {
-      key = UniqueKey(); // Refresh app by changing key
+      key = UniqueKey();
     });
   }
 
@@ -94,7 +91,7 @@ class CutyApp extends ConsumerWidget {
     return MaterialApp(
       title: 'CUTY',
       debugShowCheckedModeBanner: false,
-      locale: locale, // Dynamic Locale
+      locale: locale,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -102,11 +99,11 @@ class CutyApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
-        Locale('ko', 'KR'), // Korean
-        Locale('en', 'US'), // English
+        Locale('ko', 'KR'),
+        Locale('en', 'US'),
       ],
       theme: AppTheme.lightTheme,
-      home: const MainScreen(),
+      home: const LoginScreen(), // 초기 화면을 LoginScreen으로 변경
       routes: {
         '/visa/startup': (context) => const StartupVisaScreen(),
       },

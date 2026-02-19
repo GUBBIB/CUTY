@@ -2163,4 +2163,96 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchaseButton => 'Pay 50,000 KRW';
+
+  @override
+  String get loginTitle => 'Welcome to CUTY!';
+
+  @override
+  String get loginIdHint => 'Email or ID';
+
+  @override
+  String get loginPwHint => 'Password';
+
+  @override
+  String get btnLogin => 'Log In';
+
+  @override
+  String get btnSignUp => 'Sign Up';
+
+  @override
+  String get btnFindPw => 'Find Password';
+
+  @override
+  String get loginSocialLabel => 'Easy Login';
+
+  @override
+  String get tutorialWelcome => 'Hi! I\'m Cutybara.\nNice to meet you! 🎉';
+
+  @override
+  String get tutorialNationality =>
+      'What\'s your nationality?\nI\'ll find the perfect visa info for you!';
+
+  @override
+  String get tutorialRegion => 'I see!\nWhich region do you live in now?';
+
+  @override
+  String get tutorialSchool => 'Lastly,\nwhich university do you attend?';
+
+  @override
+  String get btnNext => 'Next';
+
+  @override
+  String get btnStartCuty => 'Perfect! Let\'s start CUTY!';
+
+  @override
+  String get signupTitle => 'Sign Up';
+
+  @override
+  String get signupStepTerms => 'Terms';
+
+  @override
+  String get signupStepInfo => 'Details';
+
+  @override
+  String get signupStepComplete => 'Complete';
+
+  @override
+  String get signupAgreeAll => 'Agree to all';
+
+  @override
+  String get signupAgreeTerms => '(Required) Terms of Service';
+
+  @override
+  String get signupAgreePrivacy => '(Required) Privacy Policy';
+
+  @override
+  String get signupEmailHint => 'Email Address';
+
+  @override
+  String get signupPwHint => 'Password (8+ characters)';
+
+  @override
+  String get signupPwConfirmHint => 'Confirm Password';
+
+  @override
+  String get msgPwMismatch => 'Passwords do not match.';
+
+  @override
+  String get msgSignupSuccessTitle => 'Welcome!';
+
+  @override
+  String get msgSignupSuccessDesc =>
+      'Sign up is complete.\nPlease log in to start CUTY.';
+
+  @override
+  String get signupTermsDesc => 'Terms required to use CUTY service.';
+
+  @override
+  String get signupPrivacyDesc => 'Check purpose of personal data collection.';
+
+  @override
+  String get btnViewDetails => 'View';
+
+  @override
+  String get btnGoToLogin => 'Go to Login';
 }
