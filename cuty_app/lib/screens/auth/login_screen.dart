@@ -1,16 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../../services/local_storage_service.dart';
 import 'onboarding_tutorial_screen.dart';
 import 'sign_up_screen.dart';
 import '../main_screen.dart';
+import '../../providers/locale_provider.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
 
+  void _showLanguagePicker(BuildContext context, WidgetRef ref) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) {
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(bottom: 16),
+                child: Text('언어 선택 / Choose Language', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              ),
+              ListTile(
+                leading: const Text('🇰🇷', style: TextStyle(fontSize: 24)),
+                title: const Text('한국어'),
+                onTap: () {
+                  ref.read(localeProvider.notifier).setLocale(const Locale('ko'));
+                  Navigator.pop(ctx);
+                },
+              ),
+              ListTile(
+                leading: const Text('🇺🇸', style: TextStyle(fontSize: 24)),
+                title: const Text('English'),
+                onTap: () {
+                  ref.read(localeProvider.notifier).setLocale(const Locale('en'));
+                  Navigator.pop(ctx);
+                },
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     const brandColor = Color(0xFF1E2B4D);
     const double characterSize = 220.0; // ✨ 여기서 캐릭터 크기 조절 (기본: 150.0)
@@ -24,15 +66,24 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 1. 상단 로고
-              Text(
-                'CUTY',
-                style: GoogleFonts.poppins(
-                  fontSize: 28,
-                  fontWeight: FontWeight.w900,
-                  color: brandColor,
-                  letterSpacing: 1.2,
-                ),
+              // 1. 상단 로고 및 언어 설정
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'CUTY',
+                    style: GoogleFonts.poppins(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w900,
+                      color: brandColor,
+                      letterSpacing: 1.2,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () => _showLanguagePicker(context, ref),
+                    icon: const Icon(Icons.language, color: Colors.grey),
+                  ),
+                ],
               ),
 
               const Spacer(),
@@ -90,7 +141,7 @@ class LoginScreen extends StatelessWidget {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: brandColor,
+                      backgroundColor: brandColor,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         elevation: 0,

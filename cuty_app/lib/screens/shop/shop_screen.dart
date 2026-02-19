@@ -285,7 +285,7 @@ class _ShopBannerState extends State<_ShopBanner> {
       {
         'color': const Color(0xFFE8F5E9), // Green.shade50
         'title': AppLocalizations.of(context)!.bannerInviteFriend,
-        'image': 'assets/images/capy_friend.png', 
+        'image': 'assets/images/capy_joy.png', 
         'tag': AppLocalizations.of(context)!.tagInvite,
         'titleColor': const Color(0xFF2E7D32), // Green
         'tagColor': const Color(0xFF1B5E20),

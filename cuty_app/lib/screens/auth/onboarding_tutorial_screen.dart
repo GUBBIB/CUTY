@@ -43,10 +43,10 @@ class _OnboardingView extends StatelessWidget {
 
     String getDialogueMessage() {
       switch (step) {
-        case 0: return "안녕! 난 쿠티바라야. 만나서 반가워! 🎉\n앞으로 너의 한국 유학생활을\n도울 CUTY의 마스코트지!\n시작에 앞서 간단한 질문부터 해도 될까?";
-        case 1: return "넌 어느 나라에서 왔어?";
-        case 2: return "한국에서는 어디에 살아?";
-        case 3: return "다니고 있는 대학교는 어디야?";
+        case 0: return l10n.tutorialWelcome;
+        case 1: return l10n.tutorialNationality;
+        case 2: return l10n.tutorialRegion;
+        case 3: return l10n.tutorialSchool;
         default: return "";
       }
     }
@@ -115,6 +115,7 @@ class _OnboardingView extends StatelessWidget {
                 ),
 
                 // [Dialogue Box containing Text AND Input]
+                // [Dialogue Box containing Text AND Input]
                 Positioned(
                   bottom: 16,
                   left: 16,
@@ -124,38 +125,46 @@ class _OnboardingView extends StatelessWidget {
                     children: [
                       Container(
                         width: double.infinity,
-                        constraints: const BoxConstraints(minHeight: 215), // Increased height for input
-                        padding: const EdgeInsets.fromLTRB(24, 32, 24, 24),
+                        constraints: const BoxConstraints(minHeight: 215, maxHeight: 280), // Increased height for input
+                        padding: const EdgeInsets.fromLTRB(24, 32, 24, 20),
                         decoration: BoxDecoration(
                           color: const Color(0xFF1E2B4D).withOpacity(0.9), // Slightly higher opacity
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(color: Colors.white.withOpacity(0.3), width: 1.5),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            // Dialogue Text
-                             AnimatedSwitcher(
-                                duration: const Duration(milliseconds: 300),
-                                child: Text(
-                                  getDialogueMessage(),
-                                  key: ValueKey<int>(step),
-                                  style: GoogleFonts.notoSansKr(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.5,
-                                    color: Colors.white,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              // Dialogue Text
+                               AnimatedSwitcher(
+                                  duration: const Duration(milliseconds: 300),
+                                  child: Text(
+                                    getDialogueMessage(),
+                                    key: ValueKey<int>(step),
+                                    style: GoogleFonts.notoSansKr(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w500,
+                                      height: 1.5,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              
-                              // Input Field (Embedded inside Dialogue)
-                              if (step > 0) ...[
-                                const SizedBox(height: 16), // Spacing between text and input
-                                _buildSelectionContent(context, provider),
-                              ],
-                          ],
+                                
+                                // Input Field (Embedded inside Dialogue)
+                                if (step > 0) ...[
+                                  const SizedBox(height: 16), // Spacing between text and input
+                                  _buildSelectionContent(context, provider),
+                                ],
+
+                                const SizedBox(height: 20),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: _buildNextIconButton(context, provider),
+                                ),
+                            ],
+                          ),
                         ),
                       ),
                       // Name Tag
@@ -179,12 +188,6 @@ class _OnboardingView extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ),
-                      // Next Button
-                      Positioned(
-                        bottom: 20,
-                        right: 20,
-                        child: _buildNextIconButton(context, provider),
                       ),
                     ],
                   ),
@@ -283,14 +286,17 @@ class _OnboardingView extends StatelessWidget {
     return GestureDetector(
       onTap: isEnabled ? () {
         if (provider.currentStep == 3) {
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const MainScreen()));
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (_) => const MainScreen(showTutorial: true)),
+          );
         } else {
           provider.nextStep();
         }
       } : null,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: isEnabled ? const Color(0xFF8B5CF6) : Colors.white.withOpacity(0.2),
           borderRadius: BorderRadius.circular(24),
@@ -301,10 +307,10 @@ class _OnboardingView extends StatelessWidget {
           children: [
             Text(
               provider.currentStep == 3 ? "Start" : "Next",
-              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
             ),
-            const SizedBox(width: 6),
-            const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 18),
+            const SizedBox(width: 4),
+            const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 14),
           ],
         ),
       ),

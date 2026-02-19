@@ -4295,26 +4295,50 @@ abstract class AppLocalizations {
   /// No description provided for @tutorialWelcome.
   ///
   /// In ko, this message translates to:
-  /// **'안녕! 난 쿠티바라야.\n만나서 반가워! 🎉'**
+  /// **'안녕! 난 쿠티바라야. 만나서 반가워! 🎉\n앞으로 너랑 함께 한국 유학생활을 도울 CUTY의 마스코트지!\n시작에 앞서 간단한 질문부터 해도 될까?'**
   String get tutorialWelcome;
 
   /// No description provided for @tutorialNationality.
   ///
   /// In ko, this message translates to:
-  /// **'너의 국적을 알려줄래?\n딱 맞는 비자 정보를 찾아줄게!'**
+  /// **'넌 어느 나라에서 왔어?'**
   String get tutorialNationality;
 
   /// No description provided for @tutorialRegion.
   ///
   /// In ko, this message translates to:
-  /// **'오, 그렇구나!\n지금 거주하는 지역은 어디야?'**
+  /// **'한국에서는 어디에 살아?'**
   String get tutorialRegion;
 
   /// No description provided for @tutorialSchool.
   ///
   /// In ko, this message translates to:
-  /// **'마지막으로,\n어느 대학교에 다니고 있어?'**
+  /// **'다니고 있는 대학교는 어디야?'**
   String get tutorialSchool;
+
+  /// No description provided for @tutorialMainIntro.
+  ///
+  /// In ko, this message translates to:
+  /// **'여기는 다양한 기능을 한눈에 볼 수 있는 곳이야!\n비자 정보부터 알바까지 다 여기서 확인할 수 있어.'**
+  String get tutorialMainIntro;
+
+  /// No description provided for @tutorialCharacterIntro.
+  ///
+  /// In ko, this message translates to:
+  /// **'가운데는 내가 있어서 중요한 일이 있을때 바로바로 알려줄거야! 손에 있는 포춘쿠키는 매일 주는 선물! 행운이 있을지도?'**
+  String get tutorialCharacterIntro;
+
+  /// No description provided for @tutorialCommunityIntro.
+  ///
+  /// In ko, this message translates to:
+  /// **'여기는 커뮤니티 섹션! 다양한 유학생 친구들과 소통할 수 있는 공간이야! 평소에는 인기글들을 보여준다구~'**
+  String get tutorialCommunityIntro;
+
+  /// No description provided for @tutorialBottomIntro.
+  ///
+  /// In ko, this message translates to:
+  /// **'열심히 활동 하면 포인트가 쌓이고 저기 있는 숍에서 선물들과 교환할 수 있어 그럼 CUTY와 함께 즐거운 한국 유학생활 보내자!'**
+  String get tutorialBottomIntro;
 
   /// No description provided for @btnNext.
   ///

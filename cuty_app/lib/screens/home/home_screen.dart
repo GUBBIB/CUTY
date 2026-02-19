@@ -14,15 +14,28 @@ import '../schedule/schedule_screen.dart';
 
 
 import '../../../providers/message_provider.dart'; // [Added]
+import 'widgets/tutorial_overlay.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
-  const HomeScreen({super.key});
+  final GlobalKey? menuKey;
+  final GlobalKey? characterKey;
+  final GlobalKey? communityKey;
+
+  const HomeScreen({
+    super.key, 
+    this.menuKey,
+    this.characterKey,
+    this.communityKey,
+  });
 
   @override
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
+  // Internal keys are no longer needed if passed from parent, 
+  // but we can keep defaults if not passed (though MainScreen will pass them).
+  
   @override
   Widget build(BuildContext context) {
     // Note: In ConsumerState, ref is available directly as a property
@@ -42,97 +55,109 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     }
 
     // Default Dashboard View
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color(0xFFFFFEF5), // Bright Ivory
-            Color(0xFFFFE4C4), // Warm Apricot/Beige
-          ],
-        ),
-      ),
-      // Modified SafeArea: bottom=false allows the white sheet to extend to the very bottom device edge
-      child: SafeArea(
-        bottom: false, 
-        child: RefreshIndicator(
-          onRefresh: () async {
-            await ref.read(homeViewModelProvider.notifier).refresh();
-            ref.read(characterProvider.notifier).pickRandomCharacter();
-            ref.read(messageProvider.notifier).pickRandomIndex();
-          },
-          child: CustomScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            slivers: [
-              SliverFillRemaining(
-                hasScrollBody: false,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.fromLTRB(20, 5, 12, 0),
-                      child: HomeHeader(),
-                    ),
-                    const HomeMenuGrid(),
-                    
-                    // Flexible Gap 1
-                    const Spacer(flex: 2),
-
-                    // [Character Hero Section]
-                    SizedBox(
-                      height: 340, 
-                      child: Stack(
-                        alignment: Alignment.topCenter,
-                        clipBehavior: Clip.none,
-                        children: [
-                          // Character (Centered)
-                          const Positioned(
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            child: CharacterSection(),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    // Flexible Gap 2
-                    const Spacer(flex: 1),
-
-                    // [Status Message Card] (ScheduleList)
-                    Transform.translate(
-                      offset: const Offset(0, -10),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => const ScheduleScreen()),
-                            );
-                          },
-                          child: const ScheduleList(),
+    return Stack(
+      children: [
+        Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xFFFFFEF5), // Bright Ivory
+                Color(0xFFFFE4C4), // Warm Apricot/Beige
+              ],
+            ),
+          ),
+          // Modified SafeArea: bottom=false allows the white sheet to extend to the very bottom device edge
+          child: SafeArea(
+            bottom: false, 
+            child: RefreshIndicator(
+              onRefresh: () async {
+                await ref.read(homeViewModelProvider.notifier).refresh();
+                ref.read(characterProvider.notifier).pickRandomCharacter();
+                ref.read(messageProvider.notifier).pickRandomIndex();
+              },
+              child: CustomScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                slivers: [
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.fromLTRB(20, 5, 12, 0),
+                          child: HomeHeader(),
                         ),
-                      ),
+                        // [Target for Tutorial: Menu Grid]
+                        KeyedSubtree(
+                          key: widget.menuKey,
+                          child: const HomeMenuGrid(),
+                        ),
+                        
+                        // Flexible Gap 1
+                        const Spacer(flex: 2),
+
+                        // [Character Hero Section]
+                        KeyedSubtree(
+                          key: widget.characterKey,
+                          child: SizedBox(
+                            height: 340, 
+                            child: Stack(
+                              alignment: Alignment.topCenter,
+                              clipBehavior: Clip.none,
+                              children: [
+                                // Character (Centered)
+                                const Positioned(
+                                  bottom: 0,
+                                  left: 0,
+                                  right: 0,
+                                  child: CharacterSection(),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        // Flexible Gap 2
+                        const Spacer(flex: 1),
+
+                        // [Status Message Card] (ScheduleList)
+                        Transform.translate(
+                          offset: const Offset(0, -10),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const ScheduleScreen()),
+                                );
+                              },
+                              child: const ScheduleList(),
+                            ),
+                          ),
+                        ),
+
+                        // Flexible Gap 3
+                        const Spacer(flex: 1),
+
+                        // [Community Section] - FULL WIDTH SHEET
+                        KeyedSubtree(
+                          key: widget.communityKey, 
+                          child: const PopularPostsPreview(),
+                        ),
+                      ],
                     ),
-
-                    // Flexible Gap 3
-                    const Spacer(flex: 1),
-
-                    // [Community Section] - FULL WIDTH SHEET
-                    const PopularPostsPreview(),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }
-
-

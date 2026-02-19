@@ -2186,17 +2186,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginSocialLabel => 'Easy Login';
 
   @override
-  String get tutorialWelcome => 'Hi! I\'m Cutybara.\nNice to meet you! 🎉';
+  String get tutorialWelcome =>
+      'Hi! I\'m Cutybara.\nNice to meet you! 🎉\n\nI\'m CUTY\'s mascot who will help you\nwith your study life in Korea!\n\nCan I ask you a few simple questions first?';
 
   @override
-  String get tutorialNationality =>
-      'What\'s your nationality?\nI\'ll find the perfect visa info for you!';
+  String get tutorialNationality => 'Where are you from?';
 
   @override
-  String get tutorialRegion => 'I see!\nWhich region do you live in now?';
+  String get tutorialRegion => 'Where do you live in Korea?';
 
   @override
-  String get tutorialSchool => 'Lastly,\nwhich university do you attend?';
+  String get tutorialSchool => 'Which university do you attend?';
+
+  @override
+  String get tutorialMainIntro =>
+      'Here you can see various features at a glance!\nYou can check everything from visa info to part-time jobs.';
+
+  @override
+  String get tutorialCharacterIntro =>
+      'I\'m right here in the center to let you know about important things! And you can open the fortune cookie in my hand every day—there might be some luck inside!';
+
+  @override
+  String get tutorialCommunityIntro =>
+      'This is the Community Section! It is a space where you can communicate with various international students! Usually, it shows popular posts~';
+
+  @override
+  String get tutorialBottomIntro =>
+      'If you are active, you can earn points and exchange them for gifts at the shop over there! Let\'s have a fun study life in Korea with CUTY!';
 
   @override
   String get btnNext => 'Next';
