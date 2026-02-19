@@ -7,6 +7,8 @@ class Country(db.Model, TimestampMixin):
     name = db.Column(db.String(100), nullable=False)
     eng_name = db.Column(db.String(100), nullable=False)
     code = db.Column(db.String(2), nullable=False, unique=True)  # ISO 3166-1 alpha-2 코드
+
+    flag_image_url = db.Column(db.String(255), nullable=True) # 국기 이미지 URL
     
     # Relationships
     users = db.relationship('User', backref='country', lazy=True)

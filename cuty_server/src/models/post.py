@@ -13,7 +13,8 @@ class Post(db.Model, TimestampMixin):
     school_id = db.Column(db.Integer, db.ForeignKey('schools.id'), nullable=False)
     college_id = db.Column(db.Integer, db.ForeignKey('colleges.id'), nullable=False)
     department_id = db.Column(db.Integer, db.ForeignKey('departments.id'), nullable=False)
-    nickname = db.Column(db.String(100), nullable=False)  # 랜덤 닉네임
+
+    extra_data = db.Column(MutableDict.as_mutable(db.JSON), nullable=True, default={})  # 게시판별 추가 속성 저장용
 
     likes_count = db.Column(db.Integer, default=0, nullable=False)
     dislikes_count = db.Column(db.Integer, default=0, nullable=False)

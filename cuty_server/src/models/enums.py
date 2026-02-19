@@ -33,3 +33,8 @@ class ReqState(str, Enum):
     REJECTED = "REJECTED"
     APPROVED = "APPROVED"
     CANCELED = "CANCELED"
+
+class SexType(str, Enum):
+    MALE = "MALE"
+    FEMALE = "FEMALE"
+    OTHER = "OTHER"
