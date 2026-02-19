@@ -45,7 +45,6 @@ class User(db.Model, TimestampMixin):
     point_logs = db.relationship('PointLog', backref='user', lazy=True)
     attendances = db.relationship('Attendance', backref='user', lazy=True)
     timetables = db.relationship('Timetable', backref='user', lazy=True)
-    
     visas = db.relationship('Visa', backref='user', lazy=True)
     kvtis = db.relationship('Kvti', backref='user', lazy=True)
 
