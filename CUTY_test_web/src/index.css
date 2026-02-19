@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@theme {
+  --color-kvti-bg: #0f172a;
+  --color-kvti-primary: #fbbf24;
+  --color-kvti-gold: #d4af37;
+  --color-kvti-surface: rgba(255, 255, 255, 0.05);
+
+  --font-display: "Satoshi", "Pretendard", sans-serif;
+  --font-body: "Inter", "Pretendard", sans-serif;
+}
+
+body {
+  background-color: var(--color-kvti-bg);
+  color: white;
+  font-family: var(--font-body);
+}
+
+.glass-card {
+  background: var(--color-kvti-surface);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.gold-gradient-text {
+  background: linear-gradient(to right, var(--color-kvti-primary), var(--color-kvti-gold), #b45309);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@layer base {
+  body {
+    @apply bg-slate-900 text-white font-sans antialiased;
+  }
+}
