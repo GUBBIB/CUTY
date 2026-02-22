@@ -2,7 +2,7 @@ from datetime import datetime
 import logging
 from flask import current_app
 from sqlalchemy import and_
-from src.models import db, Document, ImageStore, User
+from src.models import db, Document, ImageStore, User, PointLog
 from src.models.enums import DocumentType
 from src.utils.formatters import get_document_data
 from pypdf import PdfWriter, PdfReader
@@ -105,6 +105,14 @@ class DocumentService:
             if not user or user.is_deleted:
                 raise ValueError("사용자를 찾을 수 없습니다")
             
+            target_document_type = DocumentType[document_type]
+            existing_document = Document.query.filter_by(
+                user_id=user_id,
+                document_type=target_document_type
+            ).first()
+
+            is_first_registration = (existing_document is None)
+
             # 서류 생성
             new_document = Document(
                 name=name,
@@ -114,6 +122,16 @@ class DocumentService:
             )
             
             db.session.add(new_document)
+
+            if is_first_registration:
+                new_point_log = PointLog(
+                    user_id=user_id,
+                    amount=300,
+                    description= f"{document_type} 서류 첫 등록 보상"
+                )
+                db.session.add(new_point_log)
+                user.points += 300
+
             db.session.commit()
             
             return get_document_data(new_document)

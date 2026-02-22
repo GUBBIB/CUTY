@@ -4,16 +4,11 @@ from src.utils.exception import ValidationError, InternalServiceError
 
 class StoreService:
     @staticmethod
-    def get_products(page, per_page, search=''):
-        if page < 1:
-            raise ValidationError(
-                message="페이지 번호는 1 이상이어야 합니다.", 
-                details={"provided_page": page}
-            )
-        if per_page < 1 or per_page > 100: # 너무 많은 데이터를 한 번에 요청하는 것 방지
+    def get_products(limit=10, cursor=None, search=''):
+        if limit < 1 or limit > 100: 
             raise ValidationError(
                 message="요청 가능한 데이터 개수는 1개 이상 100개 이하입니다.", 
-                details={"provided_per_page": per_page}
+                details={"provided_limit": limit}
             )
             
         try:
@@ -22,8 +17,10 @@ class StoreService:
             if search:
                 products_query = products_query.filter(products.name.ilike(f'%{search}%'))
             
-            products_query = products_query.order_by(products.created_at.desc())
-            pagination = products_query.paginate(page=page, per_page=per_page, error_out=False)
+            if cursor:
+                products_query = products_query.filter(products.id < cursor)
+            
+            queried_products = products_query.order_by(products.id.desc()).limit(limit).all()
             
             products_list = [{
                 'id': product.id,
@@ -31,30 +28,31 @@ class StoreService:
                 'description': product.description,
                 'price': product.price,
                 'image_url': product.image_url
-            } for product in pagination.items]
+            } for product in queried_products]
+            
+            next_cursor = queried_products[-1].id if queried_products else None
+            has_next = len(queried_products) == limit
             
             return {
                 'products': products_list,
-                'total': pagination.total,
-                'pages': pagination.pages,
-                'current_page': page,
-                'per_page': per_page,
-                'search': search
+                'next_cursor': next_cursor,
+                'has_next': has_next,
+                'search': search,
+                'limit': limit
             }
             
-        # 데이터베이스 관련 오류가 터졌을 때
         except SQLAlchemyError as e:
             raise InternalServiceError(
                 message="상품 데이터를 불러오는 중 데이터베이스 오류가 발생했습니다.",
                 details={"db_error": str(e)}
             )
-        # 그 외에 파이썬 딕셔너리 파싱 등에서 알 수 없는 오류가 터졌을 때
         except Exception as e:
             raise InternalServiceError(
                 message="상품 데이터를 처리하는 중 알 수 없는 오류가 발생했습니다.",
                 details={"unknown_error": str(e)}
             )
 
+    @staticmethod
     def create_product(name, description, price, image_url):
 
         if not name or not description or price is None or not image_url:
@@ -98,6 +96,7 @@ class StoreService:
                 details={"unknown_error": str(e)}
             )
 
+    @staticmethod
     def get_product_detail(product_id):
         try:
             product = products.query.get(product_id)
@@ -125,6 +124,7 @@ class StoreService:
                 details={"unknown_error": str(e)}
             )
 
+    @staticmethod
     def buy_product(current_user, product_id):
         try:
             product = products.query.get(product_id)

@@ -10,15 +10,15 @@ store_bp = Blueprint('store', __name__)
 @store_bp.route('/products', methods=['GET'])
 @swag_from(get_swagger_config('docs/v1/store/products.yml'))
 def get_products():
-    page = request.args.get('page', 1, type=int)
-    per_page = request.args.get('per_page', 10, type=int)
+    limit = request.args.get('limit', 10, type=int)
+    cursor = request.args.get('cursor', type=int) 
     search = request.args.get('search', '')
     
     try:
-        result = StoreService.get_products(page, per_page, search)
+        # Service 호출 시 매개변수 변경
+        result = StoreService.get_products(limit, cursor, search)
         return jsonify(result), 200
     except ServiceError as e:
-        # 에러 코드에 따라 HTTP 상태 코드를 분기 처리
         status_code = 400
         if e.code == "FORBIDDEN":
             status_code = 403
@@ -27,7 +27,6 @@ def get_products():
             
         return jsonify(e.to_dict()), status_code
         
-    # 예측하지 못한 에러 처리
     except Exception as e:
         return jsonify({
             "code": "UNKNOWN_ERROR",
@@ -37,7 +36,6 @@ def get_products():
 @store_bp.route('/products', methods=['POST'])
 @swag_from(get_swagger_config('docs/v1/store/create_product.yml'))
 def create_product():
-
     try:
         StoreService.create_product(
             name=request.json.get('name'),
