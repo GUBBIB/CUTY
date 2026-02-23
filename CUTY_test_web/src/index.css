@@ -1,30 +1,68 @@
 @import "tailwindcss";
 
 @theme {
-  --color-kvti-bg: #0f172a;
-  --color-kvti-primary: #fbbf24;
-  --color-kvti-gold: #d4af37;
-  --color-kvti-surface: rgba(255, 255, 255, 0.05);
+  --color-kvti-bg: #0F172A;
+  /* Deep Midnight Navy (Default/Landing) */
+  --color-kvti-primary: #38BDF8;
+  /* Sky-400 */
+  --color-kvti-gold: #2DD4BF;
+  /* Teal-400 */
+  --color-kvti-accent: #818CF8;
+  /* Indigo-400 */
+  --color-kvti-surface: rgba(30, 41, 59, 0.4);
 
   --font-display: "Satoshi", "Pretendard", sans-serif;
   --font-body: "Inter", "Pretendard", sans-serif;
 }
 
+/* Scoped Theme for Diagnosis (Charcoal/Gold) */
+.theme-charcoal {
+  --color-kvti-bg: #121212;
+  --color-kvti-primary: #FCD34D;
+  /* Amber-300 */
+  --color-kvti-gold: #fbbf24;
+  /* Amber-400 */
+  --color-kvti-accent: #A78BFA;
+  /* Violet-400 */
+  --color-kvti-surface: rgba(255, 255, 255, 0.03);
+}
+
 body {
   background-color: var(--color-kvti-bg);
-  color: white;
+  /* Default Navy Gradient */
+  background-image: radial-gradient(circle at 50% -20%, #1e293b 0%, #0F172A 60%);
+  color: #F1F5F9;
   font-family: var(--font-body);
+}
+
+/* Override body background when in charcoal mode (needs !important or specific targeting via JS, 
+   but since we wrap the component, we set bg on the wrapper) */
+.theme-charcoal {
+  background-color: #121212;
+  background-image: radial-gradient(circle at 50% -10%, #27272a 0%, #121212 50%);
+  color: #E5E7EB;
 }
 
 .glass-card {
   background: var(--color-kvti-surface);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  /* Minimal border */
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  /* Deeper shadow */
 }
 
 .gold-gradient-text {
-  background: linear-gradient(to right, var(--color-kvti-primary), var(--color-kvti-gold), #b45309);
+  /* Default Navy Gradient */
+  background: linear-gradient(to right, #2DD4BF, #38BDF8, #F8FAFC);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Override for Charcoal */
+.theme-charcoal .gold-gradient-text {
+  background: linear-gradient(to right, #FCD34D, #fbbf24, #FEF3C7);
   -webkit-background-clip: text;
   color: transparent;
 }
@@ -32,5 +70,66 @@ body {
 @layer base {
   body {
     @apply bg-slate-900 text-white font-sans antialiased;
+  }
+}
+
+/* ========================================================================= */
+/* Print Styles (For Report PDF Export)
+/* ========================================================================= */
+@media print {
+  body {
+    background-color: white !important;
+    background-image: none !important;
+    color: black !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Force background colors and gradients to print */
+  .print-bg {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Hide elements that shouldn't appear on paper */
+  .print-hidden {
+    display: none !important;
+  }
+
+  /* Prevent page breaks inside cards */
+  .page-break-avoid {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Force a page break before this element */
+  .page-break-before {
+    page-break-before: always;
+    break-before: page;
+  }
+
+  /* Optimize dark mode cards to print nicely */
+  .print-card-light {
+    background-color: #f8fafc !important;
+    /* slate-50 */
+    border: 1px solid #e2e8f0 !important;
+    /* slate-200 */
+    color: #0f172a !important;
+    /* slate-900 */
+    box-shadow: none !important;
+  }
+
+  .print-text-dark {
+    color: #0f172a !important;
+  }
+
+  .print-text-muted {
+    color: #475569 !important;
+    /* slate-600 */
+  }
+
+  /* Remove all shadows to save ink and look cleaner */
+  * {
+    box-shadow: none !important;
   }
 }

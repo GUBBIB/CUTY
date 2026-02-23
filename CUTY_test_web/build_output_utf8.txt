@@ -1,0 +1,141 @@
+﻿
+> cuty-test-web@0.0.0 build
+> vite build
+
+[36mvite v7.3.1 [32mbuilding client environment for production...[36m[39m
+transforming...
+node.exe : [33mModule 
+"src/utils/kvtiLogic.js
+" tried to import "src/
+data/kvti_questions.jso
+n" with "type": "json" 
+attributes, but it was 
+already imported elsewh
+ere with no attributes.
+ Please ensure that imp
+ort attributes for the 
+same module are always 
+consistent.[39m
+위치 줄:1 문자:1
++ & "C:\Program Files\n
+odejs/node.exe" "C:\Pro
+gram Files\nodejs/node_
+mo ...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: ([33mModule "   
+ sr...onsistent.[3    
+9m:String) [], Rem    o
+teException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+[32m✓[39m 2154 modules transformed.
+[31m✗[39m Build faile
+d in 3.82s
+[31merror during build
+:
+[31msrc/components/Job
+DetailModal.jsx (6:9): 
+"E7_REQUIREMENTS" is no
+t exported by "src/data
+/e7_requirements.js", i
+mported by "src/compone
+nts/JobDetailModal.jsx"
+.[31m
+file: [36mC:/Users/qor
+gu/Desktop/CUTY/fronten
+d/CUTY_test_web/src/com
+ponents/JobDetailModal.
+jsx:6:9[31m
+[33m
+4: import { E7_DB } fro
+m '../data/persona_data
+';
+5: import { E7_DESCRIPT
+IONS } from '../data/e7
+_official_descriptions'
+;
+6: import { E7_REQUIREM
+ENTS } from '../data/e7
+_requirements';
+            ^
+7: 
+8: export default funct
+ion JobDetailModal({ is
+Open, onClose, jobCode,
+ kvtiCode, matchScore =
+ 85 }) {
+[31m
+    at getRollupError (
+file:///C:/Users/qorgu/
+Desktop/CUTY/frontend/C
+UTY_test_web/node_modul
+es/rollup/dist/es/share
+d/parseAst.js:402:41)
+    at error (file:///C
+:/Users/qorgu/Desktop/C
+UTY/frontend/CUTY_test_
+web/node_modules/rollup
+/dist/es/shared/parseAs
+t.js:398:42)
+    at Module.error (fi
+le:///C:/Users/qorgu/De
+sktop/CUTY/frontend/CUT
+Y_test_web/node_modules
+/rollup/dist/es/shared/
+node-entry.js:17040:16)
+    at Module.traceVari
+able (file:///C:/Users/
+qorgu/Desktop/CUTY/fron
+tend/CUTY_test_web/node
+_modules/rollup/dist/es
+/shared/node-entry.js:1
+7452:29)
+    at ModuleScope.find
+Variable (file:///C:/Us
+ers/qorgu/Desktop/CUTY/
+frontend/CUTY_test_web/
+node_modules/rollup/dis
+t/es/shared/node-entry.
+js:15070:39)
+    at FunctionScope.fi
+ndVariable (file:///C:/
+Users/qorgu/Desktop/CUT
+Y/frontend/CUTY_test_we
+b/node_modules/rollup/d
+ist/es/shared/node-entr
+y.js:5673:38)
+    at FunctionBodyScop
+e.findVariable (file://
+/C:/Users/qorgu/Desktop
+/CUTY/frontend/CUTY_tes
+t_web/node_modules/roll
+up/dist/es/shared/node-
+entry.js:5673:38)
+    at Identifier.bind 
+(file:///C:/Users/qorgu
+/Desktop/CUTY/frontend/
+CUTY_test_web/node_modu
+les/rollup/dist/es/shar
+ed/node-entry.js:5447:4
+0)
+    at MemberExpression
+.bind (file:///C:/Users
+/qorgu/Desktop/CUTY/fro
+ntend/CUTY_test_web/nod
+e_modules/rollup/dist/e
+s/shared/node-entry.js:
+2829:23)
+    at MemberExpression
+.bind (file:///C:/Users
+/qorgu/Desktop/CUTY/fro
+ntend/CUTY_test_web/nod
+e_modules/rollup/dist/e
+s/shared/node-entry.js:
+7407:19)[39m

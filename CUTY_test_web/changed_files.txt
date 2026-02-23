@@ -1,0 +1,11 @@
+﻿CUTY_test_web/src/App.jsx
+CUTY_test_web/src/components/LikertScale.jsx
+CUTY_test_web/src/components/SectionGuideScreen.jsx
+CUTY_test_web/src/components/SectionIntro.jsx
+CUTY_test_web/src/data/persona_data.js
+CUTY_test_web/src/index.css
+CUTY_test_web/src/pages/Diagnosis.jsx
+CUTY_test_web/src/pages/Result.jsx
+CUTY_test_web/src/utils/kvtiLogic.js
+CUTY_test_web/verification_log_v2.txt
+cuty_app/lib/screens/home/widgets/tutorial_overlay.dart

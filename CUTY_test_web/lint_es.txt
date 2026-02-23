@@ -1,0 +1,19 @@
+﻿
+> cuty-test-web@0.0.0 lint
+> eslint .
+
+
+C:\Users\qorgu\Desktop\CUTY\frontend\CUTY_test_web\count_questions.js
+  1:12  error  'require' is not defined  no-undef
+
+C:\Users\qorgu\Desktop\CUTY\frontend\CUTY_test_web\extract_guides.js
+  11:15  error  'guideSheet' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+C:\Users\qorgu\Desktop\CUTY\frontend\CUTY_test_web\inspect_excel.js
+   2:8   error  'fs' is defined but never used. Allowed unused vars must match /^[A-Z_]/u                   no-unused-vars
+   3:8   error  'path' is defined but never used. Allowed unused vars must match /^[A-Z_]/u                 no-unused-vars
+   5:7   error  'schema' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u      no-unused-vars
+  28:11  error  'outputPath' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+??6 problems (6 errors, 0 warnings)
+

@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 
 function LikertScale({ selected, onSelect, labels = { 1: "전혀 아님", 3: "보통", 5: "매우 그렇다" } }) {
@@ -13,7 +14,7 @@ function LikertScale({ selected, onSelect, labels = { 1: "전혀 아님", 3: "�
                         className={`
                             flex flex-col items-center justify-center p-3 rounded-xl transition-all duration-200 border
                             ${selected === score
-                                ? 'bg-kvti-primary text-kvti-bg border-kvti-gold shadow-lg shadow-kvti-gold/20'
+                                ? 'bg-kvti-primary text-slate-900 border-kvti-primary shadow-[0_0_15px_rgba(252,211,77,0.3)]'
                                 : 'bg-white/5 text-slate-400 border-white/10 hover:bg-white/10 hover:text-white'
                             }
                         `}
