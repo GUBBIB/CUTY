@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_migrate import Migrate
 import logging
 from src.models import (
@@ -16,6 +16,25 @@ from src.config.database import DatabaseConfig
 from flask_cors import CORS
 from flasgger import Swagger
 from werkzeug.middleware.proxy_fix import ProxyFix
+from src.utils.exceptions import ServiceError
+
+def register_error_handlers(app):
+    @app.errorhandler(ServiceError)
+    def handle_service_error(error):
+        # 에러 코드에 따라 HTTP 상태 코드 매핑
+        status_code_map = {
+            "BAD_REQUEST": 400,
+            "FORBIDDEN": 403,
+            "DUPLICATE": 409,
+            "INTERNAL": 500
+        }
+        status_code = status_code_map.get(error.code, 400)
+        
+        return jsonify({
+            "status": "error",
+            "error": error.to_dict()
+        }), status_code
+
 
 def create_app(config_name='local'):
     app = Flask(__name__)
@@ -46,6 +65,9 @@ def create_app(config_name='local'):
     db.init_app(app)
     Migrate(app, db)
     
+    # 에러 핸들러 등록
+    register_error_handlers(app)
+
     # 라우트 등록
     init_routes(app)
     
