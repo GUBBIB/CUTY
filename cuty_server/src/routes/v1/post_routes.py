@@ -8,37 +8,14 @@ from src.utils.swagger_helper import get_swagger_config
 
 post_bp = Blueprint('post', __name__)
 
-@post_bp.route('', methods=['GET'])
-@swag_from(get_swagger_config('docs/v1/post/list.yml'))
-def get_posts():
-    page = request.args.get('page', 1, type=int)
-    per_page = request.args.get('per_page', 10, type=int)
-    
-    filters = {
-        'category': request.args.get('category'),
-        'search': request.args.get('search', ''),
-        'school_id': request.args.get('school_id', type=int),
-        'college_id': request.args.get('college_id', type=int),
-        'department_id': request.args.get('department_id', type=int)
-    }
-    
-    current_user_school_id = UserService.get_user_school_id(request.headers)
-    current_user_id = UserService.get_user_id(request.headers)
-    
-    try:
-        result = PostService.get_posts(page, per_page, current_user_school_id, current_user_id, **filters)
-        return jsonify(result), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
 @post_bp.route('/<int:post_id>', methods=['GET'])
 @swag_from(get_swagger_config('docs/v1/post/detail.yml'))
-def get_post(post_id):
+def get_post(board_id, post_id):
     user_id = UserService.get_user_id(request.headers)
     ip_address = request.remote_addr
     
     try:
-        result = PostService.get_post(post_id, user_id, ip_address)
+        result = PostService.get_post(board_id, post_id, user_id, ip_address)
         return jsonify(result), 200
     except ValueError as e:
         return jsonify({'error': str(e)}), 404

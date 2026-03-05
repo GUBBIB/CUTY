@@ -34,7 +34,7 @@ def init_routes(app):
     app.register_blueprint(board_bp, url_prefix='/api/v1/boards')
 
     # 게시글 관련 라우트
-    app.register_blueprint(post_bp, url_prefix='/api/v1/posts')
+    app.register_blueprint(post_bp, url_prefix='/api/v1/boards/<int:board_id>/posts')
     
     # 댓글 관련 라우트
     app.register_blueprint(comment_bp, url_prefix='/api/v1/posts')
