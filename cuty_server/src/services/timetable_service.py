@@ -1,6 +1,6 @@
 from src.models import db, Timetable, Lecture, LectureTime
 from src.utils.exceptions import ValidationError, PermissionDeniedError, InternalServiceError
-from src.utils.date_utils import get_current_academic_term
+from src.utils.utils import get_current_academic_term
 from sqlalchemy import and_
 
 class TimetableService:

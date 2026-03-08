@@ -12,6 +12,13 @@ from .document import Document
 from .requests import Requests
 from .point_log import PointLog
 from .attendacne import Attendance
+from .board import Board
+from .timetable import Timetable
+from .lecture import Lecture, LectureTime
+from .kvti import Kvti
+from .inventory import Inventory
+from .product import Product
+from .visa import Visa
 
 __all__ = [
     'db',
@@ -32,4 +39,12 @@ __all__ = [
     'Requests',
     'PointLog',
     'Attendance',
+    'Board',
+    'Kvti',
+    'Timetable',
+    'Lecture',
+    'LectureTime',
+    'Inventory',
+    'Product',
+    'Visa'
 ]

@@ -17,7 +17,7 @@ def get_boards():
     boards_data = BoardService.get_board_list()
 
     return jsonify({
-        "status": success",
+        "status": "success",
         "data" : boards_data
     }), 200
 
