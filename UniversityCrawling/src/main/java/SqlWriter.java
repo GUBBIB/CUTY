@@ -50,11 +50,10 @@ public class SqlWriter implements Closeable {
             int newId = schoolSeq++;
 
             String sql = String.format(
-                    "INSERT INTO schools(id, name, country_id, created_at, updated_at, deleted_at) " +
-                    "VALUES(%d, '%s', %d, now(), now(), null);",
+                    "INSERT INTO schools(id, name, created_at, updated_at, deleted_at) " +
+                    "VALUES(%d, '%s', now(), now(), null);",
                     newId,
-                    escape(schoolName),
-                    1 // country_id는 1로 고정
+                    escape(schoolName)
             );
             out.println(sql);
             return newId;
