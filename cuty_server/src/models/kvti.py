@@ -7,6 +7,3 @@ class Kvti(db.Model, TimestampMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     
-
-    # Relationships
-    user = db.relationship('User', backref='kvtis')

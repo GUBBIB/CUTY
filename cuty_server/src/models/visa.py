@@ -11,8 +11,5 @@ class Visa(db.Model, TimestampMixin):
     document_url = db.Column(db.String(255))              # 비자 관련 서류 URL
     score = db.Column(db.Integer, nullable=True)              # 비자 점수
 
-    # Relationships
-    user = db.relationship('User', backref='visas')
-
     def __repr__(self):
         return f'<Visa {self.visa_type} for User {self.user_id}>'
