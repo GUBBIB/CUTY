@@ -72,3 +72,6 @@ definitions:
   
   Lecture:
     $ref: 'docs/v1/models/timetable_model.yml#/Lecture'
+
+  Board:
+    $ref: 'docs/v1/models/board_model.yml#/Board'

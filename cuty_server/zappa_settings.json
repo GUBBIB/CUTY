@@ -12,7 +12,20 @@
     },
     "keep_warm": true,
     "slim_handler": false,
-    "include": ["docs", "src/docs"],
-    "exclude": ["*.git", "__pycache__"]
+    "include": [
+      "docs",
+      "src/docs",
+      "docs/*",
+      "docs/v1/*"
+    ],
+    "exclude": [
+      "*.git",
+      "__pycache__",
+      "PIL",
+      "Pillow"
+    ],
+    "layers": [
+      "arn:aws:lambda:ap-northeast-2:770693421928:layer:Klayers-p312-Pillow:5"
+    ]
   }
 }

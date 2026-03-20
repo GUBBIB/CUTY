@@ -1,0 +1,22 @@
+Board:
+  allOf:
+    - $ref: './common_model.yml#/definitions/TimestampFields'
+    - type: object
+      description: 게시판 정보 모델
+      properties:
+        id:
+          type: integer
+          example: 1
+          description: 게시판 고유 ID
+        name:
+          type: string
+          example: 자유게시판
+          description: 게시판 이름
+        description:
+          type: string
+          example: 자유롭게 이야기를 나누는 공간입니다.
+          description: 게시판 설명
+        attribute_schema:
+          type: object
+          example: {"is_accepted": "boolean"}
+          description: 게시판 고유 속성 스키마 (예. 질문게시판의 채택 여부 등)
